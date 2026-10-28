@@ -1,0 +1,2220 @@
+{
+  "accommodations": [
+    {
+      "id": "acc-la-villa-calvi",
+      "name": "Hôtel La Villa",
+      "region": "calvi",
+      "url": "https://www.lavilla.fr/en",
+      "lat": 42.557,
+      "lon": 8.744,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 1,
+        "luxury": 1,
+        "pool": 1,
+        "spa": 0.8,
+        "gym": 0.6,
+        "restaurant": 0.7,
+        "modern": 0.8,
+        "airco": 1,
+        "adults_only": 0.4,
+        "sea_view": 0.4,
+        "ev_charging": 1
+      },
+      "desc": "Vijfsterrenhotel op de heuvel boven Calvi met binnen- en buitenzwembad, spa en uitzicht op de citadel.",
+      "photo": {
+        "file": "img/acc-la-villa-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi_panorama_Nov-2007.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-la-signoria-calvi",
+      "name": "La Signoria",
+      "region": "calvi",
+      "url": "https://www.hotel-la-signoria.com/en",
+      "lat": 42.537,
+      "lon": 8.785,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 0.8,
+        "luxury": 0.9,
+        "agriturismo": 0.8,
+        "pool": 1,
+        "restaurant": 0.9,
+        "secluded": 0.8,
+        "rustic": 0.7,
+        "mountain_view": 0.7,
+        "spa": 0.8,
+        "airco": 0.8
+      },
+      "desc": "Landhuis-hotel (Relais & Châteaux) met zwembad, spa en restaurant, vlak achter Calvi.",
+      "photo": {
+        "file": "img/acc-la-signoria-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre BONA",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi-Montagnes.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-kasano-calvi",
+      "name": "Hôtel & Spa Kasano",
+      "region": "calvi",
+      "url": "https://all.accor.com/hotel/C1V2/index.fr.shtml",
+      "lat": 42.5682,
+      "lon": 8.7578,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "pool": 0.9,
+        "sea_view": 0.4,
+        "in_town": 0.6,
+        "modern": 0.6,
+        "airco": 0.9,
+        "walk_to_beach": 0.5,
+        "spa": 0.8
+      },
+      "desc": "Vierstershotel met spa en buitenzwembad in het centrum van Calvi, aan de voet van de citadel (geopend 2022).",
+      "photo": {
+        "file": "img/acc-kasano-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Julian Nyča",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi_%E2%80%93_Bay_view_02.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-onda-calvi",
+      "name": "Hôtel L'Onda",
+      "region": "calvi",
+      "url": "https://www.booking.com/hotel/fr/onda.html",
+      "lat": 42.5579,
+      "lon": 8.759,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "sea_view": 0.3,
+        "in_town": 0.7,
+        "walk_to_beach": 0.8,
+        "budget": 0.5,
+        "airco": 0.8
+      },
+      "desc": "Eenvoudig driesterrenhotel in Calvi, op twee minuten van het strand en dicht bij de haven; geen zwembad.",
+      "photo": {
+        "file": "img/acc-onda-calvi.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi_Revellata_plage_de_l%27Alga.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-rocabella-ile-rousse",
+      "name": "Hôtel & Spa Rocabella",
+      "region": "calvi",
+      "url": "https://www.hotel-rocabella.com",
+      "lat": 42.6367,
+      "lon": 8.936,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "boutique": 0.7,
+        "sea_view": 1,
+        "modern": 0.7,
+        "walk_to_beach": 0.7,
+        "airco": 1,
+        "spa": 0.8
+      },
+      "desc": "Vierstershotel & spa aan de kust van Île-Rousse met zeezicht en uitzicht op het eilandje Pietra; geen zwembad.",
+      "photo": {
+        "file": "img/acc-rocabella-ile-rousse.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "ByB (Bruno Barral)",
+        "page": "https://commons.wikimedia.org/wiki/File:Vue_plage_IleRousse.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-a-piattatella-monticello",
+      "name": "A Piattatella",
+      "region": "calvi",
+      "url": "https://www.apiattatella.fr/",
+      "lat": 42.6122,
+      "lon": 8.9582,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 0.8,
+        "boutique": 0.9,
+        "luxury": 0.9,
+        "spa": 0.9,
+        "pool": 1,
+        "adults_only": 0.5,
+        "secluded": 0.5,
+        "mountain_view": 0.6,
+        "airco": 1
+      },
+      "desc": "Luxe boetiekhotel in Monticello, boven Île-Rousse, met spa, twee zwembaden en uitzicht over de Reginu-vallei.",
+      "photo": {
+        "file": "img/acc-a-piattatella-monticello.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Monticello_%C3%A9glise_San_Quilico_fa%C3%A7ade_m%C3%A9ridionale.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-saletta-mare-ile-rousse",
+      "name": "Résidence Saletta Mare",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/RESIDENCE-SALETTA-MARE",
+      "lat": 42.6361,
+      "lon": 8.9362,
+      "priceLevel": 3,
+      "tags": {
+        "apartment": 1,
+        "self_catering": 1,
+        "pool": 0.9,
+        "family": 0.8,
+        "in_town": 0.7,
+        "walk_to_beach": 0.6,
+        "airco": 0.8,
+        "modern": 0.6,
+        "ev_charging": 1
+      },
+      "desc": "Apparthotel in Île-Rousse met buitenzwembad en eigen keuken, handig voor gezinnen.",
+      "photo": {
+        "file": "img/acc-saletta-mare-ile-rousse.jpg",
+        "lic": "CC BY 3.0",
+        "author": "Qwesy",
+        "page": "https://commons.wikimedia.org/wiki/File:L%27%C3%8Ele-Rousse_-_panoramio.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "visit-corsica.com listing",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-serenada-algajola",
+      "name": "Hôtel Serenada",
+      "region": "calvi",
+      "url": "https://www.hotelserenada-algajola.com",
+      "lat": 42.6077,
+      "lon": 8.8659,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "walk_to_beach": 1,
+        "sea_view": 0.5,
+        "rustic": 0.4,
+        "budget": 0.5,
+        "airco": 0.6,
+        "family": 0.5
+      },
+      "desc": "Driesterrenhotel in Algajola met het strand aan de voet van het hotel.",
+      "photo": {
+        "file": "img/acc-serenada-algajola.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Ruthven",
+        "page": "https://commons.wikimedia.org/wiki/File:Algajola.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-les-castors-calvi",
+      "name": "Camping Les Castors",
+      "region": "calvi",
+      "url": "https://www.camping-castors.fr/",
+      "lat": 42.5557,
+      "lon": 8.7558,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 0.8,
+        "airco": 0.7,
+        "self_catering": 0.8,
+        "walk_to_beach": 0.4,
+        "budget": 0.5,
+        "ev_charging": 1
+      },
+      "desc": "Gezinscamping met mobil-homes met airco, op ongeveer een kilometer van de citadel van Calvi.",
+      "photo": {
+        "file": "img/acc-camping-les-castors-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre BONA",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi-pinede.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-lodge-saleccia-calvi",
+      "name": "Lodge Saleccia, Camping La Pinède",
+      "region": "calvi",
+      "url": "https://camping-calvi.com/hebergement/lodge-saleccia/",
+      "lat": 42.5545,
+      "lon": 8.766,
+      "priceLevel": 2,
+      "tags": {
+        "glamping": 1,
+        "camping": 0.8,
+        "family": 0.8,
+        "self_catering": 0.6,
+        "secluded": 0.3,
+        "rustic": 0.6,
+        "ev_charging": 1
+      },
+      "desc": "Safaritent op palen voor vier personen op een camping bij Calvi, met ventilatoren in plaats van airco.",
+      "photo": {
+        "file": "img/acc-lodge-saleccia-calvi.jpg",
+        "lic": "CC BY 4.0",
+        "author": "JLunder96",
+        "page": "https://commons.wikimedia.org/wiki/File:Glamping_Thorbjornrud_Hotel.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "noAirco": true,
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-paradella-calenzana",
+      "name": "Camping Paradella",
+      "region": "calvi",
+      "url": "https://www.camping-paradella.fr",
+      "lat": 42.5029,
+      "lon": 8.7897,
+      "priceLevel": 1,
+      "tags": {
+        "camping": 1,
+        "budget": 0.9,
+        "restaurant": 0.6,
+        "rustic": 0.6,
+        "mountain_view": 0.6,
+        "family": 0.6,
+        "secluded": 0.5
+      },
+      "desc": "Grote camping met zwembad bij Calenzana (7 km van het strand), startpunt van de GR20.",
+      "photo": {
+        "file": "img/acc-camping-paradella-calenzana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calenzana-Village.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-demeure-loredana-stflorent",
+      "name": "Demeure Loredana",
+      "region": "stflorent",
+      "url": "https://www.booking.com/hotel/fr/demeure-loredana.html",
+      "lat": 42.6851,
+      "lon": 9.3081,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 1,
+        "luxury": 1,
+        "boutique": 0.8,
+        "pool": 1,
+        "spa": 0.8,
+        "sea_view": 0.8,
+        "in_town": 0.5,
+        "airco": 1,
+        "restaurant": 0.5
+      },
+      "desc": "Vijfsterrenhotel tussen centrum en strand van Saint-Florent, met zwembad, hammam en zeezicht.",
+      "photo": {
+        "file": "img/acc-demeure-loredana-stflorent.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Gzen92",
+        "page": "https://commons.wikimedia.org/wiki/File:Port_(Saint-Florent).jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-la-roya-stflorent",
+      "name": "Hôtel de la Roya",
+      "region": "stflorent",
+      "url": "https://www.hoteldelaroya.com",
+      "lat": 42.6744,
+      "lon": 9.2958,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "walk_to_beach": 1,
+        "pool": 0.9,
+        "family": 0.7,
+        "modern": 0.7,
+        "mountain_view": 0.4,
+        "airco": 0.9
+      },
+      "desc": "Moderne viersterren aan het strand van La Roya met buitenzwembad en uitzicht op de Cap Corse-bergen.",
+      "photo": {
+        "file": "img/acc-la-roya-stflorent.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Saint-Florent_%C3%AElot_de_la_Roya.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-tettola-stflorent",
+      "name": "Hôtel Tettola",
+      "region": "stflorent",
+      "url": "https://www.hoteltettola.com",
+      "lat": 42.6895,
+      "lon": 9.3155,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "pool": 0.8,
+        "sea_view": 1,
+        "walk_to_beach": 0.8,
+        "in_town": 0.6,
+        "airco": 0.8
+      },
+      "desc": "Driesterrenhotel met zwembad en vrij zicht op zee, aan de noordkant van Saint-Florent.",
+      "photo": {
+        "file": "img/acc-tettola-stflorent.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Gzen92",
+        "page": "https://commons.wikimedia.org/wiki/File:Citadelle_(Saint-Florent)_(1).jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-dolce-notte-stflorent",
+      "name": "Hôtel Dolce Notte",
+      "region": "stflorent",
+      "url": "https://www.hotel-dolce-notte.com",
+      "lat": 42.6849,
+      "lon": 9.3065,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "in_town": 1,
+        "walk_to_beach": 1,
+        "airco": 0.8,
+        "budget": 0.3
+      },
+      "desc": "Driesterrenhotel in het centrum van Saint-Florent, vlak bij het noordstrand.",
+      "photo": {
+        "file": "img/acc-dolce-notte-stflorent.jpg",
+        "lic": "CC0",
+        "author": "Ruthven",
+        "page": "https://commons.wikimedia.org/wiki/File:Port_-_Saint_Florent_(3).jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-auberge-u-lustincone-patrimonio",
+      "name": "Auberge U Lustincone",
+      "region": "stflorent",
+      "url": "https://www.u-lustincone.com",
+      "lat": 42.699,
+      "lon": 9.358,
+      "priceLevel": 2,
+      "tags": {
+        "agriturismo": 1,
+        "bnb": 0.5,
+        "hotel": 0.4,
+        "pool": 0.8,
+        "rustic": 1,
+        "mountain_view": 1,
+        "secluded": 0.8,
+        "restaurant": 0.7,
+        "airco": 1
+      },
+      "desc": "Herberg tussen de wijngaarden van Patrimonio met zwembad en rondom uitzicht op de bergen.",
+      "photo": {
+        "file": "img/acc-auberge-u-lustincone-patrimonio.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Oursmarie",
+        "page": "https://commons.wikimedia.org/wiki/File:Pagliaghu_des_bergers_Agriates_Hte_Corse.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-la-dimora-oletta",
+      "name": "Hôtel La Dimora",
+      "region": "stflorent",
+      "url": "https://www.ladimora.fr",
+      "lat": 42.629,
+      "lon": 9.352,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 1,
+        "boutique": 1,
+        "luxury": 0.7,
+        "pool": 1,
+        "spa": 0.8,
+        "secluded": 0.8,
+        "mountain_view": 0.9,
+        "rustic": 0.6,
+        "adults_only": 0.4,
+        "airco": 1,
+        "ev_charging": 1
+      },
+      "desc": "Boetiekhotel in een oud huis bij Oletta, met zwembad, jacuzzi en spa in het groen.",
+      "photo": {
+        "file": "img/acc-la-dimora-oletta.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Oletta_Romanacce.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-u-palazzu-serenu-oletta",
+      "name": "Aethos U Palazzu Serenu",
+      "region": "stflorent",
+      "url": "https://www.booking.com/hotel/fr/u-palazzu-serenu.html",
+      "lat": 42.631,
+      "lon": 9.358,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 1,
+        "boutique": 0.9,
+        "luxury": 0.9,
+        "pool": 1,
+        "secluded": 0.8,
+        "mountain_view": 0.9,
+        "rustic": 0.7,
+        "spa": 0.3,
+        "adults_only": 0.5
+      },
+      "desc": "Elegant landhotel met zwembad in de Nebbio, met massages en uitzicht op de bergen.",
+      "photo": {
+        "file": "img/acc-u-palazzu-serenu-oletta.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Clemens Pohl",
+        "page": "https://commons.wikimedia.org/wiki/File:Le_golfe_de_Saint-Florent_(San_Fiurenzu)_-_panoramio.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-kalliste-stflorent",
+      "name": "Camping Village Kalliste",
+      "region": "stflorent",
+      "url": "https://www.homair.com/camping-saint-florent",
+      "lat": 42.6737,
+      "lon": 9.2978,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 1,
+        "walk_to_beach": 0.7,
+        "self_catering": 0.8,
+        "airco": 0.4
+      },
+      "desc": "Familiecamping bij La Roya met zwembaden en mobil-homes, vlak bij het strand.",
+      "photo": {
+        "file": "img/acc-camping-kalliste-stflorent.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "jeffwarder",
+        "page": "https://commons.wikimedia.org/wiki/File:St.Florent_-_view_from_la_Roya_beach_-_panoramio.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-olzo-stflorent",
+      "name": "Camping d'Olzo",
+      "region": "stflorent",
+      "url": "https://www.campingolzo.com",
+      "lat": 42.694,
+      "lon": 9.3265,
+      "priceLevel": 1,
+      "tags": {
+        "camping": 1,
+        "family": 0.9,
+        "budget": 0.8,
+        "rustic": 0.5,
+        "walk_to_beach": 0.5
+      },
+      "desc": "Schaduwrijke familiecamping bij Saint-Florent, populair bij gezinnen.",
+      "photo": {
+        "file": "img/acc-camping-olzo-stflorent.jpg",
+        "lic": "Public domain",
+        "author": "Forest Service - Northern Region",
+        "page": "https://commons.wikimedia.org/wiki/File:Tent_at_Rombo_Campground_(5860430777).jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-castel-brando-erbalunga",
+      "name": "Hôtel Castel Brando",
+      "region": "stflorent",
+      "url": "https://www.castelbrando.com",
+      "lat": 42.774,
+      "lon": 9.4755,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "boutique": 1,
+        "pool": 0.9,
+        "rustic": 0.7,
+        "secluded": 0.4,
+        "restaurant": 0.4,
+        "sea_view": 0.3,
+        "ev_charging": 1
+      },
+      "desc": "Charmehotel in een negentiende-eeuws landhuis in Erbalunga, het vissersdorp aan Cap Corse-zuid.",
+      "photo": {
+        "file": "img/acc-castel-brando-erbalunga.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Herbert wie",
+        "page": "https://commons.wikimedia.org/wiki/File:Port_de_plaisance_Erbalunga_Cap_Corse.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-hotel-scandola-piana",
+      "name": "Hôtel Scandola",
+      "region": "porto",
+      "url": "https://www.booking.com/hotel/fr/scandola.html",
+      "lat": 42.2379,
+      "lon": 8.6335,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "sea_view": 0.8,
+        "in_town": 0.6,
+        "rustic": 0.6,
+        "airco": 0.7,
+        "restaurant": 0.4
+      },
+      "desc": "Hotel in het bergdorp Piana met uitzicht op de Golf van Porto.",
+      "photo": {
+        "file": "img/acc-hotel-scandola-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "KlausF",
+        "page": "https://commons.wikimedia.org/wiki/File:Panorama_210_degrees_from_Capo_Rosso.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-hotel-capo-rosso-piana",
+      "name": "Hôtel Capo Rosso",
+      "region": "porto",
+      "url": "https://www.booking.com/hotel/fr/capo-rosso.html",
+      "lat": 42.2402,
+      "lon": 8.6436,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "pool": 1,
+        "sea_view": 1,
+        "restaurant": 0.7,
+        "mountain_view": 0.5,
+        "airco": 0.8
+      },
+      "desc": "Hotel in Piana met zwembad en uitzicht over de rode rotsen en de golf.",
+      "photo": {
+        "file": "img/acc-hotel-capo-rosso-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Patrick Rouzet",
+        "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Porto_depuis_Capo_Rosso.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-les-roches-rouges-piana",
+      "name": "Hôtel Les Roches Rouges",
+      "region": "porto",
+      "url": "https://www.lesrochesrouges.com",
+      "lat": 42.2401,
+      "lon": 8.6416,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "rustic": 1,
+        "sea_view": 0.8,
+        "restaurant": 0.7,
+        "boutique": 0.5,
+        "in_town": 0.5
+      },
+      "desc": "Historisch hotel uit de belle époque in Piana, tegenover de rode rotsen van de Calanques.",
+      "photo": {
+        "file": "img/acc-les-roches-rouges-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Piana_h%C3%B4tel_Les_Roches_Rouges.jpg"
+      },
+      "photoGeneric": false,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-capu-seninu-porto",
+      "name": "Résidence Capu Seninu",
+      "region": "porto",
+      "url": "https://www.booking.com/hotel/fr/residence-hoteliere-capu-seninu.html",
+      "lat": 42.2671,
+      "lon": 8.6958,
+      "priceLevel": 2,
+      "tags": {
+        "apartment": 1,
+        "self_catering": 1,
+        "family": 0.7,
+        "mountain_view": 0.7,
+        "airco": 0.6,
+        "budget": 0.4
+      },
+      "desc": "Apparthotel in Porto met eigen keuken en uitzicht op de bergen.",
+      "photo": {
+        "file": "img/acc-capu-seninu-porto.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Ota_marine_de_Porto.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-les-flots-bleus-porto",
+      "name": "Hôtel Les Flots Bleus",
+      "region": "porto",
+      "url": "https://www.booking.com/hotel/fr/les-flots-bleus-porto-ota.html",
+      "lat": 42.2687,
+      "lon": 8.6934,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "walk_to_beach": 0.8,
+        "budget": 0.5,
+        "in_town": 0.6,
+        "airco": 0.6
+      },
+      "desc": "Eenvoudig hotel in Porto met zicht op de Genuese toren en korte wandeling naar de haven.",
+      "photo": {
+        "file": "img/acc-les-flots-bleus-porto.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse_Ota_Porto_tour_genoise.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-les-oliviers-porto",
+      "name": "Camping Les Oliviers",
+      "region": "porto",
+      "url": "https://www.camping-oliviers-porto.com",
+      "lat": 42.2619,
+      "lon": 8.7123,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 1,
+        "self_catering": 0.8,
+        "budget": 0.5,
+        "airco": 0.6,
+        "mountain_view": 0.4,
+        "ev_charging": 1
+      },
+      "desc": "Camping tussen Porto en Ota met verwarmd zwembad, jacuzzi en pierenbadje.",
+      "photo": {
+        "file": "img/acc-camping-les-oliviers-porto.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse-du-Sud_Ota.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-sole-e-vista-porto",
+      "name": "Camping Sole e Vista",
+      "region": "porto",
+      "url": "https://www.camping-sole-e-vista.fr",
+      "lat": 42.2638,
+      "lon": 8.7114,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 1,
+        "walk_to_beach": 0.6,
+        "self_catering": 0.7,
+        "airco": 0.3,
+        "ev_charging": 1
+      },
+      "desc": "Camping bij Porto met zwembad met glijbaan, kinderclub en de zee op minder dan een kilometer.",
+      "photo": {
+        "file": "img/acc-camping-sole-e-vista-porto.jpg",
+        "lic": "CC BY 2.0",
+        "author": "Michal Osmenda from Brussels, Belgium",
+        "page": "https://commons.wikimedia.org/wiki/File:Marina_in_Porto,_Corsica_(8026161703).jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "evSource": "official website",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-camping-torraccia-cargese",
+      "name": "Camping Torraccia",
+      "region": "porto",
+      "url": "https://www.toocamp.com/france/camping-torraccia-c26631.html",
+      "lat": 42.1633,
+      "lon": 8.5978,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 1,
+        "self_catering": 0.9,
+        "walk_to_beach": 0.3,
+        "airco": 0.4
+      },
+      "desc": "Camping met bungalows voor vier tot zes personen en zwembad met glijbanen, bij Cargèse.",
+      "photo": {
+        "file": "img/acc-camping-torraccia-cargese.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Carg%C3%A8se_plage_de_Peru.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-27",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-calvi-relais-jeunesse-carabellu",
+      "name": "Relais International de la Jeunesse U Carabellu",
+      "region": "calvi",
+      "url": "https://en.balagne-corsica.com/hebergement-collec/relais-international-de-la-jeunesse/",
+      "lat": 42.5425,
+      "lon": 8.7613,
+      "priceLevel": 1,
+      "tags": {
+        "budget": 1,
+        "sea_view": 0.3,
+        "restaurant": 0.3
+      },
+      "desc": "Jeugdherberg boven Calvi (Route de Pietra Maggiore, 3 tot 4 km van het centrum) met bar, restaurant en gratis parkeren; de goedkoopste slaapplek van Calvi.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-calvi-relais-jeunesse-carabellu.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Guallendra",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse_baie_de_Calvi.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-calenzana-gite-municipal",
+      "name": "Gîte d'étape communal de Calenzana",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/fr/Mes-Favoris/GITE-D-ETAPE-COMMUNAL",
+      "lat": 42.5088,
+      "lon": 8.8555,
+      "priceLevel": 1,
+      "tags": {
+        "budget": 1,
+        "rustic": 0.6,
+        "in_town": 0.6
+      },
+      "desc": "Gemeentelijk gîte voor wandelaars in Calenzana, startpunt van de GR20: 30 bedden in zeven 4-persoonskamers en een 2-persoonskamer. Reserveren via 04 95 62 77 13.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-calenzana-gite-municipal.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calenzana-Village.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-calenzana-a-casa",
+      "name": "Chambres d'hôtes A Casa (Calenzana)",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Locatifs/A-CASA",
+      "lat": 42.5073,
+      "lon": 8.8546,
+      "priceLevel": 2,
+      "tags": {
+        "bnb": 1,
+        "in_town": 0.8,
+        "rustic": 0.6,
+        "family": 0.4
+      },
+      "desc": "Gastenkamers in het dorp Calenzana (Rue Rappalli): een tweepersoonskamer en een familiesuite, elk met eigen badkamer, terras of balkon en een ommuurde tuin.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-calenzana-a-casa.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "ROCHAT PATRICE",
+        "page": "https://commons.wikimedia.org/wiki/File:Village_de_Calenzana.JPG"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-pigna-casa-musicale",
+      "name": "A Casa Musicale (Pigna)",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/CASA-MUSICALE",
+      "lat": 42.5988,
+      "lon": 8.9019,
+      "priceLevel": 2,
+      "tags": {
+        "hotel": 1,
+        "in_town": 0.7,
+        "rustic": 0.8,
+        "restaurant": 0.7,
+        "sea_view": 0.5
+      },
+      "desc": "Tweesterrenhotel in een voormalig herenhuis midden in Pigna met zicht op de Middellandse Zee; concerten en workshops het hele jaar en het Festivoce-festival in juli. Open 23 maart tot 14 december.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-pigna-casa-musicale.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Chabe01",
+        "page": "https://commons.wikimedia.org/wiki/File:Vue_Village_-_Pigna_(FR2B)_-_2021-09-06_-_1.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-pigna-palazzu",
+      "name": "U Palazzu (Pigna)",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/de/layout/set/print/Carnet-de-voyage/PALAZZU-PIGNA",
+      "lat": 42.5999,
+      "lon": 8.9025,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "boutique": 0.6,
+        "in_town": 0.7,
+        "rustic": 0.9,
+        "restaurant": 0.7
+      },
+      "desc": "Kleine hotel in een gerestaureerd 18e-eeuws huis in het dorp Pigna: vijf kamers (twee suites met terras), restaurant in een voormalige olijfoliepers.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-pigna-palazzu.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "ROCHAT PATRICE",
+        "page": "https://commons.wikimedia.org/wiki/File:PIGNA_LE_VILLAGE.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-olivella-corbara",
+      "name": "Résidence L'Olivella (Corbara)",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/L-OLIVELLA",
+      "lat": 42.6261,
+      "lon": 8.92,
+      "priceLevel": 2,
+      "tags": {
+        "apartment": 1,
+        "self_catering": 0.9,
+        "family": 0.8,
+        "pool": 0.8,
+        "sea_view": 0.5,
+        "secluded": 0.3,
+        "airco": 1
+      },
+      "desc": "Familieresidence met zwembad op bijna 2 ha tussen olijfbomen en maquis, appartementen met terras en zeezicht, op 1 km van L'Île-Rousse. Open 1 mei tot 31 oktober.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-olivella-corbara.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Corbara-Village.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-porto-chez-marie-ota",
+      "name": "Gîte d'étape Chez Marie (Ota)",
+      "region": "porto",
+      "url": "https://www.gite-chez-marie.com/",
+      "lat": 42.2573,
+      "lon": 8.7421,
+      "priceLevel": 1,
+      "tags": {
+        "budget": 1,
+        "restaurant": 0.6,
+        "rustic": 0.7,
+        "mountain_view": 0.3,
+        "self_catering": 0.3
+      },
+      "desc": "Gîte met restaurant in Ota: drie slaapzalen (6, 8 en 12 bedden) en eenpersoons- of tweepersoonskamers, keuken en wifi. Bed 25 euro per nacht (tarief 2026), langs het pad Tra mare e monti.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-porto-chez-marie-ota.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse-du-Sud_Ota.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-porto-ustaria-di-a-rota",
+      "name": "Ustaria di a Rota (Marignana)",
+      "region": "porto",
+      "url": "https://www.ouestcorsica.com/hebergements/ustaria-di-a-rota/",
+      "lat": 42.2364,
+      "lon": 8.8061,
+      "priceLevel": 1,
+      "tags": {
+        "budget": 1,
+        "restaurant": 0.6,
+        "rustic": 0.8,
+        "mountain_view": 0.5
+      },
+      "desc": "Goedgekeurd gîte d'étape met restaurant en kampeerplek in Marignana, op de Mare a Mare Nord: 26 bedden en halfpension mogelijk. Telefoon 04 95 26 21 21.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-porto-ustaria-di-a-rota.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Marignana-maison.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-marina-darone-piana",
+      "name": "Marina d'Arone Résidence & Spa (Piana)",
+      "region": "porto",
+      "url": "http://www.marina-arone.com/",
+      "lat": 42.209,
+      "lon": 8.5831,
+      "priceLevel": 2,
+      "tags": {
+        "apartment": 1,
+        "self_catering": 0.9,
+        "family": 0.9,
+        "pool": 0.8,
+        "walk_to_beach": 0.8,
+        "sea_view": 0.5,
+        "airco": 0.6,
+        "restaurant": 0.4,
+        "spa": 0.4
+      },
+      "desc": "Residentie met 19 appartementen (studio tot T3, 2 tot 6 personen) met zwembad, kinderspeelbad, restaurant en balneo, op ongeveer 200 m van het strand van Arone.",
+      "photoGeneric": true,
+      "photo": {
+        "file": "img/acc-marina-darone-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Jerem0808",
+        "page": "https://commons.wikimedia.org/wiki/File:Plage_d'arone.jpg"
+      },
+      "verified": "2026-10-28",
+      "facilitiesChecked": "2026-10-28"
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-citadelle-calvi",
+      "name": "Citadel van Calvi",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Calvi",
+      "lat": 42.569,
+      "lon": 8.755,
+      "durationH": 2,
+      "tags": {
+        "town": 1,
+        "culture": 1,
+        "viewpoint": 0.8,
+        "photo": 0.9,
+        "effort_low": 0.8
+      },
+      "desc": "Wandel door de Genuese citadel op de rots en kijk uit over de baai.",
+      "photo": {
+        "file": "img/act-citadelle-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Isiwal",
+        "page": "https://commons.wikimedia.org/wiki/File:Corsica_Calvi_port_citadelle.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-grande-plage-calvi",
+      "name": "Strand van Calvi",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Calvi",
+      "lat": 42.558,
+      "lon": 8.762,
+      "durationH": 3,
+      "tags": {
+        "beach": 1,
+        "relax": 0.9,
+        "kids": 0.9,
+        "effort_low": 1
+      },
+      "desc": "Lang zandstrand met ondiep water onder de citadel, ideaal met kinderen.",
+      "photo": {
+        "file": "img/act-grande-plage-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Fr.Latreille",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi-plage-87.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-notre-dame-de-la-serra",
+      "name": "Notre-Dame de la Serra",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Chapelle_Notre-Dame-de-la-Serra_de_Calvi",
+      "lat": 42.5525,
+      "lon": 8.7372,
+      "durationH": 1,
+      "tags": {
+        "viewpoint": 1,
+        "photo": 1,
+        "culture": 0.4,
+        "effort_low": 0.8
+      },
+      "desc": "Kapel op een heuvel met het mooiste panorama over Calvi en de baai.",
+      "photo": {
+        "file": "img/act-notre-dame-de-la-serra.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Dnalor 01",
+        "page": "https://commons.wikimedia.org/wiki/File:Bucht_von_Calvi,_Blick_von_Notre-Dame_de_La_Serra.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-revellata",
+      "name": "Wandeling naar de Revellata-vuurtoren",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Golfe_de_la_Revellata",
+      "lat": 42.587,
+      "lon": 8.669,
+      "durationH": 3.5,
+      "tags": {
+        "hike": 1,
+        "viewpoint": 0.8,
+        "nature": 0.8,
+        "photo": 0.7,
+        "beach": 0.4
+      },
+      "desc": "Wandeling over de rotsige kaap met zeezicht en kleine baaien om te zwemmen.",
+      "photo": {
+        "file": "img/act-revellata.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Revellata-phare.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-trinichellu",
+      "name": "Trinichellu-treintje naar Île-Rousse",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Chemins_de_fer_de_la_Corse",
+      "lat": 42.5648,
+      "lon": 8.7561,
+      "durationH": 3,
+      "tags": {
+        "train": 1,
+        "kids": 0.8,
+        "effort_low": 1,
+        "photo": 0.6,
+        "relax": 0.6
+      },
+      "desc": "Rit met het kleine kusttreintje langs de stranden van de Balagne.",
+      "photo": {
+        "file": "img/act-trinichellu.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calvi_arr%C3%AAt_CFC_Balagne_Orizonte_Novu.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-ile-rousse",
+      "name": "Île-Rousse en de markthal",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/L%27%C3%8Ele-Rousse",
+      "lat": 42.6356,
+      "lon": 8.9381,
+      "durationH": 3,
+      "tags": {
+        "town": 1,
+        "market": 0.8,
+        "food": 0.6,
+        "beach": 0.6,
+        "kids": 0.5,
+        "effort_low": 0.9
+      },
+      "desc": "Palmen, markthal en een stadsstrand in het levendige Île-Rousse.",
+      "photo": {
+        "file": "img/act-ile-rousse.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Ile-Rousse_march%C3%A9_couvert.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-pigna",
+      "name": "Pigna, bergdorp van de ambachten",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Pigna_(Haute-Corse)",
+      "lat": 42.6003,
+      "lon": 8.9028,
+      "durationH": 2,
+      "tags": {
+        "village": 1,
+        "culture": 0.6,
+        "photo": 0.7,
+        "food": 0.4,
+        "effort_low": 0.8
+      },
+      "desc": "Stenen bergdorp met ateliers van ambachtslieden en muzikanten.",
+      "photo": {
+        "file": "img/act-pigna.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Tim Tim (VD fr)",
+        "page": "https://commons.wikimedia.org/wiki/File:Pigna-Corse.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-sant-antonino",
+      "name": "Sant'Antonino",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Sant%27Antonino_(Haute-Corse)",
+      "lat": 42.59,
+      "lon": 8.9056,
+      "durationH": 2,
+      "tags": {
+        "village": 1,
+        "viewpoint": 0.9,
+        "photo": 0.9,
+        "hike": 0.4
+      },
+      "desc": "Een van de mooiste dorpjes van Frankrijk, boven op een heuvel met uitzicht op de Balagne.",
+      "photo": {
+        "file": "img/act-sant-antonino.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:StAntonino-pano.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-arinella-lumio",
+      "name": "Baai van Arinella bij Lumio",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Lumio",
+      "lat": 42.5769,
+      "lon": 8.8076,
+      "durationH": 3,
+      "tags": {
+        "snorkel": 1,
+        "beach": 0.9,
+        "relax": 0.7,
+        "kids": 0.6,
+        "effort_low": 0.9
+      },
+      "desc": "Rustige baai met helder water, goed om te snorkelen.",
+      "photo": {
+        "file": "img/act-arinella-lumio.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Chabe01",
+        "page": "https://commons.wikimedia.org/wiki/File:Plage_Sainte_Restitude_-_Lumio_(FR2B)_-_2021-09-11_-_4.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-diving-calvi",
+      "name": "Duiken bij Calvi",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Calvi",
+      "lat": 42.564,
+      "lon": 8.758,
+      "durationH": 3,
+      "tags": {
+        "diving": 1,
+        "boat": 0.7,
+        "nature": 0.7,
+        "adrenaline": 0.3
+      },
+      "desc": "Duiken rond de Revellata en bij het wrak van een B-17 voor de kust van Calvi.",
+      "photo": {
+        "file": "img/act-diving-calvi.jpg",
+        "lic": "CC BY 4.0",
+        "author": "Arnaud Abadie",
+        "page": "https://commons.wikimedia.org/wiki/File:Scuba_divers_on_the_wreck_of_a_B-17_bomber.JPG"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-kayak-revellata",
+      "name": "Kajak of SUP langs de Revellata",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Golfe_de_la_Revellata",
+      "lat": 42.5667,
+      "lon": 8.7312,
+      "durationH": 2.5,
+      "tags": {
+        "kayak": 1,
+        "nature": 0.7,
+        "snorkel": 0.5,
+        "effort_high": 0.4
+      },
+      "desc": "Peddel langs de rotskust en stop voor een duik in kleine baaien.",
+      "photo": {
+        "file": "img/act-kayak-revellata.jpg",
+        "lic": "CC0",
+        "author": "Edelmauswaldgeist",
+        "page": "https://commons.wikimedia.org/wiki/File:Halbinsel_Revellata_3.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-gr20-calenzana",
+      "name": "GR20, eerste etappe vanaf Calenzana",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Calenzana",
+      "lat": 42.5086,
+      "lon": 8.8558,
+      "durationH": 7,
+      "tags": {
+        "hike_hard": 1,
+        "effort_high": 1,
+        "nature": 0.8,
+        "viewpoint": 0.8
+      },
+      "desc": "Steile eerste etappe van de GR20 vanaf Calenzana, alleen voor geoefende wandelaars.",
+      "photo": {
+        "file": "img/act-gr20-calenzana.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Rémih",
+        "page": "https://commons.wikimedia.org/wiki/File:GR20_Calenzana.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-calenzana",
+      "name": "Calenzana en de kerk Saint-Blaise",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Calenzana",
+      "lat": 42.5086,
+      "lon": 8.8558,
+      "durationH": 1.5,
+      "tags": {
+        "village": 1,
+        "culture": 0.8,
+        "effort_low": 0.9
+      },
+      "desc": "Dorp aan de voet van de bergen met een barokke kerk.",
+      "photo": {
+        "file": "img/act-calenzana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Calenzana-le_village.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-zilia-wijn",
+      "name": "Wijn proeven bij Zilia",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Zilia",
+      "lat": 42.5311,
+      "lon": 8.9017,
+      "durationH": 2,
+      "tags": {
+        "wine": 1,
+        "food": 0.8,
+        "relax": 0.6,
+        "effort_low": 0.9
+      },
+      "desc": "Proef Balagne-wijn bij een domein rond het dorp Zilia.",
+      "photo": {
+        "file": "img/act-zilia-wijn.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Zilia_Panorama.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-corbara",
+      "name": "Convent van Corbara",
+      "region": "calvi",
+      "url": "https://fr.wikipedia.org/wiki/Couvent_Saint-Dominique_de_Corbara",
+      "lat": 42.603,
+      "lon": 8.912,
+      "durationH": 1.5,
+      "tags": {
+        "culture": 1,
+        "village": 0.6,
+        "viewpoint": 0.5,
+        "effort_low": 0.8
+      },
+      "desc": "Dominicaans klooster boven Île-Rousse in een bergdorp met uitzicht.",
+      "photo": {
+        "file": "img/act-corbara.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Corbara-Couvent_et_Ste-Lucie.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-citadelle-stflorent",
+      "name": "Citadel van Saint-Florent",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Citadelle_de_Saint-Florent",
+      "lat": 42.6829,
+      "lon": 9.3016,
+      "durationH": 1.5,
+      "tags": {
+        "town": 1,
+        "culture": 0.8,
+        "photo": 0.7,
+        "effort_low": 0.9
+      },
+      "desc": "Genuese citadel aan de haven van Saint-Florent.",
+      "photo": {
+        "file": "img/act-citadelle-stflorent.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Gzen92",
+        "page": "https://commons.wikimedia.org/wiki/File:Citadelle_(Saint-Florent)_(2).jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-nebbio-kathedraal",
+      "name": "Kathedraal van Nebbio",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Cath%C3%A9drale_Sainte-Marie_de_Nebbio",
+      "lat": 42.6799,
+      "lon": 9.3109,
+      "durationH": 1,
+      "tags": {
+        "culture": 1,
+        "photo": 0.6,
+        "effort_low": 1
+      },
+      "desc": "Romaanse kathedraal uit de twaalfde eeuw net buiten Saint-Florent.",
+      "photo": {
+        "file": "img/act-nebbio-kathedraal.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Cath%C3%A9drale_du_Nebbio_portail.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-haven-stflorent",
+      "name": "Haven en terrassen van Saint-Florent",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Saint-Florent_(Haute-Corse)",
+      "lat": 42.684,
+      "lon": 9.3035,
+      "durationH": 2.5,
+      "tags": {
+        "food": 1,
+        "town": 0.8,
+        "nightlife": 0.5,
+        "relax": 0.7,
+        "effort_low": 1
+      },
+      "desc": "Verse vis, pizza en ijs aan de jachthaven.",
+      "photo": {
+        "file": "img/act-haven-stflorent.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Chabe01",
+        "page": "https://commons.wikimedia.org/wiki/File:Port_-_Saint-Florent_(FR2B)_-_2021-09-10_-_7.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-saleccia",
+      "name": "Strand van Saleccia",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Plage_de_Saleccia",
+      "lat": 42.7253,
+      "lon": 9.202,
+      "durationH": 5,
+      "tags": {
+        "beach": 1,
+        "snorkel": 0.7,
+        "nature": 0.8,
+        "photo": 0.9,
+        "relax": 0.7
+      },
+      "desc": "Wit zand en turquoise water in de Agriates, per boot of 4x4-piste bereikbaar.",
+      "photo": {
+        "file": "img/act-saleccia.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Saleccia_2004.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-lotu",
+      "name": "Strand van Lotu",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Plage_du_Lotu",
+      "lat": 42.7195,
+      "lon": 9.2342,
+      "durationH": 5,
+      "tags": {
+        "beach": 1,
+        "nature": 0.8,
+        "photo": 0.8,
+        "relax": 0.8,
+        "snorkel": 0.5
+      },
+      "desc": "Rustig zandstrand in de Agriates, alleen per boot of te voet bereikbaar.",
+      "photo": {
+        "file": "img/act-lotu.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Alacoolwiki",
+        "page": "https://commons.wikimedia.org/wiki/File:Plage_de_Lotu.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-agriates-boot",
+      "name": "Boottocht naar de Agriates",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/D%C3%A9sert_des_Agriates",
+      "lat": 42.684,
+      "lon": 9.303,
+      "durationH": 5,
+      "tags": {
+        "boat": 1,
+        "beach": 0.8,
+        "nature": 0.8,
+        "snorkel": 0.5,
+        "kids": 0.4
+      },
+      "desc": "Shuttleboot of tocht vanuit Saint-Florent naar Saleccia en Lotu.",
+      "photo": {
+        "file": "img/act-agriates-boot.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Clemens Pohl",
+        "page": "https://commons.wikimedia.org/wiki/File:D%C3%A9sert_des_Agriates_-_panoramio.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-agriates-wandeling",
+      "name": "Kustpad Lotu-Saleccia",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/D%C3%A9sert_des_Agriates",
+      "lat": 42.722,
+      "lon": 9.218,
+      "durationH": 3.5,
+      "tags": {
+        "hike": 1,
+        "nature": 0.9,
+        "beach": 0.6,
+        "photo": 0.8,
+        "effort_high": 0.4
+      },
+      "desc": "Wandelpad door de maquis langs de kust, tussen twee van de mooiste stranden.",
+      "photo": {
+        "file": "img/act-agriates-wandeling.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "jeffwarder",
+        "page": "https://commons.wikimedia.org/wiki/File:Sentier_du_littoral_-_Plage_de_Loto_(Lotu)_-_rocks_%26_Cap_Corse_-_panoramio.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-patrimonio-wijn",
+      "name": "Wijn proeven in Patrimonio",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Patrimonio",
+      "lat": 42.6983,
+      "lon": 9.3622,
+      "durationH": 2.5,
+      "tags": {
+        "wine": 1,
+        "food": 0.7,
+        "village": 0.6,
+        "relax": 0.6,
+        "effort_low": 1
+      },
+      "desc": "Corsica's bekendste wijnstreek met proeverijen bij wijnboeren.",
+      "photo": {
+        "file": "img/act-patrimonio-wijn.jpg",
+        "lic": "CC BY 2.0",
+        "author": "cremona daniel",
+        "page": "https://commons.wikimedia.org/wiki/File:Vignoble_de_l%27AOC_Patrimonio_pr%C3%A8s_de_Saint-Florent.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-col-de-teghime",
+      "name": "Col de Teghime",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Col_de_Teghime",
+      "lat": 42.6769,
+      "lon": 9.3828,
+      "durationH": 0.5,
+      "tags": {
+        "viewpoint": 1,
+        "photo": 1,
+        "effort_low": 1
+      },
+      "desc": "Bergpas met uitzicht over beide kusten tegelijk.",
+      "photo": {
+        "file": "img/act-col-de-teghime.jpg",
+        "lic": "CC BY 2.0",
+        "author": "skender",
+        "page": "https://commons.wikimedia.org/wiki/File:Col_de_Teghime_et_D81.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-nonza",
+      "name": "Nonza en het zwarte strand",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Nonza",
+      "lat": 42.7853,
+      "lon": 9.345,
+      "durationH": 2.5,
+      "tags": {
+        "village": 1,
+        "photo": 1,
+        "beach": 0.6,
+        "culture": 0.5,
+        "viewpoint": 0.7
+      },
+      "desc": "Dorp op een rots met Genuese toren en een zwart kiezelstrand.",
+      "photo": {
+        "file": "img/act-nonza.jpg",
+        "lic": "CC BY-SA 2.5",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Nonza-pano-cut.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-oletta",
+      "name": "Oletta en het Nebbio",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Oletta",
+      "lat": 42.6333,
+      "lon": 9.3561,
+      "durationH": 2,
+      "tags": {
+        "village": 1,
+        "culture": 0.6,
+        "food": 0.4,
+        "effort_low": 0.9
+      },
+      "desc": "Rustig heuveldorp in de Nebbio met uitzicht op de golf.",
+      "photo": {
+        "file": "img/act-oletta.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Oletta-panorama.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-erbalunga",
+      "name": "Erbalunga",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Tour_d%27Erbalunga",
+      "lat": 42.774,
+      "lon": 9.477,
+      "durationH": 2,
+      "tags": {
+        "village": 1,
+        "photo": 0.9,
+        "food": 0.5,
+        "relax": 0.5,
+        "effort_low": 0.9
+      },
+      "desc": "Pittoresk vissersdorp met Genuese toren aan de oostkant van Cap Corse.",
+      "photo": {
+        "file": "img/act-erbalunga.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "jeffwarder",
+        "page": "https://commons.wikimedia.org/wiki/File:Cap_Corse_-_Erbalunga_-_the_tour_-_panoramio.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-la-roya-snorkel",
+      "name": "Snorkelen bij La Roya",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Saint-Florent_(Haute-Corse)",
+      "lat": 42.673,
+      "lon": 9.306,
+      "durationH": 3,
+      "tags": {
+        "snorkel": 1,
+        "beach": 1,
+        "kids": 0.7,
+        "relax": 0.7,
+        "effort_low": 0.9
+      },
+      "desc": "Zandstrand met helder water bij Saint-Florent, goed om te snorkelen.",
+      "photo": {
+        "file": "img/act-la-roya-snorkel.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:St-Florent-LV.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-diving-stflorent",
+      "name": "Duiken bij Saint-Florent",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Saint-Florent_(Haute-Corse)",
+      "lat": 42.684,
+      "lon": 9.3035,
+      "durationH": 3,
+      "tags": {
+        "diving": 1,
+        "boat": 0.7,
+        "nature": 0.7
+      },
+      "desc": "Duikcentra in de haven bieden duiken in de Golf van Saint-Florent.",
+      "photo": null,
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-kayak-stflorent",
+      "name": "Kajak in de Golf van Saint-Florent",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Golfe_de_Saint-Florent",
+      "lat": 42.7058,
+      "lon": 9.2964,
+      "durationH": 2.5,
+      "tags": {
+        "kayak": 1,
+        "nature": 0.6,
+        "effort_high": 0.3
+      },
+      "desc": "Peddel langs de kust van de golf, met stops op rustige stranden.",
+      "photo": {
+        "file": "img/act-kayak-stflorent.jpg",
+        "lic": "CC BY 2.0",
+        "author": "Astronautilus",
+        "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Saint-Florent.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-agriates-mtb",
+      "name": "Mountainbiken in de Agriates",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/D%C3%A9sert_des_Agriates",
+      "lat": 42.7001,
+      "lon": 9.1647,
+      "durationH": 4,
+      "tags": {
+        "cycling": 1,
+        "nature": 0.7,
+        "effort_high": 0.6,
+        "adrenaline": 0.3
+      },
+      "desc": "Pistes door de maquis van de Agriates met uitzicht op zee.",
+      "photo": {
+        "file": "img/act-agriates-mtb.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Jedesto",
+        "page": "https://commons.wikimedia.org/wiki/File:D%C3%A9sert_des_Agriates_(71915).jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-tour-mortella",
+      "name": "Tour de la Mortella",
+      "region": "stflorent",
+      "url": "https://fr.wikipedia.org/wiki/Tour_de_la_Mortella",
+      "lat": 42.715,
+      "lon": 9.2569,
+      "durationH": 0.5,
+      "tags": {
+        "culture": 0.8,
+        "viewpoint": 0.8,
+        "photo": 0.6,
+        "effort_low": 1
+      },
+      "desc": "Genuese toren aan de kust op de route naar de Agriates.",
+      "photo": null,
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-calanques-piana",
+      "name": "Calanques de Piana, autoroute",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Calanques_de_Piana",
+      "lat": 42.25,
+      "lon": 8.653,
+      "durationH": 2,
+      "tags": {
+        "viewpoint": 1,
+        "photo": 1,
+        "nature": 0.8,
+        "effort_low": 0.9
+      },
+      "desc": "Rode granietrotsen langs de D81, werelderfgoed van UNESCO.",
+      "photo": {
+        "file": "img/act-calanques-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:01_Calanche_Piana.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-piana",
+      "name": "Dorp Piana",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Piana",
+      "lat": 42.24,
+      "lon": 8.6369,
+      "durationH": 1.5,
+      "tags": {
+        "village": 1,
+        "photo": 0.8,
+        "viewpoint": 0.7,
+        "effort_low": 0.9
+      },
+      "desc": "Bergdorp boven de Calanques, een van de mooiste dorpen van Frankrijk.",
+      "photo": {
+        "file": "img/act-piana.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Piana_village.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-boot-calanques",
+      "name": "Boottocht langs de Calanques",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Calanques_de_Piana",
+      "lat": 42.266,
+      "lon": 8.693,
+      "durationH": 2,
+      "tags": {
+        "boat": 1,
+        "photo": 0.9,
+        "nature": 0.7,
+        "kids": 0.5,
+        "effort_low": 0.9
+      },
+      "desc": "Rondvaart vanuit Porto langs de rode rotsen en de Capo Rosso-toren.",
+      "photo": {
+        "file": "img/act-boot-calanques.jpg",
+        "lic": "CC BY 2.5",
+        "author": "Pinpin",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse-04844-Capo_Rosso.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-scandola",
+      "name": "Scandola en Girolata per boot",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/R%C3%A9serve_naturelle_de_Scandola",
+      "lat": 42.3589,
+      "lon": 8.56,
+      "durationH": 6,
+      "tags": {
+        "boat": 1,
+        "nature": 1,
+        "snorkel": 0.6,
+        "photo": 0.9,
+        "kids": 0.4
+      },
+      "desc": "Dagtocht door het UNESCO-natuurreservaat met een stop in Girolata.",
+      "photo": {
+        "file": "img/act-scandola.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "LySioS-wkp",
+        "page": "https://commons.wikimedia.org/wiki/File:R%C3%A9serve_naturelle_scandola_(62731).jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-girolata",
+      "name": "Girolata",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Girolata",
+      "lat": 42.3486,
+      "lon": 8.6119,
+      "durationH": 3,
+      "tags": {
+        "village": 1,
+        "beach": 0.5,
+        "hike": 0.5,
+        "nature": 0.7,
+        "photo": 0.8
+      },
+      "desc": "Dorp zonder weg aan een baai, alleen per boot of te voet bereikbaar.",
+      "photo": {
+        "file": "img/act-girolata.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Guallendra",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse_Girolata_en_2021.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-spelunca",
+      "name": "Wandeling door de Gorges de Spelunca",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Gorges_de_Spelunca",
+      "lat": 42.2513,
+      "lon": 8.7685,
+      "durationH": 4,
+      "tags": {
+        "hike": 1,
+        "nature": 0.9,
+        "swim_river": 0.6,
+        "culture": 0.5,
+        "effort_high": 0.4
+      },
+      "desc": "Oud muildierpad door de kloof met Genuese bruggen, van Ota naar Évisa.",
+      "photo": {
+        "file": "img/act-spelunca.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Rolf Gebhardt",
+        "page": "https://commons.wikimedia.org/wiki/File:Gorges_de_spelunca_2005_09c.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-aitone",
+      "name": "Cascades d'Aïtone",
+      "region": "porto",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Patrimoine-naturel/Tout-le-patrimoine-naturel/FORET-D-AITONE",
+      "lat": 42.24,
+      "lon": 8.81,
+      "durationH": 2,
+      "tags": {
+        "swim_river": 1,
+        "hike": 0.7,
+        "nature": 0.9,
+        "kids": 0.5,
+        "effort_low": 0.6
+      },
+      "desc": "Korte wandeling in het Aïtone-bos naar waterval en natuurlijke zwempoelen.",
+      "photo": {
+        "file": "img/act-aitone.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:Aitone_cascade_Evisa.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-capu-rossu",
+      "name": "Capu Rossu",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Capu_Rossu",
+      "lat": 42.2403,
+      "lon": 8.5867,
+      "durationH": 4,
+      "tags": {
+        "hike": 1,
+        "viewpoint": 1,
+        "photo": 0.8,
+        "effort_high": 0.6,
+        "nature": 0.7
+      },
+      "desc": "Wandeling naar de Genuese toren op de Capo Rosso, met zicht over de golf.",
+      "photo": {
+        "file": "img/act-capu-rossu.jpg",
+        "lic": "CC BY 2.5",
+        "author": "Pinpin",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse-04940-Capo_Rosso.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-tour-porto",
+      "name": "Genuese toren van Porto",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Tour_de_Porto",
+      "lat": 42.2678,
+      "lon": 8.6918,
+      "durationH": 1,
+      "tags": {
+        "culture": 0.8,
+        "viewpoint": 0.7,
+        "effort_low": 1,
+        "kids": 0.4
+      },
+      "desc": "Vierkante toren boven de haven van Porto met uitzicht over de baai.",
+      "photo": {
+        "file": "img/act-tour-porto.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Myrabella",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse_Porto_tour_genoise.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-plage-porto",
+      "name": "Strand van Porto",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Porto_(Corse-du-Sud)",
+      "lat": 42.2655,
+      "lon": 8.6955,
+      "durationH": 3,
+      "tags": {
+        "beach": 1,
+        "relax": 0.8,
+        "kids": 0.6,
+        "effort_low": 1
+      },
+      "desc": "Kiezelstrand tegenover de haven met de zonsondergang over zee.",
+      "photo": {
+        "file": "img/act-plage-porto.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Tmaurizia",
+        "page": "https://commons.wikimedia.org/wiki/File:Stones_Porto_DSCF0572.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-golfe-de-peru",
+      "name": "Golf van Peru bij Cargèse",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Golfe_de_Peru",
+      "lat": 42.1436,
+      "lon": 8.5814,
+      "durationH": 3,
+      "tags": {
+        "beach": 1,
+        "snorkel": 0.8,
+        "relax": 0.7,
+        "kids": 0.5,
+        "effort_low": 0.9
+      },
+      "desc": "Zachte baaien en helder water bij Cargèse, goed om te snorkelen.",
+      "photo": {
+        "file": "img/act-golfe-de-peru.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Rotavdrag",
+        "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Peru.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-cargese",
+      "name": "Cargèse en de Griekse kerk",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Carg%C3%A8se",
+      "lat": 42.1361,
+      "lon": 8.5953,
+      "durationH": 2,
+      "tags": {
+        "town": 1,
+        "culture": 1,
+        "photo": 0.7,
+        "food": 0.4,
+        "effort_low": 0.9
+      },
+      "desc": "Dorp met twee kerken naast elkaar, een Latijnse en een Griekse.",
+      "photo": {
+        "file": "img/act-cargese.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Sy.forester",
+        "page": "https://commons.wikimedia.org/wiki/File:Carg%C3%A8se_-_The_two_churches.JPG"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-evisa",
+      "name": "Évisa en kastanjes",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89visa",
+      "lat": 42.2544,
+      "lon": 8.8019,
+      "durationH": 2,
+      "tags": {
+        "village": 1,
+        "food": 0.9,
+        "market": 0.4,
+        "nature": 0.5,
+        "effort_low": 0.8
+      },
+      "desc": "Bergdorp met kastanjegerechten en ijs van kastanjemeel.",
+      "photo": {
+        "file": "img/act-evisa.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Evisa_gorges_de_Spelonca.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-diving-porto",
+      "name": "Duiken in de Golf van Porto",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Golfe_de_Porto",
+      "lat": 42.265,
+      "lon": 8.695,
+      "durationH": 3,
+      "tags": {
+        "diving": 1,
+        "boat": 0.7,
+        "nature": 0.8,
+        "adrenaline": 0.3
+      },
+      "desc": "Duiken rond Scandola en Capo Rosso met rijk onderwaterleven.",
+      "photo": {
+        "file": "img/act-diving-porto.jpg",
+        "lic": "CC BY 3.0",
+        "author": "Amada44",
+        "page": "https://commons.wikimedia.org/wiki/File:Diving_boat_of_the_coast_of_Corsica.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-fango",
+      "name": "Vallée du Fango",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Vall%C3%A9e_du_Fango",
+      "lat": 42.4667,
+      "lon": 8.6667,
+      "durationH": 4,
+      "tags": {
+        "swim_river": 1,
+        "hike": 0.7,
+        "nature": 1,
+        "kids": 0.4
+      },
+      "desc": "Wilde vallei met rivierpoelen om in te zwemmen, in de Fango-reserve.",
+      "photo": {
+        "file": "img/act-fango.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Vallee_Fango-Paglia_Orba.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-galeria",
+      "name": "Galéria",
+      "region": "porto",
+      "url": "https://fr.wikipedia.org/wiki/Gal%C3%A9ria",
+      "lat": 42.41,
+      "lon": 8.6492,
+      "durationH": 3,
+      "tags": {
+        "village": 0.8,
+        "beach": 0.8,
+        "relax": 0.6,
+        "nature": 0.6,
+        "effort_low": 0.9
+      },
+      "desc": "Rustig kustdorp aan een golf met zand- en kiezelstrand.",
+      "photo": {
+        "file": "img/act-galeria.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Galeria_village.jpg"
+      },
+      "verified": "2026-10-27"
+    },
+    {
+      "id": "act-algajola-sport-nature-velo",
+      "name": "Algajola Sport Nature: MTB en e-bike",
+      "region": "calvi",
+      "url": "https://www.visit-corsica.com/en/Mon-sejour/Activites-Loisirs/Toutes-les-activites/ALGAJOLA-SPORT-NATURE-VELO",
+      "lat": 42.6075,
+      "lon": 8.8679,
+      "durationH": 3,
+      "tags": {
+        "cycling": 1,
+        "nature": 0.5,
+        "effort_high": 0.4,
+        "village": 0.3
+      },
+      "desc": "Verhuur van mountainbikes, e-bikes en racefietsen tussen Calvi en L'Île-Rousse, ook begeleide tochten door de Balagne-dorpen (1 april tot 31 oktober).",
+      "verified": "2026-10-28"
+    },
+    {
+      "id": "act-casamore-spa-day-pass",
+      "name": "Spa-dagpas Hôtel Casamore (Cap Corse)",
+      "region": "stflorent",
+      "url": "https://www.hotelcasamore.com",
+      "lat": 42.9221,
+      "lon": 9.4681,
+      "durationH": 5,
+      "tags": {
+        "wellness": 1,
+        "relax": 0.9,
+        "effort_low": 1
+      },
+      "desc": "Dagpas voor buitenbad en spa in Romeinse-thermenstijl (verwarmd binnenbad, hammam, sauna) boven de Middellandse Zee in Méria, 10.00 tot 20.00 uur via Staycation. Hotel zelf noemt dagpas niet: vooraf navragen.",
+      "verified": "2026-10-28"
+    }
+  ]
+}

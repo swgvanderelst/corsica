@@ -1,0 +1,952 @@
+{
+ "_doc": "Destination-neutral swipe deck. Tags come from tags.json (closed vocabulary). Weights: 1.0 dominant, 0.5 secondary, max 3 tags per card. First 10 cards per deck are broad contrasts, the rest refine. Photos: Wikimedia Commons (see photo.page).",
+ "axes": {
+  "accommodation": [
+   {
+    "id": "luxury_budget",
+    "label": "Luxe vs budget",
+    "pos": {
+     "luxury": 1,
+     "spa": 0.5,
+     "boutique": 0.5,
+     "hotel": 0.5,
+     "pool": 0.5
+    },
+    "neg": {
+     "budget": 1,
+     "camping": 0.5
+    }
+   },
+   {
+    "id": "nature_town",
+    "label": "Afgelegen/natuur vs in het dorp",
+    "pos": {
+     "secluded": 1,
+     "rustic": 1,
+     "agriturismo": 0.5,
+     "mountain_view": 0.5,
+     "glamping": 0.5
+    },
+    "neg": {
+     "in_town": 1,
+     "apartment": 0.5,
+     "hotel": 0.5
+    }
+   },
+   {
+    "id": "comfort_independent",
+    "label": "Hotelservice vs zelfstandig",
+    "pos": {
+     "hotel": 1,
+     "restaurant": 1,
+     "gym": 0.5,
+     "spa": 0.5,
+     "modern": 0.5
+    },
+    "neg": {
+     "self_catering": 1,
+     "apartment": 0.5,
+     "camping": 0.5,
+     "villa": 0.5
+    }
+   },
+   {
+    "id": "family_adults",
+    "label": "Gezin vs rust/adults only",
+    "pos": {
+     "family": 1,
+     "camping": 0.5,
+     "pool": 0.5
+    },
+    "neg": {
+     "adults_only": 1,
+     "boutique": 0.5,
+     "spa": 0.5
+    }
+   },
+   {
+    "id": "sea_mountain",
+    "label": "Zee vs berg",
+    "pos": {
+     "sea_view": 1,
+     "walk_to_beach": 1,
+     "pool": 0.5
+    },
+    "neg": {
+     "mountain_view": 1,
+     "secluded": 0.5,
+     "rustic": 0.5
+    }
+   }
+  ],
+  "activity": [
+   {
+    "id": "active_relaxed",
+    "label": "Actief vs relaxed",
+    "pos": {
+     "hike_hard": 1,
+     "effort_high": 1,
+     "climbing": 0.5,
+     "cycling": 0.5,
+     "canyoning": 0.5,
+     "adrenaline": 0.5
+    },
+    "neg": {
+     "relax": 1,
+     "effort_low": 1,
+     "wellness": 1,
+     "beach": 0.5
+    }
+   },
+   {
+    "id": "adrenaline_wellness",
+    "label": "Adrenaline vs wellness",
+    "pos": {
+     "adrenaline": 1,
+     "canyoning": 0.5,
+     "climbing": 0.5,
+     "diving": 0.5
+    },
+    "neg": {
+     "wellness": 1,
+     "relax": 0.5,
+     "train": 0.5
+    }
+   },
+   {
+    "id": "nature_culture",
+    "label": "Natuur vs cultuur/stad",
+    "pos": {
+     "nature": 1,
+     "hike": 0.5,
+     "swim_river": 0.5,
+     "snorkel": 0.5,
+     "diving": 0.5
+    },
+    "neg": {
+     "culture": 1,
+     "town": 1,
+     "market": 0.5,
+     "village": 0.5
+    }
+   },
+   {
+    "id": "sea_mountain",
+    "label": "Zee vs berg",
+    "pos": {
+     "beach": 1,
+     "snorkel": 0.5,
+     "diving": 0.5,
+     "boat": 0.5,
+     "kayak": 0.5
+    },
+    "neg": {
+     "hike_hard": 1,
+     "climbing": 0.5,
+     "village": 0.5,
+     "viewpoint": 0.5
+    }
+   },
+   {
+    "id": "lively_quiet",
+    "label": "Uitgaan/eten vs rust",
+    "pos": {
+     "nightlife": 1,
+     "food": 0.5,
+     "wine": 0.5,
+     "market": 0.5
+    },
+    "neg": {
+     "relax": 0.5,
+     "nature": 0.5,
+     "hike": 0.5,
+     "village": 0.5
+    }
+   },
+   {
+    "id": "family",
+    "label": "Gezinsvriendelijk",
+    "pos": {
+     "kids": 1,
+     "beach": 0.5,
+     "swim_river": 0.5
+    },
+    "neg": {
+     "nightlife": 0.5,
+     "adrenaline": 0.5
+    }
+   }
+  ]
+ },
+ "accommodation": [
+  {
+   "id": "da01",
+   "title": "Infinity pool met zeezicht",
+   "sub": "Luxe hotel, zwemmen met uitzicht",
+   "tags": {
+    "pool": 1,
+    "sea_view": 0.5,
+    "luxury": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da01.jpg",
+    "lic": "CC0",
+    "author": "Cosmic Timetraveler atw",
+    "page": "https://commons.wikimedia.org/wiki/File:Round_infinity_pool_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "da02",
+   "title": "Tentje op de camping",
+   "sub": "Simpel en goedkoop slapen in de natuur",
+   "tags": {
+    "camping": 1,
+    "budget": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da02.jpg",
+    "lic": "CC0",
+    "author": "Christopher Jolly chris_jolly",
+    "page": "https://commons.wikimedia.org/wiki/File:Camping_in_the_mountains_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "da03",
+   "title": "Boutiquehotel in het centrum",
+   "sub": "Klein hotel met karakter, midden in de stad",
+   "tags": {
+    "boutique": 1,
+    "in_town": 0.5,
+    "restaurant": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da03.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Dqfn13",
+    "page": "https://commons.wikimedia.org/wiki/File:Hotel_Petit_Nord,_Hoorn.JPG"
+   }
+  },
+  {
+   "id": "da04",
+   "title": "Landhuis tussen de cipressen",
+   "sub": "Chambre d'hôtes op een domaine",
+   "tags": {
+    "agriturismo": 1,
+    "villa": 0.5,
+    "bnb": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da04.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Anton Sulsky",
+    "page": "https://commons.wikimedia.org/wiki/File:Path2HilltopVilla@cypresses(byAntonSulsky).jpg"
+   }
+  },
+  {
+   "id": "da05",
+   "title": "Moderne villa met zwembad",
+   "sub": "Eigen huis, strak design",
+   "tags": {
+    "villa": 1,
+    "modern": 0.5,
+    "pool": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da05.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Stefan Fussan",
+    "page": "https://commons.wikimedia.org/wiki/File:View_from_Ao_Luek_Panoramic_Pool_Villa,_Krabi,_Thailand_SF0003.jpg"
+   }
+  },
+  {
+   "id": "da06",
+   "title": "Stapelbed in een hostel",
+   "sub": "Goedkoopste optie, gedeelde kamer",
+   "tags": {
+    "budget": 1
+   },
+   "photo": {
+    "file": "img/deck/da06.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Sgroey",
+    "page": "https://commons.wikimedia.org/wiki/File:Hostel_6-bed_dorm_room,_Kuching,_Malaysia.jpg"
+   }
+  },
+  {
+   "id": "da07",
+   "title": "Glamping-tent onder de sterren",
+   "sub": "Kamperen met comfort, ver van alles",
+   "tags": {
+    "glamping": 1,
+    "secluded": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da07.jpg",
+    "lic": "CC0",
+    "author": "Cindy Chen cindychenc",
+    "page": "https://commons.wikimedia.org/wiki/File:Glamping_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "da08",
+   "title": "Appartement in het oude centrum",
+   "sub": "Eigen plek in een levendige straat",
+   "tags": {
+    "apartment": 1,
+    "in_town": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da08.jpg",
+    "lic": "CC0",
+    "author": "mike nguyen fckyeahmike",
+    "page": "https://commons.wikimedia.org/wiki/File:Rome,_Italy_(Unsplash_t-4xEHYhr2g).jpg"
+   }
+  },
+  {
+   "id": "da09",
+   "title": "Strandhotel aan het zand",
+   "sub": "Slapen met je voeten bijna in zee",
+   "tags": {
+    "walk_to_beach": 1,
+    "hotel": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da09.jpg",
+    "lic": "CC0",
+    "author": "Gabriel Ghnassia gabrielghnassia",
+    "page": "https://commons.wikimedia.org/wiki/File:Hotel_resort_in_sunlight_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "da10",
+   "title": "Berghut tussen de pieken",
+   "sub": "Alleen jij en de bergen",
+   "tags": {
+    "mountain_view": 1,
+    "secluded": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da10.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Mudflattop",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Mint_Hut,_in_the_Talkeetna_Mountains_of_Alaska.jpg"
+   }
+  },
+  {
+   "id": "da11",
+   "title": "Sauna en spa na een lange dag",
+   "sub": "Wellness-hotel",
+   "tags": {
+    "spa": 1,
+    "adults_only": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da11.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Sauna_of_the_spa_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   }
+  },
+  {
+   "id": "da12",
+   "title": "Hotel met sportschool",
+   "sub": "Fitness op de kamer of beneden",
+   "tags": {
+    "gym": 1,
+    "modern": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da12.jpg",
+    "lic": "CC0",
+    "author": "LANENWM Meso Amermbalin",
+    "page": "https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E6%B2%B3%E6%BA%90%E5%B8%82_HeYuan_%E8%B6%8A%E7%8E%8B%E5%A4%A7%E9%81%93_YueWang_Avenue_Double_Tree_by_Hilton_Hotel_fittness_gym_room_center_n_machines_April_2026_N13P_03.jpg"
+   }
+  },
+  {
+   "id": "da13",
+   "title": "B&B met tuin en ontbijt",
+   "sub": "Persoonlijk en huiselijk",
+   "tags": {
+    "bnb": 1,
+    "agriturismo": 0.5,
+    "rustic": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da13.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Charmedhawk1",
+    "page": "https://commons.wikimedia.org/wiki/File:Fonte-martino-bed-and-breakfast-gardens-montepulciano.jpg"
+   }
+  },
+  {
+   "id": "da14",
+   "title": "Zwembad met glijbaan voor de kinderen",
+   "sub": "Gezinsresort",
+   "tags": {
+    "family": 1,
+    "pool": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da14.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Poudou99",
+    "page": "https://commons.wikimedia.org/wiki/File:Antalya_-_2005-July_-_IMG_3089.JPG"
+   }
+  },
+  {
+   "id": "da15",
+   "title": "Mobil-home op de camping",
+   "sub": "Gezinsvakantie met eigen veranda",
+   "tags": {
+    "camping": 1,
+    "glamping": 0.5,
+    "family": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da15.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Democracycontributor",
+    "page": "https://commons.wikimedia.org/wiki/File:Luxury_Camping_with_Mobile_Homes_and_verandas,_Cavallino_Treporti,_Veneto,_Italy.jpg"
+   }
+  },
+  {
+   "id": "da16",
+   "title": "Stil wellnesshotel voor volwassenen",
+   "sub": "Rust, geen kinderen, binnenbad",
+   "tags": {
+    "adults_only": 1,
+    "spa": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da16.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Indoor_pool_of_spa_with_open_door_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   }
+  },
+  {
+   "id": "da17",
+   "title": "Dineren in het hotelrestaurant",
+   "sub": "Alles onder één dak",
+   "tags": {
+    "restaurant": 1,
+    "hotel": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da17.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Restaurant_room_of_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   }
+  },
+  {
+   "id": "da18",
+   "title": "Stenen huisjes op de berghelling",
+   "sub": "Authentiek en rustiek",
+   "tags": {
+    "rustic": 1
+   },
+   "photo": {
+    "file": "img/deck/da18.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Mænsard vokser",
+    "page": "https://commons.wikimedia.org/wiki/File:Malga_alla_Colma_di_Toceno_-_Val_Vigezzo,_Toceno_VCO,_Piedmont,_Italy_2020-09-12.jpg"
+   }
+  },
+  {
+   "id": "da19",
+   "title": "Hotel met grote fitnessruimte",
+   "sub": "Trainen op vakantie",
+   "tags": {
+    "gym": 1,
+    "hotel": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da19.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Wpcpey",
+    "page": "https://commons.wikimedia.org/wiki/File:JW_Marriott_Hotel_Macau_Gym_Room_2016.jpg"
+   }
+  },
+  {
+   "id": "da20",
+   "title": "Appartement met kinderbad en speeltuin",
+   "sub": "Zelf koken, kinderen kunnen buiten spelen",
+   "tags": {
+    "family": 1,
+    "self_catering": 0.5,
+    "apartment": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da20.jpg",
+    "lic": "CC0",
+    "author": "Miró Gomsi",
+    "page": "https://commons.wikimedia.org/wiki/File:Grosuplje-192709.jpg"
+   }
+  },
+  {
+   "id": "da21",
+   "title": "Appartement met eigen keuken",
+   "sub": "Zelf koken en eten wanneer je wilt",
+   "tags": {
+    "self_catering": 1,
+    "apartment": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da21.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Stilfehler",
+    "page": "https://commons.wikimedia.org/wiki/File:Marriott_Kitchenette_1.jpg"
+   }
+  },
+  {
+   "id": "da22",
+   "title": "Kamer in een historisch stadje",
+   "sub": "B&B in de oude binnenstad",
+   "tags": {
+    "bnb": 1,
+    "in_town": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da22.jpg",
+    "lic": "CC0",
+    "author": "JOHN TOWNER heytowner",
+    "page": "https://commons.wikimedia.org/wiki/File:Open_bedroom_window_in_Paris.jpg"
+   }
+  },
+  {
+   "id": "da23",
+   "title": "Luxe suite met hemelbed",
+   "sub": "Vijfsterren, boutique-sfeer",
+   "tags": {
+    "luxury": 1,
+    "hotel": 0.5,
+    "boutique": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da23.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Canopy_bed_of_Amantaka_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   }
+  },
+  {
+   "id": "da24",
+   "title": "Houten chalet in de heuvels",
+   "sub": "Afgelegen, eigen keuken",
+   "tags": {
+    "secluded": 1,
+    "self_catering": 0.5,
+    "mountain_view": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da24.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Victuallers",
+    "page": "https://commons.wikimedia.org/wiki/File:Log_cabin_outside_Melrose_side.jpg"
+   }
+  },
+  {
+   "id": "da25",
+   "title": "Balkon met zeezicht",
+   "sub": "Appartement vlak bij het strand",
+   "tags": {
+    "sea_view": 1,
+    "walk_to_beach": 0.5
+   },
+   "photo": {
+    "file": "img/deck/da25.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Rodolfo Cardarelli",
+    "page": "https://commons.wikimedia.org/wiki/File:Taormina_View_From_A_Balcony_(36266916).jpeg"
+   }
+  }
+ ],
+ "activity": [
+  {
+   "id": "dt01",
+   "title": "Zware bergtocht over de kam",
+   "sub": "Hoog, steil en een hele dag lopen",
+   "tags": {
+    "hike_hard": 1,
+    "hike": 0.5,
+    "climbing": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt01.jpg",
+    "lic": "CC0",
+    "author": "Roger Steinbacher armaas",
+    "page": "https://commons.wikimedia.org/wiki/File:Hiking_in_the_mountains_in_Schilt_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "dt02",
+   "title": "Lui op een ligbed aan zee",
+   "sub": "Strand, niets doen",
+   "tags": {
+    "beach": 1,
+    "relax": 0.5,
+    "effort_low": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt02.jpg",
+    "lic": "CC0",
+    "author": "kostas Nakos konak",
+    "page": "https://commons.wikimedia.org/wiki/File:Paradise_beach_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "dt03",
+   "title": "Feesten tot diep in de nacht",
+   "sub": "Club en DJ",
+   "tags": {
+    "nightlife": 1
+   },
+   "photo": {
+    "file": "img/deck/dt03.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Malagalabombonera",
+    "page": "https://commons.wikimedia.org/wiki/File:Wikipedia_space_ibiza(03).jpg"
+   }
+  },
+  {
+   "id": "dt04",
+   "title": "Rustig dorpje met stenen huizen",
+   "sub": "Wandelen door smalle straatjes",
+   "tags": {
+    "village": 1,
+    "photo": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt04.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "AronMSzabo",
+    "page": "https://commons.wikimedia.org/wiki/File:Saint-Cirq-Lapopie,_France.jpg"
+   }
+  },
+  {
+   "id": "dt05",
+   "title": "Historisch stadje aan zee",
+   "sub": "Citadel en oude muren",
+   "tags": {
+    "town": 1,
+    "culture": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt05.jpg",
+    "lic": "CC0",
+    "author": "Hilthart Pedersen h3p",
+    "page": "https://commons.wikimedia.org/wiki/File:Ol_City_of_Korcula_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "dt06",
+   "title": "Lokale hapjes en kazen proeven",
+   "sub": "Eten en drinken zoals de locals",
+   "tags": {
+    "food": 1,
+    "market": 0.5,
+    "wine": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt06.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Herbert Frank",
+    "page": "https://commons.wikimedia.org/wiki/File:Antipasto_nell%27isola_di_Ortigia.jpg"
+   }
+  },
+  {
+   "id": "dt07",
+   "title": "Massage en spadag",
+   "sub": "Volledig ontspannen",
+   "tags": {
+    "wellness": 1,
+    "relax": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt07.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Паша Бунин",
+    "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%9F%D0%90_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%8B_%D0%B2_%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B9_%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B5.jpg"
+   }
+  },
+  {
+   "id": "dt08",
+   "title": "Canyoning door een waterval",
+   "sub": "Afdalen, springen en abseilen",
+   "tags": {
+    "canyoning": 1,
+    "swim_river": 0.5,
+    "adrenaline": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt08.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Krish Dulal",
+    "page": "https://commons.wikimedia.org/wiki/File:Canyoning_NP.jpg"
+   }
+  },
+  {
+   "id": "dt09",
+   "title": "Zeilen en kajakken in de baai",
+   "sub": "Op het water",
+   "tags": {
+    "boat": 1,
+    "kayak": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt09.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Fred Hsu (Wikipedia:User:Fred Hsu on en.wikipedia)",
+    "page": "https://commons.wikimedia.org/wiki/File:Manhasset_Bay_Yacht_Club_2010_FRD_SNC16796.jpg"
+   }
+  },
+  {
+   "id": "dt10",
+   "title": "Zwemmen in een natuurlijke rivierpoel",
+   "sub": "Helder water in de rotsen",
+   "tags": {
+    "swim_river": 1,
+    "kids": 0.5,
+    "canyoning": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt10.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Jodal rachid",
+    "page": "https://commons.wikimedia.org/wiki/File:Natural_isolared_pool_in_Talambot_-_akchour.jpg"
+   }
+  },
+  {
+   "id": "dt11",
+   "title": "Snorkelen boven het koraal",
+   "sub": "Vissen kijken zonder duikuitrusting",
+   "tags": {
+    "snorkel": 1,
+    "diving": 0.5,
+    "nature": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt11.jpg",
+    "lic": "Public domain",
+    "author": "John Brooks, National Park Service photographer",
+    "page": "https://commons.wikimedia.org/wiki/File:Elkhorn_Coral_Biscayne_NP1.jpg"
+   }
+  },
+  {
+   "id": "dt12",
+   "title": "Duiken bij een wrak",
+   "sub": "Onder water ontdekken",
+   "tags": {
+    "diving": 1,
+    "snorkel": 0.5,
+    "nature": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt12.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Ggerdel - Foto de: Gustavo Gerdel",
+    "page": "https://commons.wikimedia.org/wiki/File:Naufragio_por_Gustavo_Gerdel.jpg"
+   }
+  },
+  {
+   "id": "dt13",
+   "title": "Kajakken langs de kust",
+   "sub": "Peddelen door helder water",
+   "tags": {
+    "kayak": 1,
+    "boat": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt13.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Roger Braunstein",
+    "page": "https://commons.wikimedia.org/wiki/File:Sea_kayaking_Zamami_Okinawa.jpg"
+   }
+  },
+  {
+   "id": "dt14",
+   "title": "Via ferrata langs de rotswand",
+   "sub": "Klimmen met kabel en hangbrug",
+   "tags": {
+    "climbing": 1,
+    "hike_hard": 0.5,
+    "effort_high": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt14.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "kallerna",
+    "page": "https://commons.wikimedia.org/wiki/File:La_Colmiane_Les_Baus_de_la_Frema_via_Ferrata_3.jpg"
+   }
+  },
+  {
+   "id": "dt15",
+   "title": "Mountainbiken in de bergen",
+   "sub": "Technisch en uitdagend",
+   "tags": {
+    "cycling": 1,
+    "effort_high": 0.5,
+    "adrenaline": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt15.jpg",
+    "lic": "CC BY 2.0",
+    "author": "TRAILSOURCE.COM",
+    "page": "https://commons.wikimedia.org/wiki/File:Mountain_Biking_In_Lenzerheide,_Switzerland_-_29591826245.jpg"
+   }
+  },
+  {
+   "id": "dt16",
+   "title": "Uitzicht over de vallei",
+   "sub": "Roadtrip met stops onderweg",
+   "tags": {
+    "viewpoint": 1,
+    "photo": 0.5,
+    "village": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt16.jpg",
+    "lic": "CC0",
+    "author": "Lee Aik Soon aiksooon",
+    "page": "https://commons.wikimedia.org/wiki/File:Vietnamese_mountain_village_(Unsplash).jpg"
+   }
+  },
+  {
+   "id": "dt17",
+   "title": "Ruïnes en oude geschiedenis",
+   "sub": "Verhalen uit een ver verleden",
+   "tags": {
+    "culture": 1,
+    "town": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt17.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "ftrc",
+    "page": "https://commons.wikimedia.org/wiki/File:Empty_theater.jpg"
+   }
+  },
+  {
+   "id": "dt18",
+   "title": "Wijngaarden en wijn proeven",
+   "sub": "Heuvels vol druiven",
+   "tags": {
+    "wine": 1,
+    "food": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt18.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Brocken Inaglory",
+    "page": "https://commons.wikimedia.org/wiki/File:Napa_Valley.jpg"
+   }
+  },
+  {
+   "id": "dt19",
+   "title": "Kleurrijke markt vol fruit",
+   "sub": "Lokale producten kopen",
+   "tags": {
+    "market": 1,
+    "food": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt19.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Wilfredor",
+    "page": "https://commons.wikimedia.org/wiki/File:Municipal_Market_of_S%C3%A3o_Paulo_city.jpg"
+   }
+  },
+  {
+   "id": "dt20",
+   "title": "Kinderen spelen in het zand",
+   "sub": "Veilig strand voor het gezin",
+   "tags": {
+    "kids": 1,
+    "beach": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt20.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Øyvind Holmstad",
+    "page": "https://commons.wikimedia.org/wiki/File:Children_playing_in_the_sands_on_a_beach_in_the_Philippines.jpg"
+   }
+  },
+  {
+   "id": "dt21",
+   "title": "Dolfijnen kijken",
+   "sub": "Wildlife vanaf het water",
+   "tags": {
+    "nature": 1,
+    "kids": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt21.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Peter Asprey, http://www.peter-asprey.com/",
+    "page": "https://commons.wikimedia.org/wiki/File:Bottlenose_dolphin_with_young.JPG"
+   }
+  },
+  {
+   "id": "dt22",
+   "title": "Rustig fietsen langs de kust",
+   "sub": "Vlak, zonder haast",
+   "tags": {
+    "cycling": 1,
+    "effort_low": 0.5,
+    "hike": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt22.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Mat Fascione",
+    "page": "https://commons.wikimedia.org/wiki/File:Cycling_along_Undercliff_Walk_at_Saltdean_-_geograph.org.uk_-_8324123.jpg"
+   }
+  },
+  {
+   "id": "dt23",
+   "title": "Treinrit door de bergen",
+   "sub": "Van je stoel genieten van het landschap",
+   "tags": {
+    "train": 1,
+    "viewpoint": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt23.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Ikiwaner",
+    "page": "https://commons.wikimedia.org/wiki/File:Landwasserviadukt.jpg"
+   }
+  },
+  {
+   "id": "dt24",
+   "title": "Thermaal bad en ontspanning",
+   "sub": "Warm water, geen haast",
+   "tags": {
+    "wellness": 1,
+    "relax": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt24.jpg",
+    "lic": "CC BY-SA 3.0 es",
+    "author": "Carloscabanillas",
+    "page": "https://commons.wikimedia.org/wiki/File:Ba%C3%B1os_de_Alange.jpg"
+   }
+  },
+  {
+   "id": "dt25",
+   "title": "Cocktails aan de bar",
+   "sub": "Een drankje en gezelligheid",
+   "tags": {
+    "nightlife": 1,
+    "relax": 0.5
+   },
+   "photo": {
+    "file": "img/deck/dt25.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Achim Schleuning",
+    "page": "https://commons.wikimedia.org/wiki/File:Cocktail-Bar_(Kleines_Phi)_in_Hamburg.jpg"
+   }
+  }
+ ]
+}

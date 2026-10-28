@@ -1,0 +1,2774 @@
+{
+ "accommodations": [
+  {
+   "id": "acc-casadelmar",
+   "name": "Casadelmar",
+   "region": "portov",
+   "url": "https://www.casadelmar.fr",
+   "lat": 41.595,
+   "lon": 9.31,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "luxury": 1,
+    "spa": 0.9,
+    "pool": 0.9,
+    "sea_view": 1,
+    "restaurant": 0.8,
+    "boutique": 0.5,
+    "secluded": 0.3,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Vijfsterrenhotel aan de Golf van Porto-Vecchio met zeezicht, zwembad, spa en restaurant.",
+   "photo": {
+    "file": "img/acc-casadelmar.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Martin Falbisoner",
+    "page": "https://commons.wikimedia.org/wiki/File:Infinity_Pool_Lopesan_Costa_Meloneras,_May_2018.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-cala-rossa-bay",
+   "name": "Cala Rossa Bay Resort",
+   "region": "portov",
+   "url": "https://calarossabay.com",
+   "lat": 41.6287,
+   "lon": 9.3357,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.8,
+    "luxury": 1,
+    "pool": 1,
+    "walk_to_beach": 0.9,
+    "sea_view": 0.7,
+    "restaurant": 0.7,
+    "family": 0.6,
+    "villa": 0.3,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Luxe resort met suites en villa's en zwembad aan de baai van Cala Rossa.",
+   "photo": {
+    "file": "img/acc-cala-rossa-bay.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "愛子棋枰",
+    "page": "https://commons.wikimedia.org/wiki/File:Infinity_pool_of_UCSI_Hotel,_Sarawak.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-roi-theodore",
+   "name": "Le Roi Théodore & Spa",
+   "region": "portov",
+   "url": "https://www.roitheodore.com",
+   "lat": 41.6125,
+   "lon": 9.2799,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 0.9,
+    "boutique": 0.6,
+    "spa": 0.8,
+    "pool": 0.8,
+    "restaurant": 0.4,
+    "secluded": 0.3,
+    "airco": 1.0
+   },
+   "desc": "Charmehotel met zwembaden en spa, een oase van rust vlak bij Porto-Vecchio.",
+   "photo": {
+    "file": "img/acc-roi-theodore.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Kritzolina",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_Pool_in_a_hotel_in_Tamil_Nadu_03.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-son-de-mar",
+   "name": "Son de Mar",
+   "region": "portov",
+   "url": "https://sondemar.fr",
+   "lat": 41.6385,
+   "lon": 9.3466,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 0.8,
+    "boutique": 0.6,
+    "spa": 0.7,
+    "restaurant": 0.8,
+    "walk_to_beach": 0.6,
+    "airco": 1.0
+   },
+   "desc": "Hotel met spa en restaurant vlak bij het strand van Saint-Cyprien.",
+   "photo": {
+    "file": "img/acc-son-de-mar.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vechio_Port1a.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-les-regalia",
+   "name": "Les Regalia",
+   "region": "portov",
+   "url": "https://www.lesregalia.com",
+   "lat": 41.6868,
+   "lon": 9.3671,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.8,
+    "luxury": 0.9,
+    "boutique": 0.6,
+    "spa": 0.7,
+    "pool": 0.7,
+    "sea_view": 0.6,
+    "restaurant": 0.7,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Vijfsterrenhotel in een familiehuis bij Pinarellu, met zwembad, spa en restaurant.",
+   "photo": {
+    "file": "img/acc-les-regalia.jpg",
+    "lic": "CC0",
+    "author": "Aa77zz",
+    "page": "https://commons.wikimedia.org/wiki/File:Tour_de_Pinarellu_-_Corsica.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-moby-dick",
+   "name": "Hôtel & Lodges Moby Dick",
+   "region": "portov",
+   "url": "https://www.sud-corse.com/hotels/hotel-moby-dick/",
+   "lat": 41.5246,
+   "lon": 9.2716,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "walk_to_beach": 1,
+    "restaurant": 0.8,
+    "sea_view": 0.5,
+    "family": 0.5,
+    "airco": 1.0
+   },
+   "desc": "Viersterrenhotel met de voeten in het water bij het strand van Santa Giulia, met restaurant.",
+   "photo": {
+    "file": "img/acc-hotel-moby-dick.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vecchio_plage_de_Santa_Giulia.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-paese-serenu",
+   "name": "Paese Serenu",
+   "region": "portov",
+   "url": "https://www.paese-serenu.com",
+   "lat": 41.6109,
+   "lon": 9.2856,
+   "priceLevel": 2,
+   "tags": {
+    "apartment": 1,
+    "self_catering": 0.9,
+    "family": 0.6,
+    "sea_view": 0.6,
+    "walk_to_beach": 0.8,
+    "airco": 0.6,
+    "restaurant": 0.5,
+    "ev_charging": 1.0
+   },
+   "desc": "Driesterrenresidence met appartementen aan het water in de baai van Porto-Vecchio.",
+   "photo": {
+    "file": "img/acc-paese-serenu.jpg",
+    "lic": "CC0",
+    "author": "Air fans",
+    "page": "https://commons.wikimedia.org/wiki/File:Bastion_de_France_(Porto_Vecchio)_2.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-domaine-de-sonia",
+   "name": "Domaine de Sonia",
+   "region": "portov",
+   "url": "https://domainedesonia.com/",
+   "lat": 41.578,
+   "lon": 9.312,
+   "priceLevel": 3,
+   "tags": {
+    "glamping": 1,
+    "airco": 0.9,
+    "pool": 0.7,
+    "sea_view": 0.6,
+    "secluded": 0.6,
+    "rustic": 0.3
+   },
+   "desc": "Ecochique koepeltenten met airco aan de weg naar Palombaggia.",
+   "photo": {
+    "file": "img/acc-domaine-de-sonia.jpg",
+    "lic": "CC BY 4.0",
+    "author": "JLunder96",
+    "page": "https://commons.wikimedia.org/wiki/File:Glamping_Thorbjornrud_Hotel.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-la-vetta",
+   "name": "Camping La Vetta",
+   "region": "portov",
+   "url": "https://www.campinglavetta.com",
+   "lat": 41.6317,
+   "lon": 9.2938,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "family": 0.8,
+    "budget": 0.6,
+    "rustic": 0.3,
+    "pool": 0.8
+   },
+   "desc": "Familiecamping tussen de bomen, ongeveer 10 minuten van Porto-Vecchio.",
+   "photo": {
+    "file": "img/acc-camping-la-vetta.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Michal Klajban",
+    "page": "https://commons.wikimedia.org/wiki/File:Campsite_at_Mystic_Beach,_Vancouver_Island,_Canada.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-u-paradisu",
+   "name": "Camping à la Ferme U Paradisu",
+   "region": "portov",
+   "url": "https://www.campinguparadisu.com/",
+   "lat": 41.5906,
+   "lon": 9.3374,
+   "priceLevel": 1,
+   "tags": {
+    "agriturismo": 0.8,
+    "camping": 0.8,
+    "rustic": 0.7,
+    "budget": 0.7,
+    "family": 0.5,
+    "secluded": 0.5
+   },
+   "desc": "Kleinschalige boerderijcamping vlak bij Palombaggia.",
+   "photo": {
+    "file": "img/acc-camping-u-paradisu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Kgbo",
+    "page": "https://commons.wikimedia.org/wiki/File:Agriturismo_Cavazzone,_Viano,_Italy_01.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-sole-di-sari",
+   "name": "Camping Sole di Sari",
+   "region": "portov",
+   "url": "https://www.soledisari.com/",
+   "lat": 41.8657,
+   "lon": 9.3854,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "glamping": 0.4,
+    "family": 0.7,
+    "walk_to_beach": 0.6,
+    "budget": 0.5,
+    "pool": 0.7,
+    "ev_charging": 1.0
+   },
+   "desc": "Viersterrencamping met lodgetenten en mobil-homes aan de kust bij Solenzara.",
+   "photo": {
+    "file": "img/acc-camping-sole-di-sari.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Democracycontributor",
+    "page": "https://commons.wikimedia.org/wiki/File:Luxury_Camping_with_Mobile_Homes_and_verandas,_Cavallino_Treporti,_Veneto,_Italy.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-golden-tulip-porto-vecchio",
+   "name": "Golden Tulip Porto-Vecchio",
+   "region": "portov",
+   "url": "https://www.louvrehotels.com/fr-fr/hotels/golden-tulip-porto-vecchio",
+   "lat": 41.5975,
+   "lon": 9.278,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1,
+    "gym": 0.7,
+    "modern": 0.7,
+    "in_town": 0.8,
+    "airco": 1.0
+   },
+   "desc": "Modern hotel in het centrum van Porto-Vecchio met fitness.",
+   "photo": {
+    "file": "img/acc-golden-tulip-porto-vecchio.jpg",
+    "lic": "CC0",
+    "author": "Air fans",
+    "page": "https://commons.wikimedia.org/wiki/File:Bastion_de_France_(Porto_Vecchio)_2.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-genovese",
+   "name": "Hôtel Genovese",
+   "region": "bonifacio",
+   "url": "https://hotel-genovese.com/",
+   "lat": 41.3876,
+   "lon": 9.1563,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 1,
+    "boutique": 0.6,
+    "spa": 0.8,
+    "pool": 0.8,
+    "in_town": 1,
+    "luxury": 0.6,
+    "sea_view": 0.5,
+    "airco": 1.0
+   },
+   "desc": "Viersterrenhotel bij de haven en de citadel van Bonifacio, met zwembad en spa.",
+   "photo": {
+    "file": "img/acc-hotel-genovese.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Traroth",
+    "page": "https://commons.wikimedia.org/wiki/File:Bonifacio.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-cala-di-greco",
+   "name": "Hôtel Cala di Greco",
+   "region": "bonifacio",
+   "url": "https://www.hotel-caladigreco.com",
+   "lat": 41.3979,
+   "lon": 9.1567,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.8,
+    "luxury": 0.8,
+    "boutique": 0.7,
+    "pool": 0.9,
+    "spa": 0.7,
+    "sea_view": 0.6,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Luxe charmehotel met zwembad en spa vlak bij Bonifacio.",
+   "photo": {
+    "file": "img/acc-cala-di-greco.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Marc Ryckaert",
+    "page": "https://commons.wikimedia.org/wiki/File:Infinity_Pool_Jolie_Ville_Luxor_R01.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-u-capu-biancu",
+   "name": "U Capu Biancu",
+   "region": "bonifacio",
+   "url": "https://www.ucapubiancu.com/",
+   "lat": 41.4194,
+   "lon": 9.2238,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "luxury": 0.9,
+    "sea_view": 1,
+    "walk_to_beach": 0.8,
+    "restaurant": 0.7,
+    "family": 0.5,
+    "spa": 0.4
+   },
+   "desc": "Luxehotel aan zee bij de baai van Santa Manza met strand en restaurant.",
+   "photo": {
+    "file": "img/acc-u-capu-biancu.jpg",
+    "lic": "Public domain",
+    "author": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Santa_Manza,_(17..)_-_btv1b85926771.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-santateresa",
+   "name": "Hôtel Santateresa",
+   "region": "bonifacio",
+   "url": "https://www.hotel-santateresa.com/",
+   "lat": 41.3868,
+   "lon": 9.1521,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1,
+    "sea_view": 0.8,
+    "in_town": 0.7,
+    "modern": 0.4,
+    "airco": 1.0
+   },
+   "desc": "Hotel op de klifrand met zicht op de citadel van Bonifacio.",
+   "photo": {
+    "file": "img/acc-hotel-santateresa.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Espandero",
+    "page": "https://commons.wikimedia.org/wiki/File:Falaises_depuis_la_citadelle_de_Bonifacio.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-domaine-de-licetto",
+   "name": "Domaine de Licetto",
+   "region": "bonifacio",
+   "url": "https://www.licetto.com/",
+   "lat": 41.38,
+   "lon": 9.172,
+   "priceLevel": 4,
+   "tags": {
+    "secluded": 0.8,
+    "sea_view": 0.8,
+    "villa": 0.3,
+    "rustic": 0.3,
+    "apartment": 0.6,
+    "self_catering": 0.8
+   },
+   "desc": "Residentiehotel met 12 gîtes in 25 hectare maquis, 5 minuten van Bonifacio.",
+   "photo": {
+    "file": "img/acc-domaine-de-licetto.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Bonifacio_Grain_de_Sable_Capo_Pertusato.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-pozzo-di-mastri",
+   "name": "Domaine Pozzo di Mastri",
+   "region": "bonifacio",
+   "url": "https://www.pozzodimastri.com/",
+   "lat": 41.4994,
+   "lon": 9.1357,
+   "priceLevel": 3,
+   "tags": {
+    "agriturismo": 1,
+    "hotel": 0.6,
+    "pool": 0.8,
+    "restaurant": 0.8,
+    "rustic": 0.5,
+    "secluded": 0.5,
+    "family": 0.5,
+    "ev_charging": 1.0
+   },
+   "desc": "Viersterrendomein in een groen park tussen Porto-Vecchio en Bonifacio, met zwembad en auberge.",
+   "photo": {
+    "file": "img/acc-pozzo-di-mastri.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Kgbo",
+    "page": "https://commons.wikimedia.org/wiki/File:Agriturismo_Cavazzone,_Viano,_Italy_03.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-pertamina",
+   "name": "Pertamina Village",
+   "region": "bonifacio",
+   "url": "https://www.camping-pertamina.com/fr/",
+   "lat": 41.416,
+   "lon": 9.1827,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "family": 0.9,
+    "pool": 0.6,
+    "walk_to_beach": 0.5,
+    "self_catering": 0.3,
+    "airco": 1.0
+   },
+   "desc": "Viersterrencamping met mobil-homes en zwembad bij Bonifacio.",
+   "photo": {
+    "file": "img/acc-camping-pertamina.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Penny Mayes",
+    "page": "https://commons.wikimedia.org/wiki/File:Wold_Farm_campsite_-_geograph.org.uk_-_5940062.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-la-rondinara",
+   "name": "Camping La Rondinara",
+   "region": "bonifacio",
+   "url": "https://www.rondinara.fr/",
+   "lat": 41.4734,
+   "lon": 9.2607,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "walk_to_beach": 1,
+    "family": 0.7,
+    "restaurant": 0.5,
+    "secluded": 0.5
+   },
+   "desc": "Camping met strandrestaurant vlak bij de baai van Rondinara.",
+   "photo": {
+    "file": "img/acc-camping-la-rondinara.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "E.Guggenbichler",
+    "page": "https://commons.wikimedia.org/wiki/File:Tent_on_a_campsite.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-des-iles",
+   "name": "Camping des Îles",
+   "region": "bonifacio",
+   "url": "https://www.camping-desiles.com/fr/",
+   "lat": 41.3798,
+   "lon": 9.212,
+   "priceLevel": 3,
+   "tags": {
+    "camping": 1,
+    "pool": 0.8,
+    "family": 0.7,
+    "restaurant": 0.6,
+    "walk_to_beach": 0.5
+   },
+   "desc": "Viersterrencamping met zwembad aan de weg naar de lagune van Piantarella.",
+   "photo": {
+    "file": "img/acc-camping-des-iles.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Penny Mayes",
+    "page": "https://commons.wikimedia.org/wiki/File:Wold_Farm_campsite_-_geograph.org.uk_-_5940069.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "noAirco": true,
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-kevano-plage",
+   "name": "Camping Kévano Plage",
+   "region": "bonifacio",
+   "url": "https://www.campingkevano.com/",
+   "lat": 41.4725,
+   "lon": 9.045,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "walk_to_beach": 1,
+    "pool": 0.7,
+    "family": 0.8
+   },
+   "desc": "Camping met de voeten in het water bij Pianottoli-Caldarello, met zwembad.",
+   "photo": {
+    "file": "img/acc-camping-kevano-plage.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Martin Speck",
+    "page": "https://commons.wikimedia.org/wiki/File:Campsite_at_Rowsley_-_geograph.org.uk_-_1994411.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-macchie-e-fiori",
+   "name": "Hôtel Macchie e Fiori",
+   "region": "bonifacio",
+   "url": "https://www.hotelmacchieefiori.fr/",
+   "lat": 41.4933,
+   "lon": 9.0515,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1,
+    "restaurant": 0.9,
+    "rustic": 0.5,
+    "secluded": 0.4,
+    "family": 0.4,
+    "airco": 1.0
+   },
+   "desc": "Rustiek hotel met restaurant voor lokale gerechten in Pianottoli-Caldarello.",
+   "photo": {
+    "file": "img/acc-hotel-macchie-e-fiori.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "ydecaseneuve",
+    "page": "https://commons.wikimedia.org/wiki/File:20131_Pianottoli-Caldarello,_France_-_panoramio.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-marinca",
+   "name": "Hôtel Marinca & Spa",
+   "region": "propriano",
+   "url": "https://www.hotel-marinca.com/",
+   "lat": 41.6915,
+   "lon": 8.9027,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "luxury": 0.9,
+    "spa": 0.9,
+    "pool": 0.9,
+    "sea_view": 1,
+    "walk_to_beach": 0.8,
+    "restaurant": 0.6
+   },
+   "desc": "Vijfsterrenhotel aan het strand van Olmeto met zwembad, spa en zeezicht.",
+   "photo": {
+    "file": "img/acc-hotel-marinca.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Sean McGrath from Saint John, NB, Canada",
+    "page": "https://commons.wikimedia.org/wiki/File:Infinity_Pool_(1471310973).jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-domaine-de-murtoli",
+   "name": "Domaine de Murtoli",
+   "region": "propriano",
+   "url": "https://www.murtoli.com/",
+   "lat": 41.5161,
+   "lon": 8.9489,
+   "priceLevel": 4,
+   "tags": {
+    "villa": 0.9,
+    "luxury": 1,
+    "secluded": 1,
+    "agriturismo": 0.6,
+    "rustic": 0.6,
+    "pool": 0.6,
+    "restaurant": 0.6,
+    "airco": 1.0
+   },
+   "desc": "Luxe landgoed met bergeries en villa's op een afgelegen kuststrook bij Sartène.",
+   "photo": {
+    "file": "img/acc-domaine-de-murtoli.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Diane Selwyn",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool,_Tran_Le_Xuan_Villa_01.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-neptune",
+   "name": "Hôtel Le Neptune",
+   "region": "propriano",
+   "url": "https://www.hotelneptune-propriano.com/",
+   "lat": 41.6764,
+   "lon": 8.9072,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1,
+    "spa": 0.8,
+    "sea_view": 0.8,
+    "walk_to_beach": 0.8,
+    "in_town": 0.7,
+    "airco": 1.0
+   },
+   "desc": "Driesterrenhotel met spa aan zee in Propriano.",
+   "photo": {
+    "file": "img/acc-hotel-neptune.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Hajotthu",
+    "page": "https://commons.wikimedia.org/wiki/File:Propriano_Port@171015_04.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-sampiero",
+   "name": "Hôtel Le Sampiero",
+   "region": "propriano",
+   "url": "https://www.hotel-sampierocorso.com/",
+   "lat": 41.6798,
+   "lon": 8.9143,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1,
+    "sea_view": 0.8,
+    "walk_to_beach": 0.9,
+    "restaurant": 0.7,
+    "airco": 1.0
+   },
+   "desc": "Driesterrenhotel aan de kust van Propriano met restaurant.",
+   "photo": {
+    "file": "img/acc-hotel-sampiero.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Hajotthu",
+    "page": "https://commons.wikimedia.org/wiki/File:Propriano_Port@171015_04.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-abbartello",
+   "name": "Hôtel Abbartello",
+   "region": "propriano",
+   "url": "https://www.hotelabbartello.com/",
+   "lat": 41.6978,
+   "lon": 8.8423,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1,
+    "walk_to_beach": 0.7,
+    "sea_view": 0.6,
+    "restaurant": 0.8,
+    "family": 0.4,
+    "pool": 0.8,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Hotel in Olmeto Plage aan de Golf van Valinco, met verwarmd zwembad en restaurant.",
+   "photo": {
+    "file": "img/acc-hotel-abbartello.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Propriano_Golfe_de_Valinco_JPG1.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-campomoro",
+   "name": "Hôtel Campomoro",
+   "region": "propriano",
+   "url": "https://hotelcampomoro.com/",
+   "lat": 41.6318,
+   "lon": 8.8108,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1,
+    "walk_to_beach": 0.9,
+    "secluded": 0.6,
+    "sea_view": 0.6,
+    "restaurant": 0.5,
+    "rustic": 0.4,
+    "airco": 1.0
+   },
+   "desc": "Eenvoudig hotel in het rustige Campomoro, vlak bij de Genuese toren.",
+   "photo": {
+    "file": "img/acc-hotel-campomoro.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Myrabella",
+    "page": "https://commons.wikimedia.org/wiki/File:Corse_Campomoro_tour_genoise.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-vigna-maggiore",
+   "name": "Camping Vigna Maggiore",
+   "region": "propriano",
+   "url": "https://www.vignamaggiore.com",
+   "lat": 41.6995,
+   "lon": 8.8969,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "pool": 0.8,
+    "family": 0.8,
+    "restaurant": 0.5,
+    "ev_charging": 1.0
+   },
+   "desc": "Driesterrencamping met zwembad in Olmeto, dicht bij Propriano.",
+   "photo": {
+    "file": "img/acc-camping-vigna-maggiore.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Eirian Evans",
+    "page": "https://commons.wikimedia.org/wiki/File:Large_bell_tents_at_Treheli_Farm_Campsite_-_geograph.org.uk_-_7027469.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-l-esplanade",
+   "name": "Camping L'Esplanade",
+   "region": "propriano",
+   "url": "https://www.campingesplanade.fr",
+   "lat": 41.6955,
+   "lon": 8.889,
+   "priceLevel": 3,
+   "tags": {
+    "camping": 1,
+    "glamping": 0.5,
+    "walk_to_beach": 1,
+    "pool": 0.8,
+    "family": 0.8,
+    "ev_charging": 1.0
+   },
+   "desc": "Camping met lodgetenten en mobil-homes, zwembad en strand voor de deur.",
+   "photo": {
+    "file": "img/acc-camping-l-esplanade.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Philip Halling",
+    "page": "https://commons.wikimedia.org/wiki/File:Glamping_tents_-_geograph.org.uk_-_6244841.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-tikiti",
+   "name": "Camping Tikiti",
+   "region": "propriano",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/TIKITI",
+   "lat": 41.6807,
+   "lon": 8.9225,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "pool": 0.9,
+    "family": 0.9,
+    "self_catering": 0.4
+   },
+   "desc": "Camping met bungalows en een zwembad van 200 m2 met kinderbad.",
+   "photo": {
+    "file": "img/acc-camping-tikiti.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Dystopiamatt",
+    "page": "https://commons.wikimedia.org/wiki/File:Campsite_mini_fearsome_wilderness.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-villa-les-orangers",
+   "name": "Villa Les Orangers",
+   "region": "propriano",
+   "url": "https://www.villa-lesorangers-olmeto.com/hotel-olmeto/",
+   "lat": 41.7193,
+   "lon": 8.9207,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 0.9,
+    "pool": 0.6,
+    "restaurant": 0.8,
+    "rustic": 0.5,
+    "in_town": 0.5,
+    "family": 0.4
+   },
+   "desc": "Hotel met zwembad en restaurant in het bergdorp Olmeto.",
+   "photo": {
+    "file": "img/acc-villa-les-orangers.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pancrat",
+    "page": "https://commons.wikimedia.org/wiki/File:Olmeto_Corse.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-les-roches",
+   "name": "Hôtel Les Roches",
+   "region": "propriano",
+   "url": "https://les-roches-sartene.com/",
+   "lat": 41.6224,
+   "lon": 8.9712,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1,
+    "in_town": 0.8,
+    "mountain_view": 0.6,
+    "rustic": 0.5,
+    "restaurant": 0.5,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Driesterrenhotel met uitzicht in het oude stadje Sartène.",
+   "photo": {
+    "file": "img/acc-hotel-les-roches.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Sartene_Vi1aJPG.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-le-maquis",
+   "name": "Hôtel Le Maquis",
+   "region": "ajaccio",
+   "url": "https://www.lemaquis.com/fr/",
+   "lat": 41.878,
+   "lon": 8.786,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "luxury": 1,
+    "pool": 0.8,
+    "walk_to_beach": 1,
+    "restaurant": 0.9,
+    "sea_view": 0.6
+   },
+   "desc": "Vijfsterrenhotel in Porticcio met eigen strand, zwembad en gastronomisch restaurant.",
+   "photo": {
+    "file": "img/acc-le-maquis.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Simon_sees from Australia",
+    "page": "https://commons.wikimedia.org/wiki/File:Pullman_Infinity_Pool_(7070529735).jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-radisson-blu-ajaccio-bay",
+   "name": "Radisson Blu Resort & Spa Ajaccio Bay",
+   "region": "ajaccio",
+   "url": "https://www.radissonhotels.com/en-us/hotels/radisson-blu-resort-ajaccio-bay-spa",
+   "lat": 41.8645,
+   "lon": 8.7918,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "spa": 0.9,
+    "pool": 0.8,
+    "gym": 0.7,
+    "luxury": 0.6,
+    "modern": 0.7,
+    "family": 0.6,
+    "walk_to_beach": 0.6,
+    "sea_view": 0.6
+   },
+   "desc": "Groot resorthotel met spa, zwembad en fitness aan de baai van Ajaccio.",
+   "photo": {
+    "file": "img/acc-radisson-blu-ajaccio-bay.jpg",
+    "lic": "CC BY 3.0",
+    "author": "David Shankbone",
+    "page": "https://commons.wikimedia.org/wiki/File:088_Irotama_Infinity_Pool_Sunset.JPG"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-hotel-les-mouettes",
+   "name": "Hôtel Les Mouettes",
+   "region": "ajaccio",
+   "url": "https://www.hotellesmouettes.fr/fr/",
+   "lat": 41.9101,
+   "lon": 8.7216,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 0.9,
+    "luxury": 0.8,
+    "boutique": 0.6,
+    "spa": 0.7,
+    "pool": 0.7,
+    "walk_to_beach": 0.7,
+    "sea_view": 0.7,
+    "restaurant": 0.6,
+    "ev_charging": 1.0
+   },
+   "desc": "Luxehotel in een statig herenhuis aan zee met zwembad en spa, vlak bij het centrum van Ajaccio.",
+   "photo": {
+    "file": "img/acc-hotel-les-mouettes.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio-Chapelle_des_Grecs.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-dolce-vita",
+   "name": "Hôtel Dolce Vita",
+   "region": "ajaccio",
+   "url": "https://www.hotel-dolcevita.com/",
+   "lat": 41.909,
+   "lon": 8.6386,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1,
+    "pool": 0.7,
+    "sea_view": 0.9,
+    "restaurant": 0.8,
+    "walk_to_beach": 0.6,
+    "secluded": 0.3
+   },
+   "desc": "Hotel met zwembad en zeezicht aan de weg naar de Îles Sanguinaires.",
+   "photo": {
+    "file": "img/acc-dolce-vita.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio_Sanguinaires_1.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-conti-1855",
+   "name": "Résidence Conti 1855",
+   "region": "ajaccio",
+   "url": "https://www.conti1855.com/",
+   "lat": 41.9182,
+   "lon": 8.7318,
+   "priceLevel": 3,
+   "tags": {
+    "apartment": 0.6,
+    "hotel": 0.5,
+    "spa": 0.7,
+    "pool": 0.6,
+    "in_town": 0.7,
+    "self_catering": 0.5,
+    "modern": 0.5,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Residence-hotel met appartementen, zwembad en spa vlak bij het centrum van Ajaccio.",
+   "photo": {
+    "file": "img/acc-conti-1855.jpg",
+    "lic": "CC0",
+    "author": "Julian Lupyan",
+    "page": "https://commons.wikimedia.org/wiki/File:Plaque_of_Maison_Bonaparte,_Ajaccio,_Corsica.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-paese-di-lava",
+   "name": "Paese Di Lava",
+   "region": "ajaccio",
+   "url": "https://www.paese-di-lava.com/",
+   "lat": 41.9835,
+   "lon": 8.6705,
+   "priceLevel": 2,
+   "tags": {
+    "apartment": 0.6,
+    "family": 0.7,
+    "secluded": 0.7,
+    "sea_view": 0.8,
+    "self_catering": 0.5
+   },
+   "desc": "Vakantiedorp op ongeveer 10 km van Ajaccio met uitzicht over de baai van Lava.",
+   "photo": {
+    "file": "img/acc-paese-di-lava.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Ajaccio_Pointe_de_la_Parata_Tour_g%C3%A9noise.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-domaine-finili",
+   "name": "Domaine Finili",
+   "region": "ajaccio",
+   "url": "https://domainefinili.com/",
+   "lat": 41.9081,
+   "lon": 8.8621,
+   "priceLevel": 3,
+   "tags": {
+    "villa": 1,
+    "pool": 0.8,
+    "family": 0.6,
+    "self_catering": 0.8,
+    "secluded": 0.5,
+    "airco": 1.0
+   },
+   "desc": "Villa's met zwembad om zelf te koken in de heuvels achter de baai van Ajaccio.",
+   "photo": {
+    "file": "img/acc-domaine-finili.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Lebu Ayiga",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool_and_Makuti-thatched_villa_in_Malindi.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-jardin-d-emile",
+   "name": "Le Jardin d'Emile",
+   "region": "ajaccio",
+   "url": "https://www.jardindemile.com/",
+   "lat": 41.829,
+   "lon": 8.7839,
+   "priceLevel": 3,
+   "tags": {
+    "boutique": 0.8,
+    "bnb": 0.4,
+    "pool": 0.6,
+    "sea_view": 0.8,
+    "secluded": 0.8
+   },
+   "desc": "Intiem verblijf aan het water in Pietrosella met uitzicht op de Îles Sanguinaires.",
+   "photo": {
+    "file": "img/acc-jardin-d-emile.jpg",
+    "lic": "CC BY 2.0",
+    "author": "upyernoz from Haverford, USA",
+    "page": "https://commons.wikimedia.org/wiki/File:Garden_Terrace_(2853899602).jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-le-sud",
+   "name": "Camping Le Sud",
+   "region": "ajaccio",
+   "url": "https://www.camping-le-sud.com/",
+   "lat": 41.8285,
+   "lon": 8.7856,
+   "priceLevel": 2,
+   "tags": {
+    "camping": 1,
+    "walk_to_beach": 0.6,
+    "family": 0.6,
+    "restaurant": 0.5
+   },
+   "desc": "Driesterrencamping met restaurant dicht bij het strand van Porticcio.",
+   "photo": {
+    "file": "img/acc-camping-le-sud.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Vyacheslav Argenberg",
+    "page": "https://commons.wikimedia.org/wiki/File:Krasnoyarsk_Stolby,_Campground,_Campsite_at_night,_Russia.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-camping-les-mimosas",
+   "name": "Camping Les Mimosas",
+   "region": "ajaccio",
+   "url": "https://www.camping-lesmimosas.com",
+   "lat": 41.9372,
+   "lon": 8.7276,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1,
+    "budget": 0.8
+   },
+   "desc": "Eenvoudige camping aan de rand van Ajaccio.",
+   "photo": {
+    "file": "img/acc-camping-les-mimosas.jpg",
+    "lic": "CC BY 4.0",
+    "author": "Vyacheslav Argenberg",
+    "page": "https://commons.wikimedia.org/wiki/File:Ergaki,_Campsite,_camping_equipment,_outdoor_gear_in_the_wild,_Sayan_Mountains,_Siberia,_Russia.jpg"
+   },
+   "photoGeneric": true,
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-portov-corsica-hostel",
+   "name": "Corsica Hostel Porto-Vecchio",
+   "region": "portov",
+   "url": "https://porto-vecchio.corsicahostels.com/",
+   "lat": 41.5835,
+   "lon": 9.2753,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "in_town": 0.6,
+    "modern": 0.5,
+    "self_catering": 0.6
+   },
+   "desc": "Hostel op mensenmaat enkele minuten van het centrum: slaapzalen van 4 tot 6 bedden en privékamers, grote gemeenschappelijke keuken en wifi; nachtrust vanaf 23.00 uur.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-portov-corsica-hostel.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Pascal POGGI",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vecchio_vieille_ville.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-salina-bay-portov",
+   "name": "Résidence Salina Bay (Porto-Vecchio)",
+   "region": "portov",
+   "url": "https://www.portovecchio-tourisme.corsica/residence-vacance/salina-bay/",
+   "lat": 41.5841,
+   "lon": 9.2837,
+   "priceLevel": 3,
+   "tags": {
+    "apartment": 1.0,
+    "self_catering": 0.9,
+    "family": 0.8,
+    "pool": 0.9,
+    "in_town": 0.4,
+    "modern": 0.6
+   },
+   "desc": "Viersterren-residentie met moderne appartementen in een boomrijk park van 4 ha, groot zwembad, op 800 m van de oude stad en vlak bij de jachthaven.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-salina-bay-portov.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vechio_Port1a.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-bonifacio-hotel-colomba",
+   "name": "Hôtel Colomba (haute ville Bonifacio)",
+   "region": "bonifacio",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/COLOMBA",
+   "lat": 41.3867,
+   "lon": 9.1579,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1.0,
+    "in_town": 1.0,
+    "rustic": 0.8,
+    "restaurant": 0.5,
+    "airco": 1.0
+   },
+   "desc": "Familiehotel met 11 kamers in een 14e-eeuws pand in de oudste wijk van de bovenstad, ca. 100 m van de trap van de koning van Aragón. Open 15 april tot 31 oktober.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-bonifacio-hotel-colomba.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Bonifacio_Ville_haute.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  }
+ ],
+ "activities": [
+  {
+   "id": "act-palombaggia",
+   "name": "Plage de Palombaggia",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Palombaggia",
+   "lat": 41.5616,
+   "lon": 9.3338,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "photo": 0.9,
+    "relax": 0.8,
+    "kids": 0.6,
+    "snorkel": 0.5,
+    "effort_low": 0.9
+   },
+   "desc": "Beroemd strand met rode rotsen, parasolpijnen en turquoise water.",
+   "photo": {
+    "file": "img/act-palombaggia.jpg",
+    "lic": "CC BY 2.0",
+    "author": "dronepicr",
+    "page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Palombaggia_Beach,_Corsica,_France_(52724214180).jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-santa-giulia",
+   "name": "Plage de Santa Giulia",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Porto-Vecchio",
+   "lat": 41.5275,
+   "lon": 9.2722,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 1,
+    "relax": 0.8,
+    "kayak": 0.6,
+    "snorkel": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Ondiepe baai met wit zand die bijna op een zwembad lijkt.",
+   "photo": {
+    "file": "img/act-santa-giulia.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vecchio_plage_de_Santa_Giulia.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-rondinara",
+   "name": "Baai van Rondinara",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Baie_de_Rondinara",
+   "lat": 41.4723,
+   "lon": 9.2724,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.9,
+    "snorkel": 0.6,
+    "photo": 0.9,
+    "nature": 0.5,
+    "relax": 0.8,
+    "effort_low": 0.9
+   },
+   "desc": "Bijna ronde, ondiepe baai met helder water.",
+   "photo": {
+    "file": "img/act-rondinara.jpg",
+    "lic": "CC BY 2.0",
+    "author": "dronepicr",
+    "page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Rondinara_Beach,_France_(52724210190).jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-pinarellu",
+   "name": "Strand en toren van Pinarellu",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Zonza",
+   "lat": 41.6746,
+   "lon": 9.3732,
+   "durationH": 2.5,
+   "tags": {
+    "beach": 0.9,
+    "kids": 0.6,
+    "culture": 0.4,
+    "kayak": 0.5,
+    "photo": 0.6,
+    "relax": 0.7,
+    "effort_low": 0.9
+   },
+   "desc": "Zandstrand met een Genuese toren aan de oostkust bij Porto-Vecchio.",
+   "photo": {
+    "file": "img/act-pinarellu.jpg",
+    "lic": "CC0",
+    "author": "Aa77zz",
+    "page": "https://commons.wikimedia.org/wiki/File:Tour_de_Pinarellu_-_Corsica.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-porto-vecchio-oude-stad",
+   "name": "Oude stad van Porto-Vecchio",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Porto-Vecchio",
+   "lat": 41.5911,
+   "lon": 9.2795,
+   "durationH": 1.5,
+   "tags": {
+    "town": 1,
+    "culture": 0.7,
+    "food": 0.6,
+    "photo": 0.6,
+    "effort_low": 0.9,
+    "nightlife": 0.3
+   },
+   "desc": "Bovenstad met citadel, steegjes en terrasjes boven de haven.",
+   "photo": {
+    "file": "img/act-porto-vecchio-oude-stad.jpg",
+    "lic": "CC0",
+    "author": "Air fans",
+    "page": "https://commons.wikimedia.org/wiki/File:Bastion_de_France_(Porto_Vecchio)_2.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-porto-vecchio-haven",
+   "name": "Haven van Porto-Vecchio",
+   "region": "portov",
+   "url": "https://marina.portivechju.corsica/",
+   "lat": 41.5911,
+   "lon": 9.2868,
+   "durationH": 2,
+   "tags": {
+    "nightlife": 0.8,
+    "food": 0.8,
+    "town": 0.5,
+    "relax": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Jachthaven met restaurants en bars voor een avond uit.",
+   "photo": {
+    "file": "img/act-porto-vecchio-haven.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Porto-Vechio_Port1a.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-salines-porto-vecchio",
+   "name": "Zoutpannen van Porto-Vecchio",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Porto-Vecchio",
+   "lat": 41.5835,
+   "lon": 9.2881,
+   "durationH": 1.5,
+   "tags": {
+    "nature": 1,
+    "photo": 0.7,
+    "effort_low": 1,
+    "kids": 0.5,
+    "relax": 0.5
+   },
+   "desc": "Natuurgebied met zoutpannen aan de baai bij Porto-Vecchio.",
+   "photo": {
+    "file": "img/act-salines-porto-vecchio.jpg",
+    "lic": "CC0",
+    "author": "Annacquaghjolu",
+    "page": "https://commons.wikimedia.org/wiki/File:Portivechju_vistu_da_e_saline.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-cala-rossa",
+   "name": "Plage de Cala Rossa",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Porto-Vecchio",
+   "lat": 41.6195,
+   "lon": 9.3315,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "relax": 0.8,
+    "kids": 0.8,
+    "snorkel": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Beschutte baai met ondiep water ten noorden van Porto-Vecchio.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-cerbicale",
+   "name": "Boottocht en snorkelen bij de Îles Cerbicale",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/%C3%8Eles_Cerbicale",
+   "lat": 41.551,
+   "lon": 9.3617,
+   "durationH": 5,
+   "tags": {
+    "boat": 1,
+    "snorkel": 0.9,
+    "diving": 0.6,
+    "nature": 0.9,
+    "photo": 0.7,
+    "kids": 0.4,
+    "effort_low": 0.8
+   },
+   "desc": "Boottocht naar het beschermde eilandengroepje voor de kust met snorkelstops.",
+   "photo": {
+    "file": "img/act-cerbicale.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "AlessandraAntonini",
+    "page": "https://commons.wikimedia.org/wiki/File:Rainbow_on_Cerbicale_Islands.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-col-de-bavella",
+   "name": "Col de Bavella en de Aiguilles",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Col_de_Bavella",
+   "lat": 41.7959,
+   "lon": 9.225,
+   "durationH": 4,
+   "tags": {
+    "viewpoint": 1,
+    "hike": 0.6,
+    "nature": 0.8,
+    "photo": 1,
+    "effort_low": 0.5
+   },
+   "desc": "Bergpas met de grillige naalden van Bavella, een dagtocht vanaf de kust.",
+   "photo": {
+    "file": "img/act-col-de-bavella.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "goooder, https://www.flickr.com/photos/goooder/",
+    "page": "https://commons.wikimedia.org/wiki/File:Col_de_Bavella_1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-purcaraccia",
+   "name": "Cascades de Purcaraccia",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Col_de_Bavella",
+   "lat": 41.8374,
+   "lon": 9.256,
+   "durationH": 4,
+   "tags": {
+    "hike": 0.9,
+    "swim_river": 0.9,
+    "nature": 0.8,
+    "photo": 0.7,
+    "hike_hard": 0.3
+   },
+   "desc": "Wandeling naar watervallen met natuurlijke zwempoelen bij Bavella.",
+   "photo": {
+    "file": "img/act-purcaraccia.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Nerijp",
+    "page": "https://commons.wikimedia.org/wiki/File:Purcaraccia-piscines.JPG"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-cucuruzzu",
+   "name": "Castellu di Cucuruzzu en Capula",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Castellu_di_Cucuruzzu",
+   "lat": 41.7247,
+   "lon": 9.1268,
+   "durationH": 3,
+   "tags": {
+    "culture": 1,
+    "hike": 0.6,
+    "kids": 0.7,
+    "nature": 0.5,
+    "effort_low": 0.6,
+    "photo": 0.6
+   },
+   "desc": "Prehistorische burchtsite tussen rotsen en bos bij Levie.",
+   "photo": {
+    "file": "img/act-cucuruzzu.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "DocteurCosmos",
+    "page": "https://commons.wikimedia.org/wiki/File:Cucuruzzu1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-piscia-di-ghjaddu",
+   "name": "Waterval Piscia di Ghjaddu",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Zonza",
+   "lat": 41.6806,
+   "lon": 9.2157,
+   "durationH": 3.5,
+   "tags": {
+    "hike": 0.8,
+    "swim_river": 0.6,
+    "nature": 0.8,
+    "photo": 0.9,
+    "kids": 0.4,
+    "hike_hard": 0.3
+   },
+   "desc": "Wandeling naar een hoge waterval met een poel bij Zonza.",
+   "photo": {
+    "file": "img/act-piscia-di-ghjaddu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Donarreiskoffer",
+    "page": "https://commons.wikimedia.org/wiki/File:Waterfall_of_Piscia_di_Gallo_04.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-fior-di-lecci",
+   "name": "Domaine Fior di Lecci",
+   "region": "portov",
+   "url": "http://www.fior-di-lecci.fr",
+   "lat": 41.6866,
+   "lon": 9.3197,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.5,
+    "relax": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Wijndomein bij Lecci aan de RN198 met wijnen uit de AOP Porto-Vecchio.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-tamaricciu",
+   "name": "Tamaricciu strandrestaurant",
+   "region": "portov",
+   "url": "https://www.tamaricciu.com/",
+   "lat": 41.5535,
+   "lon": 9.3181,
+   "durationH": 2,
+   "tags": {
+    "food": 0.9,
+    "beach": 0.6,
+    "relax": 0.8,
+    "nightlife": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Strandrestaurant met de voeten in het zand aan Palombaggia.",
+   "photo": {
+    "file": "img/act-tamaricciu.jpg",
+    "lic": "CC BY 3.0",
+    "author": "cazah",
+    "page": "https://commons.wikimedia.org/wiki/File:Tamaricciu_-_panoramio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-phare-de-la-chiappa",
+   "name": "Wandeling naar de vuurtoren van Chiappa",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Phare_de_la_Chiappa",
+   "lat": 41.5952,
+   "lon": 9.3655,
+   "durationH": 2,
+   "tags": {
+    "hike": 0.8,
+    "viewpoint": 0.8,
+    "nature": 0.7,
+    "photo": 0.7,
+    "effort_low": 0.5
+   },
+   "desc": "Kustwandeling over het schiereiland van La Chiappa naar de vuurtoren.",
+   "photo": {
+    "file": "img/act-phare-de-la-chiappa.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Raphodon",
+    "page": "https://commons.wikimedia.org/wiki/File:Chiappa_phare.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-solenzara",
+   "name": "Strand van Solenzara",
+   "region": "portov",
+   "url": "https://fr.wikipedia.org/wiki/Solenzara",
+   "lat": 41.8563,
+   "lon": 9.3986,
+   "durationH": 3,
+   "tags": {
+    "beach": 0.8,
+    "kids": 0.6,
+    "relax": 0.6,
+    "effort_low": 0.9
+   },
+   "desc": "Strand en dorp aan de oostkust, rustiger dan het zuiden.",
+   "photo": {
+    "file": "img/act-solenzara.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Herbert wie",
+    "page": "https://commons.wikimedia.org/wiki/File:Die_Solenzara_Korsika.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-citadelle-bonifacio",
+   "name": "Citadel en oude stad van Bonifacio",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Bonifacio",
+   "lat": 41.3879,
+   "lon": 9.1582,
+   "durationH": 2.5,
+   "tags": {
+    "town": 1,
+    "culture": 0.9,
+    "viewpoint": 0.8,
+    "photo": 1,
+    "food": 0.5,
+    "effort_low": 0.6
+   },
+   "desc": "Citadel op een kalkrots met smalle straten en uitzicht tot Sardinië.",
+   "photo": {
+    "file": "img/act-citadelle-bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Christian David",
+    "page": "https://commons.wikimedia.org/wiki/File:Citadelle_de_Bonifacio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-escalier-roi-aragon",
+   "name": "Escalier du Roi d'Aragon",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Escalier_du_roi_d%27Aragon",
+   "lat": 41.3862,
+   "lon": 9.1562,
+   "durationH": 1,
+   "tags": {
+    "viewpoint": 0.8,
+    "culture": 0.7,
+    "photo": 0.9,
+    "effort_high": 0.4
+   },
+   "desc": "Trap van 189 treden uitgehakt in de klif met uitzicht op de zee.",
+   "photo": {
+    "file": "img/act-escalier-roi-aragon.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Myrabella",
+    "page": "https://commons.wikimedia.org/wiki/File:Bonifacio_falaises_escalier_roi_Aragon.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-lavezzi",
+   "name": "Îles Lavezzi",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/%C3%8Eles_Lavezzi",
+   "lat": 41.3409,
+   "lon": 9.2541,
+   "durationH": 5,
+   "tags": {
+    "boat": 1,
+    "snorkel": 1,
+    "beach": 0.7,
+    "nature": 0.9,
+    "kids": 0.6,
+    "photo": 0.9,
+    "diving": 0.4,
+    "effort_low": 0.8
+   },
+   "desc": "Boottocht naar het natuurreservaat met granietrotsen en helder water om te snorkelen.",
+   "photo": {
+    "file": "img/act-lavezzi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Gzzz",
+    "page": "https://commons.wikimedia.org/wiki/File:Cala_du_Chiesa_-_%C3%AEles_Lavezzi.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bonifacio-boot-krijtrotsen",
+   "name": "Boottocht langs krijtrotsen en grotten",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Bonifacio",
+   "lat": 41.387,
+   "lon": 9.157,
+   "durationH": 1.5,
+   "tags": {
+    "boat": 1,
+    "photo": 1,
+    "viewpoint": 0.6,
+    "nature": 0.6,
+    "kids": 0.6,
+    "effort_low": 0.9
+   },
+   "desc": "Rondvaart vanuit de haven langs de witte kliffen en zeegrotten van Bonifacio.",
+   "photo": {
+    "file": "img/act-bonifacio-boot-krijtrotsen.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Espandero",
+    "page": "https://commons.wikimedia.org/wiki/File:Falaises_depuis_la_citadelle_de_Bonifacio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-piantarella",
+   "name": "Lagune van Piantarella",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Piantarella",
+   "lat": 41.3745,
+   "lon": 9.218,
+   "durationH": 3,
+   "tags": {
+    "kayak": 0.8,
+    "adrenaline": 0.5,
+    "beach": 0.8,
+    "relax": 0.5,
+    "kids": 0.6,
+    "effort_low": 0.8
+   },
+   "desc": "Ondiepe lagune bij het zuidelijkste puntje, geschikt voor SUP en kitesurfen.",
+   "photo": {
+    "file": "img/act-piantarella.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "lo.tangelini from Soliera / Modena, Italia",
+    "page": "https://commons.wikimedia.org/wiki/File:Flickr_-_lo.tangelini_-_Piantarella.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-maora-santa-manza",
+   "name": "Plage de Maora (baai van Santa Manza)",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Bonifacio",
+   "lat": 41.4082,
+   "lon": 9.2165,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.9,
+    "relax": 0.8,
+    "kayak": 0.5,
+    "snorkel": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Zandstrand in de beschutte baai van Santa Manza.",
+   "photo": {
+    "file": "img/act-maora-santa-manza.jpg",
+    "lic": "Public domain",
+    "author": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Santa_Manza,_(17..)_-_btv1b85926771.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-phare-de-pertusato",
+   "name": "Wandeling naar de vuurtoren van Pertusato",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Phare_de_Pertusato",
+   "lat": 41.3675,
+   "lon": 9.1844,
+   "durationH": 2.5,
+   "tags": {
+    "hike": 1,
+    "viewpoint": 0.9,
+    "nature": 0.6,
+    "photo": 0.8,
+    "effort_low": 0.5
+   },
+   "desc": "Kustpad over de kliffen naar de vuurtoren met uitzicht op Sardinië.",
+   "photo": {
+    "file": "img/act-phare-de-pertusato.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Bonifacio_Grain_de_Sable_Capo_Pertusato.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-cimetiere-marin-bonifacio",
+   "name": "Cimetière marin",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Cimeti%C3%A8re_marin_de_Bonifacio",
+   "lat": 41.3867,
+   "lon": 9.1504,
+   "durationH": 1,
+   "tags": {
+    "culture": 0.9,
+    "viewpoint": 0.6,
+    "photo": 0.8,
+    "relax": 0.4,
+    "effort_low": 0.9
+   },
+   "desc": "Zeekerkhof met witte grafkapelletjes aan de rand van de klif.",
+   "photo": {
+    "file": "img/act-cimetiere-marin-bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "FredSeiller",
+    "page": "https://commons.wikimedia.org/wiki/File:Cimeti%C3%A8re_marin_(Bonifacio).jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bonifacio-haven",
+   "name": "Haven en terrassen van Bonifacio",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Bonifacio",
+   "lat": 41.3868,
+   "lon": 9.1568,
+   "durationH": 2.5,
+   "tags": {
+    "nightlife": 0.6,
+    "food": 1,
+    "town": 0.6,
+    "photo": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Havenkade onder de citadel met restaurants en bars.",
+   "photo": {
+    "file": "img/act-bonifacio-haven.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Traroth",
+    "page": "https://commons.wikimedia.org/wiki/File:Bonifacio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-clos-canarelli",
+   "name": "Clos Canarelli",
+   "region": "bonifacio",
+   "url": "https://www.closcanarelli.com/",
+   "lat": 41.5274,
+   "lon": 9.1427,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.4,
+    "relax": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Biodynamisch wijndomein bij Figari; bezoek en proeverij alleen op afspraak.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-petra-bianca",
+   "name": "Domaine de Petra Bianca",
+   "region": "bonifacio",
+   "url": "https://www.petra-bianca.com/",
+   "lat": 41.4977,
+   "lon": 9.1347,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.4,
+    "relax": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Biologisch wijndomein bij Figari met proeverij en verkoop op het domein.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-pozzo-di-mastri-lunch",
+   "name": "Lunch bij Domaine Pozzo di Mastri",
+   "region": "bonifacio",
+   "url": "https://www.pozzodimastri.com/",
+   "lat": 41.4994,
+   "lon": 9.1357,
+   "durationH": 1.5,
+   "tags": {
+    "food": 0.7,
+    "relax": 0.6,
+    "wine": 0.3,
+    "effort_low": 1
+   },
+   "desc": "Lunchen in het groen bij de auberge en grill van het domein bij Figari.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-kevano",
+   "name": "Strand van Kévano en Caldarello",
+   "region": "bonifacio",
+   "url": "https://fr.wikipedia.org/wiki/Pianottoli-Caldarello",
+   "lat": 41.4725,
+   "lon": 9.045,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.7,
+    "snorkel": 0.5,
+    "relax": 0.8,
+    "nature": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Rustig strand aan de zuidwestkust bij Pianottoli-Caldarello.",
+   "photo": {
+    "file": "img/act-kevano.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "ydecaseneuve",
+    "page": "https://commons.wikimedia.org/wiki/File:20131_Pianottoli-Caldarello,_France_-_panoramio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-filitosa",
+   "name": "Prehistorische site Filitosa",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Filitosa",
+   "lat": 41.7467,
+   "lon": 8.8723,
+   "durationH": 2,
+   "tags": {
+    "culture": 1,
+    "kids": 0.6,
+    "nature": 0.4,
+    "effort_low": 0.8,
+    "photo": 0.7
+   },
+   "desc": "Beroemde prehistorische site met menhirbeelden tussen olijfbomen.",
+   "photo": {
+    "file": "img/act-filitosa.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "JopkeB",
+    "page": "https://commons.wikimedia.org/wiki/File:Filitosa_IX_Corsica_1990.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-sartene",
+   "name": "Oude stad van Sartène",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Sart%C3%A8ne",
+   "lat": 41.6209,
+   "lon": 8.9722,
+   "durationH": 2.5,
+   "tags": {
+    "town": 1,
+    "village": 0.6,
+    "culture": 0.8,
+    "food": 0.6,
+    "photo": 0.6,
+    "effort_low": 0.7,
+    "market": 0.4
+   },
+   "desc": "Granieten stadje met steegjes, pleinen en een rijke geschiedenis.",
+   "photo": {
+    "file": "img/act-sartene.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Sartene_Vi1aJPG.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-musee-prehistoire-sartene",
+   "name": "Musée de Préhistoire corse",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Sart%C3%A8ne",
+   "lat": 41.6208,
+   "lon": 8.9737,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1,
+    "kids": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Museum in Sartène over de prehistorie van Corsica.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-alignements-palaghju",
+   "name": "Menhirrijen van Palaghju (Cauria)",
+   "region": "propriano",
+   "url": "https://www.routard.com/fr/guide/france/corse/corse-du-sud/alignements-de-pagliaghju",
+   "lat": 41.5569,
+   "lon": 8.8868,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1,
+    "nature": 0.5,
+    "hike": 0.4,
+    "effort_low": 0.8,
+    "photo": 0.6
+   },
+   "desc": "Meer dan 250 prehistorische menhirs in rijen, nabij het plateau van Cauria.",
+   "photo": {
+    "file": "img/act-alignements-palaghju.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "TeletubAstyanax",
+    "page": "https://commons.wikimedia.org/wiki/File:Paddaghju_01.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-dolmen-fontanaccia",
+   "name": "Dolmen van Fontanaccia",
+   "region": "propriano",
+   "url": "https://www.isula.corsica/patrimoine/Cauria_r41.html",
+   "lat": 41.5295,
+   "lon": 8.9182,
+   "durationH": 1,
+   "tags": {
+    "culture": 1,
+    "effort_low": 0.8
+   },
+   "desc": "Goed bewaard megalietisch dolmen bij Cauria.",
+   "photo": {
+    "file": "img/act-dolmen-fontanaccia.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Max Berger",
+    "page": "https://commons.wikimedia.org/wiki/File:Dolmen_of_Fontanaccia.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-roccapina",
+   "name": "Leeuw van Roccapina en strand",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Roccapina",
+   "lat": 41.4956,
+   "lon": 8.9287,
+   "durationH": 3,
+   "tags": {
+    "beach": 0.8,
+    "hike": 0.7,
+    "viewpoint": 0.8,
+    "photo": 1,
+    "nature": 0.6,
+    "kids": 0.4,
+    "effort_low": 0.6
+   },
+   "desc": "Rots in de vorm van een leeuw boven een rustig strand, bereikbaar via een korte wandeling.",
+   "photo": {
+    "file": "img/act-roccapina.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Myrabella",
+    "page": "https://commons.wikimedia.org/wiki/File:Corse_Roccapina_tour_genoise.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-tour-de-campomoro",
+   "name": "Genuese toren van Campomoro",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Belv%C3%A9d%C3%A8re-Campomoro",
+   "lat": 41.6388,
+   "lon": 8.8073,
+   "durationH": 3,
+   "tags": {
+    "culture": 0.6,
+    "hike": 0.7,
+    "viewpoint": 0.8,
+    "beach": 0.6,
+    "nature": 0.6,
+    "photo": 0.8,
+    "snorkel": 0.4,
+    "effort_low": 0.5
+   },
+   "desc": "Kustwandeling naar de Genuese toren met strandjes en uitzicht over de golf.",
+   "photo": {
+    "file": "img/act-tour-de-campomoro.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Myrabella",
+    "page": "https://commons.wikimedia.org/wiki/File:Corse_Campomoro_tour_genoise.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-cupabia",
+   "name": "Plage de Cupabia",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Serra-di-Ferro",
+   "lat": 41.7389,
+   "lon": 8.787,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "nature": 0.8,
+    "relax": 0.8,
+    "kids": 0.5,
+    "snorkel": 0.5,
+    "effort_low": 0.8
+   },
+   "desc": "Beschermd strand aan de noordkant van de Golf van Valinco.",
+   "photo": {
+    "file": "img/act-cupabia.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Andreas Schäfer",
+    "page": "https://commons.wikimedia.org/wiki/File:Cupabia_Bucht_-_panoramio.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-portigliolo",
+   "name": "Plage de Portigliolo",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Propriano",
+   "lat": 41.6535,
+   "lon": 8.8783,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.8,
+    "relax": 0.7,
+    "kayak": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Breed zandstrand aan de Golf van Valinco.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-propriano-haven",
+   "name": "Haven van Propriano",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Propriano",
+   "lat": 41.6764,
+   "lon": 8.9036,
+   "durationH": 2,
+   "tags": {
+    "nightlife": 0.6,
+    "food": 0.9,
+    "town": 0.5,
+    "boat": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Jachthaven met terrassen voor vis en pizza en een gezellige avondsfeer.",
+   "photo": {
+    "file": "img/act-propriano-haven.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Hajotthu",
+    "page": "https://commons.wikimedia.org/wiki/File:Propriano_Port@171015_04.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-olmeto",
+   "name": "Dorp Olmeto",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Olmeto",
+   "lat": 41.717,
+   "lon": 8.9178,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1,
+    "culture": 0.6,
+    "viewpoint": 0.6,
+    "photo": 0.6,
+    "effort_low": 0.8,
+    "food": 0.4
+   },
+   "desc": "Bergdorp boven de Golf van Valinco met uitzicht over de baai.",
+   "photo": {
+    "file": "img/act-olmeto.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pancrat",
+    "page": "https://commons.wikimedia.org/wiki/File:Olmeto_Corse.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-valinco-boot",
+   "name": "Varen in de Golf van Valinco",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Golfe_de_Valinco",
+   "lat": 41.6852,
+   "lon": 8.8341,
+   "durationH": 4,
+   "tags": {
+    "boat": 1,
+    "snorkel": 0.6,
+    "kayak": 0.5,
+    "diving": 0.4,
+    "nature": 0.6,
+    "photo": 0.6,
+    "effort_low": 0.8
+   },
+   "desc": "Zeiltocht of boottocht langs de kust van de Golf van Valinco.",
+   "photo": {
+    "file": "img/act-valinco-boot.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Propriano_Golfe_de_Valinco_JPG1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-tradicettu",
+   "name": "Wandeling van Tizzano naar Tradicettu",
+   "region": "propriano",
+   "url": "https://www.visit-corsica.com/fr/Mon-sejour/Patrimoine-naturel/Tout-le-patrimoine-naturel/PLAGE-DE-TIZZANO",
+   "lat": 41.5219,
+   "lon": 8.8816,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.9,
+    "beach": 0.7,
+    "nature": 0.9,
+    "photo": 0.8,
+    "snorkel": 0.4,
+    "effort_low": 0.3
+   },
+   "desc": "Kustpad van ongeveer 20 minuten van Tizzano door de maquis naar het afgelegen strand van Tradicettu.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-capo-di-muro",
+   "name": "Wandeling naar Capo di Muro",
+   "region": "propriano",
+   "url": "https://fr.wikipedia.org/wiki/Capo_di_Muro",
+   "lat": 41.7417,
+   "lon": 8.7741,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.9,
+    "viewpoint": 0.8,
+    "nature": 0.7,
+    "photo": 0.6,
+    "effort_low": 0.4,
+    "culture": 0.3
+   },
+   "desc": "Kustpad naar de kaap tussen de golven van Ajaccio en Valinco.",
+   "photo": {
+    "file": "img/act-capo-di-muro.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Calimo",
+    "page": "https://commons.wikimedia.org/wiki/File:Maquis_Capo_di_Muro.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-domaine-fiumicicoli",
+   "name": "Domaine Fiumicicoli",
+   "region": "propriano",
+   "url": "https://domaine-fiumicicoli.com/",
+   "lat": 41.6595,
+   "lon": 9.0044,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.4,
+    "relax": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Wijndomein bij Sartène (familiebedrijf sinds 1964) met proeverij.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-domaine-saparale",
+   "name": "Domaine Saparale",
+   "region": "propriano",
+   "url": "https://www.lesvinsdesaparale.com/",
+   "lat": 41.5856,
+   "lon": 8.9967,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.4,
+    "relax": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Wijndomein in de vallei van de Ortolo bij Sartène met proeverij in het caveau.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-maison-bonaparte",
+   "name": "Maison Bonaparte",
+   "region": "ajaccio",
+   "url": "https://musees-nationaux-malmaison.fr/musee-maisonbonaparte/",
+   "lat": 41.9179,
+   "lon": 8.7386,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1,
+    "town": 0.7,
+    "effort_low": 1,
+    "kids": 0.2
+   },
+   "desc": "Geboortehuis van Napoleon in het oude centrum van Ajaccio.",
+   "photo": {
+    "file": "img/act-maison-bonaparte.jpg",
+    "lic": "CC0",
+    "author": "Julian Lupyan",
+    "page": "https://commons.wikimedia.org/wiki/File:Plaque_of_Maison_Bonaparte,_Ajaccio,_Corsica.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-palais-fesch",
+   "name": "Palais Fesch (kunstmuseum)",
+   "region": "ajaccio",
+   "url": "https://www.musee-fesch.com/",
+   "lat": 41.9219,
+   "lon": 8.739,
+   "durationH": 2,
+   "tags": {
+    "culture": 1,
+    "effort_low": 1,
+    "relax": 0.3
+   },
+   "desc": "Kunstmuseum met een grote collectie Italiaanse schilderijen.",
+   "photo": {
+    "file": "img/act-palais-fesch.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Velvet",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio_musee_Fesch.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-chapelle-imperiale",
+   "name": "Chapelle impériale",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Chapelle_imp%C3%A9riale_d%27Ajaccio",
+   "lat": 41.9217,
+   "lon": 8.7385,
+   "durationH": 0.5,
+   "tags": {
+    "culture": 0.9,
+    "effort_low": 1
+   },
+   "desc": "Grafkapel van de familie Bonaparte naast het Palais Fesch.",
+   "photo": {
+    "file": "img/act-chapelle-imperiale.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Eveha",
+    "page": "https://commons.wikimedia.org/wiki/File:Chapelle_imp%C3%A9riale_(2).JPG"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-citadelle-ajaccio",
+   "name": "Citadelle d'Ajaccio",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Citadelle_d%27Ajaccio",
+   "lat": 41.9169,
+   "lon": 8.7402,
+   "durationH": 0.75,
+   "tags": {
+    "culture": 0.8,
+    "viewpoint": 0.4,
+    "photo": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Zestiende-eeuwse vesting aan de haven, van buiten te bekijken.",
+   "photo": {
+    "file": "img/act-citadelle-ajaccio.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Myrabella",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio_phare_citadelle.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-marche-ajaccio",
+   "name": "Markt van Ajaccio",
+   "region": "ajaccio",
+   "url": "https://www.ajaccio-tourisme.com/decouvrir/vins-terroir-et-marches/marches",
+   "lat": 41.9204,
+   "lon": 8.739,
+   "durationH": 1.5,
+   "tags": {
+    "market": 1,
+    "food": 1,
+    "town": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Markt (dinsdag t/m zondagochtend) met Corsicaanse kaas, charcuterie en vis.",
+   "photo": {
+    "file": "img/act-marche-ajaccio.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio_March%C3%A9_JPG2.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-port-tino-rossi",
+   "name": "Port Tino Rossi",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Ajaccio",
+   "lat": 41.9187,
+   "lon": 8.7414,
+   "durationH": 2,
+   "tags": {
+    "nightlife": 0.7,
+    "food": 0.8,
+    "town": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Jachthaven met terrassen en bars in het centrum van Ajaccio.",
+   "photo": {
+    "file": "img/act-port-tino-rossi.jpg",
+    "lic": "CC BY 2.0",
+    "author": "JeanbaptisteM from France",
+    "page": "https://commons.wikimedia.org/wiki/File:Port_Tino_Rossi_-_Ajaccio_(15148706455).jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-sanguinaires",
+   "name": "Boottocht naar de Îles Sanguinaires",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/%C3%8Eles_Sanguinaires",
+   "lat": 41.878,
+   "lon": 8.5934,
+   "durationH": 3,
+   "tags": {
+    "boat": 1,
+    "snorkel": 0.5,
+    "nature": 0.8,
+    "photo": 0.9,
+    "viewpoint": 0.6,
+    "effort_low": 0.9,
+    "kids": 0.5
+   },
+   "desc": "Boottocht naar de rode eilandjes voor de kust van Ajaccio.",
+   "photo": {
+    "file": "img/act-sanguinaires.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio_Sanguinaires_1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-parata",
+   "name": "Pointe de la Parata",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/%C3%8Eles_Sanguinaires",
+   "lat": 41.8954,
+   "lon": 8.6084,
+   "durationH": 1.5,
+   "tags": {
+    "viewpoint": 1,
+    "photo": 1,
+    "hike": 0.4,
+    "relax": 0.5,
+    "effort_low": 0.8
+   },
+   "desc": "Kaap met Genuese toren en zonsondergang over de Sanguinaires.",
+   "photo": {
+    "file": "img/act-parata.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Ajaccio_Pointe_de_la_Parata_Tour_g%C3%A9noise.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-chapelle-des-grecs",
+   "name": "Chapelle des Grecs",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Ajaccio",
+   "lat": 41.9089,
+   "lon": 8.7192,
+   "durationH": 0.75,
+   "tags": {
+    "culture": 0.8,
+    "viewpoint": 0.7,
+    "photo": 0.8,
+    "effort_low": 1
+   },
+   "desc": "Kapel aan zee langs de weg naar de Sanguinaires.",
+   "photo": {
+    "file": "img/act-chapelle-des-grecs.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Ajaccio-Chapelle_des_Grecs.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-ricanto",
+   "name": "Plage du Ricanto",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Ajaccio",
+   "lat": 41.9214,
+   "lon": 8.7851,
+   "durationH": 3,
+   "tags": {
+    "beach": 0.9,
+    "kids": 0.7,
+    "relax": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Zandstrand aan de oostzijde van Ajaccio.",
+   "photo": {
+    "file": "img/act-ricanto.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Isiwal",
+    "page": "https://commons.wikimedia.org/wiki/File:Corsica_Ajaccio_Golfe_Plage_du_Ricanto.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-agosta",
+   "name": "Plage d'Agosta (Porticcio)",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Porticcio",
+   "lat": 41.8625,
+   "lon": 8.7908,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.8,
+    "kayak": 0.6,
+    "relax": 0.7,
+    "effort_low": 1
+   },
+   "desc": "Breed strand in Porticcio, aan de overkant van de baai van Ajaccio.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-verghia",
+   "name": "Plage de Verghia",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Albitreccia",
+   "lat": 41.8098,
+   "lon": 8.7658,
+   "durationH": 3,
+   "tags": {
+    "beach": 1,
+    "kids": 0.7,
+    "relax": 0.8,
+    "kayak": 0.4,
+    "effort_low": 1
+   },
+   "desc": "Rustig zandstrand in het zuiden van de Golf van Ajaccio.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-isolella",
+   "name": "Plage de l'Isolella",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Pietrosella",
+   "lat": 41.8455,
+   "lon": 8.7595,
+   "durationH": 3,
+   "tags": {
+    "beach": 0.9,
+    "relax": 0.8,
+    "snorkel": 0.5,
+    "kids": 0.6,
+    "effort_low": 1
+   },
+   "desc": "Strand op een schiereiland bij Pietrosella.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-lac-de-tolla",
+   "name": "Lac de Tolla",
+   "region": "ajaccio",
+   "url": "https://fr.wikipedia.org/wiki/Lac_de_Tolla",
+   "lat": 41.9682,
+   "lon": 8.9713,
+   "durationH": 2,
+   "tags": {
+    "nature": 1,
+    "viewpoint": 0.6,
+    "hike": 0.4,
+    "photo": 0.7,
+    "effort_low": 0.7,
+    "relax": 0.6
+   },
+   "desc": "Stuwmeer in de vallei van de Prunelli tussen groene bergen.",
+   "photo": {
+    "file": "img/act-lac-de-tolla.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Tolla_Lac1_JPG.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-domaine-peraldi",
+   "name": "Domaine Comte Peraldi",
+   "region": "ajaccio",
+   "url": "https://www.domaineperaldi.com",
+   "lat": 41.9409,
+   "lon": 8.7777,
+   "durationH": 1.5,
+   "tags": {
+    "wine": 1,
+    "food": 0.5,
+    "effort_low": 1
+   },
+   "desc": "Wijndomein bij Ajaccio met bezoek en proeverij.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corsica-ebike-lecci",
+   "name": "Corsica E Bike: e-MTB-tocht vanuit Lecci",
+   "region": "portov",
+   "url": "https://www.manawa.com/fr/providers/6897-corsica-e-bike",
+   "lat": 41.6796,
+   "lon": 9.317,
+   "durationH": 3,
+   "tags": {
+    "cycling": 1.0,
+    "nature": 0.6,
+    "effort_low": 0.4,
+    "beach": 0.3
+   },
+   "desc": "Begeleide e-MTB-tocht van ongeveer 3 uur tussen zee en bergen met zwemstop, vertrek vanaf het centrale rondpunt van Lecci bij Porto-Vecchio (helm en handschoenen inbegrepen).",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-kos-beach-club-ajaccio",
+   "name": "Kos Beach Club (Route des Sanguinaires)",
+   "region": "ajaccio",
+   "url": "https://mysunbed.com/en/france/ajaccio/kos-beach-club/",
+   "lat": 41.9072,
+   "lon": 8.6781,
+   "durationH": 3,
+   "tags": {
+    "nightlife": 0.6,
+    "beach": 0.5,
+    "food": 0.5,
+    "relax": 0.5
+   },
+   "desc": "Strandclub aan de Route des Sanguinaires met zeezicht, eten en een feestelijke sfeer; open van 10.00 tot 02.00 uur.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-via-notte-porto-vecchio",
+   "name": "Via Notte (openluchtdiscotheek)",
+   "region": "portov",
+   "url": "https://www.koifaire.com/corse/via,notte-4054.html",
+   "lat": 41.5633,
+   "lon": 9.2792,
+   "durationH": 4,
+   "tags": {
+    "nightlife": 1.0,
+    "food": 0.3
+   },
+   "desc": "Openluchtdiscotheek in de zone Mortone bij Porto-Vecchio, vooral jong publiek en vakantiegangers; met restaurant en zwembad. Openingstijden alleen telefonisch (04 95 72 02 12).",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-shirleys-bar-porto-vecchio",
+   "name": "Shirley's Bar (oude stad Porto-Vecchio)",
+   "region": "portov",
+   "url": "https://www.shirleys-bar.com/",
+   "lat": 41.591,
+   "lon": 9.2791,
+   "durationH": 2,
+   "tags": {
+    "nightlife": 0.6,
+    "food": 0.7,
+    "town": 0.6,
+    "effort_low": 0.8
+   },
+   "desc": "Bar-crêperie in de oude stad (Rue Joseph Pietri), sinds 1981, dagelijks open van 10.00 tot 01.00 uur met cocktails, galettes en salades.",
+   "verified": "2026-10-28"
+  }
+ ]
+}

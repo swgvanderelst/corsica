@@ -1,0 +1,29 @@
+# Lessons
+
+- puppeteer-core `launch()` fails with Edge here; use `tools/edge.mjs` (spawn with `--headless=new --remote-debugging-port` + `puppeteer.connect`). Always `--mute-audio`, always close in `finally`.
+- One browser context per person (`browser.createBrowserContext()`): localStorage is shared inside a context, so two people in one context overwrite each other's dev session.
+- Never `waitUntil: 'networkidle0'` on pages with an SSE stream. Use `domcontentloaded` and wait for selectors.
+- Long heredocs with quotes or backslashes break in this shell (`\\d` becomes `\d`): write files with the Write/Edit tools, patch scripts only for plain text.
+- `element.scrollIntoView()` also scrolls `overflow:hidden` ancestors and shifts the whole app frame: `.app` has `overflow: clip`.
+- After the last card the deck is replaced by the interstitial, so a test cannot wait for the counter after the last swipe: wait for the next screen.
+- Screenshots right after a push or a sheet open catch the animation: wait ~600 ms.
+- RTDB rules: a granted `.write` on an ancestor cascades down. The group's `.write` only grants creation (`!data.exists()`), later writes go through narrow child rules.
+- Child writes must not create half groups: member/profile writes require the group (its owner) to exist.
+- An empty object does not exist in RTDB: omit empty `swipes` / `groups`, and keep `members` non-empty (the owner cannot leave).
+- Rules cannot count or iterate, so "only the owner as member at creation" is done with `members/$uid` validate: `data.exists() || $uid === auth.uid`.
+- A read of a missing record is `null` in Firebase, not a 404: the dev server does the same (a 404 shows up as a console error and fails the smoke test).
+- Every behaviour change in `dev-server.mjs` must also be made in `scripts/gen-rules.mjs` (and back); `test/parity.test.js` catches drift. Mutate a rule once to prove the parity test notices.
+- Cosine scores are small (a dislike is about -0.4, not -1): thresholds (least misery 0.15, MMR lambda 0.5) are tuned on that scale.
+- MMR with lambda 0.35 still showed two hotels when the gap was 0.3: lambda 0.5 and a cross-type similarity of 0.25 give three types.
+- Card ids and tokens are database keys and end up in HTML: they must match `[-_A-Za-z0-9]{1,32}`; escape every interpolated value anyway.
+- iOS "add to home screen" uses the manifest `start_url`: no static `<link rel=manifest>`, inject it on non-iOS only. The invite token also lives in localStorage so it survives a sign-in redirect.
+- Share with `navigator.share({ text })` and put the link inside the text (WhatsApp drops a separate `url`).
+- `signInWithRedirect` on iOS can lose the result when the browser partitions third-party storage (authDomain is not the Pages domain): test the real sign-in on an iPhone before announcing it.
+- The service worker caches per `VERSION`, including destination data: bump it when the catalog changes.
+- Windows worktrees check files out with CRLF: patch scripts must normalise line endings (the shell hash already does).
+- The github.io origin is shared with other apps: never load data or config from a query parameter on it (`?dest` is localhost-only), and escape or coerce every field of a data file before it reaches innerHTML.
+- Rules: a stranger knowing a group id must not be enough. Reads are for members, joins prove an invite token (`members/$uid/via`), and removal bans (a plain removal can be undone with the still-valid link).
+- A preview for the invite page lives in its own node (`codes/{token} = {gid, name}`), not in the group. Keep it in sync when the group is renamed.
+- `auth.token.firebase.sign_in_provider !== 'anonymous'` in every .read/.write keeps the anonymous test users out of production. The rules evaluator needs a token on its fake auth.
+- `signInWithRedirect` needs first-party storage (authDomain = the app's origin) on Safari; the popup from the tap handler is the primary path. See docs/auth-ios.md.
+- Node on Windows maps `/tmp` to `C:	mp` while the Git Bash heredoc writes to its own `/tmp`: pass files between them through the scratchpad.

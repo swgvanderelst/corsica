@@ -1,0 +1,605 @@
+<title>Corsica Reisplanner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: smalle koptekst met tabs, daarna per tab kaart + tabel links/boven, tijdlijn en verblijfplaatsen eronder */
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --fg: #1d2a2c;
+  --muted: #5d6c6e;
+  --line: #dcd9d0;
+  --sea: #0f6e7c;
+  --sea-soft: #d8ecee;
+  --maquis: #4c6b3a;
+  --ochre: #c27a1d;
+  --rock: #e6e1d6;
+  --ok: #2f7a3e;
+  --warn: #9a6a00;
+  --no: #a23b32;
+  --route-a: #0f6e7c;
+  --route-b: #c27a1d;
+  --route-c: #7a4a8a;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111b1d; --surface: #182427; --fg: #e8eeee; --muted: #9fb1b3; --line: #2b3b3e;
+    --sea: #5cc0cf; --sea-soft: #1b3a40; --maquis: #9cc384; --ochre: #e6a54c; --rock: #223033;
+    --ok: #7fcf8f; --warn: #e5b94c; --no: #f09088;
+    --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111b1d; --surface: #182427; --fg: #e8eeee; --muted: #9fb1b3; --line: #2b3b3e;
+  --sea: #5cc0cf; --sea-soft: #1b3a40; --maquis: #9cc384; --ochre: #e6a54c; --rock: #223033;
+  --ok: #7fcf8f; --warn: #e5b94c; --no: #f09088;
+  --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+  padding-block: 0 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+a { color: var(--sea); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ochre); outline-offset: 2px; }
+
+header.top { padding-top: 28px; padding-bottom: 8px; }
+header.top .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+header.top h1 { font-size: clamp(32px, 6vw, 52px); margin-top: 6px; }
+header.top p { color: var(--muted); max-width: 62ch; margin: 10px 0 0; }
+
+.tabs-bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); margin-top: 18px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.tabs { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; scrollbar-width: thin; }
+.tab {
+  flex: 0 0 auto; font: inherit; font-weight: 600; font-size: 15px; color: var(--muted); background: transparent;
+  border: 1px solid transparent; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap;
+}
+.tab small { display: block; font-weight: 400; font-size: 12px; }
+.tab[aria-selected="true"] { background: var(--sea); color: #fff; }
+:root[data-theme="dark"] .tab[aria-selected="true"] { color: #0b1517; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tab[aria-selected="true"] { color: #0b1517; } }
+.tab:hover:not([aria-selected="true"]) { border-color: var(--line); color: var(--fg); }
+
+.panel { padding-top: 26px; display: grid; gap: 34px; }
+.panel[hidden] { display: none; }
+
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 24px; align-items: start; }
+.intro h2 { font-size: clamp(26px, 4vw, 36px); }
+.intro .lead { color: var(--muted); margin: 10px 0 16px; max-width: 58ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+.facts li { background: var(--sea-soft); color: var(--fg); border-radius: 6px; padding: 5px 10px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.btn {
+  display: inline-block; background: var(--sea); color: #fff; text-decoration: none; font-weight: 600; border-radius: 8px;
+  padding: 10px 16px; font-size: 15px;
+}
+:root[data-theme="dark"] .btn { color: #0b1517; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn { color: #0b1517; } }
+.btn.alt { background: transparent; color: var(--sea); border: 1px solid var(--sea); }
+.map-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.map-card svg { width: 100%; height: auto; max-height: 560px; display: block; }
+.map-card figcaption { font-size: 13px; color: var(--muted); padding: 6px 4px 2px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); padding: 6px 4px 0; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
+
+.sec-title { font-size: 24px; margin-bottom: 12px; }
+.sec-note { color: var(--muted); font-size: 14px; margin: -6px 0 14px; max-width: 70ch; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+tfoot td { font-weight: 600; background: var(--rock); }
+
+.days { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 6px; }
+.day { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 14px; padding: 4px 0 20px 18px; position: relative; }
+.day::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--sea); }
+.day .d { font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.2; }
+.day .d span { display: block; font-family: var(--font-body); font-weight: 500; font-size: 12px; color: var(--muted); }
+.day .where { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--maquis); }
+.day h4 { font-size: 18px; margin: 2px 0 4px; }
+.day p { margin: 0; color: var(--fg); max-width: 66ch; }
+.day .move { display: inline-block; margin-top: 6px; font-size: 13px; background: var(--rock); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+
+.stay { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 20px; }
+.stay-head { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.stay-head h3 { font-size: 26px; }
+.badge { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stay p.desc { margin: 0; color: var(--muted); max-width: 70ch; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 22px; }
+.cols > * { min-width: 0; }
+.cols h4 { font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-family: var(--font-body); font-weight: 600; }
+.cols ul { margin: 0; padding-left: 18px; }
+.cols li { margin-bottom: 6px; }
+.cols li em { color: var(--muted); font-style: normal; font-size: 14px; }
+.small-link { font-size: 14px; display: inline-block; margin-top: 4px; }
+
+.stays-list { display: grid; gap: 10px; }
+.acc { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.acc .t { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.acc .t a, .acc .t strong { font-weight: 600; }
+.acc p { margin: 0; font-size: 14px; color: var(--muted); }
+.pill { font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 9px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.yes { color: var(--ok); }
+.pill.maybe { color: var(--warn); }
+.pill.no { color: var(--no); }
+.pill.type { color: var(--muted); }
+
+.notice { border: 1px solid var(--ochre); background: var(--surface); border-radius: 10px; padding: 14px 16px; font-size: 15px; }
+.notice strong { font-family: var(--font-display); }
+
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.grid3 > * { min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.card h3 { font-size: 20px; margin-bottom: 6px; }
+.card p { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+.card ul { margin: 0; padding-left: 18px; font-size: 15px; }
+.card li { margin-bottom: 4px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--rock); border-radius: 6px; padding: 3px 9px; font-size: 13px; color: var(--fg); }
+
+footer { color: var(--muted); font-size: 13px; padding-top: 34px; max-width: 74ch; }
+
+@media (max-width: 760px) {
+  .intro { grid-template-columns: minmax(0, 1fr); }
+  .day { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .stay { padding: 16px; }
+}
+@media (prefers-reduced-motion: no-preference) { .tab { transition: background .15s, color .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">Gezin met kinderen van 5 en 7 &middot; juli/augustus &middot; ferry met eigen EV</div>
+    <h1>Corsica Reisplanner</h1>
+    <p>Drie routes van 14 dagen met elk drie of vier verblijfplaatsen, plus een eilandoverzicht. Kies een tab om het dag-voor-dag-schema, de routekaart en de verblijfplaatsen te zien.</p>
+  </header>
+
+  <div class="tabs-bar">
+    <div class="tabs" role="tablist" aria-label="Reisschema's">
+      <button class="tab" role="tab" id="tab-a" aria-controls="panel-a" data-key="a">Route A<small>Balagne, Corte, Porto-Vecchio</small></button>
+      <button class="tab" role="tab" id="tab-b" aria-controls="panel-b" data-key="b">Route B<small>Westkust, Bavella, zuiden</small></button>
+      <button class="tab" role="tab" id="tab-c" aria-controls="panel-c" data-key="c">Route C<small>Grand Tour, 4 plekken</small></button>
+      <button class="tab" role="tab" id="tab-corsica" aria-controls="panel-corsica" data-key="corsica">Corsica<small>Hoogtepunten van het eiland</small></button>
+    </div>
+  </div>
+
+  <main id="panels"></main>
+
+  <footer>
+    Rijtijden en afstanden zijn schattingen voor een gewone personenauto zonder files. In juli en augustus kan een rit 20 tot 30 procent langer duren. Controleer de actuele tijd met de knop &laquo;Open in Google Maps&raquo;. Prijzen, beschikbaarheid en voorzieningen veranderen: bevestig airco, zwembad en stroom (laden van de EV) altijd bij de verhuurder voor je boekt.
+  </footer>
+</div>
+
+<script>
+/* ---------- Kaartdata (lon, lat) ---------- */
+const P = {
+  bastia:[9.45,42.70], stflorent:[9.30,42.68], iler:[8.94,42.63], calvi:[8.76,42.57], pontel:[9.20,42.47],
+  corte:[9.15,42.30], vivario:[9.18,42.12], vizzavona:[9.12,42.12], bocognano:[8.95,42.08], aleria:[9.51,42.10],
+  ghiso:[9.40,42.02], solenzara:[9.40,41.86], portov:[9.28,41.59], zonza:[9.17,41.75], porto:[8.70,42.26],
+  piana:[8.63,42.23], cargese:[8.60,42.14], sagone:[8.70,42.12], ajaccio:[8.74,41.92], petreto:[8.99,41.80],
+  propriano:[8.90,41.68], sartene:[8.97,41.62], figari:[9.10,41.50], bonifacio:[9.16,41.39], folelli:[9.50,42.45],
+  santagiulia:[9.27,41.51], agriates:[9.10,42.67], pianottoli:[9.04,41.51]
+};
+const OUTLINE = [[9.35,43.00],[9.46,42.93],[9.50,42.80],[9.46,42.70],[9.52,42.55],[9.55,42.40],[9.56,42.20],[9.51,42.05],[9.40,41.90],[9.40,41.72],[9.33,41.58],[9.29,41.47],[9.23,41.38],[9.10,41.37],[9.00,41.45],[8.88,41.55],[8.78,41.66],[8.62,41.80],[8.60,41.93],[8.55,42.05],[8.60,42.15],[8.60,42.30],[8.66,42.40],[8.60,42.50],[8.68,42.56],[8.80,42.60],[8.94,42.66],[9.15,42.73],[9.28,42.72],[9.30,42.80],[9.33,42.90]];
+const PLACE = { // naam, label-kant
+  bastia:["Bastia","r"], stflorent:["Saint-Florent","l"], calvi:["Calvi","l"], corte:["Corte","r"], vivario:["Vivario","r"],
+  portov:["Porto-Vecchio","r"], zonza:["Zonza","r"], porto:["Porto / Piana","l"], ajaccio:["Ajaccio","l"], propriano:["Propriano","l"],
+  bonifacio:["Bonifacio","r"], figari:["Figari","l"], iler:["Île-Rousse","r"]
+};
+const X = lon => ((lon - 8.45) * 300).toFixed(1), Y = lat => ((43.05 - lat) * 400).toFixed(1);
+const pt = k => P[k];
+const pathOf = keys => keys.map((k, i) => (i ? "L" : "M") + X(pt(k)[0]) + " " + Y(pt(k)[1])).join(" ");
+
+/* ---------- Verblijfplaatsen ---------- */
+const AIRBNB = n => "https://www.airbnb.nl/s/" + encodeURIComponent(n + ", Corsica") + "/homes";
+const GMAPS_RESTO = n => "https://www.google.com/maps/search/" + encodeURIComponent("restaurants " + n + " Corsica");
+const STAYS = {
+calvi: {
+  name:"Calvi & de Balagne", kind:"Noordwestkust", coast:true,
+  desc:"Lange zandstrand met ondiep water, een citadel op de rots en bergen op de achtergrond. De Balagne is groen, er zijn veel kleine dorpjes en alles ligt dicht bij elkaar. Een goede eerste plek met jonge kinderen.",
+  sights:["Citadel van Calvi (avondwandeling, zeezicht)","Strand van Calvi, 6 km zand en ondiep water","Trinichellu: treintje Calvi - Île-Rousse langs de kust (kinderfavoriet)","Île-Rousse: palmen, oude markthal, strand La Roya","Pigna en Sant'Antonino: bergdorpjes met ambachtswinkels","Lumio en de baai van Arinella"],
+  food:[["Chez Tao","Bar-restaurant in de citadel met uitzicht op de baai, vooral voor de avond"],["A Candella","Corsicaanse keuken in de citadel"],["Il Giardino","Pizza en pasta, makkelijk met kinderen"]],
+  acc:[
+   {n:"Lodge Saleccia, Camping Calvi", u:"https://camping-calvi.com/hebergement/lodge-saleccia/", t:"Safaritent op palen", ac:"no", note:"Safaritent voor 4 personen. De site meldt ventilatoren in plaats van airco."},
+   {n:"Camping Les Castors", u:"https://www.camping-castors.fr/", t:"Mobil-home 4*", ac:"yes", note:"Mobil-homes met airco in meerdere maten. Tentplekken hebben dat niet."},
+   {n:"Camping La Clé des Champs", u:"https://en.balagne-corsica.com/camping/la-cle-des-champs/", t:"Bungalow/chalet", ac:"maybe", note:"Schaduwrijke eucalyptusterrein bij Calvi, bungalow-verhuur vanaf ca. 250 euro per week. Airco navragen."},
+   {n:"Camping Paradella, Calenzana", u:"https://camplinq.com/camps/camping-paradella-43145", t:"Camping met restaurant", ac:"maybe", note:"Grote camping met 120 plekken en eigen restaurant. Verhuur en airco navragen."},
+   {n:"Zelfstandige paviljoens in Lumio", u:AIRBNB("Lumio"), t:"Vakantiehuis", ac:"maybe", note:"Dichtbij het strand van Arinella. Zoek met filters Airco en Zwembad."}
+  ]},
+corte: {
+  name:"Corte & de Restonica", kind:"Binnenland, bergen", coast:false,
+  desc:"De oude hoofdstad van Corsica ligt tussen granietbergen. Van hieruit loop je zo de Restonica in met zijn rivier vol natuurlijke zwempoelen. 's Nachts is het hier koeler dan aan de kust.",
+  sights:["Citadel en Museu di a Corsica","Restonica-vallei: zwempoelen en korte wandelingen","Gorges du Tavignano, korte wandeling naar de eerste brug","Scala di Santa Regina, spectaculaire kloof (korte stop)","Venaco en Vivario: bergdorpjes langs de weg","Pont d'Erchu en de Tavignano-rivier"],
+  food:[["Restaurants in de oude stad Corte","Zoek op Corsicaanse kaas, brocciu en wildzwijnstoof"],["Auberges langs de Restonica","Eenvoudige eetplekken bij de poelen, vaak met lunchgerechten"]],
+  acc:[
+   {n:"Tentenhuisje bij Omessa (Airbnb)", u:AIRBNB("Omessa"), t:"Tent met terras", ac:"maybe", note:"Ca. 9 km van Corte, eigen keuken en douche, beoordeling 5/5 (21 reviews). Airco niet vermeld."},
+   {n:"Hôtel U Palazzu & Spa, Venaco", u:"https://www.fr.lastminute.com/hotel/fr_france/venaco-d1147141590", t:"Hotel", ac:"yes", note:"Kamers met airco en eigen badkamer. Geen tent, wel koel."},
+   {n:"Hotelkamer in Vivario", u:"https://www.alentoor.fr/vivario/hebergement", t:"Hotel", ac:"yes", note:"Compacte kamers (15 m2) met airco."},
+   {n:"Camping Restonica", u:"https://alanrogers.com/campsite/camping-restonica-corsica", t:"Camping", ac:"no", note:"Klassieke camping aan de rivier, open 1 mei tot 1 oktober, geen lodges."},
+   {n:"Gîtes in Corte en omgeving", u:"https://www.gites.fr/gites_vivario_7629.html", t:"Gîte", ac:"maybe", note:"Veel gîtes in de omgeving. Filter op airco."}
+  ]},
+portov: {
+  name:"Porto-Vecchio", kind:"Zuidoostkust", coast:true,
+  desc:"De beste stranden van het eiland liggen hier bij elkaar: Santa Giulia, Palombaggia en Rondinara. Veel strandjes zijn ondiep en kleinschalig. Het is de enige regio waar glamping met airco goed te vinden is.",
+  sights:["Santa Giulia, bijna een zwembad van een baai","Palombaggia, rode rotsen en parasoldennen","Rondinara, een bijna ronde baai met ondiep water","Oude stad en haven van Porto-Vecchio","Bavella-pas en de Aiguilles (dagtocht)","Bonifacio (dagtocht): citadel en grotten per boot"],
+  food:[["Tamaricciu (Palombaggia)","Strandrestaurant met voeten in het zand, reserveren in juli en augustus"],["Pizzeria's in de oude stad","Houtovenpizza en ijs, makkelijk met kinderen"],["Lunch in Bavella-dorpen","Charcuterie en Corsicaanse kaas"]],
+  acc:[
+   {n:"Domaine de Sonia", u:"https://domainedesonia.com/", t:"Koepeltent (dome)", ac:"yes", note:"Tussen Porto-Vecchio en Palombaggia, zwembad. De site meldt dat alle domes reversibele airco hebben. Dit is het dichtst bij een luxe tent."},
+   {n:"Santa Giulia Camara, Lecci Lodge", u:"https://www.fr.lastminute.com/hotel/france/lecci/santa-giulia-room-lecci-lodge_hid-15099978", t:"Lodge", ac:"yes", note:"Zwembad, tuin en terras, airco vermeld. Vanaf ca. 139 euro per nacht."},
+   {n:"Camping Sole di Sari, Solenzara", u:"https://www.campings.com/en-gb/campsite/camping-sole-di-sari-79182", t:"Lodgetenten voor 5", ac:"maybe", note:"Buitenzwembad. Airco staat alleen bij de mobil-homes vermeld. Navragen voor de lodges."},
+   {n:"Camping La Vetta", u:"https://www.pitchup.com/en-au/glamping/france/corse", t:"Familiecamping", ac:"maybe", note:"10 minuten van Porto-Vecchio, in een park met bomen."},
+   {n:"Tipi/glamping bij paardenranch (Airbnb)", u:AIRBNB("Porto-Vecchio"), t:"Tipi", ac:"no", note:"15 km ten noorden van Porto-Vecchio. Geen airco vermeld."}
+  ]},
+porto: {
+  name:"Porto, Piana & Calanques", kind:"Westkust", coast:true,
+  desc:"De rode rotsen van de Calanques de Piana staan op de werelderfgoedlijst. De kust is hier woest, de zee diep blauw. Rondvaarten naar Girolata en Scandola vertrekken vanuit Porto.",
+  sights:["Calanques de Piana: rode granietformaties, korte paden vanaf de D81","Reserve Scandola en Girolata per boot","Porto: genuese toren en strandje","Gorges de Spelunca en Évisa (Aïtone-bos)","Cascade en poelen bij Aïtone","Cargèse: Grieks-orthodoxe en Latijnse kerk tegenover elkaar"],
+  food:[["Restaurants aan de haven van Porto","Verse vis en pizza, veel terrassen"],["Hotelrestaurants in Piana","Uitzicht op de rotsen bij zonsondergang"],["Évisa","Kastanjegerechten (ook ijs en beignets van kastanjemeel)"]],
+  acc:[
+   {n:"Camping Les Calanques de Piana", u:"https://www.toocamp.com/france/camping-les-calanques-de-piana-z97.html", t:"Chalet/mobil-home", ac:"yes", note:"115 units, chalets met airco, overdekt verwarmd zwembad (ca. 28 graden) en peuterbad."},
+   {n:"Camping Les Oliviers, Porto/Ota", u:"https://www.fr.lastminute.com/hotel/france/ota/camping-les-oliviers_hid-4462680", t:"Camping", ac:"yes", note:"Verwarmd buitenbad met jacuzzi en pierenbadje. Alle accommodaties hebben een gekoelde woonruimte."},
+   {n:"Camping Sole e Vista, Porto", u:"https://www.toocamp.com/france/camping-sole-e-vista-c26736.html", t:"Camping", ac:"maybe", note:"Zwembad met glijbaan, kinderclub, zee op minder dan 1 km."},
+   {n:"Camping Torraccia (Cargèse-kant)", u:"https://www.toocamp.com/france/camping-torraccia-c26631.html", t:"Bungalow", ac:"maybe", note:"Zwembad met glijbanen, bungalows voor 4 tot 6 personen."},
+   {n:"Vakantiehuizen in Porto en Ota", u:AIRBNB("Porto"), t:"Vakantiehuis", ac:"maybe", note:"Zoek op Airco en Zwembad."}
+  ]},
+zonza: {
+  name:"Zonza & Bavella", kind:"Binnenland, bergen", coast:false,
+  desc:"Dennenbossen, granietnaalden en bergrivieren met zwempoelen. Het dorp Zonza ligt op 800 m en is 's avonds aangenaam koel. Dit is de plek voor de safaritent in de natuur.",
+  sights:["Col de Bavella en de Aiguilles de Bavella","Zwempoelen in de Solenzara-rivier","Piscines naturelles bij Cascade de Purcaraccia (wandeling, let op hitte)","Levie: museum en megalieten van Cucuruzzu (kinderen kunnen er rondrennen)","Sainte-Lucie-de-Tallano: dorp met marmeren steengroeve","Zicht over de kust vanaf de Bavella-pas"],
+  food:[["Auberge du Col de Bavella","Charcuterie, wild en kastanjepolenta bovenop de pas"],["Dorpscafés in Zonza","Lunch met kaas en hammen van de regio"]],
+  acc:[
+   {n:"Le Pré aux Biches, Les Yourtes de Zonza", u:"https://www.visit-corsica.com/en/Explore-Corsica/Our-inspirations/Inspirations-and-encounters/Top-unusual-accommodation-in-Corsica", t:"Safari lodge-tent, yurt of tipi", ac:"maybe", note:"Park van 70 ha in het Bavella-massief. Airco wordt niet genoemd. In de bergen is het 's nachts koel."},
+   {n:"Lodgetent bij Zonza (Airbnb)", u:AIRBNB("Zonza"), t:"Lodgetent voor 2", ac:"maybe", note:"4 km van Zonza, eigen toegang tot de rivier, beoordeling 4,81 (26 reviews). Voor twee personen, te klein voor jullie."},
+   {n:"Boomhut A Pignata, Levie", u:AIRBNB("Levie"), t:"Boomhut tot 5 personen", ac:"maybe", note:"Een slaapkamer plus suite. Past bij een gezin."},
+   {n:"Glampings rond Zonza (Pitchup)", u:"https://pitchup.com/glamping/france/corse/corse-du-sud/zonza", t:"Overzicht", ac:"maybe", note:"Lijst met glamping in de buurt. Filter zelf op airco."},
+   {n:"Zoekopdracht: tent met airco in Alta Rocca", u:AIRBNB("Zonza"), t:"Zoeklink", ac:"maybe", note:"Gebruik de filters Airco en Hele accommodatie."}
+  ]},
+bonifacio: {
+  name:"Bonifacio & Figari", kind:"Zuidkust", coast:true,
+  desc:"Witte krijtrotsen, een citadel op de klif en het zuiderlijkste puntje van Frankrijk. Figari ligt tussen wijngaarden en stranden, niet ver van Bonifacio. Hier vonden we de beste combinatie van lodge en airco.",
+  sights:["Citadel en haven van Bonifacio","Bootje langs de krijtrotsen en grotten (Grotte du Sdragonato)","Îles Lavezzi: snorkelen in helder water","Rondinara en Santa Manza: ondiepe strandbaaien","Plage de Pinarello en Saint-Cyprien (nabij Porto-Vecchio)","Wijnboeren bij Figari"],
+  food:[["Kissing Pigs, Bonifacio","Bekend adres, reserveren verstandig"],["A Cantina Doria, Bonifacio","Corsicaanse keuken in de citadel"],["Stella d'Oro, Bonifacio","Klassieker in de oude stad"]],
+  acc:[
+   {n:"Un Lit au Pré, Figari", u:"https://www.abracadaroom.com/fr/reservation-un-lit-au-pre-figari-corsica-tente-et-tente-lodge-lodge-figari-corsica-n02-un-lit-au-pre-3094/", t:"Lodge van 45 m2 voor 5", ac:"yes", note:"Twee slaapkamers, airco, privé spa en sauna, op een wijndomein. Prijzen ca. 125 tot 500 euro. Zwembad niet vermeld."},
+   {n:"Lodge Pinède, Pianottoli-Caldarello", u:"https://www.expedia.com/es/Pianotolli-Caldarello.dx6259910", t:"Lodge", ac:"yes", note:"Met airco, 200 m van het strand."},
+   {n:"Résidence A Santa Trinita, Bonifacio", u:"https://www.booking.com/searchresults.nl.html?ss=Residence+A+Santa+Trinita+Bonifacio", t:"Chalets", ac:"yes", note:"Tuin en airco, score 9,3 op basis van 190 reviews."},
+   {n:"Glamping bij Figari (Booking)", u:"https://www.booking.com/glamping/city/fr/figari.ca.html", t:"Overzicht", ac:"maybe", note:"Lijst met glamping. Filter op airco en zwembad."},
+   {n:"Vakantiehuizen rond Bonifacio", u:AIRBNB("Bonifacio"), t:"Vakantiehuis", ac:"maybe", note:"Filter op Airco en Zwembad."}
+  ]},
+stflorent: {
+  name:"Saint-Florent & Cap Corse", kind:"Noordkust", coast:true,
+  desc:"Een jachthaventje met terrassen en vlakbij de bekende stranden van de Désert des Agriates. Cap Corse ligt een stuk noordelijker met genuese torens en kleine havens. Rustig als eerste stop na de ferry.",
+  sights:["Haven en citadel van Saint-Florent","Plage de Saleccia en Lotu in de Agriates (per boot of 4x4-weg)","Plage de Lotu bereikbaar met een boottaxi vanuit Saint-Florent","Nonza, zwart kiezelstrand en toren","Wijngaarden van Patrimonio","Cap Corse: Macinaggio, Centuri, Erbalunga"],
+  food:[["Haven van Saint-Florent","Veel terrassen: vis, pizza, ijs"],["Patrimonio","Wijnhuizen met eenvoudige lunch"]],
+  acc:[
+   {n:"Camping Kalliste (Homair)", u:"https://www.homair.com/camping-saint-florent", t:"Camping 4*", ac:"maybe", note:"Zwembaden. Airco en tentenhuisjes niet bevestigd, bij Homair navragen."},
+   {n:"Camping d'Olzo", u:"https://fr.camping-and-co.com/camping-d-olzo", t:"Camping", ac:"maybe", note:"Veel schaduw, populair bij gezinnen. Alleen reserveren per telefoon."},
+   {n:"Appartement bij de haven met gedeeld zwembad", u:"https://www.mediavacances.com/locations-vacances-bastia/000620000/htg-117d8d8f9e504d22", t:"Appartement", ac:"yes", note:"Met airco en gedeeld zwembad. Geen tent."},
+   {n:"Glamping rond Saint-Florent (Holidu)", u:"https://www.holidu.nl/f/glamping-corsica-frankrijk", t:"Overzicht", ac:"maybe", note:"Verschillende glampings, bijvoorbeeld voor 8 personen vanaf ca. 40 euro per nacht. Controleer airco zelf."},
+   {n:"Vakantiehuizen rond Saint-Florent", u:AIRBNB("Saint-Florent"), t:"Vakantiehuis", ac:"maybe", note:"Filter op Airco en Zwembad."}
+  ]},
+vivario: {
+  name:"Vivario & Vizzavona", kind:"Binnenland, bergen", coast:false,
+  desc:"Beukenbossen, watervallen en het hoogste spoorstation van Corsica. Vizzavona ligt midden op het eiland en is koel, ook in augustus. Een rustige halte voor de lange rit naar het zuidwesten.",
+  sights:["Forêt de Vizzavona met korte boswandelingen","Cascade des Anglais (wandeling van ca. 45 minuten heen)","Treinstation van Vizzavona en de Chemins de fer de la Corse","Pont de Vecchio over de Vecchio-rivier","Zwemmen in de Vecchio","Col de Vizzavona op 1.163 m"],
+  food:[["Hôtel-restaurant U Castellu, Vizzavona","Lunch in het bos, bekende pleisterplaats"],["Brasseries in Vivario en Venaco","Eenvoudige bergkeuken, brocciu"]],
+  acc:[
+   {n:"Hôtel-restaurant U Castellu, Vizzavona", u:"https://www.fr.lastminute.com/hotel/france/vivario/hotel-restaurant-u-castellu-vizzavona_hid-252017", t:"Hotel", ac:"maybe", note:"In het bos. Airco niet bevestigd, maar op deze hoogte vaak niet nodig."},
+   {n:"Tent in Vizzavona (Airbnb)", u:"https://www.airbnb.co.uk/rooms/7447564", t:"Tent", ac:"maybe", note:"Zie de advertentie voor voorzieningen."},
+   {n:"Hôtel U Palazzu & Spa, Venaco", u:"https://www.fr.lastminute.com/hotel/fr_france/venaco-d1147141590", t:"Hotel", ac:"yes", note:"Kamers met airco en eigen badkamer."},
+   {n:"Bivouac de la Halte du Prince", u:"https://www.visit-corsica.com/fr/Accueil/Inspirations-corses/Inspirations-responsables-et-detente/Top-des-hebergements-insolites-en-Corse", t:"Wandelbivak", ac:"no", note:"Tweepersoonstenten aan de GR20 voor wandelaars. Te basaal voor een gezin."},
+   {n:"Gîtes in Vivario", u:"https://www.gites.fr/gites_vivario_7629.html", t:"Gîte", ac:"maybe", note:"Meerdere gîtes. Filter op airco."}
+  ]},
+propriano: {
+  name:"Propriano & de Golf van Valinco", kind:"Zuidwestkust", coast:true,
+  desc:"Een brede baai met zandstrand, een gezellig havenstadje en prehistorische sites vlakbij. Tussen Ajaccio en Bonifacio is dit een logische tussenstop.",
+  sights:["Strand van Portigliolo en Baraci","Filitosa: megalieten uit de steentijd, kindvriendelijk","Sartène: granieten stad en de Catenacciu-processie (Goede Vrijdag)","Tizzano en de kust bij Roccapina (Leeuw van Roccapina)","Olmeto-Plage","Haven van Propriano"],
+  food:[["Haven van Propriano","Terrassen met vis en pizza"],["Sartène","Corsicaanse specialiteiten op het plein"]],
+  acc:[
+   {n:"Camping L'Esplanade, Olmeto", u:"https://www.visit-corsica.com/fr/Mes-Favoris/L-ESPLANADE", t:"Tentenlodge en mobil-home 4*", ac:"maybe", note:"Zwembad en direct strand, 5 km van Propriano. Mobil-homes met reversibele airco. Voor de lodgetenten is dat niet bevestigd."},
+   {n:"Camping Tikiti, Propriano", u:"https://www.toocamp.com/france/camping-tikiti-c26731.html", t:"Bungalow", ac:"maybe", note:"56 bungalows, zwembad van 200 m2 met waterval en kinderbad."},
+   {n:"Domaine Sarra di Sole, Pietrosella", u:"https://www.airbnb.com/rooms/34070863", t:"Safaritent op palen", ac:"maybe", note:"Zicht over de Golf van Ajaccio met zwembad. Ca. 1 uur van Propriano, ideaal als tussenstop. Airco niet vermeld."},
+   {n:"Vakantiehuizen rond Propriano", u:AIRBNB("Propriano"), t:"Vakantiehuis", ac:"maybe", note:"Filter op Airco en Zwembad."},
+   {n:"Glamping rond Propriano (Holidu)", u:"https://www.holidu.nl/f/glamping-corsica-frankrijk", t:"Overzicht", ac:"maybe", note:"Onder meer verhuur voor 4 personen met zwembad, vanaf ca. 43 euro per nacht."}
+  ]}
+};
+
+/* ---------- Routes ---------- */
+const ROUTES = {
+a: {
+  color:"--route-a", title:"Klassiek: Balagne, de bergen en het zuidoosten",
+  lead:"Eerst het groene noordwesten rond Calvi, dan twee nachten verder de bergen in bij Corte, daarna zes nachten aan de stranden van Porto-Vecchio. Weinig lange ritten. De ferry vertrekt en komt aan in Bastia.",
+  ferry:"Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona. Boek in juli en augustus zo vroeg mogelijk, ook voor de EV.",
+  stops:["bastia","calvi","corte","portov","bastia"], stays:["calvi","corte","portov"],
+  legs:[
+   {from:"Bastia", to:"Calvi", km:92, time:"2 u 00", via:["bastia","stflorent","agriates","iler","calvi"]},
+   {from:"Calvi", to:"Corte", km:85, time:"1 u 50", via:["calvi","iler","pontel","corte"]},
+   {from:"Corte", to:"Porto-Vecchio", km:155, time:"2 u 45", via:["corte","aleria","ghiso","solenzara","portov"]},
+   {from:"Porto-Vecchio", to:"Bastia", km:135, time:"2 u 20", via:["portov","solenzara","ghiso","aleria","folelli","bastia"]}
+  ],
+  days:[
+   ["Calvi","Aankomst en eerste strandmiddag","Ferry komt aan in Bastia. Rijd via Saint-Florent naar Calvi (2 uur). Inchecken, zwemmen in de baai en vroeg naar bed.","Bastia - Calvi, 2 u"],
+   ["Calvi","Strand en citadel","Ochtend op het strand van Calvi, ondiep en rustig. Aan het eind van de middag de citadel op voor ijsjes en uitzicht.",""],
+   ["Calvi","Treinroute naar Île-Rousse","Met het Trinichellu-treintje langs de kust naar Île-Rousse. Lunch, schaduw onder de markthal en zwemmen bij het stadsstrand.",""],
+   ["Calvi","Bergdorpjes of rustdag","Pigna en Sant'Antonino met winkeltjes van ambachtslieden, of een luie dag aan de baai van Arinella bij Lumio met snorkelmasker.",""],
+   ["Corte","Naar de bergen","Via Île-Rousse en Ponte-Leccia naar Corte (2 uur). Citadel van Corte beklimmen en eten in de oude stad.","Calvi - Corte, 1 u 50"],
+   ["Corte","Restonica-rivier","Rijd de Restonica-vallei in en zoek een natuurlijk zwempoeltje. Korte wandeling langs de rivier. Neem eten mee.",""],
+   ["Corte","Kloof en dorpjes","Stop bij Scala di Santa Regina en wandel een stukje in de Gorges du Tavignano. Rustige middag in Corte.",""],
+   ["Porto-Vecchio","Op weg naar het zuiden","Via de oostkust naar Porto-Vecchio. Pauze bij de Romeinse opgraving in Aléria. Middag zwemmen op Santa Giulia.","Corte - Porto-Vecchio, 2 u 45"],
+   ["Porto-Vecchio","Palombaggia","Dagje op het strand van Palombaggia met rode rotsen en parasoldennen. Lunch bij een strandtent.",""],
+   ["Porto-Vecchio","Bavella","Autotocht omhoog naar de Col de Bavella. Zwemmen in de Solenzara-rivier. Terug langs de kust.",""],
+   ["Porto-Vecchio","Bonifacio","Bonifacio: citadel en een bootje langs de krijtrotsen. Terug via Rondinara voor een late duik.",""],
+   ["Porto-Vecchio","Rondinara en Santa Manza","Ondiepe baaien en een rustige dag. Kinderen kunnen ver het water in.",""],
+   ["Porto-Vecchio","Laatste strandmiddag","Oude stad van Porto-Vecchio, souvenirs en een afscheidsdiner bij Tamaricciu of in de stad.",""],
+   ["Bastia","Terug naar de ferry","Via de oostkust terug naar Bastia (2 uur 20). Kies een ferry aan het eind van de dag.","Porto-Vecchio - Bastia, 2 u 20"]
+  ]
+},
+b: {
+  color:"--route-b", title:"Wilde westkust, Bavella en het zuiden",
+  lead:"Aankomst in Ajaccio en direct naar de rode rotsen van Piana en Porto. Dan naar de koele bergen bij Zonza en als laatste zes nachten aan de zuidkust bij Bonifacio en Figari, met de beste kans op een lodge met airco. Twee lange ritten, beide met een natuurlijke stop.",
+  ferry:"Ferry naar Ajaccio, bijvoorbeeld vanaf Marseille, Toulon of Nice. De nachtboot scheelt een hotelnacht.",
+  stops:["ajaccio","porto","zonza","bonifacio","ajaccio"], stays:["porto","zonza","bonifacio"],
+  legs:[
+   {from:"Ajaccio", to:"Porto", km:85, time:"2 u 15", via:["ajaccio","sagone","cargese","piana","porto"]},
+   {from:"Porto", to:"Zonza", km:165, time:"3 u 30", via:["porto","piana","cargese","sagone","ajaccio","petreto","zonza"]},
+   {from:"Zonza", to:"Bonifacio / Figari", km:75, time:"1 u 30", via:["zonza","portov","figari","bonifacio"]},
+   {from:"Figari", to:"Ajaccio", km:125, time:"2 u 20", via:["figari","sartene","propriano","petreto","ajaccio"]}
+  ],
+  days:[
+   ["Porto","Ferry en de rode kust","Aankomst in Ajaccio. Rijd de D81 langs de golf van Sagone en Cargèse naar Porto (2 uur 15). Stop in Cargèse voor een ijsje.","Ajaccio - Porto, 2 u 15"],
+   ["Porto","Calanques de Piana","Korte stops op de D81, pad naar de Chien de Pierre als de kinderen het aankunnen. Zwemmen bij Porto.",""],
+   ["Porto","Boot naar Girolata","Rondvaart naar Girolata en Scandola (kies de korte route, ongeveer 3 uur). Snorkelen kan bij de stop.",""],
+   ["Porto","Aïtone en kloven","Rijd naar Évisa en het Aïtone-bos voor frisse lucht en een korte wandeling naar de poelen. Terug langs de Gorges de Spelunca.",""],
+   ["Zonza","Naar Zonza","Lange rit via Ajaccio. Lunch in Ajaccio en een uur in de stad, daarna verder naar Zonza.","Porto - Zonza, 3 u 30"],
+   ["Zonza","Col de Bavella","De Aiguilles de Bavella zien, korte wandeling bij de pas en lunch bij de auberge.",""],
+   ["Zonza","Rivier en megalieten","Zwempoelen in de Solenzara-rivier. Namiddag bij de megalieten van Cucuruzzu bij Levie.",""],
+   ["Bonifacio","Naar het zuiden","Af naar Porto-Vecchio en via de kust naar Figari/Bonifacio. Check-in en zwembad.","Zonza - Figari, 1 u 30"],
+   ["Bonifacio","Bonifacio","Citadel, haven en een bootje langs de krijtrotsen en grotten.",""],
+   ["Bonifacio","Îles Lavezzi","Boottocht naar de Lavezzi-eilanden. Snorkelen in het heldere water. Neem een zonnehoed mee.",""],
+   ["Bonifacio","Rondinara en Santa Manza","Ondiepe baaien dicht bij het zuiden. Rustig dagje aan het water.",""],
+   ["Bonifacio","Wijndomein en strand","Bezoek aan een wijnboer bij Figari met sap voor de kinderen, daarna strand bij Pinarello of Cala di Roccapina.",""],
+   ["Bonifacio","Rustdag","Zwembad, lui ontbijt en een wandeling door de oude stad.",""],
+   ["Ajaccio","Terug naar de ferry","Via Sartène en Propriano naar Ajaccio (2 uur 20). Stop bij Filitosa als het past.","Figari - Ajaccio, 2 u 20"]
+  ]
+},
+c: {
+  color:"--route-c", title:"Grand Tour met vier verblijfplaatsen",
+  lead:"Het meeste afwisseling: noordkust, bergbos van Vizzavona, zuidwestelijke golf en de oostelijke stranden. De ferry vertrekt en komt aan in Bastia. Vier verblijfplaatsen betekent drie extra keer inpakken, dus plan korte etappes.",
+  ferry:"Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona.",
+  stops:["bastia","stflorent","vivario","propriano","portov","bastia"], stays:["stflorent","vivario","propriano","portov"],
+  legs:[
+   {from:"Bastia", to:"Saint-Florent", km:22, time:"0 u 40", via:["bastia","stflorent"]},
+   {from:"Saint-Florent", to:"Vivario", km:110, time:"2 u 15", via:["stflorent","pontel","corte","vivario"]},
+   {from:"Vivario", to:"Propriano", km:100, time:"2 u 00", via:["vivario","vizzavona","bocognano","ajaccio","propriano"]},
+   {from:"Propriano", to:"Porto-Vecchio", km:85, time:"1 u 45", via:["propriano","sartene","figari","portov"]},
+   {from:"Porto-Vecchio", to:"Bastia", km:135, time:"2 u 20", via:["portov","solenzara","ghiso","aleria","folelli","bastia"]}
+  ],
+  days:[
+   ["Saint-Florent","Aankomst","Ferry naar Bastia, korte rit naar Saint-Florent (40 minuten). Rond de haven wandelen en eten.","Bastia - Saint-Florent, 40 min"],
+   ["Saint-Florent","Agriates met de boot","Boottaxi naar Lotu of Saleccia, witte stranden met turquoise water. Neem water en schaduw mee.",""],
+   ["Saint-Florent","Nonza en wijngaarden","Via Patrimonio naar Nonza (zwart strand). Naar de torens van Cap Corse als er energie is.",""],
+   ["Vivario","Naar de bergen","Over Ponte-Leccia en Corte naar Vivario (2 uur 15). Boswandeling en zwemmen in de Vecchio.","Saint-Florent - Vivario, 2 u 15"],
+   ["Vivario","Cascade des Anglais","Korte wandeling naar de waterval en poelen. Met het treintje van Vizzavona een stukje meerijden.",""],
+   ["Vivario","Corte en Restonica","Dagtocht naar Corte en de Restonica-vallei voor zwemmen in de rivier.",""],
+   ["Propriano","Naar de golf van Valinco","Over de Col de Vizzavona en door Ajaccio naar Propriano. Lunch in Ajaccio of onderweg bij Sarra di Sole.","Vivario - Propriano, 2 u"],
+   ["Propriano","Filitosa","Bezoek aan de megalieten van Filitosa, speelse ontdekkingstocht voor kinderen. Strand daarna.",""],
+   ["Propriano","Sartène en Roccapina","Rondje Sartène en de Leeuw van Roccapina. Strand voor de rest van de dag.",""],
+   ["Porto-Vecchio","Naar het oosten","Via Sartène en Bonifacio-kant naar Porto-Vecchio. Een middag op Santa Giulia.","Propriano - Porto-Vecchio, 1 u 45"],
+   ["Porto-Vecchio","Palombaggia","Strand van Palombaggia en lunch aan het water.",""],
+   ["Porto-Vecchio","Bavella of Bonifacio","Dagtocht naar de Col de Bavella of een bootje bij Bonifacio.",""],
+   ["Porto-Vecchio","Rondinara en laatste strand","Ondiepe baai voor een vrije dag. Afscheidsdiner in Porto-Vecchio.",""],
+   ["Bastia","Terug naar de ferry","Via de oostkust naar Bastia (2 uur 20). Plan een ferry aan het eind van de dag.","Porto-Vecchio - Bastia, 2 u 20"]
+  ]
+}
+};
+
+/* ---------- Eilandoverzicht ---------- */
+const ISLAND = {
+ regions:[
+  ["Cap Corse & Bastia","Genuese torens, wijngaarden, kleine havens. Bastia heeft een oude haven en een citadel.",["Nonza","Erbalunga","Centuri","Macinaggio"]],
+  ["Balagne","Calvi, Île-Rousse en bergdorpjes vol ambachtslieden. Groen en vruchtbaar.",["Calvi","Île-Rousse","Pigna","Lumio"]],
+  ["Westkust","Rode rotsen van Piana, Porto, Scandola, Girolata en de Spelunca-kloof.",["Calanques de Piana","Scandola","Girolata","Évisa"]],
+  ["Ajaccio & omgeving","Napoleons geboortestad met musea en een stadsstrand. Sanguinaires-eilanden aan de overkant.",["Maison Bonaparte","Îles Sanguinaires","Cargèse"]],
+  ["Midden en bergen","Corte, Restonica, Vizzavona en het GR20-pad. Koel, groen en vol rivieren.",["Corte","Restonica","Vizzavona","Scala di Santa Regina"]],
+  ["Oostkust","Lange vlakke kust met stranden, lagunes en Romeinse resten bij Aléria.",["Aléria","Étang de Diane","Solenzara"]],
+  ["Alta Rocca & Bavella","Dennenbossen, Aiguilles, zwempoelen en dorpjes op 800 m.",["Bavella","Zonza","Levie","Cucuruzzu"]],
+  ["Zuiden","Bonifacio, Porto-Vecchio, Figari en de stranden Palombaggia en Santa Giulia.",["Bonifacio","Lavezzi","Rondinara","Palombaggia"]],
+  ["Zuidwesten","Golf van Valinco met Propriano, Sartène, Filitosa en Roccapina.",["Filitosa","Sartène","Roccapina","Propriano"]]
+ ],
+ highlights:[
+  ["Calanques de Piana","UNESCO-werelderfgoed. Rode granietrotsen langs de D81."],
+  ["Réserve de Scandola","Beschermd natuurreservaat, alleen per boot vanuit Porto of Calvi."],
+  ["Girolata","Dorpje dat je alleen per boot of te voet bereikt."],
+  ["Bonifacio","Citadel op krijtrotsen, uitzicht tot Sardinië."],
+  ["Îles Lavezzi","Granieten eilandjes met helder water, snorkelen."],
+  ["Palombaggia en Santa Giulia","Twee van de bekendste stranden van het eiland."],
+  ["Rondinara","Bijna ronde baai, ondiep water."],
+  ["Saleccia en Lotu","Witte stranden in de Désert des Agriates."],
+  ["Col de Bavella","Bergpas met de Aiguilles de Bavella."],
+  ["Restonica","Rivier met zwempoelen en meren hoger op."],
+  ["Gorges de Spelunca","Diepe kloof bij Évisa, oude Genuese bruggen."],
+  ["Filitosa","Megalieten uit de bronstijd."],
+  ["Cap Corse","Smalle bochtige kustweg met torens en havens."],
+  ["Corte","Hart van Corsica, universiteit en citadel."],
+  ["Ajaccio","Geboorteplaats van Napoleon."],
+  ["Sartène","Donkere granieten stad op een heuvel."]
+ ],
+ kids:[
+  ["Trinichellu","Treintje Calvi - Île-Rousse langs de kust."],
+  ["Bootjes","Rondvaart Bonifacio-grotten, Scandola, Lavezzi, Agriates."],
+  ["Zwempoelen","Restonica, Solenzara, Vecchio, Tavignano."],
+  ["Filitosa en Cucuruzzu","Prehistorische stenen, veel ruimte om te rennen."],
+  ["Ondiepe baaien","Santa Giulia, Rondinara, Calvi, Santa Manza."],
+  ["Treinreis in de bergen","Chemins de fer de la Corse tussen Bastia, Ajaccio, Corte en Calvi."]
+ ],
+ tips:[
+  ["Hitte","In juli en augustus loopt het kwik tot 35 graden. Plan activiteiten 's ochtends vroeg of na 17 uur. Hoogte brengt verkoeling."],
+  ["Wegen","Bergwegen zijn smal en bochtig, gemiddeld tempo ca. 40 km/u. Plan maximaal 3 uur rijden per dag."],
+  ["Ferry's","Corsica Ferries, Corsica Linea, La Méridionale en Moby varen onder meer vanuit Livorno, Savona, Genua, Nice, Toulon en Marseille. Boek een auto met EV vroeg."],
+  ["EV","Laadpunten zijn in dit overzicht weggelaten. Vraag bij elke accommodatie of er stroom of een laadpunt is."],
+  ["Brandgevaar","Sommige bossen zijn in de zomer afgesloten. Vuur stoken is verboden."],
+  ["Kinderen","Autostoelen en zonnecrème meenemen, strandschoenen helpen bij kiezelstrandjes."]
+ ]
+};
+
+/* ---------- Helpers ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const acLabel = a => a === "yes" ? ["yes","Airco vermeld"] : a === "no" ? ["no","Geen airco"] : ["maybe","Airco niet bevestigd"];
+const gmapsDir = route => {
+  const stopsNames = {bastia:"Bastia, Corsica", calvi:"Calvi, Corsica", corte:"Corte, Corsica", portov:"Porto-Vecchio, Corsica", ajaccio:"Ajaccio, Corsica",
+    porto:"Porto, Corsica", zonza:"Zonza, Corsica", bonifacio:"Bonifacio, Corsica", stflorent:"Saint-Florent, Corsica", vivario:"Vivario, Corsica", propriano:"Propriano, Corsica"};
+  const s = route.stops.map(k => stopsNames[k]);
+  return "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=" + encodeURIComponent(s[0]) + "&destination=" + encodeURIComponent(s[s.length-1]) +
+    "&waypoints=" + encodeURIComponent(s.slice(1,-1).join("|"));
+};
+
+function mapSvg(route) {
+  const col = `var(${route.color})`;
+  let svg = `<svg viewBox="0 0 330 700" role="img" aria-label="Routekaart van Corsica met de route en verblijfplaatsen" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<path d="M${OUTLINE.map(p => X(p[0]) + " " + Y(p[1])).join(" L")} Z" fill="var(--rock)" stroke="var(--line)" stroke-width="1.5" stroke-linejoin="round"/>`;
+  svg += `<ellipse cx="${X(9.05)}" cy="${Y(42.20)}" rx="38" ry="105" fill="var(--maquis)" opacity=".18" transform="rotate(-8 ${X(9.05)} ${Y(42.20)})"/>`;
+  svg += `<text x="${X(9.03)}" y="${Y(42.20)}" font-size="10" text-anchor="middle" fill="var(--muted)" font-style="italic">bergen</text>`;
+  route.legs.forEach(l => { svg += `<path d="${pathOf(l.via)}" fill="none" stroke="${col}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 0"/>`; });
+  Object.keys(PLACE).forEach(k => { // context-plaatsen
+    if (route.stops.includes(k)) return;
+    const c = pt(k); svg += `<circle cx="${X(c[0])}" cy="${Y(c[1])}" r="2.6" fill="var(--muted)"/>`;
+  });
+  const shown = [];
+  route.stops.forEach((k, i) => {
+    const c = pt(k); const label = PLACE[k][0]; const side = PLACE[k][1];
+    const isStay = route.stays.includes(k); const first = !shown.includes(k); shown.push(k);
+    svg += `<circle cx="${X(c[0])}" cy="${Y(c[1])}" r="${isStay ? 8 : 6}" fill="${isStay ? col : 'var(--surface)'}" stroke="${col}" stroke-width="2.4"/>`;
+    if (isStay && first) {
+      const n = route.stays.indexOf(k) + 1;
+      svg += `<text x="${X(c[0])}" y="${(+Y(c[1]) + 3.6).toFixed(1)}" font-size="10.5" font-weight="700" text-anchor="middle" fill="var(--surface)">${n}</text>`;
+    }
+    if (first) {
+      const dx = side === "l" ? -13 : 13;
+      svg += `<text x="${(+X(c[0]) + dx).toFixed(1)}" y="${(+Y(c[1]) + 4).toFixed(1)}" font-size="12.5" font-weight="${isStay ? 700 : 500}" text-anchor="${side === 'l' ? 'end' : 'start'}" fill="var(--fg)" stroke="var(--rock)" stroke-width="3" paint-order="stroke">${label}</text>`;
+    }
+  });
+  svg += `</svg>`;
+  return svg;
+}
+
+function totals(route) {
+  const km = route.legs.reduce((a, l) => a + l.km, 0);
+  const min = route.legs.reduce((a, l) => { const m = l.time.match(/(\d+) u (\d+)/); return a + (+m[1]) * 60 + (+m[2]); }, 0);
+  return { km, time: Math.floor(min / 60) + " u " + String(min % 60).padStart(2, "0") };
+}
+
+function renderStay(id, num) {
+  const s = STAYS[id];
+  const sights = s.sights.map(x => `<li>${esc(x)}</li>`).join("");
+  const food = s.food.map(f => `<li><strong>${esc(f[0])}</strong><br><em>${esc(f[1])}</em></li>`).join("");
+  const acc = s.acc.map(a => { const [cls, txt] = acLabel(a.ac);
+    return `<div class="acc"><div class="t"><a href="${esc(a.u)}" target="_blank" rel="noopener">${esc(a.n)}</a><span class="pill type">${esc(a.t)}</span><span class="pill ${cls}">${txt}</span></div><p>${esc(a.note)}</p></div>`;
+  }).join("");
+  return `<article class="stay">
+    <div class="stay-head"><h3>${num}. ${esc(s.name)}</h3><span class="badge">${esc(s.kind)}</span></div>
+    <p class="desc">${esc(s.desc)}</p>
+    <div class="cols">
+      <div><h4>Bezienswaardigheden</h4><ul>${sights}</ul></div>
+      <div><h4>Waar eten</h4><ul>${food}</ul><a class="small-link" href="${GMAPS_RESTO(s.name.split(" & ")[0].split(",")[0])}" target="_blank" rel="noopener">Restaurants op Google Maps</a></div>
+    </div>
+    <div><h4 style="font-family:var(--font-body);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600">Slapen: ${s.acc.length} opties</h4><div class="stays-list">${acc}</div></div>
+  </article>`;
+}
+
+function renderRoute(key) {
+  const r = ROUTES[key], t = totals(r);
+  const nStays = r.stays.length;
+  const legs = r.legs.map(l => `<tr><td>${esc(l.from)}</td><td>${esc(l.to)}</td><td>${l.km} km</td><td>${l.time}</td></tr>`).join("");
+  const days = r.days.map((d, i) => `<div class="day"><div class="d">Dag ${i + 1}<span>${esc(d[0])}</span></div><div><div class="where">${esc(d[0])}</div><h4>${esc(d[1])}</h4><p>${esc(d[2])}</p>${d[3] ? `<span class="move">Rit: ${esc(d[3])}</span>` : ""}</div></div>`).join("");
+  const stays = r.stays.map((id, i) => renderStay(id, i + 1)).join("");
+  return `
+  <section class="intro">
+    <div>
+      <h2>${esc(r.title)}</h2>
+      <p class="lead">${esc(r.lead)}</p>
+      <ul class="facts"><li>14 dagen</li><li>${nStays} verblijfplaatsen</li><li>${t.km} km totaal</li><li>${t.time} rijden totaal</li></ul>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--muted)">${esc(r.ferry)}</p>
+      <a class="btn" href="${gmapsDir(r)}" target="_blank" rel="noopener">Open route in Google Maps</a>
+    </div>
+    <figure class="map-card" style="margin:0">
+      ${mapSvg(r)}
+      <figcaption>Schematische kaart. De genummerde cirkels zijn verblijfplaatsen, de lijn volgt de route.</figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3 class="sec-title">Ritten en rijtijden</h3>
+    <p class="sec-note">Alleen de ritten tussen verblijfplaatsen, zonder dagtochten. Schatting zonder files.</p>
+    <div class="table-scroll"><table><thead><tr><th>Van</th><th>Naar</th><th>Afstand</th><th>Rijtijd</th></tr></thead><tbody>${legs}</tbody><tfoot><tr><td colspan="2">Totaal</td><td>${t.km} km</td><td>${t.time}</td></tr></tfoot></table></div>
+  </section>
+  <section>
+    <h3 class="sec-title">Dag voor dag</h3>
+    <div class="days">${days}</div>
+  </section>
+  <section>
+    <h3 class="sec-title">De verblijfplaatsen</h3>
+    <div class="notice"><strong>Over de safaritenten met airco.</strong> Safaritenten met bevestigde airco zijn op Corsica zeldzaam. De meeste bekende lodgetenten melden ventilatoren of niets over koeling. Het label bij elke optie laat zien wat er online staat. Waar het &laquo;niet bevestigd&raquo; zegt, is een mail of telefoontje naar de eigenaar nodig.</div>
+    <div style="display:grid;gap:18px;margin-top:18px">${stays}</div>
+  </section>`;
+}
+
+function renderCorsica() {
+  const regions = ISLAND.regions.map(r => `<article class="card"><h3>${esc(r[0])}</h3><p>${esc(r[1])}</p><div class="chips">${r[2].map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div></article>`).join("");
+  const hl = ISLAND.highlights.map(h => `<li><strong>${esc(h[0])}</strong> &middot; ${esc(h[1])}</li>`).join("");
+  const kids = ISLAND.kids.map(h => `<li><strong>${esc(h[0])}</strong> &middot; ${esc(h[1])}</li>`).join("");
+  const tips = ISLAND.tips.map(h => `<li><strong>${esc(h[0])}</strong> &middot; ${esc(h[1])}</li>`).join("");
+  const allStays = Object.keys(PLACE).length;
+  return `
+  <section class="intro">
+    <div>
+      <h2>Corsica in één oogopslag</h2>
+      <p class="lead">Het eiland is 183 km lang en 83 km breed, met bergen tot 2.706 m. De kustwegen zijn traag, de binnenwegen nog meer. Hieronder zie je de regio's, hoogtepunten, wat kinderen leuk vinden en praktische tips.</p>
+      <ul class="facts"><li>8.680 km2</li><li>183 x 83 km</li><li>Hoogste top: Monte Cinto, 2.706 m</li></ul>
+      <a class="btn" href="https://www.google.com/maps/place/Corsica" target="_blank" rel="noopener">Open Corsica in Google Maps</a>
+    </div>
+    <figure class="map-card" style="margin:0">
+      ${mapSvg({color:"--sea", stops:["bastia","calvi","porto","ajaccio","propriano","bonifacio","portov","corte"], stays:[], legs:[]}).replace(/<circle cx="[^"]+" cy="[^"]+" r="6"[^>]*\/>/g, m => m.replace('fill="var(--surface)"','fill="var(--sea)"'))}
+      <figcaption>Belangrijke plaatsen op het eiland.</figcaption>
+    </figure>
+  </section>
+  <section><h3 class="sec-title">De negen streken</h3><div class="grid3">${regions}</div></section>
+  <section><h3 class="sec-title">Hoogtepunten</h3><div class="card"><ul>${hl}</ul></div></section>
+  <section><h3 class="sec-title">Leuk met kinderen van 5 en 7</h3><div class="card"><ul>${kids}</ul></div></section>
+  <section><h3 class="sec-title">Praktisch</h3><div class="card"><ul>${tips}</ul></div></section>`;
+}
+
+/* ---------- Tabs ---------- */
+const panels = document.getElementById("panels");
+const keys = ["a","b","c","corsica"];
+keys.forEach(k => {
+  const p = document.createElement("div");
+  p.className = "panel"; p.id = "panel-" + k; p.setAttribute("role","tabpanel"); p.setAttribute("aria-labelledby","tab-" + k); p.hidden = true;
+  p.innerHTML = k === "corsica" ? renderCorsica() : renderRoute(k);
+  panels.appendChild(p);
+});
+const tabs = [...document.querySelectorAll(".tab")];
+function select(k, focus) {
+  if (!keys.includes(k)) k = "a";
+  tabs.forEach(t => { const on = t.dataset.key === k; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+  keys.forEach(x => document.getElementById("panel-" + x).hidden = x !== k);
+  try { history.replaceState(null, "", "#" + k); } catch (e) {}
+}
+tabs.forEach((t, i) => {
+  t.addEventListener("click", () => { select(t.dataset.key); window.scrollTo({top: 0}); });
+  t.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") { e.preventDefault(); select(tabs[(i + 1) % tabs.length].dataset.key, true); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); select(tabs[(i + tabs.length - 1) % tabs.length].dataset.key, true); }
+  });
+});
+select((location.hash || "").slice(1));
+addEventListener("hashchange", () => select((location.hash || "").slice(1)));
+</script>

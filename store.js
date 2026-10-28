@@ -1,0 +1,11 @@
+// Picks the backend adapter. Both expose the same interface (see store-dev.js).
+// localhost / 127.0.0.1 -> dev server (never touches the real database); ?prod=1 forces Firebase. Other hosts always use Firebase.
+import { firebaseConfig } from './firebase-config.js';
+
+const q = new URLSearchParams(location.search);
+export const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+export const usesDev = isLocal && (!firebaseConfig || q.get('prod') !== '1');
+if (!usesDev && !firebaseConfig) throw Object.assign(new Error('no firebase config'), { code: 'no-config' });
+
+const mod = usesDev ? await import('./store-dev.js') : await import('./store-firebase.js');
+export const store = await mod.createStore(firebaseConfig);

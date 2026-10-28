@@ -1,0 +1,4 @@
+*.log
+.devdata.json
+node_modules/
+shots/

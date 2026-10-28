@@ -1,0 +1,18 @@
+{
+  "id": "corsica",
+  "name": "Corsica",
+  "center": [42.15, 9.1],
+  "zoom": 8,
+  "tags": "destinations/tags.json",
+  "places": "destinations/corsica/places.json",
+  "routes": "destinations/corsica/routes.json",
+  "catalogs": [
+    "destinations/corsica/catalog-northwest.json",
+    "destinations/corsica/catalog-inland.json",
+    "destinations/corsica/catalog-southeast.json"
+  ],
+  "deck": "destinations/swipe-deck.json",
+  "credits": "destinations/corsica/credits.json",
+  "base": "destinations/corsica/",
+  "stayImages": "destinations/corsica/stay-img/"
+}

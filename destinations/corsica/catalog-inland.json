@@ -1,0 +1,2068 @@
+{
+ "accommodations": [
+  {
+   "id": "acc-corte-dominique-colonna",
+   "name": "Hôtel Dominique Colonna",
+   "region": "corte",
+   "url": "https://www.dominique-colonna.com/",
+   "lat": 42.2929,
+   "lon": 9.1408,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1.0,
+    "pool": 0.8,
+    "mountain_view": 0.7,
+    "modern": 0.6,
+    "secluded": 0.3,
+    "airco": 1.0
+   },
+   "desc": "Rustig hotel met buitenzwembad aan de ingang van de Restonica-vallei, op 1 km van het centrum van Corte.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-corte-dominique-colonna.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Johann Jaritz",
+    "page": "https://commons.wikimedia.org/wiki/File:P%C3%B6rtschach_Hauptstrasse_161_P%C3%B6rtschacher_Hof_Swimming_Pool_21012016_0244.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-corte-casa-di-a-restonica",
+   "name": "Casa di a Restonica",
+   "region": "corte",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/CASA-DI-A-RESTONICA",
+   "lat": 42.2997,
+   "lon": 9.1474,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "pool": 0.9,
+    "mountain_view": 0.6,
+    "family": 0.5,
+    "modern": 0.5,
+    "airco": 0.7
+   },
+   "desc": "Driesterrenhotel met buitenzwembad en terras, aan de weg de Restonica in.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-corte-casa-di-a-restonica.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Bernard Gagnon",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool_at_Hotel_Terra_Barichara.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-corte-jardins-de-la-glaciere",
+   "name": "Les Jardins de la Glacière",
+   "region": "corte",
+   "url": "https://www.lesjardinsdelaglaciere.com/",
+   "lat": 42.294,
+   "lon": 9.1437,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1.0,
+    "pool": 0.8,
+    "spa": 0.8,
+    "mountain_view": 0.6,
+    "restaurant": 0.5,
+    "family": 0.4,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Hotel in de Restonica-vallei met binnen- en buitenbad, jacuzzi's en spa.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-corte-jardins-de-la-glaciere.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool_and_terrasse_of_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   },
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-corte-camping-restonica",
+   "name": "Camping Restonica",
+   "region": "corte",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/RESTONICA",
+   "lat": 42.3017,
+   "lon": 9.1524,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1.0,
+    "budget": 0.8,
+    "family": 0.6,
+    "rustic": 0.5,
+    "secluded": 0.3
+   },
+   "desc": "Klassieke rivier-camping bij Corte, open van mei tot eind september.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-corte-camping-restonica.jpg",
+    "lic": "Public domain",
+    "author": "BLM Oregon &amp; Washington",
+    "page": "https://commons.wikimedia.org/wiki/File:Miller_Creek_campsite_at_Gerber_%2847952702382%29.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-corte-camping-alivi",
+   "name": "Camping Alivi di a Restonica",
+   "region": "corte",
+   "url": "https://www.alividiarestonica.com/",
+   "lat": 42.2989,
+   "lon": 9.1494,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1.0,
+    "budget": 0.8,
+    "family": 0.6,
+    "mountain_view": 0.3,
+    "self_catering": 0.5
+   },
+   "desc": "Grote camping (82 plaatsen) langs de weg naar de Restonica, vlak bij Corte.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-corte-camping-alivi.jpg",
+    "lic": "CC0",
+    "author": "Cardioceras",
+    "page": "https://commons.wikimedia.org/wiki/File:Espace_bivouac_au_refuge_de_la_Sega.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-calacuccia-acqua-viva",
+   "name": "L'Acqua Viva",
+   "region": "corte",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/ACQUAVIVA",
+   "lat": 42.3343,
+   "lon": 9.0086,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 0.8,
+    "family": 0.6,
+    "restaurant": 0.5,
+    "mountain_view": 0.5,
+    "rustic": 0.5,
+    "budget": 0.6,
+    "airco": 0.5,
+    "ev_charging": 1.0
+   },
+   "desc": "Klein familiehotel (14 kamers) aan de rand van Calacuccia in de Niolo-vallei.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-calacuccia-acqua-viva.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "An insect photographer",
+    "page": "https://commons.wikimedia.org/wiki/File:Mountain%27s_chalet_in_summer.jpg"
+   },
+   "verified": "2026-10-27",
+   "evSource": "visit-corsica.com listing",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-calacuccia-grand-hotel-de-la-scala",
+   "name": "Grand Hôtel de la Scala",
+   "region": "corte",
+   "url": "https://en.francevelotourisme.com/accommodation/hotels/grand-hotel-de-la-scala",
+   "lat": 42.3363,
+   "lon": 9.0141,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "pool": 0.6,
+    "in_town": 0.6,
+    "mountain_view": 0.5,
+    "family": 0.5,
+    "rustic": 0.4,
+    "airco": 0.6
+   },
+   "desc": "Hotel in Calacuccia met seizoenszwembad, tuin en bergzicht, ideaal voor de Niolo.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-calacuccia-grand-hotel-de-la-scala.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Kritzolina",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_Pool_in_a_hotel_in_Tamil_Nadu_03.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-niolo-castel-di-vergio",
+   "name": "Hôtel Castel di Vergio",
+   "region": "corte",
+   "url": "https://www.hotel-castel-vergio.com/",
+   "lat": 42.2868,
+   "lon": 8.8927,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "rustic": 0.7,
+    "secluded": 0.9,
+    "mountain_view": 0.9,
+    "restaurant": 0.8
+   },
+   "desc": "Afgelegen berghotel op de Col de Vergio, populair bij GR20-wandelaars.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-niolo-castel-di-vergio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_1.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-vizzavona-u-castellu",
+   "name": "Hôtel-restaurant U Castellu",
+   "region": "vivario",
+   "url": "https://www.hotel-ucastellu.fr/",
+   "lat": 42.127,
+   "lon": 9.1358,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "restaurant": 0.9,
+    "rustic": 0.8,
+    "secluded": 0.7,
+    "mountain_view": 0.6
+   },
+   "desc": "Hotel-restaurant midden in het bos van Vizzavona, naast het treinstation.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-vizzavona-u-castellu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_2.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-vizzavona-monte-doro",
+   "name": "Hôtel-restaurant Monte d'Oro",
+   "region": "vivario",
+   "url": "https://www.monte-oro.com/",
+   "lat": 42.1135,
+   "lon": 9.1193,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "rustic": 0.9,
+    "restaurant": 0.8,
+    "secluded": 0.8,
+    "mountain_view": 0.6
+   },
+   "desc": "Historisch bergbotel op de Col de Vizzavona, open van eind april tot begin oktober.",
+   "photoGeneric": false,
+   "photo": {
+    "file": "img/acc-vizzavona-monte-doro.jpg",
+    "lic": "CC0",
+    "author": "Rijksmuseum",
+    "page": "https://commons.wikimedia.org/wiki/File:Hotel_Monte_d%27Oro_in_Vizzavona_op_Corsica_Hotel_Monte_D%27Oro%2C_Vizzavona_%28titel_op_object%29%2C_RP-F-2007-359-70.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-venaco-u-palazzu",
+   "name": "Hôtel U Palazzu & Spa",
+   "region": "vivario",
+   "url": "https://www.hotel-upalazzu.fr/",
+   "lat": 42.2312,
+   "lon": 9.1729,
+   "priceLevel": 3,
+   "tags": {
+    "hotel": 1.0,
+    "spa": 0.8,
+    "airco": 0.7,
+    "in_town": 0.5,
+    "mountain_view": 0.5,
+    "boutique": 0.3
+   },
+   "desc": "Hotel met spa in het historische bergdorp Venaco, kamers met airco.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-venaco-u-palazzu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-venaco-u-frascone",
+   "name": "Hôtel U Frascone",
+   "region": "vivario",
+   "url": "https://www.booking.com/hotel/fr/u-frascone.html",
+   "lat": 42.2276,
+   "lon": 9.1773,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 0.8,
+    "rustic": 0.5,
+    "in_town": 0.4,
+    "mountain_view": 0.5,
+    "airco": 0.7
+   },
+   "desc": "Eenvoudig hotel bij Venaco, handige stop tussen Corte en Vizzavona.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-venaco-u-frascone.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_3.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-vivario-casa-alta",
+   "name": "Chambres d'hôtes Casa Alta",
+   "region": "vivario",
+   "url": "https://www.casa-alta.fr/",
+   "lat": 42.1311,
+   "lon": 9.1379,
+   "priceLevel": 2,
+   "tags": {
+    "bnb": 1.0,
+    "rustic": 0.6,
+    "family": 0.4,
+    "mountain_view": 0.5
+   },
+   "desc": "Chambres d'hôtes in Tattone bij Vivario, dicht bij station Vizzavona.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-vivario-casa-alta.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Charmedhawk1",
+    "page": "https://commons.wikimedia.org/wiki/File:Fonte-martino-bed-and-breakfast-gardens-montepulciano.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-ghisoni-camping-u-valdo",
+   "name": "Camping U Valdo",
+   "region": "vivario",
+   "url": "https://camping-valdo.com/",
+   "lat": 42.0978,
+   "lon": 9.2148,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1.0,
+    "budget": 0.9,
+    "secluded": 0.7,
+    "rustic": 0.6
+   },
+   "desc": "Kleine camping (25 plaatsen) in Ghisoni, open van mei tot eind september.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-ghisoni-camping-u-valdo.jpg",
+    "lic": "Public domain",
+    "author": "BLM Oregon &amp; Washington",
+    "page": "https://commons.wikimedia.org/wiki/File:Miller_Creek_campsite_at_Gerber_%2847952743746%29.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-venaco-ferme-de-peridundellu",
+   "name": "Ferme de Peridundellu",
+   "region": "vivario",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/FERME-DE-PERIDUNDELLU",
+   "lat": 42.2229,
+   "lon": 9.1944,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 0.9,
+    "agriturismo": 0.6,
+    "pool": 0.5,
+    "mountain_view": 0.8,
+    "budget": 0.8,
+    "secluded": 0.5,
+    "family": 0.5
+   },
+   "desc": "Kleine boerderij-camping bij Venaco met uitzicht op besneeuwde toppen.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-venaco-ferme-de-peridundellu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Cardioceras",
+    "page": "https://commons.wikimedia.org/wiki/File:Bivouac_Ciuttulu.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-bocognano-beau-sejour",
+   "name": "Hôtel Beau Séjour",
+   "region": "vivario",
+   "url": "https://hotelbocognano.com/",
+   "lat": 42.0817,
+   "lon": 9.0532,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "restaurant": 0.6,
+    "in_town": 0.6,
+    "rustic": 0.4,
+    "mountain_view": 0.5
+   },
+   "desc": "Hotel met tuin en terras in Bocognano, op de weg naar Ajaccio.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-bocognano-beau-sejour.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "An insect photographer",
+    "page": "https://commons.wikimedia.org/wiki/File:Mountain%27s_chalet_in_summer.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-mouflon-d-or",
+   "name": "Domaine Le Mouflon d'Or",
+   "region": "zonza",
+   "url": "https://www.lemouflondor.com/",
+   "lat": 41.7434,
+   "lon": 9.1684,
+   "priceLevel": 4,
+   "tags": {
+    "hotel": 1.0,
+    "luxury": 1.0,
+    "spa": 1.0,
+    "pool": 0.9,
+    "gym": 0.8,
+    "restaurant": 0.9,
+    "airco": 0.8,
+    "mountain_view": 0.8,
+    "boutique": 0.5
+   },
+   "desc": "Vijfsterrendomein in Zonza met spa van 1200 m2, binnen- en buitenbad en restaurant A Népita.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-mouflon-d-or.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Basile Morin",
+    "page": "https://commons.wikimedia.org/wiki/File:Swimming_pool_of_Khan_Pool_Suite_in_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-le-tourisme",
+   "name": "Hôtel Le Tourisme",
+   "region": "zonza",
+   "url": "https://www.booking.com/hotel/fr/le-tourisme-zonza.html",
+   "lat": 41.7516,
+   "lon": 9.1719,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "rustic": 0.8,
+    "in_town": 0.8,
+    "restaurant": 0.5,
+    "mountain_view": 0.5
+   },
+   "desc": "Oude postherberg uit 1875 in het centrum van Zonza.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-le-tourisme.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_2.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-la-terrasse",
+   "name": "Hôtel-restaurant La Terrasse",
+   "region": "zonza",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/LA-TERRASSE",
+   "lat": 41.7504,
+   "lon": 9.1719,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "restaurant": 0.9,
+    "rustic": 0.7,
+    "in_town": 0.7,
+    "mountain_view": 0.6
+   },
+   "desc": "Familiehotel met Corsicaans restaurant en uitzicht op de Aiguilles de Bavella.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-la-terrasse.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_3.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-bavella-les-aiguilles",
+   "name": "Gîte-hôtel Les Aiguilles de Bavella",
+   "region": "zonza",
+   "url": "https://le-gr20.fr/en/pages/refuges/col-de-bavella.html",
+   "lat": 41.7961,
+   "lon": 9.226,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 0.6,
+    "rustic": 0.8,
+    "secluded": 0.8,
+    "mountain_view": 1.0,
+    "restaurant": 0.6,
+    "budget": 0.5
+   },
+   "desc": "Eenvoudig verblijf op de Col de Bavella, recht onder de granietnaalden.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-bavella-les-aiguilles.jpg",
+    "lic": "CC0",
+    "author": "Cardioceras",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_refuge_de_la_Sega_en_%C3%A9t%C3%A9.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-bavella-auberge-du-col",
+   "name": "Auberge du Col de Bavella",
+   "region": "zonza",
+   "url": "https://le-gr20.fr/en/pages/refuges/col-de-bavella.html",
+   "lat": 41.7948,
+   "lon": 9.229,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 0.5,
+    "restaurant": 1.0,
+    "rustic": 0.9,
+    "secluded": 0.9,
+    "mountain_view": 1.0,
+    "budget": 0.5
+   },
+   "desc": "Herberg met restaurant op de pas, bekend om charcuterie, wild en kastanjepolenta.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-bavella-auberge-du-col.jpg",
+    "lic": "CC0",
+    "author": "Cardioceras",
+    "page": "https://commons.wikimedia.org/wiki/File:Puscaghia_automne_2019.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-camping-bavella-vista",
+   "name": "Camping Bavella Vista",
+   "region": "zonza",
+   "url": "https://www.campingbavellavista.fr/",
+   "lat": 41.7552,
+   "lon": 9.1719,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1.0,
+    "budget": 0.8,
+    "family": 0.6,
+    "mountain_view": 0.7
+   },
+   "desc": "Camping met 60 plaatsen aan de weg naar Quenza, met zicht op Bavella.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-camping-bavella-vista.jpg",
+    "lic": "Public domain",
+    "author": "BLM Oregon &amp; Washington",
+    "page": "https://commons.wikimedia.org/wiki/File:Miller_Creek_campsite_at_Gerber_%2847952684882%29.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-camping-municipal",
+   "name": "Camping municipal de Zonza",
+   "region": "zonza",
+   "url": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/CAMPING-MUNICIPAL-DE-ZONZA",
+   "lat": 41.7505,
+   "lon": 9.1958,
+   "priceLevel": 1,
+   "tags": {
+    "camping": 1.0,
+    "budget": 1.0,
+    "secluded": 0.6,
+    "rustic": 0.6,
+    "family": 0.5
+   },
+   "desc": "Schaduwrijke gemeentecamping in dennenbos naast een beek, open juli tot september.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-camping-municipal.jpg",
+    "lic": "Public domain",
+    "author": "BLM Oregon &amp; Washington",
+    "page": "https://commons.wikimedia.org/wiki/File:Miller_Creek_campsite_at_Gerber_%2847952702382%29.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-zonza-pre-aux-biches",
+   "name": "Le Pré aux Biches, Yourtes de Zonza",
+   "region": "zonza",
+   "url": "https://greengo.voyage/hote/yourte-corse-le-pre-aux-biches",
+   "lat": 41.7528,
+   "lon": 9.1597,
+   "priceLevel": 2,
+   "tags": {
+    "glamping": 1.0,
+    "secluded": 0.8,
+    "rustic": 0.5,
+    "family": 0.5,
+    "mountain_view": 0.6
+   },
+   "desc": "Yurts en een tipi op een groot terrein vlak bij Zonza.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-zonza-pre-aux-biches.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Rick Obst",
+    "page": "https://commons.wikimedia.org/wiki/File:Camping_in_a_Yurt_at_Beverly_Beach_State_Park.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-levie-a-pignata",
+   "name": "Auberge A Pignata",
+   "region": "zonza",
+   "url": "https://www.apignata.com/",
+   "lat": 41.7125,
+   "lon": 9.1019,
+   "priceLevel": 3,
+   "tags": {
+    "agriturismo": 0.8,
+    "hotel": 0.6,
+    "restaurant": 1.0,
+    "pool": 0.8,
+    "spa": 0.5,
+    "glamping": 0.4,
+    "family": 0.6,
+    "rustic": 0.8,
+    "airco": 1.0,
+    "ev_charging": 1.0
+   },
+   "desc": "Ferme-auberge bij Levie met boomhutten, verwarmd binnenbad, hammam en Corsicaanse keuken.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-levie-a-pignata.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Shabicht",
+    "page": "https://commons.wikimedia.org/wiki/File:Glamping_hut_Visole_07.jpg"
+   },
+   "verified": "2026-10-27",
+   "evSource": "official website",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-quenza-sole-e-monti",
+   "name": "Hôtel Sole e Monti",
+   "region": "zonza",
+   "url": "https://www.solemonti.com/",
+   "lat": 41.7664,
+   "lon": 9.1409,
+   "priceLevel": 2,
+   "tags": {
+    "hotel": 1.0,
+    "restaurant": 0.8,
+    "pool": 0.6,
+    "rustic": 0.7,
+    "mountain_view": 0.7,
+    "secluded": 0.5
+   },
+   "desc": "Driesterrenhotel op 810 m in Quenza, met tuin onder kastanjes en restaurant met open haard.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-quenza-sole-e-monti.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sotos",
+    "page": "https://commons.wikimedia.org/wiki/File:Chalet_H%C3%B4tel_du_lac_d%27Or%C3%A9don_%28Hautes-Pyr%C3%A9n%C3%A9es%29_2.jpg"
+   },
+   "verified": "2026-10-27",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-vizzavona-halte-du-prince",
+   "name": "La Halte du Prince (Col de Vizzavona)",
+   "region": "vivario",
+   "url": "https://www.lahalteduprince.com/",
+   "lat": 42.1143,
+   "lon": 9.1215,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "restaurant": 0.6,
+    "rustic": 0.8,
+    "secluded": 0.5,
+    "mountain_view": 0.6
+   },
+   "desc": "Gîtes d'étape, kamers en bivak met restaurant A Muntagnera op de Col de Vizzavona, halverwege de GR20.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-vizzavona-halte-du-prince.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Herbert wie",
+    "page": "https://commons.wikimedia.org/wiki/File:Gare_Vizzavona_Corsica.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-ghisoni-gite-u-fugone",
+   "name": "Gîte U Fugone (Capanelle, Ghisoni)",
+   "region": "vivario",
+   "url": "http://gite-u-fugone.com/",
+   "lat": 42.0774,
+   "lon": 9.1503,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "rustic": 0.8,
+    "secluded": 0.7,
+    "mountain_view": 0.6
+   },
+   "desc": "Gîte-refuge aan de GR20 bij de Bergeries de Capanelle, aan de voet van het skigebied; uitvalsbasis voor Monte Renoso en Lac de Bastani.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-ghisoni-gite-u-fugone.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Cardioceras",
+    "page": "https://commons.wikimedia.org/wiki/File:Refuge_d'E_Capannelle_en_2021.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-tallano-gite-u-fragnonu",
+   "name": "Gîte U Fragnonu (Sainte-Lucie-de-Tallano)",
+   "region": "zonza",
+   "url": "http://gite-tallano.fr/",
+   "lat": 41.7004,
+   "lon": 9.064,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "rustic": 0.8,
+    "in_town": 0.5
+   },
+   "desc": "Gîte d'étape met slaapzalen en een sanitair per kamer, in het authentieke dorp Sainte-Lucie-de-Tallano in de Alta Rocca (32 bedden).",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-tallano-gite-u-fragnonu.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Sainte-Lucie-de-Tallano_village.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-levie-gite-detape",
+   "name": "Gîte d'étape de Levie",
+   "region": "zonza",
+   "url": "https://www.gites-corsica.com/location-vacances-Gite-etape-a-Levie-Corse-20G17821.html",
+   "lat": 41.6988,
+   "lon": 9.1235,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "rustic": 0.8,
+    "in_town": 0.5
+   },
+   "desc": "Gîte in een groot stenen familiehuis in Levie: 8 kamers voor 26 personen met eigen douche, vanaf 28 euro per nacht; maaltijden op bestelling.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-levie-gite-detape.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Wikipedro",
+    "page": "https://commons.wikimedia.org/wiki/File:Levie,_le_village.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  },
+  {
+   "id": "acc-conca-gite-la-tonnelle",
+   "name": "Gîte La Tonnelle (Conca)",
+   "region": "zonza",
+   "url": "http://www.gite-la-tonnelle.com",
+   "lat": 41.7332,
+   "lon": 9.3377,
+   "priceLevel": 1,
+   "tags": {
+    "budget": 1.0,
+    "camping": 0.3,
+    "restaurant": 0.7,
+    "rustic": 0.6
+   },
+   "desc": "Gîte d'étape met slaapzalen van 6 tot 7 personen, kamers, camping onder eiken en restaurant in Conca, eindpunt van de GR20. Gîte open april tot oktober.",
+   "photoGeneric": true,
+   "photo": {
+    "file": "img/acc-conca-gite-la-tonnelle.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Aiguilles_de_Bavella_For%C3%AAt_de_Conca.jpg"
+   },
+   "verified": "2026-10-28",
+   "facilitiesChecked": "2026-10-28"
+  }
+ ],
+ "activities": [
+  {
+   "id": "act-corte-citadelle",
+   "name": "Citadel van Corte",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Citadelle_de_Corte",
+   "lat": 42.3046,
+   "lon": 9.1484,
+   "durationH": 2,
+   "tags": {
+    "town": 0.9,
+    "culture": 0.9,
+    "photo": 0.7,
+    "viewpoint": 0.6,
+    "village": 0.2
+   },
+   "desc": "De adelaarsnest-citadel boven Corte met uitzicht over de oude hoofdstad van Corsica.",
+   "photo": {
+    "file": "img/act-corte-citadelle.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sebastien",
+    "page": "https://commons.wikimedia.org/wiki/File:Citadelle_de_Corte_2017-06-29.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corte-museu-di-a-corsica",
+   "name": "Museu di a Corsica",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Corte",
+   "lat": 42.3047,
+   "lon": 9.1485,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1.0,
+    "town": 0.6,
+    "effort_low": 0.8
+   },
+   "desc": "Museum in de citadel over de geschiedenis, tradities en het dagelijks leven op Corsica.",
+   "photo": {
+    "file": "img/act-corte-museu-di-a-corsica.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Sailko",
+    "page": "https://commons.wikimedia.org/wiki/File:Corte%2C_museo_della_corsica%2C_interno_02.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-restonica-gorges",
+   "name": "Gorges de la Restonica",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Restonica",
+   "lat": 42.2483,
+   "lon": 9.0566,
+   "durationH": 3,
+   "tags": {
+    "swim_river": 0.8,
+    "nature": 0.8,
+    "photo": 0.7,
+    "viewpoint": 0.5,
+    "hike": 0.5,
+    "kids": 0.5,
+    "effort_low": 0.5
+   },
+   "desc": "Granietkloof met helder rivierwater en natuurlijke zwempoelen langs de weg naar de hoge Restonica.",
+   "photo": {
+    "file": "img/act-restonica-gorges.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Nacaru",
+    "page": "https://commons.wikimedia.org/wiki/File:Gorges_de_la_Restonica_1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-restonica-lac-de-melo-capitello",
+   "name": "Lac de Melo en Lac de Capitello",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Lac_de_Melo",
+   "lat": 42.213,
+   "lon": 9.0227,
+   "durationH": 5,
+   "tags": {
+    "hike": 1.0,
+    "nature": 0.9,
+    "photo": 0.8,
+    "viewpoint": 0.7,
+    "effort_high": 0.6,
+    "hike_hard": 0.3
+   },
+   "desc": "Rondwandeling vanaf Grotelle naar twee gletsjermeren op ruim 1700 m.",
+   "photo": {
+    "file": "img/act-restonica-lac-de-melo-capitello.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Davric",
+    "page": "https://commons.wikimedia.org/wiki/File:Corse_GR20_Lac_de_Melo_et_Capitello.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corte-vallee-du-tavignano",
+   "name": "Tavignano-vallei bij Corte",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Tavignano",
+   "lat": 42.32,
+   "lon": 9.1184,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.9,
+    "nature": 0.8,
+    "swim_river": 0.4,
+    "effort_low": 0.4,
+    "photo": 0.4
+   },
+   "desc": "Rustige wandeling langs de Tavignano ten noordwesten van Corte, door maquis en kastanjebos.",
+   "photo": {
+    "file": "img/act-corte-vallee-du-tavignano.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Quentin Scouflaire",
+    "page": "https://commons.wikimedia.org/wiki/File:Spilonca_di_Tavignani.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-scala-di-santa-regina",
+   "name": "Scala di Santa Regina",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Scala_di_Santa_Regina",
+   "lat": 42.3581,
+   "lon": 9.0592,
+   "durationH": 1,
+   "tags": {
+    "viewpoint": 0.9,
+    "photo": 0.9,
+    "nature": 0.8,
+    "effort_low": 1.0,
+    "kids": 0.4
+   },
+   "desc": "Spectaculaire kloof van de Golo met kapel, een korte stop langs de D84 naar de Niolo.",
+   "photo": {
+    "file": "img/act-niolo-scala-di-santa-regina.jpg",
+    "lic": "CC BY 2.0",
+    "author": "Michal Osmenda from Brussels, Belgium",
+    "page": "https://commons.wikimedia.org/wiki/File:Scala_di_Santa_Regina_%288132729539%29.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-lac-de-calacuccia",
+   "name": "Lac de Calacuccia",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Lac_de_Calacuccia",
+   "lat": 42.3276,
+   "lon": 9.0145,
+   "durationH": 2,
+   "tags": {
+    "nature": 0.8,
+    "photo": 0.8,
+    "relax": 0.7,
+    "viewpoint": 0.6,
+    "effort_low": 0.8,
+    "kayak": 0.3
+   },
+   "desc": "Stuwmeer met uitzicht op Monte Cintu, goed voor een rustige wandeling of picknick.",
+   "photo": {
+    "file": "img/act-niolo-lac-de-calacuccia.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Calacuccia_Panorama_sur_le_lac.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-col-de-vergio-valdu-niellu",
+   "name": "Col de Vergio en Valdu Niellu",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Col_de_Vergio",
+   "lat": 42.2903,
+   "lon": 8.8784,
+   "durationH": 2.5,
+   "tags": {
+    "hike": 0.8,
+    "nature": 0.9,
+    "viewpoint": 0.7,
+    "photo": 0.7,
+    "effort_low": 0.6,
+    "kids": 0.4
+   },
+   "desc": "Hoogste doorgaande pas van Corsica (1477 m) met het lariksbos van Valdu Niellu.",
+   "photo": {
+    "file": "img/act-niolo-col-de-vergio-valdu-niellu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Valdu_Niellu.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-cascade-de-radule",
+   "name": "Cascade de Radule",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Albertacce",
+   "lat": 42.3052,
+   "lon": 8.8778,
+   "durationH": 2.5,
+   "tags": {
+    "hike": 0.8,
+    "swim_river": 0.7,
+    "nature": 0.8,
+    "photo": 0.6,
+    "kids": 0.4,
+    "effort_low": 0.5
+   },
+   "desc": "Waterval en zwempoelen van de Golo in het bos onder Col de Vergio.",
+   "photo": {
+    "file": "img/act-niolo-cascade-de-radule.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Capu_a_u_Tozzu_Cascade_de_Radule.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-lac-de-nino",
+   "name": "Lac de Nino en de Pozzines",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Lac_de_Nino",
+   "lat": 42.2552,
+   "lon": 8.9405,
+   "durationH": 6,
+   "tags": {
+    "hike": 0.9,
+    "hike_hard": 0.5,
+    "nature": 1.0,
+    "photo": 0.9,
+    "effort_high": 0.7,
+    "viewpoint": 0.6
+   },
+   "desc": "Dagwandeling vanaf Vergio naar het meer van Nino, bron van de Tavignano, met wilde paarden.",
+   "photo": {
+    "file": "img/act-niolo-lac-de-nino.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Davric",
+    "page": "https://commons.wikimedia.org/wiki/File:Corse_GR20_Lac_de_Nino_Pozzines.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-casamaccioli",
+   "name": "Casamaccioli",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Casamaccioli",
+   "lat": 42.3181,
+   "lon": 9.0025,
+   "durationH": 1,
+   "tags": {
+    "village": 1.0,
+    "culture": 0.6,
+    "photo": 0.5,
+    "effort_low": 0.9
+   },
+   "desc": "Herdersdorp in de Niolo, bekend om zijn pelgrimsfeest van Santa Maria in september.",
+   "photo": {
+    "file": "img/act-niolo-casamaccioli.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Casamaccioli-village-1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-niolo-albertacce",
+   "name": "Albertacce en de oude bruggen",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Albertacce",
+   "lat": 42.3278,
+   "lon": 8.9842,
+   "durationH": 1,
+   "tags": {
+    "village": 0.9,
+    "culture": 0.6,
+    "photo": 0.7,
+    "effort_low": 0.9
+   },
+   "desc": "Bergdorp in de Niolo met twee oude bruggen over de Golo.",
+   "photo": {
+    "file": "img/act-niolo-albertacce.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Albertacce_les_2_Ponts_sur_le_Golo.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corte-maison-natale-paoli",
+   "name": "Geboortehuis van Pasquale Paoli",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Morosaglia",
+   "lat": 42.4378,
+   "lon": 9.3092,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1.0,
+    "village": 0.5,
+    "effort_low": 0.9
+   },
+   "desc": "Huis in Stretta (Morosaglia) waar de vader van de Corsicaanse onafhankelijkheid werd geboren.",
+   "photo": {
+    "file": "img/act-corte-maison-natale-paoli.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Sicilarch",
+    "page": "https://commons.wikimedia.org/wiki/File:Maison_natale_paoli.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corte-trinichellu",
+   "name": "Trinichellu-trein vanuit Corte",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Chemins_de_fer_de_la_Corse",
+   "lat": 42.3038,
+   "lon": 9.1583,
+   "durationH": 2,
+   "tags": {
+    "train": 1.0,
+    "viewpoint": 0.5,
+    "nature": 0.5,
+    "effort_low": 1.0,
+    "culture": 0.3
+   },
+   "desc": "Met de smalspoortrein door de bergen, met Corte als halteplaats tussen Bastia en Ajaccio.",
+   "photo": {
+    "file": "img/act-corte-trinichellu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Herbert wie",
+    "page": "https://commons.wikimedia.org/wiki/File:Train_la_gare_Corte_Corsica.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-restonica-bergerie-de-grotelle",
+   "name": "Bergerie de Grotelle, kaas en charcuterie",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Restonica",
+   "lat": 42.2299,
+   "lon": 9.0321,
+   "durationH": 1,
+   "tags": {
+    "food": 0.9,
+    "nature": 0.5,
+    "effort_low": 0.9,
+    "village": 0.2
+   },
+   "desc": "Aan de parking van Grotelle verkopen herders geitenkaas, brocciu en charcuterie.",
+   "photo": {
+    "file": "img/act-restonica-bergerie-de-grotelle.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Thesupermat",
+    "page": "https://commons.wikimedia.org/wiki/File:Wikicheese_-_Brocciu_Frescu_-_20150417_-_001.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-corte-pont-genois-altiani",
+   "name": "Genuese brug van Altiani",
+   "region": "corte",
+   "url": "https://fr.wikipedia.org/wiki/Altiani",
+   "lat": 42.2226,
+   "lon": 9.2649,
+   "durationH": 1,
+   "tags": {
+    "culture": 0.7,
+    "photo": 0.7,
+    "effort_low": 1.0,
+    "nature": 0.4
+   },
+   "desc": "Oude Genuese brug over de Tavignano, een korte stop ten oosten van Corte.",
+   "photo": {
+    "file": "img/act-corte-pont-genois-altiani.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Altiani-Pont_g%C3%A9nois.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-cascade-des-anglais",
+   "name": "Cascade des Anglais",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Vizzavona",
+   "lat": 42.1177,
+   "lon": 9.1092,
+   "durationH": 2,
+   "tags": {
+    "swim_river": 0.8,
+    "hike": 0.7,
+    "nature": 0.8,
+    "kids": 0.7,
+    "effort_low": 0.7,
+    "photo": 0.6
+   },
+   "desc": "Korte boswandeling naar een waterval met poelen in het bos van Vizzavona.",
+   "photo": {
+    "file": "img/act-vizzavona-cascade-des-anglais.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "PHolzwarth",
+    "page": "https://commons.wikimedia.org/wiki/File:Cascade_des_Anglais_-_water_stream_pool.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-foret",
+   "name": "Bos van Vizzavona",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Vizzavona",
+   "lat": 42.125,
+   "lon": 9.115,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.8,
+    "nature": 1.0,
+    "relax": 0.7,
+    "kids": 0.6,
+    "effort_low": 0.7,
+    "photo": 0.5
+   },
+   "desc": "Koel beuken- en dennenbos met korte wandelpaden, ook in augustus aangenaam.",
+   "photo": {
+    "file": "img/act-vizzavona-foret.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Marie Čcheidzeová",
+    "page": "https://commons.wikimedia.org/wiki/File:For%C3%AAt_de_Vizzavona_2008_%281%29.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-gare-trinichellu",
+   "name": "Station Vizzavona en Trinichellu",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Gare_de_Vizzavona",
+   "lat": 42.1286,
+   "lon": 9.1338,
+   "durationH": 2,
+   "tags": {
+    "train": 1.0,
+    "nature": 0.6,
+    "culture": 0.4,
+    "effort_low": 1.0,
+    "photo": 0.5
+   },
+   "desc": "Hoogste treinstation van Corsica, met korte ritten met de Trinichellu en de GR20 om de hoek.",
+   "photo": {
+    "file": "img/act-vizzavona-gare-trinichellu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Herbert wie",
+    "page": "https://commons.wikimedia.org/wiki/File:Train_gare_Vizzavona_Corsica.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-monte-d-oro",
+   "name": "Monte d'Oro",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Monte_d%27Oro",
+   "lat": 42.1375,
+   "lon": 9.0986,
+   "durationH": 7,
+   "tags": {
+    "hike_hard": 1.0,
+    "hike": 0.8,
+    "effort_high": 1.0,
+    "viewpoint": 0.9,
+    "nature": 0.8,
+    "photo": 0.7
+   },
+   "desc": "Beklimming van de 2389 m hoge Monte d'Oro vanaf Vizzavona, met uitzicht over heel Corsica.",
+   "photo": {
+    "file": "img/act-vizzavona-monte-d-oro.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Monte_d%27Oro_sommet.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-fort",
+   "name": "Ruines van het Fort de Vizzavona",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Vizzavona",
+   "lat": 42.1136,
+   "lon": 9.1129,
+   "durationH": 1,
+   "tags": {
+    "culture": 0.7,
+    "nature": 0.5,
+    "effort_low": 0.8,
+    "photo": 0.5
+   },
+   "desc": "Overblijfselen van een oud fort bij de Col de Vizzavona, in het bos.",
+   "photo": {
+    "file": "img/act-vizzavona-fort.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Vizzavona-Ruines_du_fort.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vizzavona-parc-aventure",
+   "name": "Vizzavona Parc Aventure",
+   "region": "vivario",
+   "url": "https://www.visit-corsica.com/fr/Mon-sejour/Activites-Loisirs/Toutes-les-activites/VIZZAVONA-PARC-AVENTURE-CORSICA-NATURA",
+   "lat": 42.1153,
+   "lon": 9.1226,
+   "durationH": 3,
+   "tags": {
+    "adrenaline": 0.8,
+    "kids": 0.9,
+    "climbing": 0.5,
+    "nature": 0.4
+   },
+   "desc": "Klimpark in de bomen bij de Col de Vizzavona, met routes voor kinderen en volwassenen.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-venaco-pont-eiffel-du-vecchio",
+   "name": "Eiffelbrug over de Vecchio",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Viaduc_sur_le_Vecchio",
+   "lat": 42.1931,
+   "lon": 9.1676,
+   "durationH": 1,
+   "tags": {
+    "culture": 0.7,
+    "photo": 0.8,
+    "effort_low": 1.0,
+    "viewpoint": 0.5
+   },
+   "desc": "IJzeren spoorbrug van Eiffel boven de Vecchio-kloof, bij Venaco.",
+   "photo": {
+    "file": "img/act-venaco-pont-eiffel-du-vecchio.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Vecchio_Pont_Eiffel.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vivario-canyon-du-vecchio",
+   "name": "Canyoning Vecchio",
+   "region": "vivario",
+   "url": "https://www.manawa.com/fr-FR/activite/corse/corte-centre-corse/canyoning/descente-du-canyon-du-petit-vecchio-pres-de-corte-haute-corse/11786",
+   "lat": 42.19,
+   "lon": 9.17,
+   "durationH": 5,
+   "tags": {
+    "canyoning": 1.0,
+    "adrenaline": 0.8,
+    "swim_river": 0.6,
+    "nature": 0.6,
+    "effort_high": 0.5
+   },
+   "desc": "Begeleide canyoning in de Vecchio-kloof bij Vivario, ca. 5 uur met glijbanen en sprongen.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bocognano-canyon-de-richiusa",
+   "name": "Canyoning Richiusa",
+   "region": "vivario",
+   "url": "https://www.opencanyon.org/en/canyon/a63a929d-0b04-42ad-985b-fcdec42983f3",
+   "lat": 42.075,
+   "lon": 9.045,
+   "durationH": 3,
+   "tags": {
+    "canyoning": 1.0,
+    "adrenaline": 0.8,
+    "swim_river": 0.6,
+    "kids": 0.3,
+    "nature": 0.6
+   },
+   "desc": "Begeleide canyoning in de Richiusa bij Bocognano, ca. 2,5 uur met sprongen en glijbanen.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bocognano-voile-de-la-mariee",
+   "name": "Cascade du Voile de la Mariée",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Bocognano",
+   "lat": 42.064,
+   "lon": 9.0514,
+   "durationH": 1.5,
+   "tags": {
+    "nature": 0.9,
+    "photo": 0.9,
+    "effort_low": 0.8,
+    "kids": 0.5,
+    "swim_river": 0.3
+   },
+   "desc": "Hoge, sluierachtige waterval bij Bocognano, dicht bij de weg.",
+   "photo": {
+    "file": "img/act-bocognano-voile-de-la-mariee.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "TeletubAstyanax",
+    "page": "https://commons.wikimedia.org/wiki/File:VoileDeLaMariee_03.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bocognano-village",
+   "name": "Bocognano",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Bocognano",
+   "lat": 42.0835,
+   "lon": 9.0638,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1.0,
+    "food": 0.6,
+    "nature": 0.5,
+    "effort_low": 0.9,
+    "photo": 0.5
+   },
+   "desc": "Bergdorp tussen kastanjebossen, bekend om zijn kastanjes en kaas.",
+   "photo": {
+    "file": "img/act-bocognano-village.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Bocognano_panorama.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-venaco-village",
+   "name": "Venaco",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Venaco",
+   "lat": 42.2319,
+   "lon": 9.1726,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1.0,
+    "food": 0.7,
+    "photo": 0.6,
+    "effort_low": 0.9
+   },
+   "desc": "Bergdorp aan de voet van Monte Cardo, bekend van de gelijknamige kaas.",
+   "photo": {
+    "file": "img/act-venaco-village.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Venaco-village.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-ghisoni-village",
+   "name": "Ghisoni",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Ghisoni",
+   "lat": 42.1036,
+   "lon": 9.2123,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1.0,
+    "nature": 0.6,
+    "effort_low": 0.9,
+    "photo": 0.5
+   },
+   "desc": "Rustig bergdorp aan de Fium'Orbo, vertrekpunt voor Col de Verde en Capanelle.",
+   "photo": {
+    "file": "img/act-ghisoni-village.jpg",
+    "lic": "CC BY-SA 2.0",
+    "author": "Loïc Ventre",
+    "page": "https://commons.wikimedia.org/wiki/File:Ghisoni.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-ghisoni-col-de-verde",
+   "name": "Col de Verde en Col de Sorba",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Col_de_Verde",
+   "lat": 42.0282,
+   "lon": 9.1948,
+   "durationH": 2.5,
+   "tags": {
+    "viewpoint": 1.0,
+    "nature": 0.7,
+    "photo": 0.7,
+    "effort_low": 0.9
+   },
+   "desc": "Bergpassen met uitzicht, aan de weg door het hart van Corsica tussen Ghisoni en de kust.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-ghisoni-kyrie-eleison",
+   "name": "Roches Kyrie Eleison",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Ghisoni",
+   "lat": 42.0748,
+   "lon": 9.2385,
+   "durationH": 2,
+   "tags": {
+    "viewpoint": 0.8,
+    "nature": 0.8,
+    "photo": 0.8,
+    "hike": 0.5,
+    "effort_low": 0.5
+   },
+   "desc": "Rotspieken boven Ghisoni, in de legende ontstaan toen een kerkdienst werd gestoord.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-ghisoni-gr20-vizzavona-capanelle",
+   "name": "GR20: Vizzavona naar E Capanelle",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Ghisoni",
+   "lat": 42.0757,
+   "lon": 9.1495,
+   "durationH": 5.5,
+   "tags": {
+    "hike": 0.9,
+    "hike_hard": 0.5,
+    "effort_high": 0.8,
+    "nature": 0.9,
+    "viewpoint": 0.8
+   },
+   "desc": "GR20-dagetappe door bos en over bergkammen van Vizzavona naar het refuge E Capanelle.",
+   "photo": {
+    "file": "img/act-ghisoni-gr20-vizzavona-capanelle.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Station_de_Capanelle-Ghisoni_lever_de_soleil1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-vivario-fort-de-vivario",
+   "name": "Fort de Vivario (Pasciolo)",
+   "region": "vivario",
+   "url": "https://fr.wikipedia.org/wiki/Vivario",
+   "lat": 42.1811,
+   "lon": 9.1618,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 0.8,
+    "viewpoint": 0.6,
+    "photo": 0.6,
+    "effort_low": 0.7
+   },
+   "desc": "Ruine van het fort van Pasciolo boven Vivario, met uitzicht over de vallei.",
+   "photo": {
+    "file": "img/act-vivario-fort-de-vivario.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Scata2b",
+    "page": "https://commons.wikimedia.org/wiki/File:Fort_de_Vivario_.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-col-de-bavella",
+   "name": "Col de Bavella",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Col_de_Bavella",
+   "lat": 41.7959,
+   "lon": 9.225,
+   "durationH": 1.5,
+   "tags": {
+    "viewpoint": 1.0,
+    "photo": 1.0,
+    "nature": 0.8,
+    "effort_low": 0.9,
+    "hike": 0.4
+   },
+   "desc": "Bergpas op 1218 m recht onder de granietnaalden, met uitzichtpunten en kapelletje.",
+   "photo": {
+    "file": "img/act-bavella-col-de-bavella.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Mathieudu68",
+    "page": "https://commons.wikimedia.org/wiki/File:Aiguilles_de_Bavella%2C_Corsica.JPG"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-trou-de-la-bombe",
+   "name": "Trou de la Bombe",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Aiguilles_de_Bavella",
+   "lat": 41.7789,
+   "lon": 9.236,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.9,
+    "photo": 0.9,
+    "nature": 0.7,
+    "climbing": 0.3,
+    "effort_high": 0.4
+   },
+   "desc": "Wandeling naar een gat in de rotswand met uitzicht over de Bavella-naalden.",
+   "photo": {
+    "file": "img/act-bavella-trou-de-la-bombe.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Espirat",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_trou_de_la_bombe.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-zonza-piscia-di-gallu",
+   "name": "Cascade de Piscia di Gallu",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/San-Gavino-di-Carbini",
+   "lat": 41.6806,
+   "lon": 9.2157,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.8,
+    "nature": 0.9,
+    "photo": 0.8,
+    "swim_river": 0.5,
+    "effort_low": 0.4
+   },
+   "desc": "Waterval van zo'n 60 m in de Alta Rocca, bereikbaar met een bospad.",
+   "photo": {
+    "file": "img/act-zonza-piscia-di-gallu.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Donarreiskoffer",
+    "page": "https://commons.wikimedia.org/wiki/File:Waterfall_of_Piscia_di_Gallo_03.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-cascades-de-purcaraccia",
+   "name": "Cascades de Purcaraccia",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Aiguilles_de_Bavella",
+   "lat": 41.8374,
+   "lon": 9.256,
+   "durationH": 3,
+   "tags": {
+    "hike": 0.8,
+    "swim_river": 0.9,
+    "nature": 0.9,
+    "photo": 0.7,
+    "kids": 0.3,
+    "effort_low": 0.4
+   },
+   "desc": "Wandeling naar watervallen en natuurlijke zwembaden in het Bavella-massief.",
+   "photo": {
+    "file": "img/act-bavella-cascades-de-purcaraccia.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Nerijp",
+    "page": "https://commons.wikimedia.org/wiki/File:Purcaraccia-piscines.JPG"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-canyoning-purcaraccia",
+   "name": "Canyoning Purcaraccia",
+   "region": "zonza",
+   "url": "https://www.manawa.com/en-GB/view-activity/2339",
+   "lat": 41.8374,
+   "lon": 9.256,
+   "durationH": 6,
+   "tags": {
+    "canyoning": 1.0,
+    "adrenaline": 1.0,
+    "swim_river": 0.7,
+    "nature": 0.8,
+    "effort_high": 0.7
+   },
+   "desc": "Technische begeleide canyoning met glijbanen, watervallen en abseilen, ca. 6-7 uur.",
+   "photo": {
+    "file": "img/act-bavella-canyoning-purcaraccia.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Nerijp",
+    "page": "https://commons.wikimedia.org/wiki/File:Purcaraccia-cascades.JPG"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-paliri",
+   "name": "Paliri-kam bij Bavella",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Aiguilles_de_Bavella",
+   "lat": 41.7883,
+   "lon": 9.2632,
+   "durationH": 6,
+   "tags": {
+    "hike": 0.9,
+    "hike_hard": 0.6,
+    "effort_high": 0.7,
+    "nature": 0.9,
+    "viewpoint": 0.8,
+    "photo": 0.8
+   },
+   "desc": "Wandeling naar de Paliri-kam bij het GR20-eindpunt, met zicht op de Punta Tafunata.",
+   "photo": {
+    "file": "img/act-bavella-paliri.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Punta_Tafunata_di_i_Paliri_Refuge_de_Paliri.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-levie-cucuruzzu-capula",
+   "name": "Cucuruzzu en Capula",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Cucuruzzu",
+   "lat": 41.7247,
+   "lon": 9.1268,
+   "durationH": 2.5,
+   "tags": {
+    "culture": 1.0,
+    "nature": 0.6,
+    "kids": 0.7,
+    "hike": 0.4,
+    "effort_low": 0.7
+   },
+   "desc": "Prehistorische vestingsites tussen granietblokken en bos bij Levie.",
+   "photo": {
+    "file": "img/act-levie-cucuruzzu-capula.jpg",
+    "lic": "CC BY 3.0",
+    "author": "Jean-Pol GRANDMONT",
+    "page": "https://commons.wikimedia.org/wiki/File:Cucuruzzu_Capula_JPG1.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-levie-musee-alta-rocca",
+   "name": "Musée départemental de l'Alta Rocca",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Levie",
+   "lat": 41.704,
+   "lon": 9.1256,
+   "durationH": 1.5,
+   "tags": {
+    "culture": 1.0,
+    "kids": 0.4,
+    "effort_low": 0.9
+   },
+   "desc": "Museum in Levie over de archeologie en het leven in de Alta Rocca.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-levie-village",
+   "name": "Levie",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Levie",
+   "lat": 41.7036,
+   "lon": 9.123,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1.0,
+    "culture": 0.5,
+    "food": 0.4,
+    "effort_low": 0.9,
+    "photo": 0.4
+   },
+   "desc": "Hoofdplaats van de Alta Rocca, met uitzicht en het museum in het centrum.",
+   "photo": {
+    "file": "img/act-levie-village.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Wikipedro",
+    "page": "https://commons.wikimedia.org/wiki/File:Levie%2C_le_village.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-tallano-sainte-lucie",
+   "name": "Sainte-Lucie-de-Tallano",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Sainte-Lucie-de-Tallano",
+   "lat": 41.6977,
+   "lon": 9.064,
+   "durationH": 1.5,
+   "tags": {
+    "village": 1.0,
+    "culture": 0.7,
+    "photo": 0.7,
+    "food": 0.4,
+    "effort_low": 0.9
+   },
+   "desc": "Fraai dorp met kerk, bekend om de oranje marmersoort en het varken nustrale.",
+   "photo": {
+    "file": "img/act-tallano-sainte-lucie.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Sainte-Lucie-de-Tallano_village.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-tallano-couvent-saint-francois",
+   "name": "Couvent Saint-François",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Sainte-Lucie-de-Tallano",
+   "lat": 41.6953,
+   "lon": 9.0658,
+   "durationH": 1,
+   "tags": {
+    "culture": 1.0,
+    "photo": 0.6,
+    "effort_low": 1.0
+   },
+   "desc": "Franciscaans klooster bij Sainte-Lucie-de-Tallano.",
+   "photo": {
+    "file": "img/act-tallano-couvent-saint-francois.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "FredSeiller",
+    "page": "https://commons.wikimedia.org/wiki/File:Couvent_Saint-Fran%C3%A7ois_%28Sainte-Lucie-de-Tallano%29.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-quenza-village",
+   "name": "Quenza",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Quenza",
+   "lat": 41.7668,
+   "lon": 9.1402,
+   "durationH": 1,
+   "tags": {
+    "village": 1.0,
+    "culture": 0.5,
+    "photo": 0.5,
+    "effort_low": 0.9
+   },
+   "desc": "Bergdorp op 800 m met de kapel Santa Maria, op weg naar Bavella.",
+   "photo": {
+    "file": "img/act-quenza-village.jpg",
+    "lic": "CC BY-SA 3.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Quenza_en_montant_%C3%A0_Bavella.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-quenza-plateau-du-coscione",
+   "name": "Plateau du Coscione",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Plateau_du_Coscione",
+   "lat": 41.8294,
+   "lon": 9.1462,
+   "durationH": 4,
+   "tags": {
+    "hike": 0.9,
+    "nature": 1.0,
+    "photo": 0.8,
+    "viewpoint": 0.8,
+    "effort_low": 0.5
+   },
+   "desc": "Hoogvlakte met weiden en herdershutten rond Monte Incudine.",
+   "photo": {
+    "file": "img/act-quenza-plateau-du-coscione.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Plateau_du_Coscione_03.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-zonza-village",
+   "name": "Zonza",
+   "region": "zonza",
+   "url": "https://fr.wikipedia.org/wiki/Zonza",
+   "lat": 41.7494,
+   "lon": 9.1706,
+   "durationH": 1,
+   "tags": {
+    "village": 1.0,
+    "food": 0.5,
+    "photo": 0.6,
+    "effort_low": 0.9
+   },
+   "desc": "Bergdorp op 800 m, uitvalsbasis voor Bavella, met cafés en kaas- en vleeswaren.",
+   "photo": {
+    "file": "img/act-zonza-village.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Pierre Bona",
+    "page": "https://commons.wikimedia.org/wiki/File:Zonza_village.jpg"
+   },
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-bavella-lunch-auberge-du-col",
+   "name": "Lunch op de Col de Bavella",
+   "region": "zonza",
+   "url": "https://le-gr20.fr/en/pages/refuges/col-de-bavella.html",
+   "lat": 41.7948,
+   "lon": 9.229,
+   "durationH": 1.5,
+   "tags": {
+    "food": 1.0,
+    "viewpoint": 0.6,
+    "relax": 0.6,
+    "effort_low": 1.0
+   },
+   "desc": "Charcuterie, wild en kastanjepolenta bij de Auberge du Col de Bavella.",
+   "photo": null,
+   "verified": "2026-10-27"
+  },
+  {
+   "id": "act-via-ferrata-manicella",
+   "name": "Via ferrata Dia Manicella (Moltifao)",
+   "region": "corte",
+   "url": "https://www.via-ferrata.de/klettersteige/topo/via-ferrata-di-a-manicella-parcours-varianten-1-bis-5",
+   "lat": 42.4648,
+   "lon": 9.1102,
+   "durationH": 4,
+   "tags": {
+    "climbing": 1.0,
+    "adrenaline": 0.8,
+    "effort_high": 0.6,
+    "nature": 0.4
+   },
+   "desc": "Via ferrata-park in de Asco-vallei bij Moltifao met vijf varianten van gemakkelijk tot pittig (C/D) en veel tyroliennes. Materiaal huur je bij de uitbater (InTerraCorsa), minimaal een dag vooraf reserveren.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-via-ferrata-chisa",
+   "name": "Via ferrata van Chisà",
+   "region": "vivario",
+   "url": "https://www.via-ferrata.de/klettersteige/topo/via-ferrata-du-calanconi",
+   "lat": 41.9273,
+   "lon": 9.2663,
+   "durationH": 3.5,
+   "tags": {
+    "climbing": 1.0,
+    "adrenaline": 0.8,
+    "effort_high": 0.7,
+    "nature": 0.4,
+    "viewpoint": 0.3
+   },
+   "desc": "Via ferrata op het graniet van de Punta di u Calancone met touwbruggen en tyroliennes (ca. 3 uur, 300 m hoogteverschil). Aanmelden bij de gemeente of het gîte Bocca Bè in Chisà.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-via-ferrata-ospedale",
+   "name": "Xtrem Sud: via ferrata en klimparcours bij l'Ospédale",
+   "region": "portov",
+   "url": "https://www.xtremsud.com",
+   "lat": 41.6588,
+   "lon": 9.1955,
+   "durationH": 3,
+   "tags": {
+    "climbing": 0.9,
+    "adrenaline": 0.7,
+    "kids": 0.6,
+    "nature": 0.5,
+    "effort_high": 0.4
+   },
+   "desc": "Via ferrata in drie niveaus (geel, blauw, rood) en boomklimparcours op 1000 m hoogte, 20 minuten van Porto-Vecchio. Er is ook een babypark voor kinderen van 3 tot 5 jaar.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-via-ferrata-tolla",
+   "name": "Via ferrata van Tolla",
+   "region": "ajaccio",
+   "url": "https://reve-de-cimes.resactivite.com/en/via-ferrata-via-ferrata-avec-guide-5",
+   "lat": 41.9651,
+   "lon": 8.9591,
+   "durationH": 3,
+   "tags": {
+    "climbing": 0.9,
+    "adrenaline": 0.7,
+    "effort_high": 0.5,
+    "viewpoint": 0.4,
+    "nature": 0.4
+   },
+   "desc": "Matige via ferrata (B) langs de Prunelli-kloof, ca. 3 uur; met gids te boeken bij Rêves de Cimes (vanaf 11 jaar). Controleer vooraf of de verhuur van materiaal nog actief is.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-bavella-klimmen",
+   "name": "Klimmen in de Aiguilles de Bavella",
+   "region": "zonza",
+   "url": "https://en.wikipedia.org/wiki/Aiguilles_de_Bavella",
+   "lat": 41.7998,
+   "lon": 9.2148,
+   "durationH": 8,
+   "tags": {
+    "climbing": 1.0,
+    "adrenaline": 0.7,
+    "effort_high": 0.9,
+    "nature": 0.6,
+    "viewpoint": 0.4
+   },
+   "desc": "Rode granietwanden met klassieke grote routes (250 tot 600 m, graad D+ tot ED), het hele jaar te doen met een gediplomeerde berggids. Alleen voor ervaren klimmers of onder begeleiding.",
+   "photo": {
+    "file": "img/act-bavella-klimmen.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Rémih",
+    "page": "https://commons.wikimedia.org/wiki/File:Aiguilles_de_Bavella_taffoni.jpg"
+   },
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-bike-park-bavella",
+   "name": "Bike Park de Bavella (Zonza)",
+   "region": "zonza",
+   "url": "https://www.bikepark-bavella.com",
+   "lat": 41.7506,
+   "lon": 9.1714,
+   "durationH": 4,
+   "tags": {
+    "cycling": 1.0,
+    "adrenaline": 0.8,
+    "effort_high": 0.6,
+    "nature": 0.4,
+    "kids": 0.2
+   },
+   "desc": "Bikepark met 28 downhill- en enduro-trails, liften om weer omhoog te komen en verhuur van mountainbikes en beschermers. Ook cross-country routes met of zonder gids; reserveren aanbevolen.",
+   "verified": "2026-10-28"
+  },
+  {
+   "id": "act-sol-in-bike-solaro",
+   "name": "Sol In Bike: e-MTB vanuit Solaro",
+   "region": "zonza",
+   "url": "https://www.manawa.com/fr/providers/6162-sol-in-bike",
+   "lat": 41.9045,
+   "lon": 9.3283,
+   "durationH": 6,
+   "tags": {
+    "cycling": 1.0,
+    "nature": 0.6,
+    "effort_high": 0.5,
+    "viewpoint": 0.4
+   },
+   "desc": "Verhuur van elektrische mountainbikes in Solaro voor tochten naar de Aiguilles de Bavella (dagtocht ca. 70 km, vanaf 65 euro) of kortere ritten naar Chisà en Sari-Solenzara.",
+   "verified": "2026-10-28"
+  }
+ ]
+}

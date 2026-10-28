@@ -1,0 +1,345 @@
+{
+ "routes": [
+  {
+   "id": "\"<img src=x onerror=window.__pwned=1>",
+   "name": "Route A",
+   "sub": "Balagne, Corte, Porto-Vecchio",
+   "title": "Klassiek: Balagne, de bergen en het zuidoosten",
+   "lead": "Eerst het groene noordwesten rond Calvi, dan drie nachten de bergen in bij Corte en daarna zes nachten aan de stranden van Porto-Vecchio. Korte ritten. De ferry vertrekt en komt aan in Bastia.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona. Boek in juli en augustus zo vroeg mogelijk, ook voor de EV.",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "portov",
+    "bastia"
+   ],
+   "stays": [
+    "calvi",
+    "corte",
+    "portov"
+   ],
+   "nights": [
+    4,
+    3,
+    6
+   ],
+   "profile": {
+    "coast": 0.66,
+    "mountains": 0.39,
+    "town": 0.52,
+    "quiet": 0.38,
+    "lively": 0.58
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Calvi",
+     "km": 92,
+     "min": 120,
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "Calvi",
+     "to": "Corte",
+     "km": 95,
+     "min": 115,
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Porto-Vecchio",
+     "km": 135,
+     "min": 150,
+     "via": [
+      "corte",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "portov"
+     ]
+    },
+    {
+     "from": "Porto-Vecchio",
+     "to": "Bastia",
+     "km": 135,
+     "min": 140,
+     "via": [
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "a",
+   "name": "Route A",
+   "sub": "<img src=x onerror=window.__pwned=1>",
+   "title": "<img src=x onerror=window.__pwned=1>",
+   "lead": "<img src=x onerror=window.__pwned=1>",
+   "ferry": "<img src=x onerror=window.__pwned=1>",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "portov",
+    "bastia"
+   ],
+   "stays": [
+    "calvi",
+    "corte",
+    "portov"
+   ],
+   "nights": [
+    "<img src=x onerror=window.__pwned=1>",
+    3,
+    4
+   ],
+   "profile": {
+    "coast": 0.66,
+    "mountains": 0.39,
+    "town": 0.52,
+    "quiet": 0.38,
+    "lively": 0.58
+   },
+   "legs": [
+    {
+     "from": "<img src=x onerror=window.__pwned=1>",
+     "to": "Calvi",
+     "km": "<img src=x onerror=window.__pwned=1>",
+     "min": "<img src=x onerror=window.__pwned=1>",
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "<img src=x onerror=window.__pwned=1>",
+     "to": "Corte",
+     "km": "<img src=x onerror=window.__pwned=1>",
+     "min": "<img src=x onerror=window.__pwned=1>",
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "<img src=x onerror=window.__pwned=1>",
+     "to": "Porto-Vecchio",
+     "km": "<img src=x onerror=window.__pwned=1>",
+     "min": "<img src=x onerror=window.__pwned=1>",
+     "via": [
+      "corte",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "portov"
+     ]
+    },
+    {
+     "from": "<img src=x onerror=window.__pwned=1>",
+     "to": "Bastia",
+     "km": "<img src=x onerror=window.__pwned=1>",
+     "min": "<img src=x onerror=window.__pwned=1>",
+     "via": [
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ],
+   "days": [
+    {
+     "stay": "calvi",
+     "title": "<img src=x onerror=window.__pwned=1>",
+     "text": "<img src=x onerror=window.__pwned=1>"
+    }
+   ]
+  },
+  {
+   "id": "b</script><svg onload=window.__pwned=1>",
+   "name": "Route A",
+   "sub": "Balagne, Corte, Porto-Vecchio",
+   "title": "Klassiek: Balagne, de bergen en het zuidoosten",
+   "lead": "Eerst het groene noordwesten rond Calvi, dan drie nachten de bergen in bij Corte en daarna zes nachten aan de stranden van Porto-Vecchio. Korte ritten. De ferry vertrekt en komt aan in Bastia.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona. Boek in juli en augustus zo vroeg mogelijk, ook voor de EV.",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "portov",
+    "bastia"
+   ],
+   "stays": [
+    "calvi",
+    "corte",
+    "portov"
+   ],
+   "nights": [
+    4,
+    3,
+    6
+   ],
+   "profile": {
+    "coast": 0.66,
+    "mountains": 0.39,
+    "town": 0.52,
+    "quiet": 0.38,
+    "lively": 0.58
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Calvi",
+     "km": 92,
+     "min": 120,
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "Calvi",
+     "to": "Corte",
+     "km": 95,
+     "min": 115,
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Porto-Vecchio",
+     "km": 135,
+     "min": 150,
+     "via": [
+      "corte",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "portov"
+     ]
+    },
+    {
+     "from": "Porto-Vecchio",
+     "to": "Bastia",
+     "km": 135,
+     "min": 140,
+     "via": [
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ],
+   "days": [
+    {
+     "stay": "calvi",
+     "title": "Aankomst en eerste strandmiddag",
+     "text": "Ferry komt aan in Bastia. Rijd via Saint-Florent naar Calvi (2 uur). Inchecken, zwemmen in de baai en vroeg naar bed.",
+     "drive": "Bastia - Calvi, 2 u"
+    },
+    {
+     "stay": "calvi",
+     "title": "Strand en citadel",
+     "text": "Ochtend op het strand van Calvi, ondiep en rustig. Aan het eind van de middag de citadel op voor ijsjes en uitzicht."
+    },
+    {
+     "stay": "calvi",
+     "title": "Treinrit naar Île-Rousse",
+     "text": "Met het Trinichellu-treintje langs de kust naar Île-Rousse. Lunch, schaduw onder de markthal en zwemmen bij het stadsstrand."
+    },
+    {
+     "stay": "calvi",
+     "title": "Bergdorpjes of rustdag",
+     "text": "Pigna en Sant'Antonino met winkeltjes van ambachtslieden, of een luie dag aan de baai van Arinella bij Lumio met snorkelmasker."
+    },
+    {
+     "stay": "corte",
+     "title": "Naar de bergen",
+     "text": "Via Île-Rousse en Ponte-Leccia naar Corte (2 uur). Citadel van Corte beklimmen en eten in de oude stad.",
+     "drive": "Calvi - Corte, 1 u 55"
+    },
+    {
+     "stay": "corte",
+     "title": "Restonica-rivier",
+     "text": "Rijd de Restonica-vallei in en zoek een natuurlijk zwempoeltje. Korte wandeling langs de rivier. Neem eten mee."
+    },
+    {
+     "stay": "corte",
+     "title": "Kloof en dorpjes",
+     "text": "Stop bij Scala di Santa Regina en wandel een stukje in de Gorges du Tavignano. Rustige middag in Corte."
+    },
+    {
+     "stay": "portov",
+     "title": "Naar het zuiden",
+     "text": "Via de oostkust naar Porto-Vecchio, ca. 2,5 uur. Pauze bij de Romeinse opgraving in Aléria. Middag zwemmen op Santa Giulia.",
+     "drive": "Corte - Porto-Vecchio, 2 u 30"
+    },
+    {
+     "stay": "portov",
+     "title": "Palombaggia",
+     "text": "Dagje op het strand van Palombaggia met rode rotsen en parasoldennen. Lunch bij een strandtent."
+    },
+    {
+     "stay": "portov",
+     "title": "Bavella, halve dag",
+     "text": "Autotocht (ca. 1 uur) naar de Col de Bavella, kijken bij de Aiguilles en zwemmen in een rivierpoel. Geen lange wandeling met kinderen van 5 en 7."
+    },
+    {
+     "stay": "portov",
+     "title": "Bonifacio",
+     "text": "Bonifacio: citadel en een bootje langs de krijtrotsen (ca. 1 uur rijden heen). Terug via Rondinara voor een late duik."
+    },
+    {
+     "stay": "portov",
+     "title": "Rondinara en Santa Manza",
+     "text": "Ondiepe baaien en een rustige dag. Kinderen kunnen ver het water in."
+    },
+    {
+     "stay": "portov",
+     "title": "Laatste strandmiddag",
+     "text": "Oude stad van Porto-Vecchio, souvenirs en een afscheidsdiner bij Tamaricciu of in de stad."
+    },
+    {
+     "stay": "bastia",
+     "title": "Terug naar de ferry",
+     "text": "Via de oostkust terug naar Bastia (2 uur 20). Kies een ferry aan het eind van de dag.",
+     "drive": "Porto-Vecchio - Bastia, 2 u 20"
+    }
+   ]
+  }
+ ]
+}

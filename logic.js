@@ -1,0 +1,667 @@
+// Pure logic: taste profile, ranking, groups, learning curve. No DOM, no I/O (tested in test/logic.test.js).
+// Profile shape everywhere: { w: {tag: -1..1}, c: {tag: evidence >= 0}, n: swipes }. A group profile adds members: [profile].
+
+export const SWIPE = { NO: -1, YES: 1, SUPER: 2 };
+export const SWIPE_VALUES = [-1, 1, 2];
+export const MIN_SKIP = 10; // a deck may be skipped after this many cards
+export const ID_RE = /^[-_A-Za-z0-9]{1,32}$/;
+export const CODE_RE = /^[A-Za-z0-9]{10,32}$/; // join token: nobody types it, it travels in the link
+export const TAG_RE = /^[a-z_]{1,24}$/;
+export const TYPE_TAGS = ['hotel', 'boutique', 'villa', 'apartment', 'bnb', 'glamping', 'camping', 'agriturismo'];
+export const MISERY = { threshold: 0.15, weight: 1 }; // least-misery penalty for a group
+export const REGION_KEYS = ['coast', 'mountains', 'town', 'quiet', 'lively'];
+export const DISLIKE = { w: -0.5, c: 2 }; // a tag is "disliked" when its weight is this negative with evidence from at least two cards (or the person set it)
+export const SOFT_PENALTY = { factor: 0.5, cap: 0.3 }; // negative tags cost an item score, scaled by certainty, at most this much
+export const KIDS_TAGS = ['kids', 'family'];
+export const TOP_ACTS = 5; // activities that count in a stop's score
+export const KIDS_COAST = 0.8; // minimum coast affinity of a profile that likes kids or family
+
+// a tag name from outside: the right shape, never __proto__, and (when a list is given) one of tags.json
+const isTag = (t, allowed) => TAG_RE.test(t) && t !== '__proto__' && (!allowed || allowed.has(t));
+const r3 = x => Math.round(x * 1000) / 1000;
+const isNum = v => typeof v === 'number' && Number.isFinite(v);
+const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
+
+// ---- tags ----
+// card/item tags are either ['pool', 'spa'] (weight 1) or {pool: 0.8}; anything else is ignored
+export function tagWeights(item) {
+  const t = item && item.tags;
+  const out = {};
+  if (Array.isArray(t)) { for (const k of t) if (typeof k === 'string' && k !== '__proto__') out[k] = 1; }
+  else if (t && typeof t === 'object') { for (const [k, v] of Object.entries(t)) if (isNum(v) && v > 0 && k !== '__proto__') out[k] = clamp(v, 0, 1); }
+  return out;
+}
+// tags.json -> {tag: label} over all groups
+export function flattenLabels(tagsJson) {
+  const out = {};
+  for (const [group, map] of Object.entries(tagsJson || {})) if (!group.startsWith('_') && map && typeof map === 'object') Object.assign(out, map);
+  return out;
+}
+
+// ---- profile ----
+export const emptyProfile = () => ({ w: {}, c: {}, n: 0 });
+
+// pure: returns a new accumulator {raw, c, n}; value is -1 (nope), 1 (like), 2 (super like)
+export function applySwipe(state, card, value) {
+  const s = state || { raw: {}, c: {}, pos: {}, n: 0 };
+  if (!SWIPE_VALUES.includes(value)) return s;
+  const raw = { ...s.raw }, c = { ...s.c }, pos = { ...(s.pos || {}) };
+  for (const [t, w] of Object.entries(tagWeights(card))) { raw[t] = (raw[t] || 0) + value * w; c[t] = (c[t] || 0) + w; if (value > 0) pos[t] = (pos[t] || 0) + w; }
+  return { raw, c, pos, n: s.n + 1 };
+}
+// profile.l (not enumerable, local only): the tags that were liked at least once
+const withLiked = (p, l) => Object.defineProperty(p, 'l', { value: l, enumerable: false, writable: true });
+// normalise: shrink towards 0 with one unit of prior evidence, so one like is +0.5, two are +0.67, a super like is +1
+export function finalize(state) {
+  const w = {}, c = {};
+  for (const t of Object.keys(state.c)) { w[t] = r3(clamp(state.raw[t] / (state.c[t] + 1), -1, 1)); c[t] = r3(state.c[t]); }
+  return withLiked({ w, c, n: state.n }, { ...(state.pos || {}) });
+}
+// manual corrections from the profile screen: {tag: 1 (like) | -1 (dislike) | 0 (forget what the swipes said)}
+export function applyOverrides(profile, overrides) {
+  if (!overrides) return profile;
+  const w = { ...profile.w }, c = { ...profile.c }, l = { ...(profile.l || {}) };
+  for (const [t, v] of Object.entries(overrides)) {
+    if (v === 1 || v === -1) { w[t] = v; c[t] = Math.max(c[t] || 0, 3); if (v === 1) l[t] = Math.max(l[t] || 0, 1); else delete l[t]; }
+    else if (v === 0) { delete w[t]; delete c[t]; delete l[t]; }
+  }
+  return withLiked({ w, c, n: profile.n }, l);
+}
+// "with children" counts as liking kids and family unless the person set those tags themselves
+export function effectiveOverrides(overrides, prefs) {
+  const out = { ...(overrides || {}) };
+  if (prefs && prefs.kids) for (const t of ['kids', 'family']) if (out[t] === undefined) out[t] = 1;
+  return out;
+}
+export function cleanOverrides(raw, allowed = null) {
+  const out = {};
+  for (const [t, v] of Object.entries(raw || {})) if (isTag(t, allowed) && (v === -1 || v === 0 || v === 1)) out[t] = v;
+  return out;
+}
+// switches and a budget (1-4 euro signs); only what is on is kept
+export function cleanPrefs(raw) {
+  const out = {};
+  const r = raw || {};
+  for (const k of ['airco', 'ev', 'kids']) if (r[k] === true) out[k] = true;
+  if (Number.isInteger(r.budget) && r.budget >= 1 && r.budget <= 4) out.budget = r.budget;
+  return out;
+}
+const asList = deck => (Array.isArray(deck) ? deck : Object.values(deck || {}));
+export function profileFrom(swipes, deck, overrides) {
+  let st = { raw: {}, c: {}, n: 0 };
+  const sw = swipes || {};
+  for (const card of asList(deck)) if (card && Object.hasOwn(sw, card.id)) st = applySwipe(st, card, sw[card.id]);
+  return applyOverrides(finalize(st), overrides);
+}
+// profile from only the first k cards (presentation order) of each deck; decks: [deckA, deckB] or one deck
+export function profileAfter(swipes, k, decks, overrides) {
+  const list = Array.isArray(decks) && decks.length && Array.isArray(decks[0]) ? decks : [decks || []];
+  const part = [];
+  for (const d of list) part.push(...asList(d).slice(0, k));
+  return profileFrom(swipes, part, overrides);
+}
+export function certainty(profile, tag) {
+  const e = (profile && profile.c && profile.c[tag]) || 0;
+  return e / (e + 2);
+}
+// cosine similarity of two profiles' weights (1 = same taste); used to see how fast the profile settles
+export function profileSimilarity(a, b) {
+  let dot = 0, na = 0, nb = 0;
+  const wa = (a && a.w) || {}, wb = (b && b.w) || {};
+  for (const t of new Set([...Object.keys(wa), ...Object.keys(wb)])) { const x = wa[t] || 0, y = wb[t] || 0; dot += x * y; na += x * x; nb += y * y; }
+  return na && nb ? dot / Math.sqrt(na * nb) : 0;
+}
+
+// ---- stored summaries (what a member writes to groups/{gid}/profiles/{uid}) ----
+// prefs travel with the summary (only what is on), so a group can combine them
+export function summarize(profile, now = Date.now(), prefs = null, allowed = null) {
+  const w = {}, c = {};
+  for (const t of Object.keys(profile.w)) if (isTag(t, allowed) && isNum(profile.w[t])) { w[t] = r3(clamp(profile.w[t], -1, 1)); c[t] = r3(clamp(profile.c[t] || 0, 0, 500)); }
+  const out = { w, c, n: clamp(Math.round(profile.n || 0), 0, 500), updatedAt: now };
+  const p = cleanPrefs(prefs);
+  if (Object.keys(p).length) out.prefs = p;
+  return out;
+}
+// untrusted data from the database -> a safe profile
+export function readSummary(raw, allowed = null) {
+  const p = emptyProfile();
+  if (!raw || typeof raw !== 'object') return p;
+  for (const [t, v] of Object.entries(raw.w || {})) if (isTag(t, allowed) && isNum(v)) { p.w[t] = clamp(v, -1, 1); p.c[t] = isNum(raw.c && raw.c[t]) ? clamp(raw.c[t], 0, 500) : 1; }
+  p.n = isNum(raw.n) ? clamp(Math.round(raw.n), 0, 500) : 0;
+  return p;
+}
+// the strictest budget and the union of the must-haves (kids is on when anybody travels with kids)
+export function combinePrefs(list) {
+  const out = {};
+  const budgets = [];
+  for (const raw of list || []) {
+    const p = cleanPrefs(raw);
+    for (const k of ['airco', 'ev', 'kids']) if (p[k]) out[k] = true;
+    if (p.budget) budgets.push(p.budget);
+  }
+  if (budgets.length) out.budget = Math.min(...budgets);
+  return out;
+}
+export const readPrefs = raw => cleanPrefs(raw && raw.prefs);
+// a member entry is {name, via}; older data may be a plain name
+export const memberName = m => (m && typeof m === 'object' ? String(m.name ?? '') : String(m ?? ''));
+export function cleanSwipes(raw) {
+  const out = {};
+  for (const [k, v] of Object.entries(raw || {})) if (ID_RE.test(k) && SWIPE_VALUES.includes(v)) out[k] = v;
+  return out;
+}
+
+// ---- scoring ----
+function cosScore(p, it) {
+  let dot = 0, ni = 0, np = 0;
+  for (const [t, v] of Object.entries(it)) { ni += v * v; if (p[t]) dot += p[t] * v; }
+  for (const v of Object.values(p)) np += v * v;
+  return ni && np ? dot / Math.sqrt(ni * np) : 0;
+}
+// the weighted mean of the profile's weights over the item's own tags (untested tags count 0). Unlike a cosine it does not shrink
+// when the profile learns more tags, so scores stay comparable from the 5th to the 50th swipe.
+function meanScore(p, it) {
+  let num = 0, den = 0;
+  for (const [t, v] of Object.entries(it)) { den += v; if (p[t]) num += p[t] * v; }
+  return den ? num / den : 0;
+}
+const isGroup = p => !!(p && Array.isArray(p.members) && p.members.length > 1);
+const membersOf = p => (isGroup(p) ? p.members : p ? [p] : []);
+// tags the person rejected: net weight <= -0.5 with evidence from two cards, or set by hand. In a group: anything one member rejected.
+const memberDis = new WeakMap();
+function dislikedOf(m) {
+  let out = memberDis.get(m);
+  if (!out) {
+    out = new Set();
+    for (const [t, v] of Object.entries(m.w || {})) if (v <= DISLIKE.w && ((m.c && m.c[t]) || 0) >= DISLIKE.c) out.add(t);
+    memberDis.set(m, out);
+  }
+  return out;
+}
+export function dislikedTags(profile) {
+  const out = new Set();
+  for (const m of membersOf(profile)) for (const t of dislikedOf(m)) out.add(t);
+  return out;
+}
+// accommodation types to leave out: the type tag itself is rejected and was never liked (by that member)
+export function rejectedTypes(profile) {
+  const out = new Set();
+  for (const m of membersOf(profile)) for (const t of TYPE_TAGS) if (dislikedOf(m).has(t) && !((m.l && m.l[t]) > 0)) out.add(t);
+  return out;
+}
+const certaintyOf = (p, t) => { const e = (p.c && p.c[t]) || 0; return e / (e + 2); };
+// a soft penalty for every negative tag, scaled by certainty and capped
+function softPenalty(p, it) {
+  let sum = 0;
+  for (const [t, v] of Object.entries(it)) { const w = p.w && p.w[t]; if (w < 0) sum += v * -w * certaintyOf(p, t); }
+  return Math.min(SOFT_PENALTY.cap, SOFT_PENALTY.factor * sum);
+}
+function memberScore(p, it) { return meanScore(p.w || {}, it) - softPenalty(p, it); }
+// about -1..1. A group score is the mean of the members' scores minus a penalty when somebody dislikes the item strongly.
+export function scoreItem(profile, item) {
+  const it = tagWeights(item);
+  if (isGroup(profile)) {
+    const s = profile.members.map(m => memberScore(m, it));
+    const mean = s.reduce((a, b) => a + b, 0) / s.length;
+    return mean - MISERY.weight * Math.max(0, -Math.min(...s) - MISERY.threshold);
+  }
+  return memberScore(profile || {}, it);
+}
+// children: without kids a family resort or kids club costs 0.25; with kids adults-only costs a little
+export function prefDelta(item, prefs) {
+  const tw = tagWeights(item);
+  return prefs && prefs.kids ? -0.1 * (tw.adults_only || 0) : -0.25 * Math.max(tw.family || 0, tw.kids || 0);
+}
+const likes = (p, t) => !!p && !!p.w && p.w[t] >= 0.3 && ((p.c && p.c[t]) || 0) >= 1;
+const negative = (p, t) => !!p && !!p.w && p.w[t] < 0 && ((p.c && p.c[t]) || 0) >= 1;
+const likedOnce = (p, t) => membersOf(p).some(m => (m.l && m.l[t]) > 0);
+// laid-back signal: the person likes culture, relax or little effort and turned down something strenuous (even once)
+export const STRENUOUS = ['canyoning', 'adrenaline', 'boat', 'hike_hard'];
+export const laidBackDrops = p => (['culture', 'relax', 'effort_low'].some(t => likes(p, t)) && STRENUOUS.some(t => negative(p, t)) ? STRENUOUS : []);
+// long hikes (4 hours or more, hiking tags) and effort_high count as strenuous too
+const strenuousItem = tw => tw.effort_high >= 0.5;
+export const hiddenReasons = prefs => (prefs && prefs.kids ? [] : KIDS_TAGS); // "kindvriendelijk" is no reason when travelling without kids
+// why an item fits: the best matching tags (never a rejected or hidden one), the rejected tags it carries ("let op"), and one honest con:
+// a rejected tag it has, else a strongly liked tag it lacks (only for tags in opts.vocab)
+export function explain(profile, item, labels = {}, n = 2, { vocab = null, hide = [] } = {}) {
+  const it = tagWeights(item), p = (profile && profile.w) || {}, dis = dislikedTags(profile);
+  const lab = t => labels[t] || t;
+  const rows = Object.keys(it).filter(t => p[t]).map(t => ({ tag: t, label: lab(t), v: p[t] * it[t] }));
+  const pick = list => list.slice(0, n).map(({ tag, label }) => ({ tag, label }));
+  const by = (a, b) => b.v - a.v || a.tag.localeCompare(b.tag);
+  const match = pick(rows.filter(r => r.v > 0 && !dis.has(r.tag) && !hide.includes(r.tag)).sort(by));
+  const warn = pick(rows.filter(r => dis.has(r.tag) && !hide.includes(r.tag)).sort((a, b) => -by(a, b)));
+  let con = null;
+  if (warn.length) con = { tag: warn[0].tag, label: warn[0].label, text: 'let op: ' + warn[0].label.toLowerCase() };
+  else if (vocab) {
+    const lack = vocab.filter(t => !it[t] && p[t] >= 0.5 && ((profile.c && profile.c[t]) || 0) >= 2 && !dis.has(t) && !hide.includes(t)).sort((a, b) => p[b] - p[a] || a.localeCompare(b))[0];
+    if (lack) con = { tag: lack, label: lab(lack), text: 'minder: geen ' + lab(lack).toLowerCase() };
+  }
+  const text = match.length ? 'Past bij jouw smaak: ' + match.map(m => m.label).join(', ') : 'Nog weinig bekend over jouw smaak voor deze keuze';
+  return { match, warn, con, text };
+}
+
+// ---- diversity (MMR: maximal marginal relevance) ----
+// pick n items, each time the best score minus lambda * similarity to what is already picked
+// minRel: after the best item, only items scoring at least minRel * best take part in the diversity pick;
+// when none are left the rest is filled by plain score (a poor match never wins just for being different)
+export function mmr(items, n, { score, sim, lambda = 0.3, minRel = 0 }) {
+  const cand = items.map(item => ({ item, s: score(item) })).sort((a, b) => b.s - a.s || String(a.item.id).localeCompare(String(b.item.id)));
+  const out = [];
+  const top = cand.length ? cand[0].s : 0;
+  while (out.length < n && cand.length) {
+    let bi = 0, bv = -Infinity;
+    const gate = out.length && top > 0 ? minRel * top : -Infinity;
+    cand.forEach((c, i) => {
+      if (c.s < gate) return;
+      const v = c.s - lambda * Math.max(0, ...out.map(o => sim(o.item, c.item)));
+      if (v > bv + 1e-12) { bv = v; bi = i; }
+    });
+    out.push(cand.splice(bi, 1)[0]);
+  }
+  return out;
+}
+const typeOf = item => { const t = tagWeights(item); return TYPE_TAGS.find(k => t[k]) || null; };
+const tagSim = (a, b) => { const x = tagWeights(a), y = tagWeights(b); return cosScore(x, y); };
+const accSim = (a, b) => { const ta = typeOf(a); return ta && ta === typeOf(b) ? 1 : 0.25 * tagSim(a, b); };
+
+const TIER_NOTE = ['', 'unknown', 'excluded', 'over_budget', 'absent'];
+// the must-haves: preference key, tag, and the flag that says "confirmed absent"
+const MUST = [['airco', 'airco', 'noAirco'], ['ev', 'ev_charging', 'noEv']];
+// top accommodations for a region. Tiers: 0 = fits everything (required extras confirmed); 1 = a required extra is unknown (shown "onbekend, vraag na");
+// 2 = soft-excluded: a rejected type, family/kids-club stays for an adults-only traveller without kids, budget hostels at a high budget when no budget
+// card was liked, hotels and pool resorts for an adventure profile; 3 = above the budget; 4 = a required extra is confirmed absent.
+// Tiers 2 to 4 only fill slots when nothing better exists; over-budget stays are hidden once two stays fit. prefs: {airco, ev, kids, budget}. Within a tier: best matches, but a different type when scores are close.
+export function topAccommodations(accs, region, profile, n = 3, { labels = {}, lambda = 0.3, minRel = 0.8, prefs = null, vocab = null } = {}) {
+  const pool = accs.filter(a => a.region === region);
+  const ex = rejectedTypes(profile), hide = hiddenReasons(prefs);
+  const need = MUST.filter(([k]) => prefs && prefs[k]);
+  const noKids = !(prefs && prefs.kids);
+  const hostelsOut = !!(prefs && prefs.budget >= 3) && !likedOnce(profile, 'budget');
+  const adventure = (likes(profile, 'camping') || likes(profile, 'budget')) && (negative(profile, 'hotel') || negative(profile, 'pool'));
+  const info = a => {
+    const tw = tagWeights(a);
+    return {
+      confirmed: need.filter(([, t]) => tw[t] >= 0.5).map(([k]) => k),
+      absent: need.filter(([, t, flag]) => a[flag] === true && !(tw[t] >= 0.5)).map(([k]) => k),
+      unknown: need.filter(([, t, flag]) => !(tw[t] >= 0.5) && a[flag] !== true).map(([k]) => k),
+    };
+  };
+  const soft = a => {
+    const tw = tagWeights(a), ty = typeOf(a);
+    return (ty && ex.has(ty)) || (noKids && Math.max(tw.family || 0, tw.kids || 0) >= 0.8) || (hostelsOut && tw.budget >= 0.5)
+      || (adventure && (ty === 'hotel' || (tw.pool >= 0.8 && ty !== 'camping' && ty !== 'glamping')));
+  };
+  const tierOf = (a, i) => {
+    if (i.absent.length) return 4;
+    if (prefs && prefs.budget && typeof a.priceLevel === 'number' && a.priceLevel > prefs.budget) return 3;
+    if (soft(a)) return 2;
+    return i.unknown.length ? 1 : 0;
+  };
+  const tiers = [[], [], [], [], []];
+  for (const a of pool) tiers[tierOf(a, info(a))].push(a);
+  // inside tier 1 the stays with more confirmed must-haves come first
+  const groups = [[0, tiers[0]]];
+  for (let c = need.length - 1; c >= 0; c--) groups.push([1, tiers[1].filter(a => info(a).confirmed.length === c)]);
+  groups.push([2, tiers[2]], [4, tiers[4]], [3, tiers[3]]); // above the budget is always last
+  const out = [];
+  groups.forEach(([tier, list]) => {
+    if (out.length >= n || !list.length) return;
+    if (tier === 3 && out.length >= 2) return; // above the budget: never next to two or more stays that fit
+    for (const { item, s } of mmr(list, n - out.length, { score: a => scoreItem(profile, a) + prefDelta(a, prefs), sim: accSim, lambda, minRel })) {
+      const i = info(item);
+      out.push({ item, score: s, tier, note: TIER_NOTE[tier], confirmed: i.confirmed, unconfirmed: i.unknown, absent: i.absent, why: explain(profile, item, labels, 2, { vocab, hide }) });
+    }
+  });
+  // the first stay should not say "nog weinig bekend" when a near-equal stay has a known match
+  if (out.length > 1 && !out[0].why.match.length) {
+    const j = out.findIndex(o => o.why.match.length && o.tier === out[0].tier && o.score >= out[0].score - 0.15);
+    if (j > 0) [out[0], out[j]] = [out[j], out[0]];
+  }
+  return out;
+}
+// how many of the shown stays confirm each required extra: [{key, confirmed, total}]
+export function mustHaveLine(accs, prefs) {
+  return MUST.filter(([k]) => prefs && prefs[k]).map(([k]) => ({ key: k, confirmed: accs.filter(a => a.confirmed.includes(k)).length, total: accs.length }));
+}
+
+// ---- geography ----
+export function distanceKm(a, b) {
+  const R = 6371, rad = d => (d * Math.PI) / 180;
+  const dl = rad(b.lat - a.lat), dn = rad(b.lon - a.lon);
+  const h = Math.sin(dl / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dn / 2) ** 2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+// approximate driving minutes: mountain roads 1.4 x the distance at 50 km/h, coast roads 1.2 x at 60 km/h
+export const driveMin = (km, coast = false) => Math.round(coast ? (km * 1.2 / 60) * 60 : (km * 1.4 / 50) * 60);
+
+const STOP_WORDS = new Set(['des', 'du', 'van', 'bij', 'the', 'and', 'het', 'een', 'les', 'aux', 'sur', 'del', 'della', 'dei']);
+export function nameTokens(name) {
+  const base = String(name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\([^)]*\)/g, ' ');
+  const toks = base.split(/[^a-z0-9]+/).filter(t => t.length >= 3 && !STOP_WORDS.has(t)).map(t => (t.length > 4 && t.endsWith('s') ? t.slice(0, -1) : t));
+  return new Set(toks);
+}
+// near-duplicates: the same name stem, or within 300 m with overlapping tags
+export function isDuplicate(a, b) {
+  const x = nameTokens(a.name), y = nameTokens(b.name);
+  const both = [...x].filter(t => y.has(t)).length, small = Math.min(x.size, y.size), union = x.size + y.size - both;
+  if (union && both / union >= 0.6) return true;
+  if (small >= 2 && both === small) return true;
+  const close = typeof a.lat === 'number' && typeof b.lat === 'number' && distanceKm(a, b) < 0.3;
+  return close && cosScore(tagWeights(a), tagWeights(b)) > 0;
+}
+const CLUSTER = {
+  hike: 'hike', hike_hard: 'hike', climbing: 'hike', swim_river: 'river', canyoning: 'river', beach: 'sea', snorkel: 'sea', diving: 'sea', kayak: 'sea', boat: 'sea',
+  culture: 'culture', town: 'culture', village: 'culture', food: 'food', wine: 'food', market: 'food', viewpoint: 'view', photo: 'view', train: 'view',
+  relax: 'relax', wellness: 'relax', nightlife: 'night', adrenaline: 'adrenaline', cycling: 'adrenaline', nature: 'nature', kids: 'kids',
+};
+export function clusterOf(item) {
+  const best = Object.entries(tagWeights(item)).filter(([t]) => CLUSTER[t]).sort((a, b) => b[1] - a[1])[0];
+  return best ? CLUSTER[best[0]] : 'other';
+}
+// an activity the person turned down: its dominant tag is disliked; for a laid-back profile anything strenuous (canyoning, boats, adrenaline,
+// hard or long hikes, high effort); nightlife as the dominant tag once nightlife got a negative weight
+function isBadActivity(item, dis, calm, nightOut) {
+  const tw = tagWeights(item);
+  if (Object.entries(tw).some(([t, w]) => dis.has(t) && w >= 0.8)) return true;
+  if (nightOut && tw.nightlife >= 0.8) return true;
+  if (!calm.length) return false;
+  return calm.some(t => tw[t] >= 0.3) || strenuousItem(tw) || (item.durationH >= 4 && Math.max(tw.hike || 0, tw.hike_hard || 0) >= 0.3);
+}
+// activities within radiusKm of a stop ({lat, lon}), best match first. Rejected kinds are left out (unless nothing else is near),
+// near-duplicates are dropped and a type cluster gets one slot first, a second only to fill the list.
+export function activitiesNear(acts, stop, profile, { radiusKm = 30, n = 8, labels = {}, coast = false, vocab = null, prefs = null } = {}) {
+  const dis = dislikedTags(profile), hide = hiddenReasons(prefs), calm = laidBackDrops(profile), nightOut = negative(profile, 'nightlife');
+  const scored = acts.map(item => ({ item, km: distanceKm(stop, item) })).filter(x => x.km <= radiusKm)
+    .map(x => ({ ...x, s: scoreItem(profile, x.item) + prefDelta(x.item, prefs), bad: isBadActivity(x.item, dis, calm, nightOut) }))
+    .sort((a, b) => b.s - a.s || String(a.item.id).localeCompare(String(b.item.id)));
+  const choose = list => {
+    const chosen = [], count = {};
+    for (const cap of [1, 2]) for (const x of list) {
+      const cl = clusterOf(x.item);
+      if (chosen.length >= n || chosen.includes(x) || (count[cl] || 0) >= cap || chosen.some(c => isDuplicate(c.item, x.item))) continue;
+      chosen.push(x); count[cl] = (count[cl] || 0) + 1;
+    }
+    return chosen.sort((a, b) => b.s - a.s || String(a.item.id).localeCompare(String(b.item.id)));
+  };
+  let picks = choose(scored.filter(x => !x.bad));
+  if (!picks.length) picks = choose(scored); // nothing else is near: better something than nothing
+  return picks.map(x => ({ item: x.item, score: x.s, km: x.km, driveMin: driveMin(x.km, coast), why: explain(profile, x.item, labels, 2, { vocab, hide }) }));
+}
+
+// ---- routes ----
+// how much the profile likes each region trait (coast, mountains, ...): mean weight of the tags that map to it, 0 when untested
+export function regionAffinity(profile, regionTags) {
+  const out = {};
+  for (const k of REGION_KEYS) {
+    const vals = (regionTags[k] || []).filter(t => profile.c && profile.c[t] > 0).map(t => profile.w[t]);
+    out[k] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+  }
+  // children want a beach, whatever else they (do not) care about
+  if (["kids", "family"].some(t => profile.w[t] >= 0.3 && (profile.c[t] || 0) >= 1)) out.coast = Math.max(out.coast, KIDS_COAST);
+  return out;
+}
+// only the profile's strongest axes count (topN), so a clear preference is not diluted by axes the person does not care about
+export function regionMatch(routeProfile, affinity, topN = 2) {
+  const axes = REGION_KEYS.slice().sort((a, b) => Math.abs(affinity[b]) - Math.abs(affinity[a]) || a.localeCompare(b)).slice(0, topN);
+  let num = 0, den = 0;
+  for (const k of axes) { const r = (routeProfile && routeProfile[k]) || 0; num += r * affinity[k]; den += Math.abs(affinity[k]); }
+  return den ? num / den : 0;
+}
+// the total nights stay the same: one night moves from the worst to the best scoring stay when the gap is clear
+export function adjustNights(nights, stayScores, { minNights = 2, gap = 0.15 } = {}) {
+  const out = nights.slice();
+  if (out.length < 2) return out;
+  let best = 0, worst = 0;
+  stayScores.forEach((s, i) => { if (s > stayScores[best]) best = i; if (s < stayScores[worst]) worst = i; });
+  if (best !== worst && stayScores[best] - stayScores[worst] >= gap && out[worst] > minNights) { out[worst]--; out[best]++; }
+  return out;
+}
+const mean = a => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
+
+// Driving burden of a route in minutes: the legs plus 45 minutes a night (at most 3) in an inland hub such as Zonza or Corte,
+// from where every beach is a drive away.
+export const HUB_MIN = 45;
+export function travelBurden(route, stays = {}) {
+  const legs = (route.legs || []).reduce((a, l) => a + (l.min || 0), 0);
+  const hubs = route.stays.reduce((a, s, i) => a + (stays[s] && stays[s].coast === false ? HUB_MIN * Math.min(3, route.nights[i]) : 0), 0);
+  return legs + hubs;
+}
+// people who want it easy (relax, little effort, children) are bothered by driving; everybody else hardly
+export function burdenWeight(profile, prefs) {
+  const p = profile || {}, w = p.w || {}, c = p.c || {};
+  const likes = t => w[t] >= 0.3 && (c[t] || 0) >= 1;
+  return (prefs && prefs.kids) || ['relax', 'effort_low', 'kids', 'family'].some(likes) ? 0.3 : p.n > 0 ? 0.05 : 0;
+}
+// the activity tags this person likes most (certain, positive), the ones a route should offer
+export function likedActivityTags(profile, vocab, k = 5) {
+  const w = (profile && profile.w) || {}, c = (profile && profile.c) || {};
+  return vocab.filter(t => !t.startsWith('effort_') && w[t] >= 0.3 && (c[t] || 0) >= 1).sort((a, b) => w[b] - w[a] || c[b] - c[a] || a.localeCompare(b)).slice(0, k);
+}
+// how much a route leans on a region trait the person turned down (key tags per trait, e.g. coast -> beach)
+export function regionVeto(routeProfile, profile, veto) {
+  let worst = 0;
+  for (const k of REGION_KEYS) {
+    const r = (routeProfile && routeProfile[k]) || 0;
+    for (const t of (veto && veto[k]) || []) if (negative(profile, t) && profile.w[t] <= -0.3) worst = Math.max(worst, r * r * -profile.w[t]);
+  }
+  return worst;
+}
+const WEAK = 0.1; // a stop whose best stay and activities both score below this is "weak"
+// ctx: { acc, act, places: {key: [lon, lat]}, stays: {key: {coast}}, regionTags, labels, vocab: {acc, act}, prefs }
+// A stop scores on its best stay, its activities and how many of the person's favourite activity kinds are near (coverage).
+// A route is the mean over its stops plus a little region match, minus the driving burden and a penalty for weak stops.
+export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}) {
+  const labels = ctx.labels || {}, stays = ctx.stays || {}, vocab = ctx.vocab || {};
+  const actVocab = vocab.act || [...new Set(ctx.act.flatMap(a => Object.keys(tagWeights(a))))];
+  const liked = likedActivityTags(profile, actVocab);
+  const stops = route.stays.map((stay, i) => {
+    const xy = ctx.places[stay];
+    const acc = topAccommodations(ctx.acc, stay, profile, 3, { labels, prefs: ctx.prefs, vocab: vocab.acc });
+    const acts = xy ? activitiesNear(ctx.act, { lat: xy[1], lon: xy[0] }, profile, { radiusKm, n: nActs, labels, coast: !!(stays[stay] && stays[stay].coast), vocab: vocab.act, prefs: ctx.prefs }) : [];
+    const accBest = acc.length ? acc[0].score : 0, actMean = mean(acts.slice(0, TOP_ACTS).map(a => a.score));
+    const cover = liked.length ? liked.filter(t => acts.some(a => tagWeights(a.item)[t] >= 0.5)).length / liked.length : 0;
+    const score = 0.55 * accBest + 0.25 * actMean + 0.2 * 0.5 * cover;
+    return { stay, nights: route.nights[i], acc, acts, score, cover, must: mustHaveLine(acc, ctx.prefs), weak: accBest < WEAK && actMean < WEAK };
+  });
+  const nights = adjustNights(route.nights, stops.map(s => s.score));
+  stops.forEach((s, i) => { s.baseNights = s.nights; s.nights = nights[i]; });
+  const burden = travelBurden(route, stays);
+  const parts = {
+    region: regionMatch(route.profile, regionAffinity(profile, ctx.regionTags || {})),
+    activity: mean(stops.map(s => mean(s.acts.slice(0, TOP_ACTS).map(a => a.score)))),
+    acc: mean(stops.map(s => (s.acc.length ? s.acc[0].score : 0))),
+    cover: mean(stops.map(s => s.cover)),
+    veto: regionVeto(route.profile, profile, ctx.regionVeto),
+    over: mean(stops.map(s => (s.acc.some(a => a.tier === 3) ? 1 : 0))),
+    burden: burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
+    weak: 0.2 * mean(stops.map(s => (s.weak || s.acc.length && s.acc[0].score < 0 ? 1 : 0))),
+  };
+  const score = 0.8 * mean(stops.map(s => s.score)) + 0.2 * parts.region - parts.burden - parts.weak - parts.veto - 0.5 * parts.over;
+  return { route, stops, parts, score, burden, overBudget: parts.over > 0, shifted: nights.some((x, i) => x !== route.nights[i]) };
+}
+// all routes, best match for the profile first (the plan of every route is included)
+// Scores are stretched around their mean so a profile with clear preferences separates the routes by at least MIN_SPREAD
+// (the stretch is capped, a really flat profile stays flat). plan.rawScore keeps the unstretched value.
+// The alternatives (after the first) are varied: a route that starts in the same place as one already listed is nudged down.
+export const MIN_SPREAD = 0.2, MAX_STRETCH = 4, SAME_START = 0.04;
+export const MIN_SHOWN_PCT = 30;
+// A readable match percentage from the ranking score itself, so the percentages follow the order by construction:
+// the top route shows 85-95% (more when its absolute score is strong), the others are relative to it. Under 30%: null = "minder passend".
+export function matchPercentages(scores) {
+  if (!scores.length) return [];
+  const SHIFT = 0.3, best = Math.max(...scores), base = Math.max(best + SHIFT, 0.05);
+  const top = 85 + 10 * clamp((best + SHIFT) / 0.7, 0, 1); // the best route is always on the 85-95 scale
+  return scores.map(v => { if (v === best) return Math.round(top); if (v + SHIFT <= 0) return null; const p = Math.round(top * (v + SHIFT) / base); return p < MIN_SHOWN_PCT ? null : p; });
+}
+export function rankRoutes(routes, profile, ctx, opts) {
+  const plans = routes.map(r => planRoute(r, profile, ctx, opts));
+  if (!plans.length) return plans;
+  const sc = plans.map(p => p.score), spread = Math.max(...sc) - Math.min(...sc);
+  const f = spread > 1e-9 ? Math.min(MAX_STRETCH, Math.max(1, MIN_SPREAD / spread)) : 1, m = mean(sc);
+  plans.forEach(p => { p.rawScore = p.score; p.score = m + (p.score - m) * f; });
+  const byScore = (a, b) => b.score - a.score || String(a.route.id).localeCompare(String(b.route.id));
+  const rest = plans.sort(byScore);
+  const fit = rest.findIndex(p => !p.overBudget);
+  const out = [rest.splice(fit > 0 ? fit : 0, 1)[0]];
+  const opening = p => p.route.stays.slice(0, 2).join('>');
+  while (rest.length) {
+    let bi = -1, bv = -Infinity;
+    // the top 3 must open differently; later places only get the small nudge
+    const strict = out.length < 3 && rest.some(p => !out.some(o => opening(o) === opening(p)));
+    rest.forEach((p, i) => {
+      if (strict && out.some(o => opening(o) === opening(p))) return;
+      const v = p.score - SAME_START * out.slice(1).filter(o => o.route.stays[0] === p.route.stays[0]).length;
+      if (v > bv + 1e-12) { bv = v; bi = i; }
+    });
+    const pick = rest.splice(bi, 1)[0];
+    pick.score = Math.min(bv, out[out.length - 1].score); // the list stays sorted by the percentage shown
+    out.push(pick);
+  }
+  const pcts = matchPercentages(out.map(p => p.score)); // after the final order: monotone with it
+  out.forEach((p, k) => { p.matchPct = pcts[k]; });
+  return out;
+}
+
+// ---- groups ----
+// combined profile: per tag the mean weight of the members who tested it; members without swipes do not count
+export function groupProfile(profiles) {
+  const list = (profiles || []).filter(p => p && p.n > 0);
+  if (list.length === 1) return list[0];
+  const sum = Object.create(null), cnt = Object.create(null), ev = Object.create(null); // keys come from other people's data
+  for (const p of list) for (const [t, v] of Object.entries(p.w)) {
+    if (t === '__proto__') continue; sum[t] = (sum[t] || 0) + v; cnt[t] = (cnt[t] || 0) + 1; ev[t] = (ev[t] || 0) + (p.c[t] || 0); }
+  const w = {};
+  for (const t of Object.keys(sum)) w[t] = r3(sum[t] / cnt[t]);
+  return { w, c: Object.fromEntries(Object.keys(ev).map(t => [t, r3(ev[t])])), n: list.reduce((a, p) => a + p.n, 0), members: list };
+}
+
+// ---- profile screen ----
+// strongest likes / dislikes as [{tag, w, c}], strongest first
+// strongest likes / dislikes as [{tag, w, c}]: ordered by weight times certainty
+export function topTags(profile, { n = 6, sign = 1, hide = [] } = {}) {
+  return Object.keys(profile.w)
+    .filter(t => Math.sign(profile.w[t]) === sign && !hide.includes(t))
+    .map(t => ({ tag: t, w: profile.w[t], c: profile.c[t] || 0 }))
+    .sort((a, b) => Math.abs(b.w) * (b.c / (b.c + 2)) - Math.abs(a.w) * (a.c / (a.c + 2)) || b.c - a.c || a.tag.localeCompare(b.tag)) // strongest first, but well-evidenced beats a lucky single card
+    .slice(0, n);
+}
+// unswiped cards that clear up the least certain tags first
+export function moreCards(deck, swipes, profile, n = 10) {
+  const seen = swipes || {};
+  return asList(deck)
+    .map((card, i) => ({ card, i, v: Object.entries(tagWeights(card)).reduce((a, [t, w]) => a + w * (1 - certainty(profile, t)), 0) }))
+    .filter(x => !Object.hasOwn(seen, x.card.id))
+    .sort((a, b) => b.v - a.v || a.i - b.i)
+    .slice(0, n)
+    .map(x => x.card);
+}
+
+// ---- catalog / deck loading (tolerant about the exact file layout) ----
+const pickList = (o, names) => { for (const k of names) if (Array.isArray(o && o[k])) return o[k]; return []; };
+// ---- destination data comes from files: only safe ids and real numbers get through ----
+export const SAFE_ID_RE = /^[A-Za-z0-9_-]{1,40}$/;
+const ITEM_ID_RE = /^[-_A-Za-z0-9]{1,64}$/;
+const numOr = (v, d = 0) => { const n = typeof v === 'number' ? v : typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN; return Number.isFinite(n) ? n : d; };
+const strOr = (v, d = '') => (typeof v === 'string' ? v : d);
+const safeKeys = list => (Array.isArray(list) ? list.filter(k => typeof k === 'string' && SAFE_ID_RE.test(k)) : []);
+export function sanitizeRoutes(routes) {
+  const out = [];
+  for (const r of Array.isArray(routes) ? routes : []) {
+    if (!r || typeof r.id !== 'string' || !SAFE_ID_RE.test(r.id) || !Array.isArray(r.stays) || !Array.isArray(r.nights) || r.stays.length !== r.nights.length) continue;
+    const stays = safeKeys(r.stays);
+    if (stays.length !== r.stays.length) continue;
+    const profile = {};
+    for (const k of REGION_KEYS) profile[k] = clamp(numOr(r.profile && r.profile[k]), 0, 1);
+    out.push({
+      id: r.id, name: strOr(r.name), sub: strOr(r.sub), title: strOr(r.title), lead: strOr(r.lead), ferry: strOr(r.ferry),
+      stops: safeKeys(r.stops), stays, nights: r.nights.map(n => Math.max(1, Math.round(numOr(n, 1)))), profile,
+      legs: (Array.isArray(r.legs) ? r.legs : []).filter(l => l && typeof l === 'object').map(l => ({ from: strOr(l.from), to: strOr(l.to), km: Math.max(0, numOr(l.km)), min: Math.max(0, numOr(l.min)), via: safeKeys(l.via) })),
+      ...(Array.isArray(r.days) ? { days: r.days.filter(d => d && typeof d === 'object').map(d => ({ stay: strOr(d.stay), title: strOr(d.title), text: strOr(d.text), ...(d.drive ? { drive: strOr(d.drive) } : {}) })) } : {}),
+    });
+  }
+  return out;
+}
+// places.json: numeric coordinates only, safe keys
+export function sanitizePlaces(p) {
+  const pair = v => (Array.isArray(v) && v.length === 2 && v.every(x => Number.isFinite(numOr(x, NaN))) ? [numOr(v[0]), numOr(v[1])] : null);
+  const out = { places: {}, names: {}, outline: [], stays: {}, regionTags: {}, regionVeto: {}, tips: [] };
+  for (const [k, v] of Object.entries((p && p.places) || {})) if (SAFE_ID_RE.test(k) && pair(v)) out.places[k] = pair(v);
+  for (const [k, v] of Object.entries((p && p.names) || {})) if (SAFE_ID_RE.test(k) && v && typeof v === 'object') out.names[k] = { name: strOr(v.name), side: v.side === 'l' ? 'l' : 'r' };
+  out.outline = ((p && p.outline) || []).map(pair).filter(Boolean);
+  for (const [k, v] of Object.entries((p && p.stays) || {})) {
+    if (!SAFE_ID_RE.test(k) || !v || typeof v !== 'object') continue;
+    const profile = {};
+    for (const rk of REGION_KEYS) profile[rk] = clamp(numOr(v.profile && v.profile[rk]), 0, 1);
+    out.stays[k] = {
+      name: strOr(v.name, k), short: strOr(v.short, k), kind: strOr(v.kind), coast: v.coast !== false, img: SAFE_ID_RE.test(strOr(v.img)) ? v.img : '', desc: strOr(v.desc), profile,
+      sights: (Array.isArray(v.sights) ? v.sights : []).filter(x => x && typeof x === 'object').map(x => ({ title: strOr(x.title), img: SAFE_ID_RE.test(strOr(x.img)) ? x.img : '', text: strOr(x.text) })),
+      food: (Array.isArray(v.food) ? v.food : []).filter(x => x && typeof x === 'object').map(x => ({ name: strOr(x.name), text: strOr(x.text) })),
+    };
+  }
+  for (const [map, src] of [[out.regionTags, p && p.regionTags], [out.regionVeto, p && p.regionVeto]]) for (const k of REGION_KEYS) map[k] = (Array.isArray(src && src[k]) ? src[k] : []).filter(t => typeof t === 'string' && isTag(t));
+  out.tips = (Array.isArray(p && p.tips) ? p.tips : []).filter(t => t && typeof t === 'object').map(t => ({ title: strOr(t.title), text: strOr(t.text) }));
+  return out;
+}
+// catalog items: a safe id, real coordinates, numeric price level and duration; anything else is dropped or zeroed
+export function sanitizeItems(list, kind) {
+  const out = [];
+  for (const it of Array.isArray(list) ? list : []) {
+    if (!it || typeof it !== 'object' || typeof it.id !== 'string' || !ITEM_ID_RE.test(it.id)) continue;
+    const lat = numOr(it.lat, NaN), lon = numOr(it.lon, NaN);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+    const o = { ...it, lat, lon, name: strOr(it.name), region: strOr(it.region) };
+    if (kind === 'accommodation') { if ('priceLevel' in it) o.priceLevel = numOr(it.priceLevel, 0) || undefined; } else if ('durationH' in it) o.durationH = numOr(it.durationH, 0) || undefined;
+    out.push(o);
+  }
+  return out;
+}
+// deck cards: a key-safe id and text
+export function sanitizeCards(list) {
+  return (Array.isArray(list) ? list : []).filter(c => c && typeof c.id === 'string' && ID_RE.test(c.id)).map(c => ({ ...c, title: strOr(c.title), sub: strOr(c.sub) }));
+}
+export function mergeCatalogs(parts) {
+  const acc = [], act = [], seen = new Set();
+  for (const p of parts) {
+    const list = Array.isArray(p) ? p : null;
+    const a = list ? list.filter(x => x.type === 'accommodation') : pickList(p, ['accommodations', 'accommodation', 'acc']);
+    const b = list ? list.filter(x => x.type === 'activity') : pickList(p, ['activities', 'activity', 'act']);
+    for (const [target, src] of [[acc, a], [act, b]]) for (const it of src) if (it && it.id && !seen.has(it.id)) { seen.add(it.id); target.push(it); }
+  }
+  return { acc, act };
+}
+export function normalizeDeck(raw) {
+  return { acc: pickList(raw, ['accommodations', 'accommodation', 'acc']), act: pickList(raw, ['activities', 'activity', 'act']) };
+}
+// photo may be a path or {file|url|src}; relative paths belong to the destination folder
+export function photoSrc(item, base = '') {
+  const p = item && item.photo;
+  const f = typeof p === 'string' ? p : p && (p.file || p.url || p.src || p.path);
+  if (typeof f !== 'string' || !f) return '';
+  return /^(https:\/\/|data:|\/)/.test(f) ? f : base + f.replace(/^\.\//, '');
+}
+export const photoOf = (item, base) => photoSrc(item, base) || photoSrc({ photo: item && item.photoGeneric }, base);
+
+// ---- tokens and links (same pattern as De Michel) ----
+const TOKEN_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+export function newToken(len = 12, rand = n => globalThis.crypto.getRandomValues(new Uint8Array(n))) {
+  let out = '';
+  while (out.length < len) for (const b of rand(len * 2)) { if (b < 248 && out.length < len) out += TOKEN_CHARS[b % 62]; } // 248 = 4 * 62: unbiased
+  return out;
+}
+export const isValidCode = c => typeof c === 'string' && CODE_RE.test(c);
+// token from a pasted link ("...?g=TOKEN"); '' when there is none. Only full links count, never a bare token.
+export function tokenFromLink(text, app = null) {
+  let u;
+  try { u = new URL(String(text ?? '').trim()); } catch { return ''; }
+  if (app) {
+    const path = x => x.replace(/index\.html$/, '');
+    if (u.origin !== app.origin || path(u.pathname) !== path(app.pathname)) return '';
+  }
+  const g = u.searchParams.get('g') || '';
+  return isValidCode(g) ? g : '';
+}
+export const shareUrl = (origin, pathname, code) => `${origin}${pathname}?g=${code}`;
+export const shareText = (name, url) => `Plan mee de reis naar Corsica (${name}): ${url}`;
+export const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+export const fmtMin = m => Math.floor(m / 60) + ' u ' + String(m % 60).padStart(2, '0');

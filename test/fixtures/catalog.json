@@ -1,0 +1,2236 @@
+{
+ "accommodations": [
+  {
+   "id": "fx-acc-calvi-0",
+   "name": "Fixture Calvi hotel",
+   "region": "calvi",
+   "url": "https://example.com/calvi0",
+   "lat": 42.543,
+   "lon": 8.7813,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "walk_to_beach",
+    "self_catering",
+    "airco",
+    "in_town"
+   ],
+   "desc": "Testverblijf 1 bij Calvi.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-calvi-1",
+   "name": "Fixture Calvi boutique",
+   "region": "calvi",
+   "url": "https://example.com/calvi1",
+   "lat": 42.5984,
+   "lon": 8.7619,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "luxury",
+    "pool",
+    "spa",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 2 bij Calvi.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-calvi-2",
+   "name": "Fixture Calvi villa",
+   "region": "calvi",
+   "url": "https://example.com/calvi2",
+   "lat": 42.5868,
+   "lon": 8.7551,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "adults_only",
+    "airco",
+    "restaurant",
+    "secluded"
+   ],
+   "desc": "Testverblijf 3 bij Calvi.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-calvi-3",
+   "name": "Fixture Calvi apartment",
+   "region": "calvi",
+   "url": "https://example.com/calvi3",
+   "lat": 42.5455,
+   "lon": 8.7749,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "adults_only",
+    "in_town",
+    "mountain_view",
+    "family"
+   ],
+   "desc": "Testverblijf 4 bij Calvi.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-stflorent-0",
+   "name": "Fixture Saint-Florent hotel",
+   "region": "stflorent",
+   "url": "https://example.com/stflorent0",
+   "lat": 42.6573,
+   "lon": 9.2973,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "in_town",
+    "luxury",
+    "spa",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 1 bij Saint-Florent.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-stflorent-1",
+   "name": "Fixture Saint-Florent boutique",
+   "region": "stflorent",
+   "url": "https://example.com/stflorent1",
+   "lat": 42.6964,
+   "lon": 9.2751,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "adults_only",
+    "gym",
+    "spa",
+    "rustic"
+   ],
+   "desc": "Testverblijf 2 bij Saint-Florent.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-stflorent-2",
+   "name": "Fixture Saint-Florent villa",
+   "region": "stflorent",
+   "url": "https://example.com/stflorent2",
+   "lat": 42.6712,
+   "lon": 9.2888,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "airco",
+    "self_catering",
+    "walk_to_beach",
+    "family"
+   ],
+   "desc": "Testverblijf 3 bij Saint-Florent.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-stflorent-3",
+   "name": "Fixture Saint-Florent apartment",
+   "region": "stflorent",
+   "url": "https://example.com/stflorent3",
+   "lat": 42.7024,
+   "lon": 9.3075,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "family",
+    "modern",
+    "walk_to_beach",
+    "spa"
+   ],
+   "desc": "Testverblijf 4 bij Saint-Florent.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-porto-0",
+   "name": "Fixture Porto hotel",
+   "region": "porto",
+   "url": "https://example.com/porto0",
+   "lat": 42.2452,
+   "lon": 8.7252,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "luxury",
+    "ev_charging",
+    "adults_only",
+    "spa"
+   ],
+   "desc": "Testverblijf 1 bij Porto.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-porto-1",
+   "name": "Fixture Porto boutique",
+   "region": "porto",
+   "url": "https://example.com/porto1",
+   "lat": 42.2407,
+   "lon": 8.6701,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "airco",
+    "adults_only",
+    "spa",
+    "budget"
+   ],
+   "desc": "Testverblijf 2 bij Porto.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-porto-2",
+   "name": "Fixture Porto villa",
+   "region": "porto",
+   "url": "https://example.com/porto2",
+   "lat": 42.2745,
+   "lon": 8.723,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "rustic",
+    "modern",
+    "spa",
+    "family"
+   ],
+   "desc": "Testverblijf 3 bij Porto.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-porto-3",
+   "name": "Fixture Porto apartment",
+   "region": "porto",
+   "url": "https://example.com/porto3",
+   "lat": 42.2602,
+   "lon": 8.6989,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "luxury",
+    "budget",
+    "rustic",
+    "in_town"
+   ],
+   "desc": "Testverblijf 4 bij Porto.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-corte-0",
+   "name": "Fixture Corte hotel",
+   "region": "corte",
+   "url": "https://example.com/corte0",
+   "lat": 42.2824,
+   "lon": 9.1366,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "secluded",
+    "ev_charging",
+    "mountain_view",
+    "in_town"
+   ],
+   "desc": "Testverblijf 1 bij Corte.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-corte-1",
+   "name": "Fixture Corte boutique",
+   "region": "corte",
+   "url": "https://example.com/corte1",
+   "lat": 42.2876,
+   "lon": 9.1696,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "ev_charging",
+    "rustic",
+    "sea_view",
+    "pool"
+   ],
+   "desc": "Testverblijf 2 bij Corte.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-corte-2",
+   "name": "Fixture Corte villa",
+   "region": "corte",
+   "url": "https://example.com/corte2",
+   "lat": 42.295,
+   "lon": 9.1398,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "modern",
+    "sea_view",
+    "family",
+    "secluded"
+   ],
+   "desc": "Testverblijf 3 bij Corte.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-corte-3",
+   "name": "Fixture Corte apartment",
+   "region": "corte",
+   "url": "https://example.com/corte3",
+   "lat": 42.3107,
+   "lon": 9.162,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "luxury",
+    "sea_view",
+    "in_town",
+    "walk_to_beach"
+   ],
+   "desc": "Testverblijf 4 bij Corte.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-vivario-0",
+   "name": "Fixture Vivario hotel",
+   "region": "vivario",
+   "url": "https://example.com/vivario0",
+   "lat": 42.096,
+   "lon": 9.1732,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "budget",
+    "walk_to_beach",
+    "airco",
+    "luxury"
+   ],
+   "desc": "Testverblijf 1 bij Vivario.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-vivario-1",
+   "name": "Fixture Vivario boutique",
+   "region": "vivario",
+   "url": "https://example.com/vivario1",
+   "lat": 42.1039,
+   "lon": 9.1911,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "adults_only",
+    "modern",
+    "in_town",
+    "rustic"
+   ],
+   "desc": "Testverblijf 2 bij Vivario.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-vivario-2",
+   "name": "Fixture Vivario villa",
+   "region": "vivario",
+   "url": "https://example.com/vivario2",
+   "lat": 42.1238,
+   "lon": 9.2011,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "airco",
+    "gym",
+    "modern",
+    "in_town"
+   ],
+   "desc": "Testverblijf 3 bij Vivario.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-vivario-3",
+   "name": "Fixture Vivario apartment",
+   "region": "vivario",
+   "url": "https://example.com/vivario3",
+   "lat": 42.1447,
+   "lon": 9.1618,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "gym",
+    "modern",
+    "budget",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 4 bij Vivario.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-zonza-0",
+   "name": "Fixture Zonza hotel",
+   "region": "zonza",
+   "url": "https://example.com/zonza0",
+   "lat": 41.7771,
+   "lon": 9.1418,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "mountain_view",
+    "in_town",
+    "modern",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 1 bij Zonza.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-zonza-1",
+   "name": "Fixture Zonza boutique",
+   "region": "zonza",
+   "url": "https://example.com/zonza1",
+   "lat": 41.7755,
+   "lon": 9.19,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "in_town",
+    "walk_to_beach",
+    "ev_charging",
+    "sea_view"
+   ],
+   "desc": "Testverblijf 2 bij Zonza.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-zonza-2",
+   "name": "Fixture Zonza villa",
+   "region": "zonza",
+   "url": "https://example.com/zonza2",
+   "lat": 41.7216,
+   "lon": 9.1406,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "restaurant",
+    "family",
+    "mountain_view",
+    "spa"
+   ],
+   "desc": "Testverblijf 3 bij Zonza.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-zonza-3",
+   "name": "Fixture Zonza apartment",
+   "region": "zonza",
+   "url": "https://example.com/zonza3",
+   "lat": 41.7495,
+   "lon": 9.1995,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "spa",
+    "modern",
+    "gym",
+    "budget"
+   ],
+   "desc": "Testverblijf 4 bij Zonza.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-portov-0",
+   "name": "Fixture Porto-Vecchio hotel",
+   "region": "portov",
+   "url": "https://example.com/portov0",
+   "lat": 41.5923,
+   "lon": 9.2535,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "sea_view",
+    "airco",
+    "family",
+    "budget"
+   ],
+   "desc": "Testverblijf 1 bij Porto-Vecchio.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-portov-1",
+   "name": "Fixture Porto-Vecchio boutique",
+   "region": "portov",
+   "url": "https://example.com/portov1",
+   "lat": 41.6049,
+   "lon": 9.2949,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "rustic",
+    "sea_view",
+    "adults_only",
+    "spa"
+   ],
+   "desc": "Testverblijf 2 bij Porto-Vecchio.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-portov-2",
+   "name": "Fixture Porto-Vecchio villa",
+   "region": "portov",
+   "url": "https://example.com/portov2",
+   "lat": 41.5952,
+   "lon": 9.2591,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "budget",
+    "gym",
+    "self_catering",
+    "spa"
+   ],
+   "desc": "Testverblijf 3 bij Porto-Vecchio.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-portov-3",
+   "name": "Fixture Porto-Vecchio apartment",
+   "region": "portov",
+   "url": "https://example.com/portov3",
+   "lat": 41.5762,
+   "lon": 9.2706,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "in_town",
+    "luxury",
+    "restaurant",
+    "budget"
+   ],
+   "desc": "Testverblijf 4 bij Porto-Vecchio.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-bonifacio-0",
+   "name": "Fixture Bonifacio hotel",
+   "region": "bonifacio",
+   "url": "https://example.com/bonifacio0",
+   "lat": 41.4,
+   "lon": 9.166,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "rustic",
+    "mountain_view",
+    "pool",
+    "secluded"
+   ],
+   "desc": "Testverblijf 1 bij Bonifacio.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-bonifacio-1",
+   "name": "Fixture Bonifacio boutique",
+   "region": "bonifacio",
+   "url": "https://example.com/bonifacio1",
+   "lat": 41.4173,
+   "lon": 9.1775,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "modern",
+    "family",
+    "walk_to_beach",
+    "sea_view"
+   ],
+   "desc": "Testverblijf 2 bij Bonifacio.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-bonifacio-2",
+   "name": "Fixture Bonifacio villa",
+   "region": "bonifacio",
+   "url": "https://example.com/bonifacio2",
+   "lat": 41.4,
+   "lon": 9.1846,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "pool",
+    "luxury",
+    "airco",
+    "gym"
+   ],
+   "desc": "Testverblijf 3 bij Bonifacio.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-bonifacio-3",
+   "name": "Fixture Bonifacio apartment",
+   "region": "bonifacio",
+   "url": "https://example.com/bonifacio3",
+   "lat": 41.4,
+   "lon": 9.1558,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "budget",
+    "self_catering",
+    "pool",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 4 bij Bonifacio.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-propriano-0",
+   "name": "Fixture Propriano hotel",
+   "region": "propriano",
+   "url": "https://example.com/propriano0",
+   "lat": 41.6582,
+   "lon": 8.8899,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "self_catering",
+    "walk_to_beach",
+    "spa",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 1 bij Propriano.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-propriano-1",
+   "name": "Fixture Propriano boutique",
+   "region": "propriano",
+   "url": "https://example.com/propriano1",
+   "lat": 41.7055,
+   "lon": 8.8962,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "pool",
+    "airco",
+    "sea_view",
+    "modern"
+   ],
+   "desc": "Testverblijf 2 bij Propriano.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-propriano-2",
+   "name": "Fixture Propriano villa",
+   "region": "propriano",
+   "url": "https://example.com/propriano2",
+   "lat": 41.6809,
+   "lon": 8.9146,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "gym",
+    "in_town",
+    "adults_only",
+    "pool"
+   ],
+   "desc": "Testverblijf 3 bij Propriano.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-propriano-3",
+   "name": "Fixture Propriano apartment",
+   "region": "propriano",
+   "url": "https://example.com/propriano3",
+   "lat": 41.7085,
+   "lon": 8.9073,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "mountain_view",
+    "budget",
+    "restaurant",
+    "in_town"
+   ],
+   "desc": "Testverblijf 4 bij Propriano.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-ajaccio-0",
+   "name": "Fixture Ajaccio hotel",
+   "region": "ajaccio",
+   "url": "https://example.com/ajaccio0",
+   "lat": 41.9249,
+   "lon": 8.7586,
+   "priceLevel": 1,
+   "tags": [
+    "hotel",
+    "gym",
+    "pool",
+    "mountain_view",
+    "ev_charging"
+   ],
+   "desc": "Testverblijf 1 bij Ajaccio.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-ajaccio-1",
+   "name": "Fixture Ajaccio boutique",
+   "region": "ajaccio",
+   "url": "https://example.com/ajaccio1",
+   "lat": 41.9035,
+   "lon": 8.7133,
+   "priceLevel": 2,
+   "tags": [
+    "boutique",
+    "rustic",
+    "modern",
+    "spa",
+    "airco"
+   ],
+   "desc": "Testverblijf 2 bij Ajaccio.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  },
+  {
+   "id": "fx-acc-ajaccio-2",
+   "name": "Fixture Ajaccio villa",
+   "region": "ajaccio",
+   "url": "https://example.com/ajaccio2",
+   "lat": 41.9396,
+   "lon": 8.7439,
+   "priceLevel": 3,
+   "tags": [
+    "villa",
+    "self_catering",
+    "family",
+    "mountain_view",
+    "in_town"
+   ],
+   "desc": "Testverblijf 3 bij Ajaccio.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": true
+  },
+  {
+   "id": "fx-acc-ajaccio-3",
+   "name": "Fixture Ajaccio apartment",
+   "region": "ajaccio",
+   "url": "https://example.com/ajaccio3",
+   "lat": 41.9371,
+   "lon": 8.7272,
+   "priceLevel": 4,
+   "tags": [
+    "apartment",
+    "pool",
+    "budget",
+    "in_town",
+    "self_catering"
+   ],
+   "desc": "Testverblijf 4 bij Ajaccio.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   },
+   "photoGeneric": false
+  }
+ ],
+ "activities": [
+  {
+   "id": "fx-act-calvi-0",
+   "name": "Kloof Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi0",
+   "lat": 42.7124,
+   "lon": 8.6102,
+   "durationH": 1,
+   "tags": [
+    "effort_high",
+    "boat",
+    "village"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-calvi-1",
+   "name": "Toren Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi1",
+   "lat": 42.6819,
+   "lon": 8.7343,
+   "durationH": 2,
+   "tags": [
+    "market",
+    "relax",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-calvi-2",
+   "name": "Baai Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi2",
+   "lat": 42.5648,
+   "lon": 8.6887,
+   "durationH": 3,
+   "tags": [
+    "kayak",
+    "adrenaline",
+    "viewpoint"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-calvi-3",
+   "name": "Markt Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi3",
+   "lat": 42.6344,
+   "lon": 8.8622,
+   "durationH": 4,
+   "tags": [
+    "adrenaline",
+    "beach",
+    "relax"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-calvi-4",
+   "name": "Pad Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi4",
+   "lat": 42.5449,
+   "lon": 8.808,
+   "durationH": 0.5,
+   "tags": [
+    "kids",
+    "snorkel",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-calvi-5",
+   "name": "Grot Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi5",
+   "lat": 42.6489,
+   "lon": 8.7494,
+   "durationH": 1,
+   "tags": [
+    "adrenaline",
+    "climbing",
+    "swim_river"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-calvi-6",
+   "name": "Meer Calvi",
+   "region": "calvi",
+   "url": "https://example.com/act/calvi6",
+   "lat": 42.513,
+   "lon": 8.7439,
+   "durationH": 2,
+   "tags": [
+    "boat",
+    "nightlife",
+    "hike_hard"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-stflorent-0",
+   "name": "Kloof Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent0",
+   "lat": 42.7814,
+   "lon": 9.4425,
+   "durationH": 1,
+   "tags": [
+    "nightlife",
+    "hike",
+    "food"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-stflorent-1",
+   "name": "Toren Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent1",
+   "lat": 42.79,
+   "lon": 9.2027,
+   "durationH": 2,
+   "tags": [
+    "wellness",
+    "climbing",
+    "cycling"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-stflorent-2",
+   "name": "Baai Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent2",
+   "lat": 42.5756,
+   "lon": 9.3916,
+   "durationH": 3,
+   "tags": [
+    "cycling",
+    "hike",
+    "viewpoint"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-stflorent-3",
+   "name": "Markt Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent3",
+   "lat": 42.6514,
+   "lon": 9.297,
+   "durationH": 4,
+   "tags": [
+    "nature",
+    "canyoning",
+    "nightlife"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-stflorent-4",
+   "name": "Pad Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent4",
+   "lat": 42.5534,
+   "lon": 9.3179,
+   "durationH": 0.5,
+   "tags": [
+    "culture",
+    "wine",
+    "snorkel"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-stflorent-5",
+   "name": "Grot Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent5",
+   "lat": 42.6005,
+   "lon": 9.282,
+   "durationH": 1,
+   "tags": [
+    "train",
+    "nature",
+    "kayak"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-stflorent-6",
+   "name": "Meer Saint-Florent",
+   "region": "stflorent",
+   "url": "https://example.com/act/stflorent6",
+   "lat": 42.6609,
+   "lon": 9.2046,
+   "durationH": 2,
+   "tags": [
+    "boat",
+    "nightlife",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-porto-0",
+   "name": "Kloof Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto0",
+   "lat": 42.3663,
+   "lon": 8.7795,
+   "durationH": 1,
+   "tags": [
+    "effort_high",
+    "beach",
+    "market"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-porto-1",
+   "name": "Toren Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto1",
+   "lat": 42.3245,
+   "lon": 8.6599,
+   "durationH": 2,
+   "tags": [
+    "diving",
+    "relax",
+    "effort_low"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-porto-2",
+   "name": "Baai Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto2",
+   "lat": 42.1624,
+   "lon": 8.6957,
+   "durationH": 3,
+   "tags": [
+    "boat",
+    "adrenaline",
+    "hike_hard"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-porto-3",
+   "name": "Markt Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto3",
+   "lat": 42.2069,
+   "lon": 8.6264,
+   "durationH": 4,
+   "tags": [
+    "effort_low",
+    "hike",
+    "canyoning"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-porto-4",
+   "name": "Pad Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto4",
+   "lat": 42.3425,
+   "lon": 8.6926,
+   "durationH": 0.5,
+   "tags": [
+    "cycling",
+    "wine",
+    "kids"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-porto-5",
+   "name": "Grot Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto5",
+   "lat": 42.1662,
+   "lon": 8.738,
+   "durationH": 1,
+   "tags": [
+    "relax",
+    "village",
+    "hike"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-porto-6",
+   "name": "Meer Porto",
+   "region": "porto",
+   "url": "https://example.com/act/porto6",
+   "lat": 42.1483,
+   "lon": 8.8296,
+   "durationH": 2,
+   "tags": [
+    "relax",
+    "beach",
+    "adrenaline"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-corte-0",
+   "name": "Kloof Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte0",
+   "lat": 42.2329,
+   "lon": 9.2533,
+   "durationH": 1,
+   "tags": [
+    "nature",
+    "hike",
+    "kayak"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-corte-1",
+   "name": "Toren Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte1",
+   "lat": 42.2362,
+   "lon": 9.2843,
+   "durationH": 2,
+   "tags": [
+    "kayak",
+    "climbing",
+    "adrenaline"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-corte-2",
+   "name": "Baai Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte2",
+   "lat": 42.1624,
+   "lon": 9.1848,
+   "durationH": 3,
+   "tags": [
+    "wine",
+    "viewpoint",
+    "effort_high"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-corte-3",
+   "name": "Markt Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte3",
+   "lat": 42.2676,
+   "lon": 9.0598,
+   "durationH": 4,
+   "tags": [
+    "viewpoint",
+    "hike",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-corte-4",
+   "name": "Pad Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte4",
+   "lat": 42.4101,
+   "lon": 9.1432,
+   "durationH": 0.5,
+   "tags": [
+    "canyoning",
+    "snorkel",
+    "effort_low"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-corte-5",
+   "name": "Grot Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte5",
+   "lat": 42.4098,
+   "lon": 9.0777,
+   "durationH": 1,
+   "tags": [
+    "culture",
+    "relax",
+    "canyoning"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-corte-6",
+   "name": "Meer Corte",
+   "region": "corte",
+   "url": "https://example.com/act/corte6",
+   "lat": 42.2956,
+   "lon": 9.1696,
+   "durationH": 2,
+   "tags": [
+    "village",
+    "effort_high",
+    "boat"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-vivario-0",
+   "name": "Kloof Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario0",
+   "lat": 42.0378,
+   "lon": 9.2379,
+   "durationH": 1,
+   "tags": [
+    "train",
+    "diving",
+    "market"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-vivario-1",
+   "name": "Toren Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario1",
+   "lat": 42.116,
+   "lon": 9.0642,
+   "durationH": 2,
+   "tags": [
+    "culture",
+    "nature",
+    "canyoning"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-vivario-2",
+   "name": "Baai Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario2",
+   "lat": 42.0298,
+   "lon": 9.038,
+   "durationH": 3,
+   "tags": [
+    "relax",
+    "town",
+    "beach"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-vivario-3",
+   "name": "Markt Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario3",
+   "lat": 42.1575,
+   "lon": 9.3082,
+   "durationH": 4,
+   "tags": [
+    "diving",
+    "nature",
+    "adrenaline"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-vivario-4",
+   "name": "Pad Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario4",
+   "lat": 42.0454,
+   "lon": 9.1533,
+   "durationH": 0.5,
+   "tags": [
+    "food",
+    "village",
+    "market"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-vivario-5",
+   "name": "Grot Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario5",
+   "lat": 42.0069,
+   "lon": 9.0896,
+   "durationH": 1,
+   "tags": [
+    "cycling",
+    "relax",
+    "snorkel"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-vivario-6",
+   "name": "Meer Vivario",
+   "region": "vivario",
+   "url": "https://example.com/act/vivario6",
+   "lat": 42.257,
+   "lon": 9.1634,
+   "durationH": 2,
+   "tags": [
+    "beach",
+    "village",
+    "viewpoint"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-zonza-0",
+   "name": "Kloof Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza0",
+   "lat": 41.8111,
+   "lon": 9.0956,
+   "durationH": 1,
+   "tags": [
+    "culture",
+    "climbing",
+    "canyoning"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-zonza-1",
+   "name": "Toren Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza1",
+   "lat": 41.803,
+   "lon": 9.2225,
+   "durationH": 2,
+   "tags": [
+    "beach",
+    "kids",
+    "swim_river"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-zonza-2",
+   "name": "Baai Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza2",
+   "lat": 41.6453,
+   "lon": 9.1492,
+   "durationH": 3,
+   "tags": [
+    "hike_hard",
+    "swim_river",
+    "diving"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-zonza-3",
+   "name": "Markt Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza3",
+   "lat": 41.6285,
+   "lon": 9.2867,
+   "durationH": 4,
+   "tags": [
+    "relax",
+    "kayak",
+    "food"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-zonza-4",
+   "name": "Pad Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza4",
+   "lat": 41.8807,
+   "lon": 9.0781,
+   "durationH": 0.5,
+   "tags": [
+    "diving",
+    "market",
+    "beach"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-zonza-5",
+   "name": "Grot Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza5",
+   "lat": 41.6304,
+   "lon": 9.303,
+   "durationH": 1,
+   "tags": [
+    "wine",
+    "hike",
+    "effort_high"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-zonza-6",
+   "name": "Meer Zonza",
+   "region": "zonza",
+   "url": "https://example.com/act/zonza6",
+   "lat": 41.7039,
+   "lon": 9.2867,
+   "durationH": 2,
+   "tags": [
+    "kids",
+    "canyoning",
+    "market"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-portov-0",
+   "name": "Kloof Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov0",
+   "lat": 41.6206,
+   "lon": 9.3325,
+   "durationH": 1,
+   "tags": [
+    "nature",
+    "effort_high",
+    "market"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-portov-1",
+   "name": "Toren Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov1",
+   "lat": 41.6643,
+   "lon": 9.2549,
+   "durationH": 2,
+   "tags": [
+    "beach",
+    "hike_hard",
+    "diving"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-portov-2",
+   "name": "Baai Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov2",
+   "lat": 41.7163,
+   "lon": 9.4015,
+   "durationH": 3,
+   "tags": [
+    "relax",
+    "culture",
+    "train"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-portov-3",
+   "name": "Markt Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov3",
+   "lat": 41.6109,
+   "lon": 9.2511,
+   "durationH": 4,
+   "tags": [
+    "beach",
+    "viewpoint",
+    "snorkel"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-portov-4",
+   "name": "Pad Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov4",
+   "lat": 41.6848,
+   "lon": 9.3663,
+   "durationH": 0.5,
+   "tags": [
+    "effort_low",
+    "train",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-portov-5",
+   "name": "Grot Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov5",
+   "lat": 41.5961,
+   "lon": 9.2516,
+   "durationH": 1,
+   "tags": [
+    "village",
+    "wellness",
+    "swim_river"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-portov-6",
+   "name": "Meer Porto-Vecchio",
+   "region": "portov",
+   "url": "https://example.com/act/portov6",
+   "lat": 41.6186,
+   "lon": 9.2225,
+   "durationH": 2,
+   "tags": [
+    "photo",
+    "snorkel",
+    "nightlife"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-bonifacio-0",
+   "name": "Kloof Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio0",
+   "lat": 41.4881,
+   "lon": 9.1047,
+   "durationH": 1,
+   "tags": [
+    "hike_hard",
+    "market",
+    "effort_high"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-bonifacio-1",
+   "name": "Toren Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio1",
+   "lat": 41.4529,
+   "lon": 9.2122,
+   "durationH": 2,
+   "tags": [
+    "adrenaline",
+    "cycling",
+    "wine"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-bonifacio-2",
+   "name": "Baai Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio2",
+   "lat": 41.4,
+   "lon": 9.1475,
+   "durationH": 3,
+   "tags": [
+    "canyoning",
+    "beach",
+    "boat"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-bonifacio-3",
+   "name": "Markt Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio3",
+   "lat": 41.4,
+   "lon": 9.0789,
+   "durationH": 4,
+   "tags": [
+    "relax",
+    "boat",
+    "adrenaline"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-bonifacio-4",
+   "name": "Pad Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio4",
+   "lat": 41.4382,
+   "lon": 9.0147,
+   "durationH": 0.5,
+   "tags": [
+    "village",
+    "hike_hard",
+    "train"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-bonifacio-5",
+   "name": "Grot Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio5",
+   "lat": 41.474,
+   "lon": 9.1339,
+   "durationH": 1,
+   "tags": [
+    "canyoning",
+    "town",
+    "nature"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-bonifacio-6",
+   "name": "Meer Bonifacio",
+   "region": "bonifacio",
+   "url": "https://example.com/act/bonifacio6",
+   "lat": 41.5344,
+   "lon": 9.1211,
+   "durationH": 2,
+   "tags": [
+    "kids",
+    "swim_river",
+    "relax"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-propriano-0",
+   "name": "Kloof Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano0",
+   "lat": 41.7385,
+   "lon": 8.9699,
+   "durationH": 1,
+   "tags": [
+    "kayak",
+    "village",
+    "wine"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-propriano-1",
+   "name": "Toren Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano1",
+   "lat": 41.5513,
+   "lon": 9.0203,
+   "durationH": 2,
+   "tags": [
+    "swim_river",
+    "wine",
+    "canyoning"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-propriano-2",
+   "name": "Baai Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano2",
+   "lat": 41.6611,
+   "lon": 9.0053,
+   "durationH": 3,
+   "tags": [
+    "town",
+    "hike",
+    "boat"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-propriano-3",
+   "name": "Markt Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano3",
+   "lat": 41.545,
+   "lon": 8.9218,
+   "durationH": 4,
+   "tags": [
+    "effort_high",
+    "photo",
+    "food"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-propriano-4",
+   "name": "Pad Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano4",
+   "lat": 41.8097,
+   "lon": 8.787,
+   "durationH": 0.5,
+   "tags": [
+    "hike_hard",
+    "photo",
+    "snorkel"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-propriano-5",
+   "name": "Grot Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano5",
+   "lat": 41.657,
+   "lon": 8.9426,
+   "durationH": 1,
+   "tags": [
+    "relax",
+    "wine",
+    "wellness"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-propriano-6",
+   "name": "Meer Propriano",
+   "region": "propriano",
+   "url": "https://example.com/act/propriano6",
+   "lat": 41.5383,
+   "lon": 8.9081,
+   "durationH": 2,
+   "tags": [
+    "cycling",
+    "market",
+    "nightlife"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-ajaccio-0",
+   "name": "Kloof Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio0",
+   "lat": 41.9254,
+   "lon": 8.8147,
+   "durationH": 1,
+   "tags": [
+    "swim_river",
+    "snorkel",
+    "photo"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-ajaccio-1",
+   "name": "Toren Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio1",
+   "lat": 42.0651,
+   "lon": 8.6646,
+   "durationH": 2,
+   "tags": [
+    "town",
+    "boat",
+    "village"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-ajaccio-2",
+   "name": "Baai Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio2",
+   "lat": 41.7834,
+   "lon": 8.8597,
+   "durationH": 3,
+   "tags": [
+    "wine",
+    "village",
+    "beach"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-ajaccio-3",
+   "name": "Markt Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio3",
+   "lat": 42.0375,
+   "lon": 8.7295,
+   "durationH": 4,
+   "tags": [
+    "beach",
+    "cycling",
+    "hike"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-ajaccio-4",
+   "name": "Pad Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio4",
+   "lat": 42.018,
+   "lon": 8.6468,
+   "durationH": 0.5,
+   "tags": [
+    "photo",
+    "beach",
+    "wine"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  },
+  {
+   "id": "fx-act-ajaccio-5",
+   "name": "Grot Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio5",
+   "lat": 42.0673,
+   "lon": 8.7563,
+   "durationH": 1,
+   "tags": [
+    "effort_low",
+    "photo",
+    "viewpoint"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": {
+    "file": "stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-ajaccio-6",
+   "name": "Meer Ajaccio",
+   "region": "ajaccio",
+   "url": "https://example.com/act/ajaccio6",
+   "lat": 41.9086,
+   "lon": 8.854,
+   "durationH": 2,
+   "tags": [
+    "town",
+    "cycling",
+    "boat"
+   ],
+   "desc": "Testactiviteit.",
+   "photo": null
+  }
+ ]
+}

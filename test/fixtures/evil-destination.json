@@ -1,0 +1,20 @@
+{
+ "id": "corsica",
+ "name": "Corsica",
+ "center": [
+  42.15,
+  9.1
+ ],
+ "zoom": 8,
+ "tags": "destinations/tags.json",
+ "places": "destinations/corsica/places.json",
+ "routes": "test/fixtures/evil-routes.json",
+ "catalogs": [
+  "test/fixtures/catalog.json",
+  "https://evil.example/catalog.json"
+ ],
+ "deck": "test/fixtures/deck.json",
+ "credits": "https://evil.example/credits.json",
+ "base": "https://evil.example/",
+ "stayImages": "destinations/corsica/stay-img/"
+}

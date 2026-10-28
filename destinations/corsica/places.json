@@ -1,0 +1,942 @@
+{
+ "_doc": "Corsica: coordinates [lon, lat], labels, island outline, stay regions (keys match the catalog regions) and the tags that make up each region trait.",
+ "places": {
+  "bastia": [
+   9.45,
+   42.7
+  ],
+  "stflorent": [
+   9.3,
+   42.68
+  ],
+  "iler": [
+   8.94,
+   42.63
+  ],
+  "calvi": [
+   8.76,
+   42.57
+  ],
+  "pontel": [
+   9.2,
+   42.47
+  ],
+  "corte": [
+   9.15,
+   42.3
+  ],
+  "vivario": [
+   9.18,
+   42.12
+  ],
+  "vizzavona": [
+   9.12,
+   42.12
+  ],
+  "bocognano": [
+   8.95,
+   42.08
+  ],
+  "aleria": [
+   9.51,
+   42.1
+  ],
+  "ghiso": [
+   9.4,
+   42.02
+  ],
+  "solenzara": [
+   9.4,
+   41.86
+  ],
+  "portov": [
+   9.28,
+   41.59
+  ],
+  "zonza": [
+   9.17,
+   41.75
+  ],
+  "porto": [
+   8.7,
+   42.26
+  ],
+  "piana": [
+   8.63,
+   42.23
+  ],
+  "cargese": [
+   8.6,
+   42.14
+  ],
+  "sagone": [
+   8.7,
+   42.12
+  ],
+  "ajaccio": [
+   8.74,
+   41.92
+  ],
+  "petreto": [
+   8.99,
+   41.8
+  ],
+  "propriano": [
+   8.9,
+   41.68
+  ],
+  "sartene": [
+   8.97,
+   41.62
+  ],
+  "figari": [
+   9.1,
+   41.5
+  ],
+  "bonifacio": [
+   9.16,
+   41.39
+  ],
+  "folelli": [
+   9.5,
+   42.45
+  ],
+  "agriates": [
+   9.1,
+   42.67
+  ],
+  "evisa": [
+   8.8,
+   42.25
+  ]
+ },
+ "names": {
+  "bastia": {
+   "name": "Bastia",
+   "side": "r"
+  },
+  "stflorent": {
+   "name": "Saint-Florent",
+   "side": "l"
+  },
+  "calvi": {
+   "name": "Calvi",
+   "side": "l"
+  },
+  "corte": {
+   "name": "Corte",
+   "side": "r"
+  },
+  "vivario": {
+   "name": "Vivario",
+   "side": "r"
+  },
+  "portov": {
+   "name": "Porto-Vecchio",
+   "side": "r"
+  },
+  "zonza": {
+   "name": "Zonza",
+   "side": "r"
+  },
+  "porto": {
+   "name": "Porto",
+   "side": "l"
+  },
+  "ajaccio": {
+   "name": "Ajaccio",
+   "side": "l"
+  },
+  "propriano": {
+   "name": "Propriano",
+   "side": "l"
+  },
+  "bonifacio": {
+   "name": "Bonifacio",
+   "side": "r"
+  },
+  "figari": {
+   "name": "Figari",
+   "side": "l"
+  },
+  "iler": {
+   "name": "Île-Rousse",
+   "side": "r"
+  },
+  "sartene": {
+   "name": "Sartène",
+   "side": "l"
+  },
+  "evisa": {
+   "name": "Évisa",
+   "side": "r"
+  }
+ },
+ "outline": [
+  [
+   9.35,
+   43
+  ],
+  [
+   9.46,
+   42.93
+  ],
+  [
+   9.5,
+   42.8
+  ],
+  [
+   9.46,
+   42.7
+  ],
+  [
+   9.52,
+   42.55
+  ],
+  [
+   9.55,
+   42.4
+  ],
+  [
+   9.56,
+   42.2
+  ],
+  [
+   9.51,
+   42.05
+  ],
+  [
+   9.4,
+   41.9
+  ],
+  [
+   9.4,
+   41.72
+  ],
+  [
+   9.33,
+   41.58
+  ],
+  [
+   9.29,
+   41.47
+  ],
+  [
+   9.23,
+   41.38
+  ],
+  [
+   9.1,
+   41.37
+  ],
+  [
+   9,
+   41.45
+  ],
+  [
+   8.88,
+   41.55
+  ],
+  [
+   8.78,
+   41.66
+  ],
+  [
+   8.62,
+   41.8
+  ],
+  [
+   8.6,
+   41.93
+  ],
+  [
+   8.55,
+   42.05
+  ],
+  [
+   8.6,
+   42.15
+  ],
+  [
+   8.6,
+   42.3
+  ],
+  [
+   8.66,
+   42.4
+  ],
+  [
+   8.6,
+   42.5
+  ],
+  [
+   8.68,
+   42.56
+  ],
+  [
+   8.8,
+   42.6
+  ],
+  [
+   8.94,
+   42.66
+  ],
+  [
+   9.15,
+   42.73
+  ],
+  [
+   9.28,
+   42.72
+  ],
+  [
+   9.3,
+   42.8
+  ],
+  [
+   9.33,
+   42.9
+  ]
+ ],
+ "stays": {
+  "calvi": {
+   "name": "Calvi & de Balagne",
+   "short": "Calvi",
+   "kind": "Noordwestkust",
+   "coast": true,
+   "img": "calvi",
+   "desc": "Lange zandstrand met ondiep water, een citadel op de rots en bergen op de achtergrond. De Balagne is groen, met kleine dorpjes dicht bij elkaar. Een goede eerste plek met jonge kinderen.",
+   "profile": {
+    "coast": 0.8,
+    "mountains": 0.3,
+    "town": 0.5,
+    "quiet": 0.4,
+    "lively": 0.6
+   },
+   "sights": [
+    {
+     "title": "Citadel van Calvi",
+     "img": "calvi",
+     "text": "Avondwandeling met zeezicht"
+    },
+    {
+     "title": "Stranden bij Calvi",
+     "img": "calvibeach",
+     "text": "Zand en ondiep water, ook bij Revellata"
+    },
+    {
+     "title": "Trinichellu-treintje",
+     "img": "ilerousse",
+     "text": "Calvi - Île-Rousse langs de kust"
+    },
+    {
+     "title": "Île-Rousse",
+     "img": "ilerousse",
+     "text": "Palmen, markthal en stadsstrand"
+    },
+    {
+     "title": "Pigna",
+     "img": "pigna",
+     "text": "Bergdorp met ambachtswinkels"
+    },
+    {
+     "title": "Lumio",
+     "img": "lumio",
+     "text": "Bergdorp boven de baai van Arinella"
+    }
+   ],
+   "food": [
+    {
+     "name": "Chez Tao",
+     "text": "Pianobar in de citadel met uitzicht, vooral een avondplek met livemuziek. Minder geschikt met jonge kinderen",
+     "named": true
+    },
+    {
+     "name": "A Candella",
+     "text": "Corsicaanse keuken in de citadel, terras met baaizicht",
+     "named": true
+    },
+    {
+     "name": "Pizzeria met houtoven",
+     "text": "Zoek langs de haven van Calvi, makkelijk met kinderen",
+     "named": false
+    }
+   ]
+  },
+  "corte": {
+   "name": "Corte & de Restonica",
+   "short": "Corte",
+   "kind": "Binnenland, bergen",
+   "coast": false,
+   "img": "corte",
+   "desc": "De oude hoofdstad van Corsica ligt tussen granietbergen. Vanaf hier loop je de Restonica in met zijn rivier vol natuurlijke zwempoelen. 's Nachts is het koeler dan aan de kust.",
+   "profile": {
+    "coast": 0,
+    "mountains": 0.9,
+    "town": 0.6,
+    "quiet": 0.5,
+    "lively": 0.3
+   },
+   "sights": [
+    {
+     "title": "Citadel van Corte",
+     "img": "corte",
+     "text": "Museu di a Corsica"
+    },
+    {
+     "title": "Restonica-vallei",
+     "img": "restonica",
+     "text": "Zwempoelen en korte wandelingen"
+    },
+    {
+     "title": "Scala di Santa Regina",
+     "img": "santaregina",
+     "text": "Spectaculaire kloof, korte stop"
+    },
+    {
+     "title": "Bos van Vizzavona",
+     "img": "vizzavona",
+     "text": "Koel en schaduwrijk"
+    },
+    {
+     "title": "Cascade des Anglais",
+     "img": "vizzavona",
+     "text": "Waterval met poelen"
+    }
+   ],
+   "food": [
+    {
+     "name": "Oude stad van Corte",
+     "text": "Zoek Corsicaanse kaas, brocciu en wildzwijnstoof",
+     "named": false
+    },
+    {
+     "name": "Eetplekken langs de Restonica",
+     "text": "Eenvoudige lunch bij de poelen",
+     "named": false
+    }
+   ]
+  },
+  "portov": {
+   "name": "Porto-Vecchio",
+   "short": "Porto-Vecchio",
+   "kind": "Zuidoostkust",
+   "coast": true,
+   "img": "portov",
+   "desc": "De mooiste stranden van het eiland liggen hier bij elkaar: Santa Giulia, Palombaggia en Rondinara. Veel baaien zijn ondiep. Hier is glamping met airco het best te vinden.",
+   "profile": {
+    "coast": 0.9,
+    "mountains": 0.2,
+    "town": 0.5,
+    "quiet": 0.3,
+    "lively": 0.7
+   },
+   "sights": [
+    {
+     "title": "Santa Giulia",
+     "img": "santagiulia",
+     "text": "Bijna een zwembad van een baai"
+    },
+    {
+     "title": "Palombaggia",
+     "img": "palombaggia",
+     "text": "Rode rotsen en parasoldennen"
+    },
+    {
+     "title": "Rondinara",
+     "img": "rondinara",
+     "text": "Bijna ronde, ondiepe baai"
+    },
+    {
+     "title": "Porto-Vecchio",
+     "img": "portov",
+     "text": "Oude stad en haven"
+    },
+    {
+     "title": "Col de Bavella",
+     "img": "bavella",
+     "text": "Dagtocht, de Aiguilles"
+    },
+    {
+     "title": "Bonifacio",
+     "img": "bonifacio",
+     "text": "Dagtocht met boot langs de krijtrotsen"
+    }
+   ],
+   "food": [
+    {
+     "name": "Tamaricciu (Palombaggia)",
+     "text": "Strandrestaurant met voeten in het zand, reserveren in juli en augustus",
+     "named": true
+    },
+    {
+     "name": "Pizzeria's in de oude stad",
+     "text": "Houtovenpizza en ijs",
+     "named": false
+    },
+    {
+     "name": "Lunch in Bavella-dorpen",
+     "text": "Charcuterie en Corsicaanse kaas",
+     "named": false
+    }
+   ]
+  },
+  "porto": {
+   "name": "Porto, Piana & Calanques",
+   "short": "Porto",
+   "kind": "Westkust",
+   "coast": true,
+   "img": "piana",
+   "desc": "De rode rotsen van de Calanques de Piana staan op de werelderfgoedlijst. De kust is hier woest en de zee diepblauw. Rondvaarten naar Girolata en Scandola vertrekken vanuit Porto.",
+   "profile": {
+    "coast": 0.7,
+    "mountains": 0.6,
+    "town": 0.1,
+    "quiet": 0.5,
+    "lively": 0.2
+   },
+   "sights": [
+    {
+     "title": "Calanques de Piana",
+     "img": "piana",
+     "text": "Rode rotsen langs de D81"
+    },
+    {
+     "title": "Reserve Scandola",
+     "img": "scandola",
+     "text": "Per boot vanuit Porto"
+    },
+    {
+     "title": "Girolata",
+     "img": "girolata",
+     "text": "Dorp zonder weg"
+    },
+    {
+     "title": "Gorges de Spelunca",
+     "img": "spelunca",
+     "text": "Kloof met Genuese bruggen"
+    },
+    {
+     "title": "Bos van Aïtone",
+     "img": "aitone",
+     "text": "Koel bos bij Évisa"
+    }
+   ],
+   "food": [
+    {
+     "name": "Havenrestaurants in Porto",
+     "text": "Verse vis en pizza, veel terrassen",
+     "named": false
+    },
+    {
+     "name": "Hotelrestaurants in Piana",
+     "text": "Uitzicht op de rotsen bij zonsondergang",
+     "named": false
+    },
+    {
+     "name": "Évisa",
+     "text": "Kastanjegerechten en ijs van kastanjemeel",
+     "named": false
+    }
+   ]
+  },
+  "zonza": {
+   "name": "Zonza & Bavella",
+   "short": "Zonza",
+   "kind": "Binnenland, bergen",
+   "coast": false,
+   "img": "bavella",
+   "desc": "Dennenbossen, granietnaalden en bergrivieren met zwempoelen. Zonza ligt op 800 m en is 's avonds koel. Hier is de beste kans op een tent in de natuur, al is airco nergens bevestigd.",
+   "profile": {
+    "coast": 0.1,
+    "mountains": 0.9,
+    "town": 0.1,
+    "quiet": 0.8,
+    "lively": 0.1
+   },
+   "sights": [
+    {
+     "title": "Aiguilles de Bavella",
+     "img": "bavella",
+     "text": "Bergpas en uitzichtpunten"
+    },
+    {
+     "title": "Dorp Zonza",
+     "img": "zonza",
+     "text": "Op 800 m hoogte"
+    },
+    {
+     "title": "Rivier bij Solenzara",
+     "img": "solenzara",
+     "text": "Zwempoelen"
+    },
+    {
+     "title": "Cucuruzzu bij Levie",
+     "img": "cucuruzzu",
+     "text": "Prehistorische site, ruimte voor kinderen"
+    }
+   ],
+   "food": [
+    {
+     "name": "Auberge du Col de Bavella",
+     "text": "Charcuterie, wild en kastanjepolenta bovenop de pas",
+     "named": true
+    },
+    {
+     "name": "Dorpscafés in Zonza",
+     "text": "Lunch met kaas en hammen van de regio",
+     "named": false
+    }
+   ]
+  },
+  "bonifacio": {
+   "name": "Bonifacio & Figari",
+   "short": "Bonifacio",
+   "kind": "Zuidkust",
+   "coast": true,
+   "img": "bonifacio",
+   "desc": "Witte krijtrotsen, een citadel op de klif en het zuidelijkste puntje van Frankrijk. Figari ligt tussen wijngaarden en stranden. Hier staan lodges met bevestigde airco.",
+   "profile": {
+    "coast": 0.9,
+    "mountains": 0.1,
+    "town": 0.8,
+    "quiet": 0.3,
+    "lively": 0.6
+   },
+   "sights": [
+    {
+     "title": "Citadel en haven van Bonifacio",
+     "img": "bonifacio",
+     "text": "Uitzicht tot Sardinië"
+    },
+    {
+     "title": "Îles Lavezzi",
+     "img": "lavezzi",
+     "text": "Snorkelen in helder water"
+    },
+    {
+     "title": "Rondinara",
+     "img": "rondinara",
+     "text": "Ondiepe strandbaai"
+    },
+    {
+     "title": "Leeuw van Roccapina",
+     "img": "roccapina",
+     "text": "Rots in de vorm van een leeuw"
+    },
+    {
+     "title": "Sartène",
+     "img": "sartene",
+     "text": "Granieten stad"
+    }
+   ],
+   "food": [
+    {
+     "name": "Kissing Pigs, Bonifacio",
+     "text": "Bekend adres bij de haven, reserveren verstandig",
+     "named": true
+    },
+    {
+     "name": "Stella d'Oro, Bonifacio",
+     "text": "Klassieker in de oude stad",
+     "named": true
+    },
+    {
+     "name": "Wijnboeren bij Figari",
+     "text": "Proeverij en lunch met sap voor de kinderen",
+     "named": false
+    }
+   ]
+  },
+  "stflorent": {
+   "name": "Saint-Florent & Cap Corse",
+   "short": "Saint-Florent",
+   "kind": "Noordkust",
+   "coast": true,
+   "img": "stflorent",
+   "desc": "Een jachthaventje met terrassen, vlakbij de stranden van de Désert des Agriates. Cap Corse ligt ten noorden met Genuese torens en kleine havens. Rustig na de ferry.",
+   "profile": {
+    "coast": 0.8,
+    "mountains": 0.2,
+    "town": 0.3,
+    "quiet": 0.6,
+    "lively": 0.4
+   },
+   "sights": [
+    {
+     "title": "Haven van Saint-Florent",
+     "img": "stflorent",
+     "text": "Terrassen en citadel"
+    },
+    {
+     "title": "Plage de Saleccia",
+     "img": "saleccia",
+     "text": "Wit zand in de Agriates"
+    },
+    {
+     "title": "Plage du Lotu",
+     "img": "lotu",
+     "text": "Per boot of 4x4"
+    },
+    {
+     "title": "Nonza",
+     "img": "nonza",
+     "text": "Zwart strand en toren"
+    }
+   ],
+   "food": [
+    {
+     "name": "Haven van Saint-Florent",
+     "text": "Veel terrassen met vis, pizza en ijs",
+     "named": false
+    },
+    {
+     "name": "Wijnhuizen van Patrimonio",
+     "text": "Eenvoudige lunch bij een wijnboer",
+     "named": false
+    }
+   ]
+  },
+  "vivario": {
+   "name": "Vivario & Vizzavona",
+   "short": "Vivario",
+   "kind": "Binnenland, bergen",
+   "coast": false,
+   "img": "vizzavona",
+   "desc": "Beukenbossen, watervallen en het hoogste treinstation van Corsica. Vizzavona ligt midden op het eiland en is koel, ook in augustus. Een rustige halte voor de lange rit naar het zuidwesten.",
+   "profile": {
+    "coast": 0,
+    "mountains": 0.9,
+    "town": 0.1,
+    "quiet": 0.8,
+    "lively": 0.1
+   },
+   "sights": [
+    {
+     "title": "Bos van Vizzavona",
+     "img": "vizzavona",
+     "text": "Korte boswandelingen"
+    },
+    {
+     "title": "Cascade des Anglais",
+     "img": "vizzavona",
+     "text": "Waterval met poelen"
+    },
+    {
+     "title": "Treinstation Vizzavona",
+     "img": "ilerousse",
+     "text": "Chemins de fer de la Corse"
+    },
+    {
+     "title": "Restonica (dagtocht)",
+     "img": "restonica",
+     "text": "Zwempoelen"
+    },
+    {
+     "title": "Corte (dagtocht)",
+     "img": "corte",
+     "text": "Citadel en museum"
+    }
+   ],
+   "food": [
+    {
+     "name": "Hôtel-restaurant U Castellu",
+     "text": "Lunch in het bos, bekende pleisterplaats in Vizzavona",
+     "named": true
+    },
+    {
+     "name": "Brasseries in Vivario en Venaco",
+     "text": "Eenvoudige bergkeuken en brocciu",
+     "named": false
+    }
+   ]
+  },
+  "propriano": {
+   "name": "Propriano & Golf van Valinco",
+   "short": "Propriano",
+   "kind": "Zuidwestkust",
+   "coast": true,
+   "img": "propriano",
+   "desc": "Een brede baai met zandstrand, een gezellig havenstadje en prehistorische sites vlakbij. Tussen Ajaccio en Bonifacio is dit een logische tussenstop.",
+   "profile": {
+    "coast": 0.8,
+    "mountains": 0.2,
+    "town": 0.4,
+    "quiet": 0.5,
+    "lively": 0.4
+   },
+   "sights": [
+    {
+     "title": "Propriano",
+     "img": "propriano",
+     "text": "Haven en strand"
+    },
+    {
+     "title": "Filitosa",
+     "img": "filitosa",
+     "text": "Prehistorische beelden, kindvriendelijk"
+    },
+    {
+     "title": "Sartène",
+     "img": "sartene",
+     "text": "Granieten stad"
+    },
+    {
+     "title": "Leeuw van Roccapina",
+     "img": "roccapina",
+     "text": "Rotsformatie bij het strand"
+    }
+   ],
+   "food": [
+    {
+     "name": "Haven van Propriano",
+     "text": "Terrassen met vis en pizza",
+     "named": false
+    },
+    {
+     "name": "Plein van Sartène",
+     "text": "Corsicaanse specialiteiten",
+     "named": false
+    }
+   ]
+  },
+  "ajaccio": {
+   "name": "Ajaccio & omgeving",
+   "short": "Ajaccio",
+   "kind": "Westkust, stad",
+   "coast": true,
+   "img": "ajaccio",
+   "profile": {
+    "coast": 0.6,
+    "mountains": 0.3,
+    "town": 0.9,
+    "quiet": 0.2,
+    "lively": 0.8
+   },
+   "desc": "De geboortestad van Napoleon met musea, een stadsstrand en veel restaurants. Vanaf hier zijn de Îles Sanguinaires, Cargèse en de bergen bij Bocognano makkelijk te bereiken.",
+   "sights": [
+    {
+     "title": "Maison Bonaparte",
+     "img": "ajaccio",
+     "text": "Geboortehuis van Napoleon"
+    },
+    {
+     "title": "Stadsstrand en haven",
+     "img": "ajaccio",
+     "text": "Terrassen langs de baai"
+    },
+    {
+     "title": "Îles Sanguinaires",
+     "img": "ajaccio",
+     "text": "Zonsondergang aan de kust"
+    }
+   ],
+   "food": [
+    {
+     "name": "Markt aan de Place Foch",
+     "text": "Brocciu, charcuterie en fruit",
+     "named": false
+    },
+    {
+     "name": "Haven van Ajaccio",
+     "text": "Vis en pizza met uitzicht op de baai",
+     "named": false
+    }
+   ]
+  }
+ },
+ "regionTags": {
+  "coast": [
+   "beach",
+   "snorkel",
+   "diving",
+   "boat",
+   "kayak",
+   "sea_view",
+   "walk_to_beach",
+   "kids",
+   "family",
+   "spa",
+   "wellness",
+   "pool"
+  ],
+  "mountains": [
+   "hike",
+   "hike_hard",
+   "swim_river",
+   "canyoning",
+   "climbing",
+   "village",
+   "mountain_view"
+  ],
+  "town": [
+   "town",
+   "culture",
+   "food",
+   "market",
+   "boutique",
+   "in_town",
+   "wine"
+  ],
+  "quiet": [
+   "relax",
+   "secluded",
+   "adults_only",
+   "nature",
+   "rustic",
+   "effort_low"
+  ],
+  "lively": [
+   "nightlife",
+   "adrenaline",
+   "market",
+   "restaurant",
+   "in_town"
+  ]
+ },
+ "tips": [
+  {
+   "title": "Hitte",
+   "text": "In juli en augustus loopt het kwik tot 35 graden. Plan activiteiten 's ochtends of na 17 uur. Hoogte brengt verkoeling."
+  },
+  {
+   "title": "Wegen",
+   "text": "Bergwegen zijn smal en bochtig, gemiddeld ca. 40 km/u. Plan liefst maximaal 3 uur rijden per dag."
+  },
+  {
+   "title": "Ferry's",
+   "text": "Corsica Ferries, Corsica Linea, La Méridionale en Moby varen onder meer vanuit Livorno, Savona, Genua, Nice, Toulon en Marseille. Boek de auto vroeg mee."
+  },
+  {
+   "title": "EV",
+   "text": "Laadpunten zijn niet in kaart gebracht. Vraag bij elke accommodatie of er stroom of een laadpunt is."
+  },
+  {
+   "title": "Brandgevaar",
+   "text": "Sommige bossen zijn in de zomer afgesloten. Vuur stoken is verboden."
+  },
+  {
+   "title": "Kinderen",
+   "text": "Autostoelen en zonnecrème mee. Strandschoenen helpen bij kiezelstrandjes."
+  }
+ ],
+ "regionVeto": {
+  "coast": [
+   "beach"
+  ],
+  "mountains": [
+   "hike",
+   "hike_hard"
+  ],
+  "town": [
+   "culture",
+   "town"
+  ],
+  "quiet": [
+   "relax"
+  ],
+  "lively": [
+   "nightlife"
+  ]
+ }
+}

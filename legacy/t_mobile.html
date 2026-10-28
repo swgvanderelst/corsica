@@ -1,0 +1,320 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0}</style><title>Corsica Reisplanner App</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: iOS-achtige app. Schermstack per tab, onderaan een tabbalk, bovenaan een navigatiebalk met grote titel, bottom sheets voor details */
+:root {
+  --bg: #f2f2f7; --surface: #ffffff; --fg: #111418; --muted: #6a6f76; --line: rgba(60,60,67,.18); --fill: rgba(120,120,128,.14);
+  --accent: #0a7488; --accent-fg: #ffffff; --maquis: #4c6b3a; --ochre: #c27a1d; --rock: #e6e1d6;
+  --ok: #248a3d; --warn: #946000; --no: #c0392b; --bar: rgba(249,249,251,.82);
+  --route-a: #0a7488; --route-b: #b36a0f; --route-c: #7a4a8a;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000; --surface: #1c1c1e; --fg: #f2f2f7; --muted: #9a9aa1; --line: rgba(84,84,88,.55); --fill: rgba(120,120,128,.28);
+    --accent: #5cc0cf; --accent-fg: #06191d; --maquis: #9cc384; --ochre: #e6a54c; --rock: #2c2c2e;
+    --ok: #52c76d; --warn: #e5b94c; --no: #ff8a7e; --bar: rgba(22,22,24,.82);
+    --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --surface: #1c1c1e; --fg: #f2f2f7; --muted: #9a9aa1; --line: rgba(84,84,88,.55); --fill: rgba(120,120,128,.28);
+  --accent: #5cc0cf; --accent-fg: #06191d; --maquis: #9cc384; --ochre: #e6a54c; --rock: #2c2c2e;
+  --ok: #52c76d; --warn: #e5b94c; --no: #ff8a7e; --bar: rgba(22,22,24,.82);
+  --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 17px; line-height: 1.35; overflow: hidden; overscroll-behavior: none; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+a { color: var(--accent); text-decoration: none; }
+:focus-visible { outline: 3px solid var(--ochre); outline-offset: 2px; }
+
+.stage { height: 100%; display: grid; place-items: center; }
+.app { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); display: flex; flex-direction: column; }
+@media (min-width: 560px) and (min-height: 700px) {
+  body { background: #d9dde0; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body { background: #101214; } }
+  .app { width: 410px; height: min(860px, calc(100% - 32px)); border-radius: 46px; box-shadow: 0 0 0 10px #111, 0 30px 80px rgba(0,0,0,.35); }
+}
+
+/* Schermen */
+.tabroot { position: absolute; inset: 0; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); display: none; }
+.tabroot.on { display: block; }
+.screen { position: absolute; inset: 0; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; will-change: transform; }
+.screen.push { animation: pushIn .34s cubic-bezier(.2,.9,.25,1) both; }
+.screen.pop { animation: popOut .28s cubic-bezier(.4,0,.6,1) both; }
+@keyframes pushIn { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes popOut { from { transform: none; } to { transform: translateX(100%); } }
+.scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 24px; }
+
+/* Navigatiebalk */
+.nav { flex: none; position: relative; z-index: 5; height: calc(44px + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); display: flex; align-items: center; justify-content: center;
+  background: var(--bar); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: .5px solid transparent; transition: border-color .2s; }
+.nav.solid { border-bottom-color: var(--line); }
+.nav .ttl { font-weight: 600; font-size: 17px; opacity: 0; transition: opacity .2s; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav.solid .ttl { opacity: 1; }
+.nav .back { position: absolute; left: max(8px, env(safe-area-inset-left, 0px)); top: env(safe-area-inset-top, 0px); height: 44px; display: flex; align-items: center; gap: 2px; color: var(--accent); font-size: 17px; padding: 0 8px; }
+.nav .back svg { width: 12px; height: 20px; }
+.nav .act { position: absolute; right: max(12px, env(safe-area-inset-right, 0px)); top: env(safe-area-inset-top, 0px); height: 44px; display: flex; align-items: center; color: var(--accent); font-size: 17px; }
+.pad { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.large { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -.02em; line-height: 1.1; padding-top: 2px; }
+.subt { color: var(--muted); font-size: 15px; margin: 4px 0 14px; }
+
+/* Segmentbediening */
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--fill); border-radius: 9px; padding: 2px; position: sticky; top: 0; z-index: 4; margin-bottom: 16px; }
+.seg button { text-align: center; font-size: 14px; font-weight: 500; padding: 6px 4px; border-radius: 7px; transition: background .2s, box-shadow .2s; }
+.seg button[aria-selected="true"] { background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,.18); font-weight: 600; }
+
+/* Groepen en rijen */
+.group-h { font-size: 13px; letter-spacing: .02em; text-transform: uppercase; color: var(--muted); margin: 22px 16px 7px; padding: 0 4px; }
+.group { background: var(--surface); border-radius: 12px; overflow: hidden; }
+.row { display: flex; gap: 12px; align-items: center; width: 100%; min-height: 48px; padding: 11px 14px; position: relative; transition: background .12s; }
+.row + .row::before { content: ""; position: absolute; left: 14px; right: 0; top: 0; border-top: .5px solid var(--line); }
+.row:active, .card-btn:active, .tile:active { background: var(--fill); }
+.row .grow { flex: 1; min-width: 0; }
+.row .t { font-size: 16px; font-weight: 600; }
+.row .s { font-size: 14px; color: var(--muted); margin-top: 1px; }
+.row .chev { width: 8px; height: 14px; color: var(--muted); opacity: .6; flex: none; }
+.num { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; background: var(--accent); color: var(--accent-fg); }
+.num.sq { border-radius: 9px; background: var(--fill); color: var(--fg); font-size: 14px; }
+.ic { flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--fill); color: var(--accent); display: grid; place-items: center; }
+.ic svg { width: 24px; height: 24px; }
+
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { background: var(--surface); border-radius: 12px; padding: 12px 14px; }
+.stat b { display: block; font-family: var(--font-display); font-size: 26px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+.mapcard { background: var(--surface); border-radius: 14px; padding: 8px; margin-bottom: 12px; }
+.mapcard svg { width: 100%; height: auto; max-height: 420px; display: block; }
+.mapcap { font-size: 12px; color: var(--muted); padding: 2px 6px 4px; }
+.btn { display: block; width: 100%; text-align: center; background: var(--accent); color: var(--accent-fg); font-weight: 600; border-radius: 13px; padding: 14px; margin: 14px 0 0; font-size: 17px; }
+.btn.alt { background: var(--fill); color: var(--accent); }
+.btn:active { opacity: .7; }
+.note { font-size: 14px; color: var(--muted); margin: 10px 4px 0; }
+.warn { background: var(--surface); border-radius: 12px; padding: 12px 14px; font-size: 14px; border-left: 4px solid var(--ochre); margin-top: 10px; }
+
+/* Foto's */
+.ph { position: relative; display: block; overflow: hidden; background: linear-gradient(135deg, var(--g)); }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.stay-card { display: block; width: 100%; background: var(--surface); border-radius: 16px; overflow: hidden; margin-bottom: 14px; transition: transform .15s; }
+.stay-card:active { transform: scale(.98); }
+.stay-card .ph { height: 150px; }
+.stay-card .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 45%, rgba(0,0,0,.55)); }
+.stay-card .ov { position: absolute; left: 14px; right: 14px; bottom: 10px; color: #fff; z-index: 1; text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+.stay-card .ov b { font-family: var(--font-display); font-size: 22px; display: block; letter-spacing: -.01em; }
+.stay-card .ov span { font-size: 13px; opacity: .92; }
+.stay-card .meta { padding: 10px 14px 12px; font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.hero { height: 240px; margin-bottom: 0; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.45)); }
+.car { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 16px; padding: 2px 16px 6px; margin: 0 -16px; scrollbar-width: none; }
+.car::-webkit-scrollbar { display: none; }
+.tile { flex: none; width: 170px; scroll-snap-align: start; background: var(--surface); border-radius: 14px; overflow: hidden; display: block; transition: transform .15s; }
+.tile:active { transform: scale(.97); }
+.tile .ph { height: 116px; }
+.tile div { padding: 8px 11px 11px; }
+.tile b { font-size: 15px; line-height: 1.2; display: block; }
+.tile span.s { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; line-height: 1.25; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid2 .tile { width: auto; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 1px 8px; border: 1px solid currentColor; margin-right: 5px; white-space: nowrap; }
+.pill.yes { color: var(--ok); } .pill.maybe { color: var(--warn); } .pill.no { color: var(--no); } .pill.type { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip { background: var(--fill); border-radius: 8px; padding: 3px 9px; font-size: 13px; }
+.sbtns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.sbtns a { background: var(--fill); color: var(--accent); font-weight: 600; font-size: 15px; border-radius: 999px; padding: 0 18px; min-height: 44px; display: inline-flex; align-items: center; }
+
+/* Tabbalk */
+.tabbar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px max(8px, env(safe-area-inset-left, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)); min-height: calc(56px + env(safe-area-inset-bottom, 0px));
+  background: var(--bar); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-top: .5px solid var(--line); }
+.tabbar button { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px; font-size: 10.5px; font-weight: 500; color: var(--muted); padding: 3px 0; text-align: center; transition: transform .12s; }
+.tabbar button:active { transform: scale(.92); }
+.tabbar button svg { width: 26px; height: 26px; }
+.tabbar button[aria-selected="true"] { color: var(--accent); }
+
+/* Bottom sheet */
+.backdrop { position: absolute; inset: 0; z-index: 40; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .25s; }
+.backdrop.on { opacity: 1; pointer-events: auto; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 41; max-height: 86%; background: var(--surface); border-radius: 18px 18px 0 0; transform: translateY(105%); transition: transform .34s cubic-bezier(.2,.9,.25,1); display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom, 0px); box-shadow: 0 -8px 40px rgba(0,0,0,.25); }
+.sheet.on { transform: none; }
+.sheet .close { position: absolute; right: 10px; top: 8px; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; color: var(--muted); text-align: center; z-index: 2; }
+.sheet .grab { flex: none; width: 38px; height: 5px; border-radius: 3px; background: var(--line); margin: 8px auto 4px; }
+.sheet .body { overflow-y: auto; padding: 8px 20px 24px; }
+.sheet h3 { font-family: var(--font-display); font-size: 24px; letter-spacing: -.01em; margin: 6px 0 4px; line-height: 1.15; }
+.sheet p { margin: 8px 0 0; font-size: 16px; }
+.sheet .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--maquis); }
+.sheet .ph { height: 190px; border-radius: 14px; margin-top: 10px; }
+.sheet .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.sheet .tag { background: var(--fill); border-radius: 8px; padding: 4px 10px; font-size: 14px; }
+
+@media (prefers-reduced-motion: reduce) { .screen.push, .screen.pop { animation: none; } .sheet, .backdrop { transition: none; } }
+</style>
+
+<div class="stage">
+ <div class="app" id="app">
+  <div id="roots"></div>
+  <nav class="tabbar" id="tabbar" role="tablist" aria-label="Hoofdmenu"></nav>
+  <div class="backdrop" id="backdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Details"><div class="grab"></div><button class="close" id="sheetClose" aria-label="Sluiten">&times;</button><div class="body" id="sheetBody"></div></div>
+ </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+const CHEV = '<svg class="chev" viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const BACK = '<svg viewBox="0 0 12 20" aria-hidden="true"><path d="M10 2 2 10l8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const TABS = [
+  ["a", "Route A", '<svg viewBox="0 0 24 24"><path d="M6 20V5m0 0 10 0-2 3.5L16 12H6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>'],
+  ["b", "Route B", '<svg viewBox="0 0 24 24"><path d="M3 18c3-8 6-8 9-3s6 3 9-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3.5" cy="18" r="1.6" fill="currentColor"/><circle cx="20.5" cy="9" r="1.6" fill="currentColor"/></svg>'],
+  ["c", "Route C", '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>'],
+  ["corsica", "Eiland", '<svg viewBox="0 0 24 24"><path d="M9 3c2 1 3 3 3 5 0 1 2 2 2 4s-1 3-1 5-1 3-2 3-1-2-2-3-2-1-2-3 2-2 1-4-1-3 1-5 .5-1 0-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>']
+];
+const app = document.getElementById("app"), roots = document.getElementById("roots"), tabbar = document.getElementById("tabbar");
+const stacks = {}; let current = "a";
+const state = {a:{seg:0}, b:{seg:0}, c:{seg:0}};
+
+/* ---------- Gedeelde onderdelen ---------- */
+function screen(opts) { // opts: title, back, content (html), onMount
+  const el = document.createElement("section"); el.className = "screen";
+  el.innerHTML = `<div class="nav"><span class="ttl">${esc(opts.navTitle || opts.title)}</span>${opts.back ? `<button class="back" aria-label="Terug naar ${esc(opts.back)}">${BACK}<span>${esc(opts.back)}</span></button>` : ""}</div>
+    <div class="scroll">${opts.content}</div>`;
+  const sc = el.querySelector(".scroll"), nav = el.querySelector(".nav");
+  sc.addEventListener("scroll", () => nav.classList.toggle("solid", sc.scrollTop > 40), {passive: true});
+  if (opts.back) el.querySelector(".back").addEventListener("click", () => pop(current));
+  if (opts.onMount) opts.onMount(el);
+  return el;
+}
+function push(tab, el) {
+  const root = stacks[tab].root; const prev = root.lastElementChild;
+  el.classList.add("push"); root.appendChild(el); stacks[tab].depth++;
+  attachSwipeBack(tab, el);
+}
+function pop(tab) {
+  const s = stacks[tab]; if (s.depth === 0) return;
+  const el = s.root.lastElementChild; el.classList.remove("push"); el.classList.add("pop"); s.depth--;
+  const done = () => el.remove(); el.addEventListener("animationend", done, {once: true}); setTimeout(done, 400);
+}
+function attachSwipeBack(tab, el) { // veeg vanaf de linkerrand terug
+  let x0 = null, y0 = 0, dx = 0;
+  el.addEventListener("touchstart", e => { const t = e.touches[0]; if (t.clientX - app.getBoundingClientRect().left < 28) { x0 = t.clientX; y0 = t.clientY; dx = 0; } }, {passive: true});
+  el.addEventListener("touchmove", e => { if (x0 === null) return; const t = e.touches[0]; dx = t.clientX - x0; if (Math.abs(t.clientY - y0) > dx) { x0 = null; el.style.transform = ""; return; } if (dx > 0) el.style.transform = `translateX(${dx}px)`; }, {passive: true});
+  el.addEventListener("touchend", () => { if (x0 === null) return; el.style.transform = ""; if (dx > 90) pop(tab); x0 = null; });
+}
+function openSheet(html) {
+  document.getElementById("sheetBody").innerHTML = html;
+  document.getElementById("sheetBody").scrollTop = 0;
+  document.getElementById("backdrop").classList.add("on"); document.getElementById("sheet").classList.add("on"); document.getElementById("sheetClose").focus({preventScroll: true});
+}
+function closeSheet() { document.getElementById("backdrop").classList.remove("on"); document.getElementById("sheet").classList.remove("on"); }
+document.getElementById("backdrop").addEventListener("click", closeSheet);
+document.getElementById("sheetClose").addEventListener("click", closeSheet);
+(function sheetDrag() {
+  const sh = document.getElementById("sheet"); let y0 = null, dy = 0;
+  sh.addEventListener("touchstart", e => { if (document.getElementById("sheetBody").scrollTop <= 0) { y0 = e.touches[0].clientY; dy = 0; sh.style.transition = "none"; } }, {passive: true});
+  sh.addEventListener("touchmove", e => { if (y0 === null) return; dy = e.touches[0].clientY - y0; if (dy > 0) sh.style.transform = `translateY(${dy}px)`; }, {passive: true});
+  sh.addEventListener("touchend", () => { if (y0 === null) return; sh.style.transition = ""; sh.style.transform = ""; if (dy > 110) closeSheet(); y0 = null; });
+})();
+addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+
+function sightSheet(title, text, key) {
+  openSheet(`<div class="kicker">Bezienswaardigheid</div><h3>${esc(title)}</h3>${photo(key, "", title)}<p>${esc(text)}</p>`);
+}
+function daySheet(r, i) {
+  const d = r.days[i], st = STAYS[d[0]];
+  openSheet(`<div class="kicker">Dag ${i + 1} &middot; ${esc(st ? st.short : "Ferry")}</div><h3>${esc(d[1])}</h3>${photo(dayImg(d), "", d[1])}<p>${esc(d[2])}</p>
+    ${d[3] ? `<div class="tags"><span class="tag">Rit: ${esc(d[3])}</span></div>` : ""}
+    ${st ? `<a class="btn alt" href="https://www.google.com/maps/search/${encodeURIComponent(st.q + ", Corsica")}" target="_blank" rel="noopener">Open ${esc(st.short)} in Google Maps</a>` : ""}`);
+}
+
+/* ---------- Routescherm ---------- */
+function routeContent(key) {
+  const r = ROUTES[key], t = totals(r), seg = state[key].seg;
+  const days = r.days.map((d, i) => { const st = STAYS[d[0]];
+    return `<button class="row" data-day="${i}"><span class="num">${i + 1}</span><span class="grow"><div class="t">${esc(d[1])}</div><div class="s">${esc(st ? st.short : "Ferry")}${d[3] ? " &middot; " + esc(d[3]) : ""}</div></span>${CHEV}</button>`; }).join("");
+  const legs = r.legs.map((l, i) => `<div class="row"><span class="num sq">${LEGLET[i]}</span><span class="grow"><div class="t">${esc(l.from)} &rarr; ${esc(l.to)}</div><div class="s">${l.km} km &middot; ${fmtT(l.min)}</div></span></div>`).join("");
+  const stays = r.stays.map((id, i) => { const s = STAYS[id];
+    return `<button class="stay-card" data-stay="${id}" data-i="${i}">${photo(s.img, "", s.name).replace('class="ph ', 'class="ph abs ').replace("</span>", `<span class="ov"><b>${i + 1}. ${esc(s.name)}</b><span>${esc(s.kind)} &middot; ${r.nights[i]} nachten</span></span></span>`)}<div class="meta"><span>${s.acc.length} ${s.acc.length === 1 ? "optie" : "opties"}</span><span style="color:var(--accent)">Bekijk</span></div></button>`; }).join("");
+  const body = seg === 0 ? `
+      <div class="mapcard">${mapSvg(r)}<div class="mapcap">Genummerde cirkels zijn verblijfplaatsen, letters zijn ritten. Gestippeld is de terugreis.</div></div>
+      <div class="stats"><div class="stat"><b>14</b><span>dagen</span></div><div class="stat"><b>${r.stays.length}</b><span>verblijfplaatsen</span></div><div class="stat"><b>${t.km}</b><span>km totaal</span></div><div class="stat"><b>${t.time}</b><span>rijden totaal</span></div></div>
+      <div class="group-h">Ritten</div><div class="group">${legs}</div>
+      <p class="note">${esc(r.ferry)}</p>
+      <a class="btn" href="${gmapsDir(r)}" target="_blank" rel="noopener">Open route in Google Maps</a>
+      <p class="note">Schattingen zonder files. In juli en augustus kan het 20 tot 30 procent langer duren.</p>`
+    : seg === 1 ? `<div class="group">${days}</div>`
+    : `<div class="warn"><strong>Safaritenten met airco</strong> zijn zeldzaam op Corsica. Elk verblijf toont per optie wat er online over airco staat. De bronnen zijn gelezen, maar prijzen en voorzieningen veranderen.</div><div style="height:14px"></div>${stays}`;
+  return `<div class="pad"><div class="large">${esc(r.name)}</div><div class="subt">${esc(r.title)}</div>
+    <div class="seg" role="tablist">${["Overzicht","Dagen","Verblijf"].map((n, i) => `<button role="tab" aria-selected="${i === seg}" data-seg="${i}">${n}</button>`).join("")}</div>
+    <p style="margin:-4px 0 14px;color:var(--muted);font-size:15px;display:${seg === 0 ? "block" : "none"}">${esc(r.lead)}</p>${body}</div>`;
+}
+function mountRoute(key, host) {
+  const r = ROUTES[key];
+  host.querySelectorAll("[data-seg]").forEach(b => b.addEventListener("click", () => { state[key].seg = +b.dataset.seg; renderRoot(key, true); }));
+  host.querySelectorAll("[data-day]").forEach(b => b.addEventListener("click", () => daySheet(r, +b.dataset.day)));
+  host.querySelectorAll("[data-stay]").forEach(b => b.addEventListener("click", () => push(key, stayScreen(key, b.dataset.stay, +b.dataset.i))));
+}
+function stayScreen(key, id, idx) {
+  const s = STAYS[id], r = ROUTES[key];
+  const sights = s.sights.map((x, i) => `<button class="tile" data-sight="${i}">${photo(x[1], "", x[0])}<div><b>${esc(x[0])}</b><span class="s">${esc(x[2])}</span></div></button>`).join("");
+  const food = s.food.map(f => `<div class="row"><span class="grow"><div class="t">${esc(f[0])}</div><div class="s">${esc(f[1])}${f[2] ? "" : " (tip)"}</div></span></div>`).join("");
+  const acc = s.acc.map(a => { const [cls, txt] = acLabel(a.ac);
+    return `<a class="row" href="${esc(a.u)}" target="_blank" rel="noopener" style="color:inherit"><span class="ic">${ICONS[a.k] || ICONS.house}</span><span class="grow"><div class="t">${esc(a.n)}</div><div class="s"><span class="pill type">${esc(a.t)}</span><span class="pill ${cls}">${txt}</span></div><div class="s">${esc(a.note)}</div></span>${CHEV}</a>`; }).join("");
+  const content = `${photo(s.img, "hero", s.name)}
+    <div class="pad"><div class="large" style="margin-top:14px">${esc(s.name)}</div><div class="subt">${esc(s.kind)}${r.nights[idx] ? " &middot; " + r.nights[idx] + " nachten" : ""}</div>
+    <p style="margin:0 0 4px">${esc(s.desc)}</p>
+    <div class="group-h" style="margin-left:0">Bezienswaardigheden</div><div class="car">${sights}</div>
+    <div class="group-h" style="margin-left:0">Waar eten</div><div class="group">${food}</div>
+    <a class="btn alt" href="${GMAPS_RESTO(s.q)}" target="_blank" rel="noopener">Restaurants in de buurt</a>
+    <div class="group-h" style="margin-left:0">Slapen</div><div class="group">${acc}</div>
+    <div class="group-h" style="margin-left:0">Zelf zoeken met airco-filter</div>
+    <div class="sbtns"><a href="${AIRBNB(s.q)}" target="_blank" rel="noopener">Airbnb</a><a href="${BOOKING(s.q)}" target="_blank" rel="noopener">Booking</a><a href="${PITCHUP}" target="_blank" rel="noopener">Glamping</a></div></div>`;
+  return screen({title: s.name, navTitle: s.short, back: r.name, content, onMount: el => {
+    el.querySelectorAll("[data-sight]").forEach(b => b.addEventListener("click", () => { const x = s.sights[+b.dataset.sight]; sightSheet(x[0], x[2] + ". Ligt in of bij " + s.short + ".", x[1]); }));
+  }});
+}
+
+/* ---------- Eilandscherm ---------- */
+function islandContent() {
+  const regions = ISLAND.regions.map(x => `<button class="tile" data-reg="${esc(x[0])}">${photo(x[2], "", x[0])}<div><b>${esc(x[0])}</b><span class="s">${esc(x[1].split(".")[0])}</span></div></button>`).join("");
+  const hl = ISLAND.highlights.map(x => `<button class="tile" data-hl="${esc(x[0])}">${photo(x[2], "", x[0])}<div><b>${esc(x[0])}</b><span class="s">${esc(x[1])}</span></div></button>`).join("");
+  const kids = ISLAND.kids.map(x => `<div class="row"><span class="ic">${ICONS.tent}</span><span class="grow"><div class="t">${esc(x[0])}</div><div class="s">${esc(x[1])}</div></span></div>`).join("");
+  const tips = ISLAND.tips.map(x => `<div class="row"><span class="grow"><div class="t">${esc(x[0])}</div><div class="s">${esc(x[1])}</div></span></div>`).join("");
+  return `<div class="pad"><div class="large">Corsica</div><div class="subt">183 x 83 km &middot; Monte Cinto 2.706 m</div>
+    <div class="mapcard">${islandMapSvg()}<div class="mapcap">Belangrijke plaatsen op het eiland.</div></div>
+    <a class="btn" href="https://www.google.com/maps/place/Corsica" target="_blank" rel="noopener">Open Corsica in Google Maps</a>
+    <div class="group-h" style="margin-left:0">Streken</div><div class="car">${regions}</div>
+    <div class="group-h" style="margin-left:0">Hoogtepunten</div><div class="grid2">${hl}</div>
+    <div class="group-h" style="margin-left:0">Leuk met kinderen van 5 en 7</div><div class="group">${kids}</div>
+    <div class="group-h" style="margin-left:0">Praktisch</div><div class="group">${tips}</div>
+    <p class="note" style="margin-top:18px">Foto's komen van Wikimedia Commons (CC BY of CC BY-SA) en tonen de plek, niet de accommodatie. <a href="#" id="credLink">Bekijk fotocredits</a>.</p></div>`;
+}
+function mountIsland(host) {
+  const cl = host.querySelector("#credLink"); if (cl) cl.addEventListener("click", e => { e.preventDefault(); fetch("credits.json").then(r => r.json()).then(c => openSheet(`<div class="kicker">Foto's</div><h3>Fotocredits</h3><p style="font-size:13px;line-height:1.5">${Object.values(c).map(x => `${esc(x.title.replace("File:", ""))}, ${esc(x.author || "onbekend")}, ${esc(x.lic)}`).join("<br>")}</p>`)).catch(() => openSheet("<h3>Credits niet beschikbaar</h3>")); });
+  host.querySelectorAll("[data-reg]").forEach(b => b.addEventListener("click", () => { const x = ISLAND.regions.find(r => r[0] === b.dataset.reg); openSheet(`<div class="kicker">Streek</div><h3>${esc(x[0])}</h3>${photo(x[2], "", x[0])}<p>${esc(x[1])}</p><div class="chips">${x[3].map(c => `<span class="chip">${esc(c)}</span>`).join("")}</div>`); }));
+  host.querySelectorAll("[data-hl]").forEach(b => b.addEventListener("click", () => { const x = ISLAND.highlights.find(r => r[0] === b.dataset.hl); sightSheet(x[0], x[1], x[2]); }));
+}
+
+/* ---------- Root per tab ---------- */
+function renderRoot(tab, top) {
+  const s = stacks[tab], old = s.rootScreen, keepScroll = old && !top ? old.querySelector(".scroll").scrollTop : 0;
+  const content = tab === "corsica" ? islandContent() : routeContent(tab);
+  const el = screen({title: tab === "corsica" ? "Corsica" : ROUTES[tab].name, content, onMount: el => { if (tab === "corsica") mountIsland(el); else mountRoute(tab, el); }});
+  if (old) old.replaceWith(el); else s.root.prepend(el);
+  s.rootScreen = el; el.querySelector(".scroll").scrollTop = keepScroll;
+}
+TABS.forEach(([k, label, icon]) => {
+  const host = document.createElement("div"); host.className = "tabroot"; host.id = "root-" + k; roots.appendChild(host);
+  stacks[k] = {root: host, depth: 0, rootScreen: null}; renderRoot(k);
+  const b = document.createElement("button"); b.setAttribute("role", "tab"); b.dataset.k = k; b.innerHTML = icon + "<span>" + label + "</span>"; tabbar.appendChild(b);
+  b.addEventListener("click", () => { if (current === k && stacks[k].depth > 0) { while (stacks[k].depth) pop(k); } else if (current === k) { const sc = stacks[k].rootScreen.querySelector(".scroll"); sc.scrollTo({top: 0, behavior: "smooth"}); } select(k); });
+});
+function select(k) {
+  current = k; closeSheet();
+  document.querySelectorAll(".tabroot").forEach(h => h.classList.toggle("on", h.id === "root-" + k));
+  tabbar.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.k === k));
+  try { history.replaceState(null, "", "#" + k); } catch (e) {}
+}
+addEventListener("hashchange", () => { const h = (location.hash || "").slice(1); if (stacks[h]) select(h); });
+select(stacks[(location.hash || "").slice(1)] ? (location.hash || "").slice(1) : "a");
+</script>

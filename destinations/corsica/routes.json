@@ -1,0 +1,836 @@
+{
+ "_doc": "Candidate routes. stays use the catalog region keys; profile = region traits 0..1 (coast, mountains, town, quiet, lively); legs are approximate (km, minutes).",
+ "routes": [
+  {
+   "id": "a",
+   "name": "Route A",
+   "sub": "Balagne, Corte, Porto-Vecchio",
+   "title": "Klassiek: Balagne, de bergen en het zuidoosten",
+   "lead": "Eerst het groene noordwesten rond Calvi, dan drie nachten de bergen in bij Corte en daarna zes nachten aan de stranden van Porto-Vecchio. Korte ritten. De ferry vertrekt en komt aan in Bastia.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona. Boek in juli en augustus zo vroeg mogelijk, ook voor de EV.",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "portov",
+    "bastia"
+   ],
+   "stays": [
+    "calvi",
+    "corte",
+    "portov"
+   ],
+   "nights": [
+    4,
+    3,
+    6
+   ],
+   "profile": {
+    "coast": 0.66,
+    "mountains": 0.39,
+    "town": 0.52,
+    "quiet": 0.38,
+    "lively": 0.58
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Calvi",
+     "km": 92,
+     "min": 120,
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "Calvi",
+     "to": "Corte",
+     "km": 95,
+     "min": 115,
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Porto-Vecchio",
+     "km": 135,
+     "min": 150,
+     "via": [
+      "corte",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "portov"
+     ]
+    },
+    {
+     "from": "Porto-Vecchio",
+     "to": "Bastia",
+     "km": 135,
+     "min": 140,
+     "via": [
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ],
+   "days": [
+    {
+     "stay": "calvi",
+     "title": "Aankomst en eerste strandmiddag",
+     "text": "Ferry komt aan in Bastia. Rijd via Saint-Florent naar Calvi (2 uur). Inchecken, zwemmen in de baai en vroeg naar bed.",
+     "drive": "Bastia - Calvi, 2 u"
+    },
+    {
+     "stay": "calvi",
+     "title": "Strand en citadel",
+     "text": "Ochtend op het strand van Calvi, ondiep en rustig. Aan het eind van de middag de citadel op voor ijsjes en uitzicht."
+    },
+    {
+     "stay": "calvi",
+     "title": "Treinrit naar Île-Rousse",
+     "text": "Met het Trinichellu-treintje langs de kust naar Île-Rousse. Lunch, schaduw onder de markthal en zwemmen bij het stadsstrand."
+    },
+    {
+     "stay": "calvi",
+     "title": "Bergdorpjes of rustdag",
+     "text": "Pigna en Sant'Antonino met winkeltjes van ambachtslieden, of een luie dag aan de baai van Arinella bij Lumio met snorkelmasker."
+    },
+    {
+     "stay": "corte",
+     "title": "Naar de bergen",
+     "text": "Via Île-Rousse en Ponte-Leccia naar Corte (2 uur). Citadel van Corte beklimmen en eten in de oude stad.",
+     "drive": "Calvi - Corte, 1 u 55"
+    },
+    {
+     "stay": "corte",
+     "title": "Restonica-rivier",
+     "text": "Rijd de Restonica-vallei in en zoek een natuurlijk zwempoeltje. Korte wandeling langs de rivier. Neem eten mee."
+    },
+    {
+     "stay": "corte",
+     "title": "Kloof en dorpjes",
+     "text": "Stop bij Scala di Santa Regina en wandel een stukje in de Gorges du Tavignano. Rustige middag in Corte."
+    },
+    {
+     "stay": "portov",
+     "title": "Naar het zuiden",
+     "text": "Via de oostkust naar Porto-Vecchio, ca. 2,5 uur. Pauze bij de Romeinse opgraving in Aléria. Middag zwemmen op Santa Giulia.",
+     "drive": "Corte - Porto-Vecchio, 2 u 30"
+    },
+    {
+     "stay": "portov",
+     "title": "Palombaggia",
+     "text": "Dagje op het strand van Palombaggia met rode rotsen en parasoldennen. Lunch bij een strandtent."
+    },
+    {
+     "stay": "portov",
+     "title": "Bavella, halve dag",
+     "text": "Autotocht (ca. 1 uur) naar de Col de Bavella, kijken bij de Aiguilles en zwemmen in een rivierpoel. Geen lange wandeling met kinderen van 5 en 7."
+    },
+    {
+     "stay": "portov",
+     "title": "Bonifacio",
+     "text": "Bonifacio: citadel en een bootje langs de krijtrotsen (ca. 1 uur rijden heen). Terug via Rondinara voor een late duik."
+    },
+    {
+     "stay": "portov",
+     "title": "Rondinara en Santa Manza",
+     "text": "Ondiepe baaien en een rustige dag. Kinderen kunnen ver het water in."
+    },
+    {
+     "stay": "portov",
+     "title": "Laatste strandmiddag",
+     "text": "Oude stad van Porto-Vecchio, souvenirs en een afscheidsdiner bij Tamaricciu of in de stad."
+    },
+    {
+     "stay": "bastia",
+     "title": "Terug naar de ferry",
+     "text": "Via de oostkust terug naar Bastia (2 uur 20). Kies een ferry aan het eind van de dag.",
+     "drive": "Porto-Vecchio - Bastia, 2 u 20"
+    }
+   ]
+  },
+  {
+   "id": "b",
+   "name": "Route B",
+   "sub": "Westkust, Bavella, zuiden",
+   "title": "Wilde westkust, Bavella en het zuiden",
+   "lead": "Aankomst in Ajaccio en direct naar de rode rotsen van Piana en Porto. Dan naar de koele bergen bij Zonza en als laatste zes nachten naar de zuidkust bij Bonifacio en Figari, met bevestigde airco. De rit Porto - Zonza is lang (ruim 4 uur), dus houd er een hele dag voor vrij.",
+   "ferry": "Ferry naar Ajaccio, bijvoorbeeld vanaf Marseille, Toulon of Nice. De nachtboot scheelt een hotelnacht.",
+   "stops": [
+    "ajaccio",
+    "porto",
+    "zonza",
+    "bonifacio",
+    "ajaccio"
+   ],
+   "stays": [
+    "porto",
+    "zonza",
+    "bonifacio"
+   ],
+   "nights": [
+    4,
+    3,
+    6
+   ],
+   "profile": {
+    "coast": 0.65,
+    "mountains": 0.44,
+    "town": 0.42,
+    "quiet": 0.48,
+    "lively": 0.36
+   },
+   "legs": [
+    {
+     "from": "Ajaccio",
+     "to": "Porto",
+     "km": 85,
+     "min": 135,
+     "via": [
+      "ajaccio",
+      "sagone",
+      "cargese",
+      "piana",
+      "porto"
+     ]
+    },
+    {
+     "from": "Porto",
+     "to": "Zonza",
+     "km": 187,
+     "min": 255,
+     "via": [
+      "porto",
+      "piana",
+      "cargese",
+      "sagone",
+      "ajaccio",
+      "petreto",
+      "zonza"
+     ]
+    },
+    {
+     "from": "Zonza",
+     "to": "Bonifacio / Figari",
+     "km": 85,
+     "min": 110,
+     "via": [
+      "zonza",
+      "portov",
+      "figari",
+      "bonifacio"
+     ]
+    },
+    {
+     "from": "Figari",
+     "to": "Ajaccio",
+     "km": 125,
+     "min": 140,
+     "via": [
+      "figari",
+      "sartene",
+      "propriano",
+      "petreto",
+      "ajaccio"
+     ]
+    }
+   ],
+   "days": [
+    {
+     "stay": "porto",
+     "title": "Ferry en de rode kust",
+     "text": "Aankomst in Ajaccio. Rijd de D81 langs de golf van Sagone en Cargèse naar Porto (2 uur 15). Stop in Cargèse voor een ijsje.",
+     "drive": "Ajaccio - Porto, 2 u 15"
+    },
+    {
+     "stay": "porto",
+     "title": "Calanques de Piana",
+     "text": "Korte stops en uitkijkpunten langs de D81. De Chien de Pierre is te zwaar voor een kind van 5. Zwemmen bij Porto."
+    },
+    {
+     "stay": "porto",
+     "title": "Boot naar Girolata",
+     "text": "Rondvaart naar Girolata en Scandola (kies de korte route, ongeveer 3 uur). Snorkelen kan bij de stop."
+    },
+    {
+     "stay": "porto",
+     "title": "Aïtone en kloven",
+     "text": "Rijd naar Évisa en het Aïtone-bos voor frisse lucht en een korte wandeling naar de poelen. Terug langs de Gorges de Spelunca."
+    },
+    {
+     "stay": "zonza",
+     "title": "Naar Zonza (lange rit)",
+     "text": "Reisdag van ca. 4 uur 15, met kinderen van 5 en 7 plan je er een hele dag voor. Lunch in Ajaccio en een uur bij het stadsstrand of Maison Bonaparte, daarna verder naar Zonza.",
+     "drive": "Porto - Zonza, 4 u 15"
+    },
+    {
+     "stay": "zonza",
+     "title": "Col de Bavella",
+     "text": "De Aiguilles de Bavella zien, korte wandeling bij de pas en lunch bij de auberge."
+    },
+    {
+     "stay": "zonza",
+     "title": "Rivier en megalieten",
+     "text": "Zwempoelen in de Solenzara-rivier. Namiddag bij de prehistorische site Cucuruzzu bij Levie."
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Naar het zuiden",
+     "text": "Via Porto-Vecchio en de kust naar Figari/Bonifacio (ca. 2 uur). Check-in en zwembad.",
+     "drive": "Zonza - Figari, 1 u 50"
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Bonifacio",
+     "text": "Citadel, haven en een bootje langs de krijtrotsen en grotten."
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Îles Lavezzi",
+     "text": "Boottocht naar de Lavezzi-eilanden. Snorkelen in het heldere water. Zonnehoed mee."
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Rondinara en Santa Manza",
+     "text": "Ondiepe baaien dicht bij het zuiden. Rustig dagje aan het water."
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Wijndomein en Roccapina",
+     "text": "Bezoek aan een wijnboer bij Figari met sap voor de kinderen, daarna het strand bij de Leeuw van Roccapina."
+    },
+    {
+     "stay": "bonifacio",
+     "title": "Rustdag",
+     "text": "Zwembad, lui ontbijt en een wandeling door de oude stad."
+    },
+    {
+     "stay": "ajaccio",
+     "title": "Terug naar de ferry",
+     "text": "Via Sartène en Propriano naar Ajaccio (2 uur 20). Stop bij Filitosa als het past.",
+     "drive": "Figari - Ajaccio, 2 u 20"
+    }
+   ]
+  },
+  {
+   "id": "c",
+   "name": "Route C",
+   "sub": "Grand Tour, 4 plekken",
+   "title": "Grand Tour met vier verblijfplaatsen",
+   "lead": "Het meeste afwisseling: noordkust, bergbos van Vizzavona, zuidwestelijke golf en oostelijke stranden. De ferry vertrekt en komt aan in Bastia. Vier verblijfplaatsen betekent drie keer inpakken, dus de dagen zijn rustig gehouden.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona.",
+   "stops": [
+    "bastia",
+    "stflorent",
+    "vivario",
+    "propriano",
+    "portov",
+    "bastia"
+   ],
+   "stays": [
+    "stflorent",
+    "vivario",
+    "propriano",
+    "portov"
+   ],
+   "nights": [
+    3,
+    3,
+    3,
+    4
+   ],
+   "profile": {
+    "coast": 0.65,
+    "mountains": 0.36,
+    "town": 0.34,
+    "quiet": 0.53,
+    "lively": 0.42
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Saint-Florent",
+     "km": 22,
+     "min": 40,
+     "via": [
+      "bastia",
+      "stflorent"
+     ]
+    },
+    {
+     "from": "Saint-Florent",
+     "to": "Vivario",
+     "km": 110,
+     "min": 135,
+     "via": [
+      "stflorent",
+      "pontel",
+      "corte",
+      "vivario"
+     ]
+    },
+    {
+     "from": "Vivario",
+     "to": "Propriano",
+     "km": 135,
+     "min": 160,
+     "via": [
+      "vivario",
+      "vizzavona",
+      "bocognano",
+      "ajaccio",
+      "propriano"
+     ]
+    },
+    {
+     "from": "Propriano",
+     "to": "Porto-Vecchio",
+     "km": 85,
+     "min": 105,
+     "via": [
+      "propriano",
+      "sartene",
+      "figari",
+      "portov"
+     ]
+    },
+    {
+     "from": "Porto-Vecchio",
+     "to": "Bastia",
+     "km": 135,
+     "min": 140,
+     "via": [
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ],
+   "days": [
+    {
+     "stay": "stflorent",
+     "title": "Aankomst",
+     "text": "Ferry naar Bastia, korte rit naar Saint-Florent (40 minuten). Rond de haven wandelen en eten.",
+     "drive": "Bastia - Saint-Florent, 40 min"
+    },
+    {
+     "stay": "stflorent",
+     "title": "Agriates met de boot",
+     "text": "Boottaxi naar Lotu of Saleccia, witte stranden met turquoise water. Neem water en schaduw mee."
+    },
+    {
+     "stay": "stflorent",
+     "title": "Nonza en wijngaarden",
+     "text": "Via Patrimonio naar Nonza (zwart strand, ca. 45 minuten rijden). Rustige middag bij de haven."
+    },
+    {
+     "stay": "vivario",
+     "title": "Naar de bergen",
+     "text": "Over Ponte-Leccia en Corte naar Vivario (2 uur 15). Boswandeling en zwemmen in de Vecchio.",
+     "drive": "Saint-Florent - Vivario, 2 u 15"
+    },
+    {
+     "stay": "vivario",
+     "title": "Cascade des Anglais",
+     "text": "Korte wandeling naar de waterval en poelen. Met het treintje van Vizzavona een stukje meerijden."
+    },
+    {
+     "stay": "vivario",
+     "title": "Corte en Restonica",
+     "text": "Dagtocht naar Corte en de Restonica-vallei voor zwemmen in de rivier."
+    },
+    {
+     "stay": "propriano",
+     "title": "Naar de golf van Valinco",
+     "text": "Over de Col de Vizzavona en door Ajaccio naar Propriano, ca. 2,5 uur. Lunch in Ajaccio.",
+     "drive": "Vivario - Propriano, 2 u 40"
+    },
+    {
+     "stay": "propriano",
+     "title": "Filitosa",
+     "text": "Bezoek aan de prehistorische beelden van Filitosa, een ontdekkingstocht voor kinderen. Strand daarna."
+    },
+    {
+     "stay": "propriano",
+     "title": "Sartène en Roccapina",
+     "text": "Rondje Sartène en de Leeuw van Roccapina. Strand voor de rest van de dag."
+    },
+    {
+     "stay": "portov",
+     "title": "Naar het oosten",
+     "text": "Via Sartène en de zuidkust naar Porto-Vecchio. Een middag op Santa Giulia.",
+     "drive": "Propriano - Porto-Vecchio, 1 u 45"
+    },
+    {
+     "stay": "portov",
+     "title": "Palombaggia",
+     "text": "Strand van Palombaggia en lunch aan het water."
+    },
+    {
+     "stay": "portov",
+     "title": "Bavella of Bonifacio",
+     "text": "Dagtocht naar de Col de Bavella of een bootje bij Bonifacio."
+    },
+    {
+     "stay": "portov",
+     "title": "Rondinara en laatste strand",
+     "text": "Ondiepe baai voor een vrije dag. Afscheidsdiner in Porto-Vecchio."
+    },
+    {
+     "stay": "bastia",
+     "title": "Terug naar de ferry",
+     "text": "Via de oostkust naar Bastia (2 uur 20). Plan een ferry aan het eind van de dag.",
+     "drive": "Porto-Vecchio - Bastia, 2 u 20"
+    }
+   ]
+  },
+  {
+   "id": "d",
+   "name": "Route D",
+   "sub": "Bergen en rivieren",
+   "title": "Meer bergen: Porto, Corte en Bavella",
+   "lead": "Aankomst in Ajaccio en dan het binnenland in: de rode rotsen bij Porto, vier nachten in Corte met de Restonica en vier nachten in de koele bergen bij Zonza. Veel wandelen en zwemmen in rivierpoelen, weinig strand. De ritten zijn langer en de wegen smal.",
+   "ferry": "Ferry naar Ajaccio, bijvoorbeeld vanaf Marseille, Toulon of Nice.",
+   "stops": [
+    "ajaccio",
+    "porto",
+    "corte",
+    "zonza",
+    "ajaccio"
+   ],
+   "stays": [
+    "porto",
+    "corte",
+    "zonza"
+   ],
+   "nights": [
+    3,
+    4,
+    4
+   ],
+   "profile": {
+    "coast": 0.23,
+    "mountains": 0.82,
+    "town": 0.28,
+    "quiet": 0.61,
+    "lively": 0.2
+   },
+   "legs": [
+    {
+     "from": "Ajaccio",
+     "to": "Porto",
+     "km": 85,
+     "min": 135,
+     "via": [
+      "ajaccio",
+      "sagone",
+      "cargese",
+      "piana",
+      "porto"
+     ]
+    },
+    {
+     "from": "Porto",
+     "to": "Corte",
+     "km": 90,
+     "min": 140,
+     "via": [
+      "porto",
+      "evisa",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Zonza",
+     "km": 150,
+     "min": 195,
+     "via": [
+      "corte",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "zonza"
+     ]
+    },
+    {
+     "from": "Zonza",
+     "to": "Ajaccio",
+     "km": 100,
+     "min": 135,
+     "via": [
+      "zonza",
+      "petreto",
+      "ajaccio"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "e",
+   "name": "Route E",
+   "sub": "Stranden en zee",
+   "title": "Meer strand: Saint-Florent, Porto-Vecchio en Bonifacio",
+   "lead": "Drie kustplaatsen aan het water: de witte stranden van de Agriates, vijf nachten Porto-Vecchio met Santa Giulia en Palombaggia, en vier nachten Bonifacio met boottochten. Weinig rijden in de bergen, veel tijd aan zee.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona.",
+   "stops": [
+    "bastia",
+    "stflorent",
+    "portov",
+    "bonifacio",
+    "bastia"
+   ],
+   "stays": [
+    "stflorent",
+    "portov",
+    "bonifacio"
+   ],
+   "nights": [
+    3,
+    5,
+    4
+   ],
+   "profile": {
+    "coast": 0.88,
+    "mountains": 0.17,
+    "town": 0.55,
+    "quiet": 0.38,
+    "lively": 0.59
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Saint-Florent",
+     "km": 22,
+     "min": 40,
+     "via": [
+      "bastia",
+      "stflorent"
+     ]
+    },
+    {
+     "from": "Saint-Florent",
+     "to": "Porto-Vecchio",
+     "km": 157,
+     "min": 185,
+     "via": [
+      "stflorent",
+      "bastia",
+      "folelli",
+      "aleria",
+      "ghiso",
+      "solenzara",
+      "portov"
+     ]
+    },
+    {
+     "from": "Porto-Vecchio",
+     "to": "Bonifacio",
+     "km": 28,
+     "min": 40,
+     "via": [
+      "portov",
+      "bonifacio"
+     ]
+    },
+    {
+     "from": "Bonifacio",
+     "to": "Bastia",
+     "km": 165,
+     "min": 190,
+     "via": [
+      "bonifacio",
+      "portov",
+      "solenzara",
+      "ghiso",
+      "aleria",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f",
+   "name": "Route F",
+   "sub": "Cultuur en steden",
+   "title": "Cultuur: Calvi, Corte, Ajaccio en Propriano",
+   "lead": "Citadellen, musea en prehistorische sites. Je begint in Bastia, gaat via Calvi en Corte naar Ajaccio (Napoleon) en eindigt bij Propriano met Filitosa en Sartène. Terug naar de ferry in Ajaccio.",
+   "ferry": "Ferry naar Bastia, terug vanuit Ajaccio, bijvoorbeeld naar Marseille, Toulon of Nice. Check of heen en terug bij dezelfde maatschappij passen.",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "ajaccio",
+    "propriano",
+    "ajaccio"
+   ],
+   "stays": [
+    "calvi",
+    "corte",
+    "ajaccio",
+    "propriano"
+   ],
+   "nights": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "profile": {
+    "coast": 0.55,
+    "mountains": 0.43,
+    "town": 0.6,
+    "quiet": 0.4,
+    "lively": 0.53
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Calvi",
+     "km": 92,
+     "min": 120,
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "Calvi",
+     "to": "Corte",
+     "km": 95,
+     "min": 115,
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Ajaccio",
+     "km": 80,
+     "min": 110,
+     "via": [
+      "corte",
+      "vivario",
+      "vizzavona",
+      "bocognano",
+      "ajaccio"
+     ]
+    },
+    {
+     "from": "Ajaccio",
+     "to": "Propriano",
+     "km": 70,
+     "min": 85,
+     "via": [
+      "ajaccio",
+      "petreto",
+      "propriano"
+     ]
+    },
+    {
+     "from": "Propriano",
+     "to": "Ajaccio",
+     "km": 70,
+     "min": 85,
+     "via": [
+      "propriano",
+      "petreto",
+      "ajaccio"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "g",
+   "name": "Route G",
+   "sub": "Korte trip, 8 nachten",
+   "title": "Kort: Calvi en Corte",
+   "lead": "Een compacte reis van 8 nachten: vier nachten strand en citadel in Calvi en vier nachten in de bergen bij Corte, met korte ritten en maar één keer inpakken.",
+   "ferry": "Ferry naar Bastia, bijvoorbeeld vanaf Livorno of Savona.",
+   "stops": [
+    "bastia",
+    "calvi",
+    "corte",
+    "bastia"
+   ],
+   "stays": [
+    "calvi",
+    "corte"
+   ],
+   "nights": [
+    4,
+    4
+   ],
+   "profile": {
+    "coast": 0.4,
+    "mountains": 0.6,
+    "town": 0.55,
+    "quiet": 0.45,
+    "lively": 0.45
+   },
+   "legs": [
+    {
+     "from": "Bastia",
+     "to": "Calvi",
+     "km": 92,
+     "min": 120,
+     "via": [
+      "bastia",
+      "stflorent",
+      "agriates",
+      "iler",
+      "calvi"
+     ]
+    },
+    {
+     "from": "Calvi",
+     "to": "Corte",
+     "km": 95,
+     "min": 115,
+     "via": [
+      "calvi",
+      "iler",
+      "pontel",
+      "corte"
+     ]
+    },
+    {
+     "from": "Corte",
+     "to": "Bastia",
+     "km": 70,
+     "min": 95,
+     "via": [
+      "corte",
+      "pontel",
+      "folelli",
+      "bastia"
+     ]
+    }
+   ]
+  }
+ ]
+}

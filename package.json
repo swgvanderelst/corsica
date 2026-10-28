@@ -1,0 +1,16 @@
+{
+  "name": "corsica",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "test": "node --test",
+    "coverage": "node --test --experimental-test-coverage test/logic.test.js",
+    "rules": "node scripts/gen-rules.mjs",
+    "smoke": "node tools/smoke.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

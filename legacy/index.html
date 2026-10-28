@@ -1,0 +1,248 @@
+<title>Corsica Reisplanner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: koptekst met tabs; per route kaart naast intro, dan tabel, tijdlijn en verblijfplaatsen met foto's */
+:root {
+  --bg: #f6f4ef; --surface: #ffffff; --fg: #1d2a2c; --muted: #566567; --line: #dcd9d0; --sea: #0f6e7c; --sea-soft: #d8ecee;
+  --maquis: #4c6b3a; --ochre: #c27a1d; --rock: #e6e1d6; --ok: #2f7a3e; --warn: #8a5e00; --no: #a23b32;
+  --route-a: #0f6e7c; --route-b: #b36a0f; --route-c: #7a4a8a;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111b1d; --surface: #182427; --fg: #e8eeee; --muted: #9fb1b3; --line: #2b3b3e; --sea: #5cc0cf; --sea-soft: #1b3a40;
+    --maquis: #9cc384; --ochre: #e6a54c; --rock: #223033; --ok: #7fcf8f; --warn: #e5b94c; --no: #f09088;
+    --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111b1d; --surface: #182427; --fg: #e8eeee; --muted: #9fb1b3; --line: #2b3b3e; --sea: #5cc0cf; --sea-soft: #1b3a40;
+  --maquis: #9cc384; --ochre: #e6a54c; --rock: #223033; --ok: #7fcf8f; --warn: #e5b94c; --no: #f09088;
+  --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55; padding-block: 0 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1080px; margin: 0 auto; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+a { color: var(--sea); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ochre); outline-offset: 2px; }
+header.top { padding-top: 28px; padding-bottom: 8px; }
+header.top .kicker { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+header.top h1 { font-size: clamp(32px, 6vw, 52px); margin-top: 6px; }
+header.top p { color: var(--muted); max-width: 62ch; margin: 10px 0 0; }
+header.top .mob { display: inline-block; margin-top: 10px; font-size: 14px; }
+.tabs-bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); margin-top: 18px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.tabs { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; scrollbar-width: thin; }
+.tab { flex: 0 0 auto; font: inherit; font-weight: 600; font-size: 15px; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; text-align: left; }
+.tab small { display: block; font-weight: 400; font-size: 13px; }
+.tab[aria-selected="true"] { background: var(--sea); color: #fff; }
+:root[data-theme="dark"] .tab[aria-selected="true"], :root[data-theme="dark"] .btn { color: #0b1517; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tab[aria-selected="true"], :root:not([data-theme="light"]) .btn { color: #0b1517; } }
+.tab:hover:not([aria-selected="true"]) { border-color: var(--line); color: var(--fg); }
+.panel { padding-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 34px; }
+.panel[hidden] { display: none; }
+.panel > * { min-width: 0; }
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 24px; align-items: start; }
+.intro h2 { font-size: clamp(26px, 4vw, 36px); }
+.intro .lead { color: var(--muted); margin: 10px 0 16px; max-width: 58ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+.facts li { background: var(--sea-soft); border-radius: 6px; padding: 5px 10px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.btn { display: inline-block; background: var(--sea); color: #fff; text-decoration: none; font-weight: 600; border-radius: 8px; padding: 10px 16px; font-size: 15px; }
+.map-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin: 0; }
+.map-card svg { width: 100%; height: auto; max-height: 560px; display: block; }
+.map-card figcaption { font-size: 13px; color: var(--muted); padding: 6px 4px 2px; }
+.sec-title { font-size: 24px; margin-bottom: 12px; }
+.sec-note { color: var(--muted); font-size: 14px; margin: -6px 0 14px; max-width: 70ch; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+tfoot td { font-weight: 600; background: var(--rock); }
+.leg-l { display: inline-block; width: 22px; height: 22px; line-height: 20px; text-align: center; border-radius: 6px; border: 1.5px solid var(--sea); font-weight: 700; font-size: 13px; }
+
+.ph { position: relative; display: block; overflow: hidden; background: linear-gradient(135deg, var(--g)); }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.days { border-left: 2px solid var(--line); margin-left: 6px; }
+.day { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 14px; padding: 4px 0 20px 18px; position: relative; }
+.day::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--sea); }
+.day { grid-template-columns: 74px 120px minmax(0, 1fr); }
+.dph { width: 120px; height: 90px; border-radius: 10px; }
+.day .d { font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.2; }
+.day .d span { display: block; font-family: var(--font-body); font-weight: 500; font-size: 13px; color: var(--muted); }
+.day .where { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--maquis); }
+.day h4 { font-size: 18px; margin: 2px 0 4px; }
+.day p { margin: 0; max-width: 66ch; }
+.day .move { display: inline-block; margin-top: 6px; font-size: 13px; background: var(--rock); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+
+.stay { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.stay-hero { height: 190px; }
+.stay-hero .tag { position: absolute; left: 16px; bottom: 14px; z-index: 1; color: #fff; font-family: var(--font-display); font-size: 28px; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.stay-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(0,0,0,.5)); }
+.stay-body { padding: 22px; display: grid; gap: 22px; }
+.badge { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stay p.desc { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+.h4 { font-family: var(--font-body); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
+.sights { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.sight { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); }
+.sight .ph { aspect-ratio: 4 / 3; }
+.sight div { padding: 8px 10px 10px; }
+.sight b { display: block; font-size: 14px; line-height: 1.25; }
+.sight span.s { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+.food { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.food > div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.food b { font-size: 15px; }
+.food p { margin: 2px 0 0; font-size: 14px; color: var(--muted); }
+.food .tip { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--maquis); }
+.stays-list { display: grid; gap: 10px; }
+.acc { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: start; }
+.acc .ic { width: 44px; height: 44px; border-radius: 10px; background: var(--sea-soft); color: var(--sea); display: grid; place-items: center; }
+.acc .ic svg { width: 26px; height: 26px; }
+.acc .t { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.acc .t a { font-weight: 600; }
+.acc p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+.pill { font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 9px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.yes { color: var(--ok); } .pill.maybe { color: var(--warn); } .pill.no { color: var(--no); } .pill.type { color: var(--muted); }
+.search { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); }
+.search a { border: 1px solid var(--sea); border-radius: 999px; padding: 4px 12px; text-decoration: none; font-weight: 600; font-size: 14px; }
+.notice { border: 1px solid var(--ochre); background: var(--surface); border-radius: 10px; padding: 14px 16px; font-size: 15px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px; }
+.grid3 > * { min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.card .ph { aspect-ratio: 16 / 10; }
+.card .in { padding: 14px 16px 16px; }
+.card h3 { font-size: 19px; margin-bottom: 4px; }
+.card p { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--rock); border-radius: 6px; padding: 3px 9px; font-size: 13px; }
+.plain { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.plain ul { margin: 0; padding-left: 18px; } .plain li { margin-bottom: 6px; }
+footer { color: var(--muted); font-size: 13px; padding-top: 34px; max-width: 74ch; }
+footer details { margin-top: 10px; } footer summary { cursor: pointer; font-weight: 600; }
+@media (max-width: 760px) { .intro { grid-template-columns: minmax(0, 1fr); } .day { grid-template-columns: minmax(0, 1fr); gap: 6px; } .dph { width: 100%; height: 150px; } .stay-body { padding: 16px; } .stay-hero { height: 150px; } }
+@media (prefers-reduced-motion: no-preference) { .tab { transition: background .15s, color .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">Gezin met kinderen van 5 en 7 &middot; juli/augustus &middot; ferry met eigen EV</div>
+    <h1>Corsica Reisplanner</h1>
+    <p>Drie routes van 14 dagen met elk drie of vier verblijfplaatsen, plus een eilandoverzicht.</p>
+    <a class="mob" href="mobile.html">Open de mobiele app-versie</a>
+  </header>
+  <div class="tabs-bar"><div class="tabs" role="tablist" aria-label="Reisschema's" id="tabs"></div></div>
+  <main id="panels"></main>
+  <footer>
+    Rijtijden en afstanden zijn schattingen voor een gewone personenauto zonder files. In juli en augustus kan een rit 20 tot 30 procent langer duren. Controleer de actuele tijd met de knop &laquo;Open in Google Maps&raquo;. Prijzen, beschikbaarheid en voorzieningen veranderen: bevestig airco, zwembad en stroom voor de EV altijd bij de verhuurder. Foto's zijn van Wikimedia Commons en dienen als sfeerbeeld van de plek, niet als foto van de accommodatie.
+    <details><summary>Fotocredits</summary><div id="credits">Laden...</div></details>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const keys = ["a","b","c","corsica"];
+const TAB = {corsica:["Corsica","Hoogtepunten van het eiland"]};
+const tabsEl = document.getElementById("tabs"), panels = document.getElementById("panels");
+keys.forEach(k => {
+  const t = document.createElement("button");
+  t.className = "tab"; t.setAttribute("role","tab"); t.id = "tab-" + k; t.setAttribute("aria-controls","panel-" + k); t.dataset.key = k;
+  const [n, s] = k === "corsica" ? TAB.corsica : [ROUTES[k].name, ROUTES[k].sub];
+  t.innerHTML = esc(n) + "<small>" + esc(s) + "</small>"; tabsEl.appendChild(t);
+});
+
+function renderStay(id, num, nights) {
+  const s = STAYS[id];
+  const sights = s.sights.map(x => `<div class="sight">${photo(x[1], "", x[0])}<div><b>${esc(x[0])}</b><span class="s">${esc(x[2])}</span></div></div>`).join("");
+  const food = s.food.map(f => `<div>${f[2] ? "" : '<span class="tip">Tip</span><br>'}<b>${esc(f[0])}</b><p>${esc(f[1])}</p></div>`).join("");
+  const acc = s.acc.map(a => { const [cls, txt] = acLabel(a.ac);
+    return `<div class="acc"><div class="ic">${ICONS[a.k] || ICONS.house}</div><div><div class="t"><a href="${esc(a.u)}" target="_blank" rel="noopener">${esc(a.n)}</a><span class="pill type">${esc(a.t)}</span><span class="pill ${cls}">${txt}</span></div><p>${esc(a.note)}</p></div></div>`;
+  }).join("");
+  return `<article class="stay">
+    ${photo(s.img, "stay-hero", s.name).replace("</span>", `<span class="tag">${num}. ${esc(s.name)}</span></span>`)}
+    <div class="stay-body">
+      <div><span class="badge">${esc(s.kind)}${nights ? " &middot; " + nights + " nachten" : ""}</span><p class="desc">${esc(s.desc)}</p></div>
+      <div><h4 class="h4">Bezienswaardigheden</h4><div class="sights">${sights}</div></div>
+      <div><h4 class="h4">Waar eten</h4><div class="food">${food}</div><p style="margin:10px 0 0"><a href="${GMAPS_RESTO(s.q)}" target="_blank" rel="noopener">Restaurants in de buurt op Google Maps</a></p></div>
+      <div><h4 class="h4">Slapen: ${s.acc.length} ${s.acc.length === 1 ? "optie" : "opties"}</h4><div class="stays-list">${acc}</div>
+        <div class="search" style="margin-top:12px">Zelf zoeken met airco-filter:
+          <a href="${AIRBNB(s.q)}" target="_blank" rel="noopener">Airbnb</a><a href="${BOOKING(s.q)}" target="_blank" rel="noopener">Booking</a><a href="${PITCHUP}" target="_blank" rel="noopener">Glamping</a></div></div>
+    </div></article>`;
+}
+
+function renderRoute(key) {
+  const r = ROUTES[key], t = totals(r);
+  const legs = r.legs.map((l, i) => `<tr><td><span class="leg-l">${LEGLET[i]}</span></td><td>${esc(l.from)}</td><td>${esc(l.to)}</td><td>${l.km} km</td><td>${fmtT(l.min)}</td></tr>`).join("");
+  const days = r.days.map((d, i) => `<div class="day"><div class="d">Dag ${i + 1}<span>${esc(STAYS[d[0]] ? STAYS[d[0]].short : "Ferry")}</span></div>${photo(dayImg(d), "dph", d[1])}<div><div class="where">${esc(STAYS[d[0]] ? STAYS[d[0]].short : "Ferry")}</div><h4>${esc(d[1])}</h4><p>${esc(d[2])}</p>${d[3] ? `<span class="move">Rit: ${esc(d[3])}</span>` : ""}</div></div>`).join("");
+  const stays = r.stays.map((id, i) => renderStay(id, i + 1, r.nights[i])).join("");
+  return `
+  <section class="intro">
+    <div>
+      <h2>${esc(r.title)}</h2>
+      <p class="lead">${esc(r.lead)}</p>
+      <ul class="facts"><li>14 dagen</li><li>${r.stays.length} verblijfplaatsen</li><li>${t.km} km totaal</li><li>${t.time} rijden totaal</li></ul>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--muted)">${esc(r.ferry)}</p>
+      <a class="btn" href="${gmapsDir(r)}" target="_blank" rel="noopener">Open route in Google Maps</a>
+    </div>
+    <figure class="map-card">${mapSvg(r)}<figcaption>Schematische kaart. Genummerde cirkels zijn verblijfplaatsen, de letters zijn de ritten uit de tabel. De gestippelde lijn is de terugreis. De lijnen zijn schematisch en volgen de wegen niet exact.</figcaption></figure>
+  </section>
+  <section><h3 class="sec-title">Ritten en rijtijden</h3><p class="sec-note">Alleen de ritten tussen verblijfplaatsen, zonder dagtochten.</p>
+    <div class="table-scroll"><table><thead><tr><th>Rit</th><th>Van</th><th>Naar</th><th>Afstand</th><th>Rijtijd</th></tr></thead><tbody>${legs}</tbody><tfoot><tr><td colspan="3">Totaal</td><td>${t.km} km</td><td>${t.time}</td></tr></tfoot></table></div></section>
+  <section><h3 class="sec-title">Dag voor dag</h3><div class="days">${days}</div></section>
+  <section><h3 class="sec-title">De verblijfplaatsen</h3>
+    <div class="notice"><strong>Over de safaritenten met airco.</strong> Safaritenten met bevestigde airco zijn op Corsica zeldzaam. De meeste lodgetenten melden ventilatoren of niets over koeling. Het label bij elke optie laat zien wat online staat. Bij &laquo;niet bevestigd&raquo; is een mail of telefoontje naar de eigenaar nodig. Ik toon alleen opties waarvan ik de bron heb gelezen, dus sommige plekken hebben minder dan vijf. De knoppen &laquo;Zelf zoeken&raquo; openen een zoekopdracht met airco-filter.</div>
+    <div style="display:grid;gap:18px;margin-top:18px">${stays}</div></section>`;
+}
+
+function renderCorsica() {
+  const regions = ISLAND.regions.map(r => `<article class="card">${photo(r[2], "", r[0])}<div class="in"><h3>${esc(r[0])}</h3><p>${esc(r[1])}</p><div class="chips">${r[3].map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div></div></article>`).join("");
+  const hl = ISLAND.highlights.map(h => `<article class="card">${photo(h[2], "", h[0])}<div class="in"><h3>${esc(h[0])}</h3><p style="margin:0">${esc(h[1])}</p></div></article>`).join("");
+  const kids = ISLAND.kids.map(h => `<article class="card">${photo(h[2], "", h[0])}<div class="in"><h3>${esc(h[0])}</h3><p style="margin:0">${esc(h[1])}</p></div></article>`).join("");
+  const tips = ISLAND.tips.map(h => `<li><strong>${esc(h[0])}</strong> &middot; ${esc(h[1])}</li>`).join("");
+  return `
+  <section class="intro"><div>
+      <h2>Corsica in één oogopslag</h2>
+      <p class="lead">Het eiland is 183 km lang en 83 km breed, met bergen tot 2.706 m. Kustwegen zijn traag, binnenwegen nog meer. Hieronder staan de streken, hoogtepunten, wat kinderen leuk vinden en praktische tips.</p>
+      <ul class="facts"><li>8.680 km2</li><li>183 x 83 km</li><li>Monte Cinto, 2.706 m</li></ul>
+      <a class="btn" href="https://www.google.com/maps/place/Corsica" target="_blank" rel="noopener">Open Corsica in Google Maps</a></div>
+    <figure class="map-card">${islandMapSvg()}<figcaption>Belangrijke plaatsen op het eiland.</figcaption></figure></section>
+  <section><h3 class="sec-title">De acht streken</h3><div class="grid3">${regions}</div></section>
+  <section><h3 class="sec-title">Hoogtepunten</h3><div class="grid3">${hl}</div></section>
+  <section><h3 class="sec-title">Leuk met kinderen van 5 en 7</h3><div class="grid3">${kids}</div></section>
+  <section><h3 class="sec-title">Praktisch</h3><div class="plain"><ul>${tips}</ul></div></section>`;
+}
+
+keys.forEach(k => {
+  const p = document.createElement("div");
+  p.className = "panel"; p.id = "panel-" + k; p.setAttribute("role","tabpanel"); p.setAttribute("aria-labelledby","tab-" + k); p.hidden = true;
+  p.innerHTML = k === "corsica" ? renderCorsica() : renderRoute(k);
+  panels.appendChild(p);
+});
+const tabs = [...document.querySelectorAll(".tab")];
+function select(k, focus) {
+  if (!keys.includes(k)) k = "a";
+  tabs.forEach(t => { const on = t.dataset.key === k; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); if (on) t.scrollIntoView({inline: "center", block: "nearest"}); });
+  keys.forEach(x => document.getElementById("panel-" + x).hidden = x !== k);
+  try { history.replaceState(null, "", "#" + k); } catch (e) {}
+}
+tabs.forEach((t, i) => {
+  t.addEventListener("click", () => { select(t.dataset.key); window.scrollTo({top: 0}); });
+  t.addEventListener("keydown", e => {
+    const go = n => { e.preventDefault(); select(tabs[n].dataset.key, true); };
+    if (e.key === "ArrowRight") go((i + 1) % tabs.length);
+    if (e.key === "ArrowLeft") go((i + tabs.length - 1) % tabs.length);
+    if (e.key === "Home") go(0);
+    if (e.key === "End") go(tabs.length - 1);
+  });
+});
+select((location.hash || "").slice(1));
+addEventListener("hashchange", () => select((location.hash || "").slice(1)));
+fetch("credits.json").then(r => r.json()).then(c => {
+  document.getElementById("credits").innerHTML = Object.values(c).map(x => `${esc(x.title.replace("File:", ""))}, ${esc(x.author || "onbekend")}, ${esc(x.lic)} (<a href="${esc(x.page)}" target="_blank" rel="noopener">bron</a>)`).join("<br>");
+}).catch(() => { document.getElementById("credits").textContent = "Credits niet beschikbaar."; });
+</script>

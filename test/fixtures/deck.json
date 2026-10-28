@@ -1,0 +1,813 @@
+{
+ "accommodations": [
+  {
+   "id": "fx-acc-01",
+   "title": "Fixture verblijf 1",
+   "sub": "Zwembad · Appartement · Airco · Hotel",
+   "tags": [
+    "pool",
+    "apartment",
+    "airco",
+    "hotel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-02",
+   "title": "Fixture verblijf 2",
+   "sub": "Gym / fitness · B&B / chambre d'hôtes · Restaurant op locatie",
+   "tags": {
+    "gym": 1,
+    "bnb": 0.8,
+    "restaurant": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-03",
+   "title": "Fixture verblijf 3",
+   "sub": "Spa / wellness · Glamping / lodge-tent · Rustiek / authentiek",
+   "tags": [
+    "spa",
+    "glamping",
+    "rustic"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-04",
+   "title": "Fixture verblijf 4",
+   "sub": "Zeezicht · Camping / mobil-home · Modern",
+   "tags": {
+    "sea_view": 1,
+    "camping": 0.8,
+    "modern": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-05",
+   "title": "Fixture verblijf 5",
+   "sub": "Strand op loopafstand · Boerderij / domaine · Afgelegen / privé · B&B / chambre d'hôtes",
+   "tags": [
+    "walk_to_beach",
+    "agriturismo",
+    "secluded",
+    "bnb"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-06",
+   "title": "Fixture verblijf 6",
+   "sub": "Bergzicht · Luxe · In het dorp / stad",
+   "tags": {
+    "mountain_view": 1,
+    "luxury": 0.8,
+    "in_town": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-07",
+   "title": "Fixture verblijf 7",
+   "sub": "Hotel · Budget · Zelf koken",
+   "tags": [
+    "hotel",
+    "budget",
+    "self_catering"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-08",
+   "title": "Fixture verblijf 8",
+   "sub": "Boutique / design · Rustig / adults only · Laadpaal",
+   "tags": {
+    "boutique": 1,
+    "adults_only": 0.8,
+    "ev_charging": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-09",
+   "title": "Fixture verblijf 9",
+   "sub": "Villa / privé huis · Kindvriendelijk · Zwembad · Hotel",
+   "tags": [
+    "villa",
+    "family",
+    "pool",
+    "hotel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-10",
+   "title": "Fixture verblijf 10",
+   "sub": "Appartement · Airco · Gym / fitness",
+   "tags": {
+    "apartment": 1,
+    "airco": 0.8,
+    "gym": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-11",
+   "title": "Fixture verblijf 11",
+   "sub": "B&B / chambre d'hôtes · Restaurant op locatie · Spa / wellness",
+   "tags": [
+    "bnb",
+    "restaurant",
+    "spa"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-12",
+   "title": "Fixture verblijf 12",
+   "sub": "Glamping / lodge-tent · Rustiek / authentiek · Zeezicht",
+   "tags": {
+    "glamping": 1,
+    "rustic": 0.8,
+    "sea_view": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-13",
+   "title": "Fixture verblijf 13",
+   "sub": "Camping / mobil-home · Modern · Strand op loopafstand · B&B / chambre d'hôtes",
+   "tags": [
+    "camping",
+    "modern",
+    "walk_to_beach",
+    "bnb"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-14",
+   "title": "Fixture verblijf 14",
+   "sub": "Boerderij / domaine · Afgelegen / privé · Bergzicht",
+   "tags": {
+    "agriturismo": 1,
+    "secluded": 0.8,
+    "mountain_view": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-15",
+   "title": "Fixture verblijf 15",
+   "sub": "Luxe · In het dorp / stad · Hotel",
+   "tags": [
+    "luxury",
+    "in_town",
+    "hotel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-16",
+   "title": "Fixture verblijf 16",
+   "sub": "Budget · Zelf koken · Boutique / design",
+   "tags": {
+    "budget": 1,
+    "self_catering": 0.8,
+    "boutique": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-17",
+   "title": "Fixture verblijf 17",
+   "sub": "Rustig / adults only · Laadpaal · Villa / privé huis · Hotel",
+   "tags": [
+    "adults_only",
+    "ev_charging",
+    "villa",
+    "hotel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-18",
+   "title": "Fixture verblijf 18",
+   "sub": "Kindvriendelijk · Zwembad · Appartement",
+   "tags": {
+    "family": 1,
+    "pool": 0.8,
+    "apartment": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-19",
+   "title": "Fixture verblijf 19",
+   "sub": "Airco · Gym / fitness · B&B / chambre d'hôtes",
+   "tags": [
+    "airco",
+    "gym",
+    "bnb"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-20",
+   "title": "Fixture verblijf 20",
+   "sub": "Restaurant op locatie · Spa / wellness · Glamping / lodge-tent",
+   "tags": {
+    "restaurant": 1,
+    "spa": 0.8,
+    "glamping": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-21",
+   "title": "Fixture verblijf 21",
+   "sub": "Rustiek / authentiek · Zeezicht · Camping / mobil-home · B&B / chambre d'hôtes",
+   "tags": [
+    "rustic",
+    "sea_view",
+    "camping",
+    "bnb"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-22",
+   "title": "Fixture verblijf 22",
+   "sub": "Modern · Strand op loopafstand · Boerderij / domaine",
+   "tags": {
+    "modern": 1,
+    "walk_to_beach": 0.8,
+    "agriturismo": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-23",
+   "title": "Fixture verblijf 23",
+   "sub": "Afgelegen / privé · Bergzicht · Luxe",
+   "tags": [
+    "secluded",
+    "mountain_view",
+    "luxury"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-24",
+   "title": "Fixture verblijf 24",
+   "sub": "In het dorp / stad · Hotel · Budget",
+   "tags": {
+    "in_town": 1,
+    "hotel": 0.8,
+    "budget": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-acc-25",
+   "title": "Fixture verblijf 25",
+   "sub": "Zelf koken · Boutique / design · Rustig / adults only · Hotel",
+   "tags": [
+    "self_catering",
+    "boutique",
+    "adults_only",
+    "hotel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  }
+ ],
+ "activities": [
+  {
+   "id": "fx-act-01",
+   "title": "Fixture activiteit 1",
+   "sub": "Wandelen · Klimmen / via ferrata · Markt",
+   "tags": [
+    "hike",
+    "climbing",
+    "market"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-02",
+   "title": "Fixture activiteit 2",
+   "sub": "Zware bergtocht · Fietsen / MTB · Uitgaan",
+   "tags": {
+    "hike_hard": 1,
+    "cycling": 0.8,
+    "nightlife": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-03",
+   "title": "Fixture activiteit 3",
+   "sub": "Zwemmen in rivierpoelen · Adrenaline · Relaxen",
+   "tags": [
+    "swim_river",
+    "adrenaline",
+    "relax"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-04",
+   "title": "Fixture activiteit 4",
+   "sub": "Strand · Uitzichtpunt / roadtrip · Wellness",
+   "tags": {
+    "beach": 1,
+    "viewpoint": 0.8,
+    "wellness": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-05",
+   "title": "Fixture activiteit 5",
+   "sub": "Snorkelen · Cultuur / geschiedenis · Leuk voor kinderen",
+   "tags": [
+    "snorkel",
+    "culture",
+    "kids"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-06",
+   "title": "Fixture activiteit 6",
+   "sub": "Duiken · Bergdorpjes · Natuur / wildlife",
+   "tags": {
+    "diving": 1,
+    "village": 0.8,
+    "nature": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-07",
+   "title": "Fixture activiteit 7",
+   "sub": "Boottocht · Stadje / citadel · Fotogeniek",
+   "tags": [
+    "boat",
+    "town",
+    "photo"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-08",
+   "title": "Fixture activiteit 8",
+   "sub": "Kajak / SUP · Lokaal eten · Treinrit",
+   "tags": {
+    "kayak": 1,
+    "food": 0.8,
+    "train": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-09",
+   "title": "Fixture activiteit 9",
+   "sub": "Canyoning · Wijn · Weinig inspanning",
+   "tags": [
+    "canyoning",
+    "wine",
+    "effort_low"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-10",
+   "title": "Fixture activiteit 10",
+   "sub": "Klimmen / via ferrata · Markt · Veel inspanning",
+   "tags": {
+    "climbing": 1,
+    "market": 0.8,
+    "effort_high": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-11",
+   "title": "Fixture activiteit 11",
+   "sub": "Fietsen / MTB · Uitgaan · Wandelen",
+   "tags": [
+    "cycling",
+    "nightlife",
+    "hike"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-12",
+   "title": "Fixture activiteit 12",
+   "sub": "Adrenaline · Relaxen · Zware bergtocht",
+   "tags": {
+    "adrenaline": 1,
+    "relax": 0.8,
+    "hike_hard": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-13",
+   "title": "Fixture activiteit 13",
+   "sub": "Uitzichtpunt / roadtrip · Wellness · Zwemmen in rivierpoelen",
+   "tags": [
+    "viewpoint",
+    "wellness",
+    "swim_river"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-14",
+   "title": "Fixture activiteit 14",
+   "sub": "Cultuur / geschiedenis · Leuk voor kinderen · Strand",
+   "tags": {
+    "culture": 1,
+    "kids": 0.8,
+    "beach": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-15",
+   "title": "Fixture activiteit 15",
+   "sub": "Bergdorpjes · Natuur / wildlife · Snorkelen",
+   "tags": [
+    "village",
+    "nature",
+    "snorkel"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-16",
+   "title": "Fixture activiteit 16",
+   "sub": "Stadje / citadel · Fotogeniek · Duiken",
+   "tags": {
+    "town": 1,
+    "photo": 0.8,
+    "diving": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bavella.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-17",
+   "title": "Fixture activiteit 17",
+   "sub": "Lokaal eten · Treinrit · Boottocht",
+   "tags": [
+    "food",
+    "train",
+    "boat"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/portov.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-18",
+   "title": "Fixture activiteit 18",
+   "sub": "Wijn · Weinig inspanning · Kajak / SUP",
+   "tags": {
+    "wine": 1,
+    "effort_low": 0.8,
+    "kayak": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/bonifacio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-19",
+   "title": "Fixture activiteit 19",
+   "sub": "Markt · Veel inspanning · Canyoning",
+   "tags": [
+    "market",
+    "effort_high",
+    "canyoning"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/propriano.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-20",
+   "title": "Fixture activiteit 20",
+   "sub": "Uitgaan · Wandelen · Klimmen / via ferrata",
+   "tags": {
+    "nightlife": 1,
+    "hike": 0.8,
+    "climbing": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/ajaccio.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-21",
+   "title": "Fixture activiteit 21",
+   "sub": "Relaxen · Zware bergtocht · Fietsen / MTB",
+   "tags": [
+    "relax",
+    "hike_hard",
+    "cycling"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/calvi.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-22",
+   "title": "Fixture activiteit 22",
+   "sub": "Wellness · Zwemmen in rivierpoelen · Adrenaline",
+   "tags": {
+    "wellness": 1,
+    "swim_river": 0.8,
+    "adrenaline": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/stflorent.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-23",
+   "title": "Fixture activiteit 23",
+   "sub": "Leuk voor kinderen · Strand · Uitzichtpunt / roadtrip",
+   "tags": [
+    "kids",
+    "beach",
+    "viewpoint"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/piana.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-24",
+   "title": "Fixture activiteit 24",
+   "sub": "Natuur / wildlife · Snorkelen · Cultuur / geschiedenis",
+   "tags": {
+    "nature": 1,
+    "snorkel": 0.8,
+    "culture": 0.6
+   },
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/corte.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  },
+  {
+   "id": "fx-act-25",
+   "title": "Fixture activiteit 25",
+   "sub": "Fotogeniek · Duiken · Bergdorpjes",
+   "tags": [
+    "photo",
+    "diving",
+    "village"
+   ],
+   "photo": {
+    "file": "../../destinations/corsica/stay-img/vizzavona.jpg",
+    "lic": "CC BY-SA 4.0",
+    "author": "Fixture",
+    "page": "https://commons.wikimedia.org/"
+   }
+  }
+ ]
+}
