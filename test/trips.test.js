@@ -257,3 +257,59 @@ test('topAccommodations: for a party of 4 a stay that surely fits beats one with
   const two = L.topAccommodations([acc('unk', {}), acc('fits', { sleeps: 6 })], 'r', L.emptyProfile(), 2, { prefs: { size: 2 } });
   near(two[0].score, two[1].score); // a couple fits everywhere
 });
+
+// ---- generated routes ----
+const sp = L.sanitizePlaces(places);
+const generated = L.generateRoutes(routes, sp.places, sp.stays);
+test('generateRoutes: every set of 1-4 stays once, from a ferry port, with real legs where they are known', () => {
+  assert.ok(generated.length > 100);
+  const sets = generated.map(r => r.stays.slice().sort().join('>'));
+  assert.equal(new Set(sets).size, sets.length, 'no set twice (another order is the same trip)');
+  const templateSets = new Set(routes.map(r => r.stays.slice().sort().join('>')));
+  assert.ok(sets.every(s => !templateSets.has(s)), 'never a copy of a hand-made template');
+  for (const r of generated) {
+    assert.match(r.id, /^g[0-9]+$/);
+    assert.ok(r.generated);
+    assert.ok(L.GEN_PORTS.includes(r.stops[0]) && r.stops[0] === r.stops[r.stops.length - 1]);
+    assert.deepEqual(r.stops.slice(1, -1), r.stays);
+    assert.equal(r.legs.length, r.stays.length + 1);
+    assert.ok(r.legs.every(l => l.min <= 270 && Number.isFinite(l.km)));
+    assert.ok(Object.values(r.profile).every(v => v >= 0 && v <= 1));
+  }
+  // Calvi - Porto-Vecchio is not in any template: it is chained from known drives (via Bastia or Corte, 4 to 4.5 h), not the straight-line guess
+  const cp = generated.find(r => r.stays.slice().sort().join() === 'calvi,portov');
+  const mid = cp.legs[1];
+  assert.ok(mid.min >= 240 && mid.min <= 270, String(mid.min));
+  assert.ok(mid.via.includes('corte') || mid.via.includes('bastia'));
+  // a known leg is used as it is
+  const g = generated.find(r => r.stays.length === 1 && r.stays[0] === 'portov' );
+  assert.equal(g, undefined, 'Porto-Vecchio alone is template H');
+  assert.deepEqual(L.generateRoutes([], {}, {}), []);
+});
+test('drivePenalty / maxStopsFor: driving above a fair share costs, twice for a calm party; fewer stops for short or calm trips', () => {
+  assert.equal(L.DRIVE_FREE(10), 320);
+  assert.equal(L.drivePenalty(300, 10, false), 0);
+  near(L.drivePenalty(420, 10, false), 0.06);
+  near(L.drivePenalty(420, 10, true), 0.15);
+  assert.equal(L.drivePenalty(5000, 10, true), 1.2);
+  assert.deepEqual([7, 10, 13, 14, 16, 28].map(n => L.maxStopsFor(n, false)), [2, 2, 3, 4, 4, 4]);
+  assert.deepEqual([5, 7, 10, 13, 14].map(n => L.maxStopsFor(n, true)), [1, 1, 2, 2, 3]);
+});
+test('rankRoutes on a trip: no more stops than the trip allows, the generated ones compete, and the trade-offs are tagged', () => {
+  const all = [...routes, ...generated];
+  const hls = json('../destinations/corsica/highlights.json').filter(h => ['hl-calvi', 'hl-palombaggia', 'hl-scandola-girolata'].includes(h.id));
+  const kids = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 13, prefs: { kids: true }, highlights: hls });
+  assert.ok(kids.every(p => p.stops.length <= 2), 'a calm party of 13 nights moves at most once');
+  assert.ok(kids.some(p => p.route.generated));
+  assert.ok(kids.filter(p => p.route.generated).length <= L.GEN_KEEP);
+  for (const p of kids) assert.equal(p.stops.reduce((a, s) => a + s.nights, 0), 13);
+  const tags = kids.slice(1, 3).map(p => p.tag).filter(Boolean);
+  assert.ok(tags.every(t => ['all', 'less'].includes(t)));
+  const less = kids.find(p => p.tag === 'less');
+  if (less) assert.ok(less.route.legs.reduce((a, l) => a + l.min, 0) <= 0.75 * kids[0].route.legs.reduce((a, l) => a + l.min, 0));
+  const all3 = kids.find(p => p.tag === 'all');
+  if (all3) assert.ok(all3.placed.every(x => x.stop >= 0));
+  assert.ok(!kids.slice(3).some(p => p.tag), 'tags only on the two places after the recommendation');
+  // without a trip nothing changes: no tags, no stop limit
+  assert.ok(L.rankRoutes(routes, L.emptyProfile(), ctx).every(p => !p.tag));
+});

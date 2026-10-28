@@ -33,8 +33,9 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   const prefs = L.tripPrefs([own], trip);
   const profile = L.profileFrom(swipes, [...data.deck.acc, ...data.deck.act], L.effectiveOverrides(overrides, prefs));
   const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs,
-    nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
-  const ranked = L.rankRoutes(data.routes, profile, ctx);
+    trip: true, nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
+  const routes = [...data.routes, ...L.generateRoutes(data.routes, data.places.places, L.sanitizePlaces(data.places).stays)]; // templates plus the generated ones, as in the app
+  const ranked = L.rankRoutes(routes, profile, ctx);
   const plan = (route && ranked.find(p => p.route.id === route.toLowerCase())) || ranked[0];
   const actById = id => data.catalog.act.find(a => a.id === id);
   const picks = (plan.placed || []).map(p => ({ ...p, item: actById(p.hl.acts[0]) }));
@@ -45,12 +46,14 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   lines.push(`Reis: ${trip.nights} nachten${trip.months ? ' in ' + trip.months : trip.start ? ` van ${trip.start} tot ${trip.end}` : ''} · gezelschap: ${party.join(', ')}`);
   lines.push(`Gekozen highlights: ${ctx.highlights.map(h => h.name).join(', ') || 'geen'}`);
   lines.push('');
-  lines.push('Routes (best passend eerst): ' + ranked.slice(0, 5).map(p => `${p.route.id.toUpperCase()} ${p.route.title} (${p.matchPct == null ? 'minder passend' : p.matchPct + '%'})`).join(' | '));
+  const TAG = { all: 'ALLE HIGHLIGHTS', less: 'MINDER RIJDEN' };
+  lines.push('Voorstellen in de app (de eerste is aanbevolen):');
+  for (const p of ranked.slice(0, 3)) lines.push(`- ${p.tag ? TAG[p.tag] + ': ' : ''}route ${p.route.id.toUpperCase()} ${p.route.title} · ${p.stops.map(s => `${stay(s.stay)} ${s.nights}`).join(', ')} · ${fmt(p.route.legs.reduce((a, l) => a + l.min, 0))} rijden · ${(p.placed || []).filter(x => x.stop >= 0).length}/${(p.placed || []).length} highlights · ${p.matchPct == null ? 'minder passend' : p.matchPct + '%'}`);
   lines.push('');
   lines.push(`=== ${plan === ranked[0] ? 'Aanbevolen' : 'Gekozen'} route ${plan.route.id.toUpperCase()}: ${plan.route.title} ===`);
   lines.push(plan.route.lead);
   lines.push(`Stops: ${plan.stops.map(s => `${stay(s.stay)} ${s.nights} nachten`).join(', ')} · rijden totaal ca. ${fmt(plan.route.legs.reduce((a, l) => a + l.min, 0))}`);
-  for (const h of unplaced) { const other = L.routesWith(ranked, h.id); lines.push(`Past niet in deze route: ${h.name || h.id}${other.length ? ` (wel in route ${other.map(x => x.toUpperCase()).join(', ')})` : ''}`); }
+  for (const h of unplaced) { const other = L.routesWith(ranked, h.id).slice(0, 2).map(id => ranked.find(p => p.route.id === id).route.title); lines.push(`Past niet in deze route: ${h.name || h.id}${other.length ? ` (wel in: ${other.join(' / ')})` : ''}`); }
   lines.push('');
   lines.push('Dag voor dag:');
   for (const d of days) {

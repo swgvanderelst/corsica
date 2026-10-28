@@ -358,7 +358,9 @@ try {
     assert.equal(await evil.$('img[src="x"]'), null, 'no injected <img>');
     assert.equal(await evil.$('svg[onload]'), null);
     assert.equal(await evil.evaluate(() => window.__pwned), undefined, 'no injected script ran');
-    assert.deepEqual(await evil.$$eval('.rcard', els => els.map(e => e.dataset.id)), ['a'], 'only the route with a safe id survives');
+    const ids = await evil.$$eval('.rcard', els => els.map(e => e.dataset.id));
+    assert.deepEqual(ids.filter(id => !/^g[0-9]+$/.test(id)), ['a'], 'of the file routes only the one with a safe id survives (g1.. are generated)');
+    assert.ok(ids.every(id => /^[a-z0-9]+$/.test(id)));
     assert.doesNotMatch(await evil.$eval('#root', e => e.innerHTML), /<img src=x|<svg onload/i, 'markup in titles and numbers is text');
     await evil.$eval('.rcard', e => e.click());
     await evil.waitForSelector('.stopcard');

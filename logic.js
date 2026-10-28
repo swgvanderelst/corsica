@@ -484,7 +484,7 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
     cover: mean(stops.map(s => s.cover)),
     veto: regionVeto(route.profile, profile, ctx.regionVeto),
     over: mean(stops.map(s => (s.acc.some(a => a.tier === 3) ? 1 : 0))),
-    burden: burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
+    burden: ctx.trip && ctx.nights ? drivePenalty(burden, ctx.nights, burdenWeight(profile, ctx.prefs) >= 0.3) : burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
     weak: 0.2 * mean(stops.map(s => (s.weak || s.acc.length && s.acc[0].score < 0 ? 1 : 0))),
     highlights: hlCover,
   };
@@ -505,10 +505,33 @@ export function matchPercentages(scores) {
   const top = 85 + 10 * clamp((best + SHIFT) / 0.7, 0, 1); // the best route is always on the 85-95 scale
   return scores.map(v => { if (v === best) return Math.round(top); if (v + SHIFT <= 0) return null; const p = Math.round(top * (v + SHIFT) / base); return p < MIN_SHOWN_PCT ? null : p; });
 }
-// ctx.nights: the trip length; every template is stretched or shrunk to exactly that. Templates that cannot fit (2 nights per stop)
-// or are meant for short trips only (maxNights) drop out.
+// ---- driving on a trip ----
+// a fair amount of driving for the trip length; more costs the route, twice as much for a calm party (kids, rest, little effort)
+export const DRIVE_FREE = (nights) => 120 + 20 * nights;
+export const drivePenalty = (minutes, nights, calm) => Math.min(1.2, (calm ? 0.0015 : 0.0006) * Math.max(0, minutes - DRIVE_FREE(nights)));
+// how many places to stay at most: packing up costs a day, more so for a calm party
+export const maxStopsFor = (nights, calm) => clamp(Math.floor(nights / (calm ? 4.5 : 3.5)), 1, 4);
+export const GEN_KEEP = 30; // generated routes that get a full plan, the most promising first
+const hlCredit = placed => placed.reduce((a, p) => a + (p.stop < 0 ? 0 : p.min <= HL_NEAR_MIN ? 1 : HL_TRIP_CREDIT), 0);
+// ctx.nights: the trip length; every route is stretched or shrunk to exactly that. Routes that cannot fit (2 nights per stop) or
+// are meant for short trips only (maxNights) drop out. ctx.trip (a real trip in the app): also routes with more stops than the trip allows. Of the generated routes only the
+// GEN_KEEP most promising (chosen highlights, region match, little driving) are planned in full.
+// With a trip the list leads with the best route, then "less driving" and "all highlights" when they are different routes (plan.tag).
 export function rankRoutes(routes, profile, ctx, opts) {
-  const fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
+  let fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
+  if (ctx.trip && ctx.nights) {
+    const limit = maxStopsFor(ctx.nights, burdenWeight(profile, ctx.prefs) >= 0.3);
+    const fewer = fitted.filter(r => r.stays.length <= limit);
+    if (fewer.length) fitted = fewer;
+    const gen = fitted.filter(r => r.generated);
+    if (gen.length > GEN_KEEP) {
+      const hls = ctx.highlights || [], aff = regionAffinity(profile, ctx.regionTags || {});
+      const promise = r => (hls.length ? 10 * hlCredit(placeHighlights(r.stays, hls, ctx.places, r.nights.map(n => Math.max(0, n - 1)))) / hls.length : 0)
+        + 2 * regionMatch(r.profile, aff) - r.legs.reduce((a, l) => a + l.min, 0) / 300;
+      const keep = new Set(gen.map(r => ({ r, v: promise(r) })).sort((a, b) => b.v - a.v || a.r.id.localeCompare(b.r.id)).slice(0, GEN_KEEP).map(x => x.r));
+      fitted = fitted.filter(r => !r.generated || keep.has(r));
+    }
+  }
   const plans = fitted.map(r => planRoute(r, profile, ctx, opts));
   if (!plans.length) return plans;
   const sc = plans.map(p => p.score), spread = Math.max(...sc) - Math.min(...sc);
@@ -534,6 +557,18 @@ export function rankRoutes(routes, profile, ctx, opts) {
   }
   const pcts = matchPercentages(out.map(p => p.score)); // after the final order: monotone with it
   out.forEach((p, k) => { p.matchPct = pcts[k]; });
+  if (ctx.trip && ctx.nights && out.length > 1) {
+    // the trade-offs next to the recommendation: noticeably less driving, and every chosen highlight when the best misses one
+    const best = out[0], hls = (ctx.highlights || []).length;
+    const drive = p => p.route.legs.reduce((a, l) => a + l.min, 0); // the driving the app shows
+    const less = out.findIndex((p, i) => i > 0 && drive(p) <= 0.75 * drive(best) && p.parts.highlights >= best.parts.highlights - 0.4);
+    const all = hls && best.placed.some(x => x.stop < 0) ? out.findIndex((p, i) => i > 0 && p.placed.every(x => x.stop >= 0)) : -1;
+    const lead = [];
+    if (all > 0) { out[all].tag = 'all'; lead.push(out[all]); }
+    if (less > 0 && less !== all) { out[less].tag = 'less'; lead.push(out[less]); }
+    const rest = out.slice(1).filter(p => !lead.includes(p));
+    out.splice(1, out.length - 1, ...lead, ...rest);
+  }
   return out;
 }
 
@@ -789,6 +824,69 @@ export function placeHighlights(stays, highlights, places, caps = null) {
   }
   return rows.map(r => ({ hl: r.hl, ...placed.get(r) }));
 }
+// ---- generated routes: every sensible combination of 1-4 stays from a ferry port, next to the hand-made templates ----
+export const GEN_PORTS = ['bastia', 'ajaccio'];
+export const EAST_LON = 9.25; // east of this the coast road is fast (Bastia, Porto-Vecchio, Solenzara; not the mountain villages)
+// minutes between two places without a known drive: calibrated on the template legs (east coast about 1.4 min per straight km, elsewhere 2.8)
+export const roadMin = (a, b) => Math.round(distanceKm(a, b) * (a.lon >= EAST_LON && b.lon >= EAST_LON ? 1.4 : 2.8));
+const permutations = list => (list.length <= 1 ? [list] : list.flatMap((x, i) => permutations([...list.slice(0, i), ...list.slice(i + 1)]).map(p => [x, ...p])));
+function combinations(list, k, from = 0) {
+  if (!k) return [[]];
+  const out = [];
+  for (let i = from; i <= list.length - k; i++) for (const rest of combinations(list, k - 1, i + 1)) out.push([list[i], ...rest]);
+  return out;
+}
+const placeName = (k, stays) => (stays[k] && stays[k].short) || k.charAt(0).toUpperCase() + k.slice(1);
+// For each set of 1..maxStops stays: the port and order with the least driving (known template legs first, else roadMin).
+// Routes with a leg over maxLegMin, or that are a template already, are left out. Ids are g1, g2, ... in a stable order.
+export function generateRoutes(templates, places, stays, { ports = GEN_PORTS, maxStops = 4, maxLegMin = 270 } = {}) {
+  const pt = k => (places[k] ? { lon: places[k][0], lat: places[k][1] } : null);
+  const known = new Map();
+  for (const r of templates || []) for (const l of r.legs || []) {
+    const a = l.via && l.via[0], b = l.via && l.via[l.via.length - 1];
+    if (a && b) for (const [x, y, via] of [[a, b, l.via], [b, a, l.via.slice().reverse()]]) if (!known.has(x + '>' + y)) known.set(x + '>' + y, { km: l.km, min: l.min, via });
+  }
+  const keys = Object.keys(stays).filter(k => pt(k)).sort();
+  // shortest drives between all places: a known leg, else the estimate, improved through other places (Calvi - Porto-Vecchio goes via Corte)
+  const nodes = [...new Set([...keys, ...ports.filter(pt)])];
+  const D = {};
+  for (const a of nodes) for (const b of nodes) D[a + '>' + b] = a === b ? { km: 0, min: 0, via: [a] } : known.get(a + '>' + b) || { km: Math.round(distanceKm(pt(a), pt(b)) * 1.3), min: roadMin(pt(a), pt(b)), via: [a, b] };
+  for (const m of nodes) for (const a of nodes) for (const b of nodes) {
+    const x = D[a + '>' + m], y = D[m + '>' + b];
+    if (a !== b && m !== a && m !== b && x.min + y.min < D[a + '>' + b].min) D[a + '>' + b] = { km: x.km + y.km, min: x.min + y.min, via: [...x.via, ...y.via.slice(1)] };
+  }
+  const leg = (a, b) => D[a + '>' + b];
+  const setKey = list => list.slice().sort().join('>'); // the same places in another order are the same trip
+  const seen = new Set((templates || []).map(r => setKey(r.stays)));
+  const ferry = Object.fromEntries(ports.map(p => [p, ((templates || []).find(r => r.stops && r.stops[0] === p && r.stops[r.stops.length - 1] === p) || {}).ferry || '']));
+  const out = [];
+  for (let k = 1; k <= maxStops; k++) for (const set of combinations(keys, k)) {
+    let best = null;
+    for (const port of ports.filter(pt)) for (const order of permutations(set)) {
+      const path = [port, ...order, port], legs = path.slice(1).map((b, i) => leg(path[i], b));
+      if (legs.some(l => l.min > maxLegMin)) continue;
+      const total = legs.reduce((a, l) => a + l.min, 0);
+      if (!best || total < best.total) best = { path, order, legs, total };
+    }
+    if (!best || seen.has(setKey(best.order))) continue;
+    seen.add(setKey(best.order));
+    const names = best.order.map(s => placeName(s, stays));
+    const title = names.length === 1 ? names[0] : names.slice(0, -1).join(', ') + ' en ' + names[names.length - 1];
+    const profile = {};
+    for (const rk of REGION_KEYS) profile[rk] = r3(mean(best.order.map(s => numOr(stays[s].profile && stays[s].profile[rk]))));
+    out.push({
+      id: '', name: 'Op maat: ' + title, sub: k === 1 ? 'Eén verblijfplaats' : k + ' verblijfplaatsen', title, generated: true,
+      lead: `Samengesteld voor jullie reis: ${best.order.map(s => placeName(s, stays) + (stays[s].kind ? ` (${stays[s].kind.toLowerCase()})` : '')).join(', ')}. De ferry komt aan en vertrekt in ${placeName(best.path[0], stays)}.`,
+      ferry: ferry[best.path[0]], stops: best.path, stays: best.order, nights: best.order.map(() => 1), profile,
+      legs: best.legs.map((l, i) => ({ from: placeName(best.path[i], stays), to: placeName(best.path[i + 1], stays), km: l.km, min: l.min, via: l.via })),
+      ...(k === 1 ? { maxNights: 10 } : k === 2 ? { maxNights: 16 } : {}),
+    });
+  }
+  out.sort((a, b) => a.stays.length - b.stays.length || a.stays.join().localeCompare(b.stays.join()));
+  out.forEach((r, i) => { r.id = 'g' + (i + 1); });
+  return out;
+}
+
 // the routes (ids, ranking order) that give this highlight a day: the explanation for a highlight that does not fit
 export const routesWith = (plans, hlId) => (plans || []).filter(p => (p.placed || []).some(x => x.hl.id === hlId && x.stop >= 0)).map(p => p.route.id);
 // highlights from a file: safe ids, real coordinates, a category and the activity ids it stands for

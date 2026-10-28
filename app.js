@@ -2,7 +2,7 @@
 // ranked routes of exactly the trip length with a day-by-day plan, 3 stays per stop and a map of activities.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, generateRoutes, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -95,7 +95,8 @@ async function loadDestination() {
   S.dest = dest; S.base = dest.base; S.deckBase = dest.deck.replace(/[^/]*$/, '');
   S.tagsJson = cleanTags(tags); S.labels = flattenLabels(S.tagsJson);
   S.allowed = new Set(Object.keys(S.labels)); // the only tags that may appear in other people's data
-  S.places = sanitizePlaces(places); S.routes = sanitizeRoutes(routes && routes.routes); S.credits = credits && typeof credits === 'object' ? credits : {};
+  S.places = sanitizePlaces(places); S.routes = sanitizeRoutes(routes && routes.routes);
+  S.routes.push(...generateRoutes(S.routes, S.places.places, S.places.stays)); // tailor-made combinations next to the templates S.credits = credits && typeof credits === 'object' ? credits : {};
   const cat = mergeCatalogs(catalogs.filter(Boolean));
   S.catalog = { acc: sanitizeItems(cat.acc, 'accommodation'), act: sanitizeItems(cat.act, 'activity') };
   S.highlights = sanitizeHighlights(highlights);
@@ -213,7 +214,7 @@ const hlById = id => S.highlights.find(h => h.id === id);
 const actById = id => S.catalog.act.find(a => a.id === id);
 function ctx(prefs, trip) {
   return { acc: S.catalog.acc, act: S.catalog.act, places: S.places.places, stays: S.places.stays, regionTags: S.places.regionTags, regionVeto: S.places.regionVeto, labels: S.labels, prefs,
-    nights: tripNights(trip) || undefined, highlights: highlightIds(trip).map(hlById).filter(Boolean), vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } };
+    trip: true, nights: tripNights(trip) || undefined, highlights: highlightIds(trip).map(hlById).filter(Boolean), vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } };
 }
 function rankedFor(gid) {
   const tp = tripProfile(gid);
@@ -376,7 +377,7 @@ const WIZ_STEPS = ['when', 'who', 'highlights'];
 const HL_CATS = [['beaches', 'Stranden'], ['towns', 'Stadjes'], ['nature', 'Natuur en bergen'], ['boat', 'Boottochten'], ['culture', 'Cultuur en dorpen']];
 function wizFrom(gid) {
   const g = gid && S.gdata[gid], t = g && g.trip;
-  if (t) return { gid, name: g.name, mode: t.start && t.end ? 'fixed' : 'flex', start: t.start || '', end: t.end || '', months: String(t.months || '').split(' ').filter(Boolean), nights: tripNights(t) || 14, party: readPeople(t.party), hl: new Set(highlightIds(t)) };
+  if (t) return { gid, name: g.name, mode: t.start && t.end ? 'fixed' : 'flex', start: t.start || '', savedStart: t.start || '', end: t.end || '', months: String(t.months || '').split(' ').filter(Boolean), nights: tripNights(t) || 14, party: readPeople(t.party), hl: new Set(highlightIds(t)) };
   const party = S.household.length ? S.household.map(p => ({ ...p })) : [{ name: myName(), uid: S.user.uid }];
   return { gid: g ? gid : null, name: g ? g.name : 'Corsica ' + (new Date().getFullYear() + 1), mode: 'flex', start: '', end: '', months: [], nights: 14, party, hl: new Set() };
 }
@@ -456,14 +457,15 @@ function tripToSave(w) {
   return out;
 }
 // a real calendar day in the years the rules accept (a typed 2026-02-31 or 2100-01-01 is not)
-const realDay = d => /^20[2-9][0-9]-[01][0-9]-[0-3][0-9]$/.test(d) && new Date(d + 'T00:00:00Z').toISOString().slice(0, 10) === d;
+const realDay = d => { if (!/^20[2-9][0-9]-[01][0-9]-[0-3][0-9]$/.test(d)) return false; const t = Date.parse(d + 'T00:00:00Z'); return Number.isFinite(t) && new Date(t).toISOString().slice(0, 10) === d; };
+const localToday = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const canRename = w => !w.gid || !S.gdata[w.gid] || S.gdata[w.gid].owner === S.user.uid;
 // a problem with this step, or '' when it is fine
 function wizProblem(w) {
   if (w.step === 'when') {
     if (!w.household && !String(w.name).trim()) return 'Geef de reis een naam.';
     if (w.mode === 'fixed' && !(realDay(w.start) && realDay(w.end))) return 'Kies de eerste nacht en de vertrekdag.';
-    if (w.mode === 'fixed' && w.start < new Date().toISOString().slice(0, 10)) return 'De eerste nacht ligt in het verleden.';
+    if (w.mode === 'fixed' && w.start !== w.savedStart && w.start < localToday()) return 'De eerste nacht ligt in het verleden.'; // a trip that already started keeps its dates
     const n = wizNights(w);
     if (n < NIGHTS_RANGE[0] || n > NIGHTS_RANGE[1]) return `Een reis duurt ${NIGHTS_RANGE[0]} tot ${NIGHTS_RANGE[1]} nachten.`;
   }
@@ -517,11 +519,12 @@ function tripDetail(gid) {
 function routeCard(p, i, empty, gid) {
   const r = p.route, km = r.legs.reduce((a, l) => a + Number(l.km), 0), nights = p.stops.reduce((a, s) => a + Number(s.nights), 0);
   const m = p.matchPct, miss = (p.placed || []).filter(x => x.stop < 0).length;
-  return `<button class="rcard${i === 0 && !empty ? ' best' : ''}" data-a="open-route" data-gid="${esc(gid)}" data-id="${esc(r.id)}" style="--c:var(--route-${esc(r.id)})">
-    <div class="top"><div class="badge">${esc(r.id.toUpperCase())}</div><div><div class="t">${esc(r.title)}</div><div class="s">${esc(r.sub)}</div></div>
-    ${empty ? '' : `<div class="match">${m == null ? '<b style="font-size:15px">minder passend</b>' : `<b>${m}%</b>`}<span>${i === 0 ? 'aanbevolen' : m == null ? '' : 'match'}</span></div>`}</div>
+  const TAG = { all: 'Alle highlights', less: 'Minder rijden' };
+  return `<button class="rcard${i === 0 && !empty ? ' best' : ''}" data-a="open-route" data-gid="${esc(gid)}" data-id="${esc(r.id)}" style="--c:var(--route-${esc(r.id)}, var(--accent))">
+    <div class="top"><div class="badge"${r.generated ? ` aria-label="${p.stops.length} verblijfplaatsen"` : ''}>${r.generated ? String(p.stops.length) : esc(r.id.toUpperCase())}</div><div><div class="t">${esc(r.title)}</div><div class="s">${esc(r.sub)}</div>${p.tag ? `<span class="pill ok tag" style="margin-top:6px;display:inline-block">${TAG[p.tag]}</span>` : ''}</div>
+    ${empty || (p.tag && m == null) ? '' : `<div class="match">${m == null ? '<b style="font-size:15px">minder passend</b>' : `<b>${m}%</b>`}<span>${i === 0 ? 'aanbevolen' : m == null ? '' : 'match'}</span></div>`}</div>
     ${empty || m == null ? '' : `<div class="bar"><i style="width:${m}%"></i></div>`}
-    ${miss ? `<div class="s" style="color:var(--warn,#b36a0f);margin-top:6px">${miss} ${miss === 1 ? 'highlight past' : 'highlights passen'} niet in deze route</div>` : ''}
+    ${miss ? `<div class="s miss" style="color:var(--warn);margin:6px 14px 0">${miss} ${miss === 1 ? 'highlight past' : 'highlights passen'} niet in deze route</div>` : ''}
     <div class="foot"><span>${nights} nachten</span><span>${p.stops.map(s => `${esc(S.places.stays[s.stay] ? S.places.stays[s.stay].short : s.stay)} ${Number(s.nights)}`).join(' · ')}</span><span>${km} km · ca. ${fmtMin(r.legs.reduce((a, l) => a + Number(l.min), 0))} rijden</span></div></button>`;
 }
 // the app users of a trip: whose taste counts, invite link, remove, leave or delete
@@ -664,17 +667,17 @@ function routeDetail(gid, id) {
       <div class="warnbox">${esc(r.ferry)}</div>
       <div class="mapcard" style="margin-top:12px">${routeSvg(S.places, r)}</div>
       <div class="group-h">Dag voor dag</div>
-      ${unplaced.length ? `<div class="warnbox" id="unplaced">${unplaced.map(h => { const other = routesWith(rankedFor(gid).plans, h.id).filter(x => x !== r.id); return `<b>${esc(h.name || h.id)}</b> past niet in deze route${other.length ? ` (wel in route ${other.map(x => esc(x.toUpperCase())).join(', ')})` : ''}.`; }).join('<br>')} Kies een andere route, of meer nachten.</div>` : ''}
+      ${unplaced.length ? `<div class="warnbox" id="unplaced">${unplaced.map(h => { const plans = rankedFor(gid).plans, other = routesWith(plans, h.id).filter(x => x !== r.id).slice(0, 2).map(id => plans.find(p => p.route.id === id).route.title); return `<b>${esc(h.name || h.id)}</b> past niet in deze route${other.length ? ` (wel in: ${other.map(esc).join(' / ')})` : ''}.`; }).join('<br>')} Kies een andere route, of meer nachten.</div>` : ''}
       <div class="group" id="days">${days.map(d => dayRow(d, youngest)).join('')}</div>
       <div class="group-h">Verblijfplaatsen</div>
       ${plan.stops.map((s, i) => stopCard(s, i)).join('')}
       <button class="btn alt" data-a="offline" data-gid="${esc(gid)}" data-id="${esc(r.id)}" id="offlinebtn">Download voor offline</button>
       <a class="btn alt" href="${esc(gmaps(r))}" target="_blank" rel="noopener">Route in Google Maps</a>
       <div class="group-h">Ritten</div>
-      <div class="group">${r.legs.map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)})">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
+      <div class="group">${r.legs.map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)}, var(--accent))">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
     </div>`;
 }
-const legText = l => (l ? `${l.from} naar ${l.to}, ca. ${fmtMin(Number(l.min))} rijden` : '');
+const legText = l => (!l ? '' : l.from === l.to ? 'De ferry komt hier aan' : `${l.from} naar ${l.to}, ca. ${fmtMin(Number(l.min))} rijden`);
 function dayRow(d, youngest) {
   const st = S.places.stays[d.stay] || { short: d.stay };
   let title = '', sub = '', extra = '', warn = '';
