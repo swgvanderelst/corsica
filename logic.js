@@ -642,6 +642,14 @@ export function photoSrc(item, base = '') {
 }
 export const photoOf = (item, base) => photoSrc(item, base) || photoSrc({ photo: item && item.photoGeneric }, base);
 
+// Google Maps search link (no API key): opens the place listing with its photos and reviews
+export function mapsUrl(item, town = '') {
+  const name = item && typeof item.name === 'string' ? item.name.trim() : '';
+  if (!name) return '';
+  const q = [name, typeof town === 'string' ? town.trim() : '', 'Corse'].filter(Boolean).join(', ');
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+}
+
 // ---- tokens and links (same pattern as De Michel) ----
 const TOKEN_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 export function newToken(len = 12, rand = n => globalThis.crypto.getRandomValues(new Uint8Array(n))) {

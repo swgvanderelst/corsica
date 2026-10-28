@@ -147,6 +147,8 @@ try {
   await click(anna, '.stopcard');
   await anna.waitForSelector('.acc');
   assert.equal((await anna.$$('.acc')).length, 3, '3 accommodation options per stop');
+  for (const h of await anna.$$eval('.acc .links a[href*="google.com/maps/search"]', els => els.map(e => e.href))) assert.match(h, /^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=.+Corse$/);
+  assert.equal((await anna.$$('.acc .links a[href*="google.com/maps"]')).length, 3, 'every stay links to Google Maps');
   await click(anna, '.acc .whybtn'); await sleep(100);
   assert.match(await anna.$eval('.acc .whytxt', e => e.textContent), /Past bij|Nog weinig/);
   await anna.waitForSelector('.pin[data-act]', { timeout: 15000 }); // Leaflet from cdnjs + OSM tiles

@@ -1,7 +1,7 @@
 // Corsica app: sign-in, swipe decks, taste profile, ranked routes with 3 stays per stop and a map of activities, groups.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -516,6 +516,8 @@ function accHtml(a, n) {
   const tags = Object.entries(tagWeights(it)).filter(([t]) => t !== 'airco' && t !== 'ev_charging' && !hiddenReasons(S.prefs).includes(t)).sort((x, y) => y[1] - x[1]).slice(0, 5).map(([t]) => `<span class="chip">${esc(label(t))}</span>`).join('');
   const generic = it.photoGeneric === true;
   const url = safeUrl(it.url);
+  const town = (S.places.stays[it.region] && S.places.stays[it.region].short) || '';
+  const maps = mapsUrl(it, town);
   const tw = tagWeights(it);
   const NAMES = { airco: 'airco', ev: 'laadpaal' };
   const badges = [tw.airco >= 0.5 ? '<span class="pill ok">Airco</span>' : '', tw.ev_charging >= 0.5 ? '<span class="pill ok">Laadpaal</span>' : '',
@@ -530,7 +532,7 @@ function accHtml(a, n) {
     ${a.tier === 3 ? '<div class="badges"><span class="pill warn">&#9888; boven je budget</span></div><div class="note" style="margin:6px 0 0">Alleen getoond omdat er in deze plaats niets anders is.</div>' : a.tier === 2 ? '<div class="note" style="margin:6px 0 0">Alleen getoond omdat er in deze plaats niets anders is.</div>' : ''}
     ${it.desc ? `<div class="desc">${esc(it.desc)}</div>` : ''}
     <div class="why"><button class="whybtn" data-a="why" aria-expanded="false">Waarom deze?</button><div class="whytxt" hidden>${esc(a.why.text)}${con}</div></div>
-    ${url ? `<div class="links"><a href="${esc(url)}" target="_blank" rel="noopener">Bekijk verblijf</a></div>` : ''}</div></div>`;
+    ${url || maps ? `<div class="links">${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">Bekijk verblijf</a>` : ''}${maps ? `<a href="${esc(maps)}" target="_blank" rel="noopener" aria-label="Foto's en reviews van ${esc(it.name)} op Google Maps">Foto's op Google Maps</a>` : ''}</div>` : ''}</div></div>`;
 }
 function actHtml(a, n) {
   const it = a.item;

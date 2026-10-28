@@ -818,3 +818,11 @@ test('profile summaries: prefs ride along; only tags of the allowed list; __prot
   assert.deepEqual(L.tagWeights({ tags: ['__proto__', 'pool'] }), { pool: 1 });
   assert.equal(L.memberName({ name: 'Anna', via: 'x' }), 'Anna'); assert.equal(L.memberName('Old'), 'Old'); assert.equal(L.memberName(null), '');
 });
+
+test('mapsUrl: Google Maps search link from name and town', () => {
+  assert.equal(L.mapsUrl({ name: 'Hôtel La Villa' }, 'Calvi'), 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Hôtel La Villa, Calvi, Corse'));
+  assert.equal(L.mapsUrl({ name: ' A & B ' }), 'https://www.google.com/maps/search/?api=1&query=A%20%26%20B%2C%20Corse');
+  assert.equal(L.mapsUrl({ name: '' }, 'Calvi'), '');
+  assert.equal(L.mapsUrl(null), '');
+  assert.equal(L.mapsUrl({ name: 5 }), '');
+});
