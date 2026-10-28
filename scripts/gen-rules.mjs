@@ -150,6 +150,8 @@ const rules = {
           end: { '.validate': `newData.isString() && newData.val().matches(${DATE})` },
           months: { '.validate': `newData.isString() && newData.val().matches(${MONTHS})` },
           party: PEOPLE,
+          // how much moving around the party wants
+          pace: { '.validate': "newData.isString() && (newData.val() === 'calm' || newData.val() === 'normal' || newData.val() === 'active')" },
           // chosen highlight ids, space separated
           highlights: { '.validate': 'newData.isString() && newData.val().length <= 1000 && newData.val().matches(/^[-a-z0-9 ]*$/)' },
           updatedAt: { '.validate': TIME },

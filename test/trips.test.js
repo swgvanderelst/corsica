@@ -334,3 +334,28 @@ test('topAccommodations: a villa that suits children is no family resort for a p
   assert.equal(L.prefDelta(villa, {}), 0);
   assert.equal(L.prefDelta(resort, {}), -0.225);
 });
+
+test('pace: the party chooses calm, normal or active; without a choice kids or a laid-back taste mean calm', () => {
+  assert.deepEqual(['calm', 'normal', 'active'].map(p => L.maxStopsFor(14, p)), [3, 4, 4]);
+  assert.deepEqual(['calm', 'normal', 'active'].map(p => L.maxStopsFor(9, p)), [2, 2, 3]);
+  assert.equal(L.maxStopsFor(9, 'nonsense'), L.maxStopsFor(9, 'normal'));
+  near(L.drivePenalty(520, 10, 'active'), 0.06);
+  assert.equal(L.resolvePace('active', L.emptyProfile(), { kids: true }), 'active', 'a chosen pace wins');
+  assert.equal(L.resolvePace(undefined, L.emptyProfile(), { kids: true }), 'calm');
+  assert.equal(L.resolvePace('', L.emptyProfile(), {}), 'normal');
+  const all = [...routes, ...generated];
+  const calm = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 14, pace: 'calm' });
+  const active = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 14, pace: 'active' });
+  assert.ok(calm.filter(p => !p.tag).every(p => p.stops.length <= 3));
+  assert.ok(active.some(p => p.stops.length === 4));
+});
+test('dayPlan: evening suggestions (going out, eating) when the party likes them, each once', () => {
+  const eve = [{ item: mkAct('bar', ['nightlife']), score: 0.4 }, { item: mkAct('rest', ['food']), score: 0.3 }, { item: mkAct('nope', ['nightlife']), score: -0.2 }];
+  const plan = () => mkPlan([{ stay: 's', nights: 4, acts: [], evenings: eve }], [{ min: 30 }, { min: 30 }]);
+  const on = L.dayPlan(plan(), { evening: true }).days;
+  assert.deepEqual(on.filter(d => d.evening).map(d => d.evening.item.id), ['bar', 'rest']);
+  assert.ok(!L.dayPlan(plan()).days.some(d => d.evening));
+  const foodie = L.profileFrom({ c1: 1, c2: 1 }, [{ id: 'c1', tags: ['food'] }, { id: 'c2', tags: ['food', 'wine'] }]);
+  assert.equal(L.likesEvenings(foodie), true);
+  assert.equal(L.likesEvenings(L.emptyProfile()), false);
+});

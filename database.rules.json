@@ -211,6 +211,9 @@
               }
             }
           },
+          "pace": {
+            ".validate": "newData.isString() && (newData.val() === 'calm' || newData.val() === 'normal' || newData.val() === 'active')"
+          },
           "highlights": {
             ".validate": "newData.isString() && newData.val().length <= 1000 && newData.val().matches(/^[-a-z0-9 ]*$/)"
           },

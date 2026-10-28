@@ -23,6 +23,7 @@ export function tripOf(t) {
   const out = { dest: 'corsica', nights: t.start && t.end ? L.nightsBetween(t.start, t.end) : t.nights, party: L.writePeople(people) };
   if (t.start && t.end) { out.start = t.start; out.end = t.end; } else if (t.months) out.months = t.months;
   if (Array.isArray(t.highlights) && t.highlights.length) out.highlights = t.highlights.join(' ');
+  if (L.PACES.includes(t.pace)) out.pace = t.pace;
   return out;
 }
 
@@ -33,13 +34,13 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   const prefs = L.tripPrefs([own], trip);
   const profile = L.profileFrom(swipes, [...data.deck.acc, ...data.deck.act], L.effectiveOverrides(overrides, prefs));
   const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs,
-    trip: true, nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
+    trip: true, pace: trip.pace, nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
   const routes = [...data.routes, ...L.generateRoutes(data.routes, data.places.places, L.sanitizePlaces(data.places).stays)]; // templates plus the generated ones, as in the app
   const ranked = L.rankRoutes(routes, profile, ctx);
   const plan = (route && ranked.find(p => p.route.id === route.toLowerCase())) || ranked[0];
   const actById = id => data.catalog.act.find(a => a.id === id);
   const picks = (plan.placed || []).map(p => ({ ...p, item: actById(p.hl.acts[0]) }));
-  const { days, unplaced } = L.dayPlan(plan, { picks, calm: L.burdenWeight(profile, prefs) >= 0.3, start: trip.start && trip.end ? trip.start : '' });
+  const { days, unplaced } = L.dayPlan(plan, { picks, calm: L.resolvePace(trip.pace, profile, prefs) === 'calm', evening: L.likesEvenings(profile), start: trip.start && trip.end ? trip.start : '' });
   const stay = k => (data.places.stays[k] || {}).short || k;
   const lines = [];
   const party = L.readPeople(trip.party).map(p => { const a = L.ageOn(p.born, L.tripStart(trip)); return a !== null && a < 18 ? `${p.name} (${a})` : p.name; });
@@ -58,13 +59,16 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   lines.push('Dag voor dag:');
   for (const d of days) {
     const head = `Dag ${d.n}${d.date ? ' (' + d.date + ')' : ''} · ${stay(d.stay)}: `;
-    if (d.kind === 'travel') lines.push(head + `${d.n === 1 ? 'aankomst' : 'verhuisdag'}${d.leg ? `, ${d.leg.from} naar ${d.leg.to} (${fmt(d.leg.min)})` : ''}${d.act ? ', daarna ' + d.act.item.name : ''}`);
+    if (d.kind === 'travel') lines.push(head + `${d.n === 1 ? 'aankomst' : 'verhuisdag'}${d.leg && d.leg.from !== d.leg.to ? `, ${d.leg.from} naar ${d.leg.to} (${fmt(d.leg.min)})` : d.leg ? ', de ferry komt hier aan' : ''}${d.act ? ', daarna ' + d.act.item.name : ''}`);
     else if (d.kind === 'highlight') lines.push(head + `HIGHLIGHT ${d.hl.name}${d.min > 15 ? ` (ca. ${fmt(d.min)} rijden)` : ''}${d.item && L.tooYoung(d.item, prefs.youngest ?? null) ? ' [let op: niet voor de jongste]' : ''}`);
     else if (d.kind === 'activity') lines.push(head + `${d.act.item.name} (${d.act.item.durationH ?? '?'} u, ${d.act.driveMin} min rijden)${d.alt ? ' — of: ' + d.alt.item.name : ''}`);
     else if (d.kind === 'rest') lines.push(head + `rustige dag${d.act ? ': ' + d.act.item.name : ''}`);
     else if (d.kind === 'free') lines.push(head + ((data.places.stays[d.stay] || {}).coast === false ? 'vrije dag, rustig rondkijken' : 'vrije dag: strand of zwembad'));
     else lines.push(head + `terug naar de ferry${d.leg ? `, ${d.leg.from} naar ${d.leg.to} (${fmt(d.leg.min)})` : ''}`);
   }
+  for (let i = 0; i < days.length; i++) if (days[i].evening) lines[lines.length - days.length + i] += ` · 's avonds: ${days[i].evening.item.name}`;
+  lines.push('');
+  lines.push(`Reistempo: ${L.resolvePace(trip.pace, profile, prefs)}${trip.pace ? ' (gekozen)' : ' (afgeleid)'}`);
   lines.push('');
   lines.push('Verblijven per stop (top 3):');
   for (const s of plan.stops) {

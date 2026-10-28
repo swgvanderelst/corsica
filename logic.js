@@ -454,6 +454,9 @@ export function regionVeto(routeProfile, profile, veto) {
   }
   return worst;
 }
+const EVENING = new Set(['night', 'food']);
+// whether evening suggestions fit: the person likes going out, food or wine
+export const likesEvenings = profile => ['nightlife', 'food', 'wine'].some(t => likes(profile, t) || membersOf(profile).some(m => likes(m, t)));
 const WEAK = 0.1; // a stop whose best stay and activities both score below this is "weak"
 // ctx: { acc, act, places: {key: [lon, lat]}, stays: {key: {coast}}, regionTags, labels, vocab: {acc, act}, prefs }
 // A stop scores on its best stay, its activities and how many of the person's favourite activity kinds are near (coverage).
@@ -465,11 +468,14 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
   const stops = route.stays.map((stay, i) => {
     const xy = ctx.places[stay];
     const acc = topAccommodations(ctx.acc, stay, profile, 3, { labels, prefs: ctx.prefs, vocab: vocab.acc });
-    const acts = xy ? activitiesNear(ctx.act, { lat: xy[1], lon: xy[0] }, profile, { radiusKm, n: nActs, labels, coast: !!(stays[stay] && stays[stay].coast), vocab: vocab.act, prefs: ctx.prefs }) : [];
+    const near = { labels, coast: !!(stays[stay] && stays[stay].coast), vocab: vocab.act, prefs: ctx.prefs };
+    const acts = xy ? activitiesNear(ctx.act, { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm, n: nActs }) : [];
+    // for the evenings: going out and eating near the stay
+    const evenings = xy ? activitiesNear(ctx.act.filter(a => EVENING.has(clusterOf(a))), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm: 20, n: 6 }) : [];
     const accBest = acc.length ? acc[0].score : 0, actMean = mean(acts.slice(0, TOP_ACTS).map(a => a.score));
     const cover = liked.length ? liked.filter(t => acts.some(a => tagWeights(a.item)[t] >= 0.5)).length / liked.length : 0;
     const score = 0.55 * accBest + 0.25 * actMean + 0.2 * 0.5 * cover;
-    return { stay, nights: route.nights[i], acc, acts, score, cover, must: mustHaveLine(acc, ctx.prefs), weak: accBest < WEAK && actMean < WEAK };
+    return { stay, nights: route.nights[i], acc, acts, evenings, score, cover, must: mustHaveLine(acc, ctx.prefs), weak: accBest < WEAK && actMean < WEAK };
   });
   const nights = adjustNights(route.nights, stops.map(s => s.score));
   stops.forEach((s, i) => { s.baseNights = s.nights; s.nights = nights[i]; });
@@ -486,7 +492,7 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
     cover: mean(stops.map(s => s.cover)),
     veto: regionVeto(route.profile, profile, ctx.regionVeto),
     over: mean(stops.map(s => (s.acc.some(a => a.tier === 3) ? 1 : 0))),
-    burden: ctx.trip && ctx.nights ? drivePenalty(burden, ctx.nights, burdenWeight(profile, ctx.prefs) >= 0.3) : burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
+    burden: ctx.trip && ctx.nights ? drivePenalty(burden, ctx.nights, resolvePace(ctx.pace, profile, ctx.prefs)) : burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
     weak: 0.2 * mean(stops.map(s => (s.weak || s.acc.length && s.acc[0].score < 0 ? 1 : 0))),
     highlights: hlCover,
   };
@@ -510,9 +516,14 @@ export function matchPercentages(scores) {
 // ---- driving on a trip ----
 // a fair amount of driving for the trip length; more costs the route, twice as much for a calm party (kids, rest, little effort)
 export const DRIVE_FREE = (nights) => 120 + 20 * nights;
-export const drivePenalty = (minutes, nights, calm) => Math.min(1.2, (calm ? 0.0015 : 0.0006) * Math.max(0, minutes - DRIVE_FREE(nights)));
+// the pace of a trip: calm (little moving), normal, active (a round trip). Chosen in the trip, else calm with kids or a laid-back taste.
+export const PACES = ['calm', 'normal', 'active'];
+const PACE = { calm: { perStop: 4.5, rate: 0.0015 }, normal: { perStop: 3.5, rate: 0.0006 }, active: { perStop: 3, rate: 0.0003 } };
+const paceOf = p => PACE[p === true ? 'calm' : p === false ? 'normal' : p] || PACE.normal; // true/false: calm or not
+export const resolvePace = (pace, profile, prefs) => (PACES.includes(pace) ? pace : burdenWeight(profile, prefs) >= 0.3 ? 'calm' : 'normal');
+export const drivePenalty = (minutes, nights, pace) => Math.min(1.2, paceOf(pace).rate * Math.max(0, minutes - DRIVE_FREE(nights)));
 // how many places to stay at most: packing up costs a day, more so for a calm party
-export const maxStopsFor = (nights, calm) => clamp(Math.floor(nights / (calm ? 4.5 : 3.5)), 1, 4);
+export const maxStopsFor = (nights, pace) => clamp(Math.floor(nights / paceOf(pace).perStop), 1, 4);
 export const GEN_KEEP = 30; // generated routes that get a full plan, the most promising first
 const hlCredit = placed => placed.reduce((a, p) => a + (p.stop < 0 ? 0 : p.min <= HL_NEAR_MIN ? 1 : HL_TRIP_CREDIT), 0);
 // ctx.nights: the trip length; every route is stretched or shrunk to exactly that. Routes that cannot fit (2 nights per stop) or
@@ -523,7 +534,7 @@ export function rankRoutes(routes, profile, ctx, opts) {
   let fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
   let extra = []; // one stop more than the trip allows: only a candidate for "all highlights"
   if (ctx.trip && ctx.nights) {
-    const limit = maxStopsFor(ctx.nights, burdenWeight(profile, ctx.prefs) >= 0.3);
+    const limit = maxStopsFor(ctx.nights, resolvePace(ctx.pace, profile, ctx.prefs));
     const hls = ctx.highlights || [], aff = regionAffinity(profile, ctx.regionTags || {});
     const promise = r => (hls.length ? 10 * hlCredit(placeHighlights(r.stays, hls, ctx.places, r.nights.map(n => Math.max(0, n - 1)))) / hls.length : 0)
       + 2 * regionMatch(r.profile, aff) - r.legs.reduce((a, l) => a + l.min, 0) / 300;
@@ -907,8 +918,9 @@ const light = it => (it.durationH || 0) <= 3 && !heavy(it);
 // the other days get the best activities near the stop that fit the taste (score > 0; no repeats, another kind than the day before when
 // possible), else a free day; with kids or a laid-back profile a quiet day follows two heavy ones. After a long drive the travel day
 // stays empty. Exactly nights + 1 days (the last one is the way back to the ferry).
-// opts: { picks: placeHighlights() with .item (the activity), calm, start (YYYY-MM-DD for fixed dates) }
-export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
+// opts.evening: every day but the last also gets an evening suggestion (going out or eating near the stay) while there are new ones.
+// opts: { picks: placeHighlights() with .item (the activity), calm, evening, start (YYYY-MM-DD for fixed dates) }
+export function dayPlan(plan, { picks = [], calm = false, evening = false, start = '' } = {}) {
   const days = [], used = new Set(), legs = plan.route.legs || [];
   const unplaced = picks.filter(p => p.stop < 0).map(p => p.hl);
   for (const p of picks) for (const id of [p.item && p.item.id, ...((p.hl && p.hl.acts) || [])]) if (id) used.add(id); // a highlight is never also a plain activity, at any stop
@@ -953,6 +965,7 @@ export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
     }
     // an alternative per activity day: something at this stop that is nowhere else in the plan
     for (const d of days) if (d.stay === s.stay && d.kind === 'activity' && !d.alt) { const alt = next(clear); if (alt) { used.add(alt.item.id); d.alt = alt; } }
+    if (evening) for (const d of days) if (d.stay === s.stay && !d.evening) { const e = next((s.evenings || []).filter(a => a.score > 0)); if (e) { used.add(e.item.id); d.evening = e; } }
   });
   push({ kind: 'depart', stay: plan.stops.length ? plan.stops[plan.stops.length - 1].stay : '', leg: legs[legs.length - 1] || null });
   return { days, unplaced };

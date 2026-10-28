@@ -2,7 +2,7 @@
 // ranked routes of exactly the trip length with a day-by-day plan, 3 stays per stop and a map of activities.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, generateRoutes, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, generateRoutes, dayPlan, resolvePace, likesEvenings, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -214,7 +214,7 @@ const hlById = id => S.highlights.find(h => h.id === id);
 const actById = id => S.catalog.act.find(a => a.id === id);
 function ctx(prefs, trip) {
   return { acc: S.catalog.acc, act: S.catalog.act, places: S.places.places, stays: S.places.stays, regionTags: S.places.regionTags, regionVeto: S.places.regionVeto, labels: S.labels, prefs,
-    trip: true, nights: tripNights(trip) || undefined, highlights: highlightIds(trip).map(hlById).filter(Boolean), vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } };
+    trip: true, pace: trip && trip.pace, nights: tripNights(trip) || undefined, highlights: highlightIds(trip).map(hlById).filter(Boolean), vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } };
 }
 function rankedFor(gid) {
   const tp = tripProfile(gid);
@@ -374,12 +374,14 @@ function tripsHtml() {
 
 // ---------- trip settings: a wizard for a new trip, one step at a time to edit ----------
 const WIZ_STEPS = ['when', 'who', 'highlights'];
+const PACE_OPTS = [['', 'Kies voor ons'], ['calm', 'Rustig'], ['normal', 'Gemiddeld'], ['active', 'Rondreis']];
+const PACE_NOTE = { '': 'Met kinderen of een rustig profiel plant de app rustig, anders gemiddeld.', calm: 'Weinig verhuizen en weinig rijden: liever langer op één plek.', normal: 'Een paar verblijfplaatsen en af en toe een langere rit.', active: 'Veel zien: meer verblijfplaatsen, rijden hoort erbij.' };
 const HL_CATS = [['beaches', 'Stranden'], ['towns', 'Stadjes'], ['nature', 'Natuur en bergen'], ['boat', 'Boottochten'], ['culture', 'Cultuur en dorpen']];
 function wizFrom(gid) {
   const g = gid && S.gdata[gid], t = g && g.trip;
-  if (t) return { gid, name: g.name, mode: t.start && t.end ? 'fixed' : 'flex', start: t.start || '', savedStart: t.start || '', end: t.end || '', months: String(t.months || '').split(' ').filter(Boolean), nights: tripNights(t) || 14, party: readPeople(t.party), hl: new Set(highlightIds(t)) };
+  if (t) return { gid, name: g.name, pace: t.pace || '', mode: t.start && t.end ? 'fixed' : 'flex', start: t.start || '', savedStart: t.start || '', end: t.end || '', months: String(t.months || '').split(' ').filter(Boolean), nights: tripNights(t) || 14, party: readPeople(t.party), hl: new Set(highlightIds(t)) };
   const party = S.household.length ? S.household.map(p => ({ ...p })) : [{ name: myName(), uid: S.user.uid }];
-  return { gid: g ? gid : null, name: g ? g.name : 'Corsica ' + (new Date().getFullYear() + 1), mode: 'flex', start: '', end: '', months: [], nights: 14, party, hl: new Set() };
+  return { gid: g ? gid : null, name: g ? g.name : 'Corsica ' + (new Date().getFullYear() + 1), pace: '', mode: 'flex', start: '', end: '', months: [], nights: 14, party, hl: new Set() };
 }
 function openWizard(gid = null, only = null) {
   S.wiz = { ...wizFrom(gid), step: only || 'when', only };
@@ -411,7 +413,10 @@ function wizWhen(w) {
       <div class="group-h">Hoeveel nachten?</div><div class="stepper"><button class="chip" data-a="wiz-n" data-d="-1" aria-label="Een nacht minder">&minus;</button><b id="wnights">${w.nights}</b><span>nachten</span><button class="chip" data-a="wiz-n" data-d="1" aria-label="Een nacht meer">+</button></div>`
     : `<div class="group-h">Eerste nacht</div><input class="field" type="date" data-f="start" value="${esc(w.start)}" aria-label="Eerste nacht">
       <div class="group-h">Vertrekdag</div><input class="field" type="date" data-f="end" value="${esc(w.end)}" aria-label="Vertrekdag">
-      <p class="note" id="fixedn">${n ? n + ' nachten' : 'Kies beide data.'}</p>`}`;
+      <p class="note" id="fixedn">${n ? n + ' nachten' : 'Kies beide data.'}</p>`}
+    <div class="group-h">Hoeveel willen jullie onderweg zijn?</div>
+    <div class="scrollchips" role="group" aria-label="Reistempo" id="pace">${PACE_OPTS.map(([v, t]) => `<button data-a="wiz-pace" data-v="${v}" aria-pressed="${(w.pace || '') === v}">${t}</button>`).join('')}</div>
+    <p class="note">${PACE_NOTE[w.pace || '']}</p>`;
 }
 function wizWho(w) {
   const day = tripStart({ start: w.start, months: w.months.join(' ') }) || `${new Date().getFullYear()}-07-01`;
@@ -443,12 +448,13 @@ function tripFromWiz(w) {
   const n = wizNights(w);
   const t = { dest: (S.dest && /^[-_A-Za-z0-9]{1,32}$/.test(S.dest.id) && S.dest.id) || 'corsica', nights: n, party: writePeople(w.party) };
   if (w.mode === 'fixed') { t.start = w.start; t.end = w.end; } else if (w.months.length) t.months = w.months.slice().sort().join(' ');
+  if (w.pace) t.pace = w.pace;
   if (w.hl.size) t.highlights = [...w.hl].join(' ');
   if (!Object.keys(t.party).length) delete t.party;
   return t;
 }
 // the fields each step owns: an edit replaces only those, on top of the latest trip (another member may have changed the rest meanwhile)
-const STEP_FIELDS = { when: ['nights', 'start', 'end', 'months'], who: ['party'], highlights: ['highlights'] };
+const STEP_FIELDS = { when: ['nights', 'start', 'end', 'months', 'pace'], who: ['party'], highlights: ['highlights'] };
 function tripToSave(w) {
   const mine = tripFromWiz(w), cur = w.gid && S.gdata[w.gid] && S.gdata[w.gid].trip;
   if (!w.only || !cur) return mine;
@@ -643,7 +649,7 @@ function planOf(gid, id) {
 function daysOf(plan, tp) {
   const picks = (plan.placed || []).map(p => ({ ...p, item: actById(p.hl.acts[0]) }));
   const fixed = tp.trip && tp.trip.start && tp.trip.end ? tp.trip.start : '';
-  return dayPlan(plan, { picks, calm: burdenWeight(tp.profile, tp.prefs) >= 0.3, start: fixed });
+  return dayPlan(plan, { picks, calm: resolvePace(tp.trip && tp.trip.pace, tp.profile, tp.prefs) === 'calm', evening: likesEvenings(tp.profile), start: fixed });
 }
 function openRoute(gid, id) {
   lastRoute = { gid, id };
@@ -690,7 +696,7 @@ function dayRow(d, youngest) {
   else if (d.kind === 'free') { title = 'Vrije dag'; sub = st.coast === false ? `Rustig rondkijken in en rond ${st.short}` : `Strand of zwembad, of rondkijken in ${st.short}`; }
   else { title = 'Terug naar de ferry'; sub = legText(d.leg); }
   return `<div class="row day ${esc(d.kind)}" style="align-items:flex-start"><span class="num sq" style="background:${d.kind === 'highlight' ? 'var(--accent)' : 'var(--fill)'};color:${d.kind === 'highlight' ? '#fff' : 'var(--fg)'};border-radius:9px;font-size:13px">${d.n}</span>
-    <div class="grow"><div class="s">Dag ${d.n}${d.date ? ' · ' + esc(dayLabel(d.date)) : ''}${d.kind === 'highlight' ? ' · highlight' : ''}</div><div class="t">${esc(title)}</div>${sub ? `<div class="s" style="color:var(--fg)">${esc(sub)}</div>` : ''}${extra ? `<div class="s">${esc(extra)}</div>` : ''}${warn ? `<div class="s" style="color:var(--no)">${esc(warn)}</div>` : ''}</div></div>`;
+    <div class="grow"><div class="s">Dag ${d.n}${d.date ? ' · ' + esc(dayLabel(d.date)) : ''}${d.kind === 'highlight' ? ' · highlight' : ''}</div><div class="t">${esc(title)}</div>${sub ? `<div class="s" style="color:var(--fg)">${esc(sub)}</div>` : ''}${extra ? `<div class="s">${esc(extra)}</div>` : ''}${d.evening ? `<div class="s">'s Avonds: ${esc(d.evening.item.name)}</div>` : ''}${warn ? `<div class="s" style="color:var(--no)">${esc(warn)}</div>` : ''}</div></div>`;
 }
 function stopCard(s, i) {
   const st = S.places.stays[s.stay] || { name: s.stay, short: s.stay, kind: '' };
@@ -939,6 +945,7 @@ const actions = {
   'trip-edit': d => openWizard(d.gid, d.step),
   household: () => openHousehold(),
   'wiz-mode': d => { S.wiz.mode = d.m; repaintTop(); },
+  'wiz-pace': d => { S.wiz.pace = d.v; repaintTop(); },
   'wiz-month': d => { const m = S.wiz.months; if (m.includes(d.m)) m.splice(m.indexOf(d.m), 1); else if (m.length < 3) m.push(d.m); else return toast('Kies maximaal 3 maanden.'); repaintTop(); },
   'wiz-n': d => { S.wiz.nights = Math.min(NIGHTS_RANGE[1], Math.max(NIGHTS_RANGE[0], S.wiz.nights + Number(d.d))); $('wnights').textContent = S.wiz.nights; },
   'wiz-add': () => { S.wiz.party.push({ name: '' }); repaintTop(); const ins = document.querySelectorAll('#people [data-f=pname]'); if (ins.length) ins[ins.length - 1].focus(); },
