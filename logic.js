@@ -267,6 +267,8 @@ const accSim = (a, b) => { const ta = typeOf(a); return ta && ta === typeOf(b) ?
 
 const TIER_NOTE = ['', 'unknown', 'excluded', 'over_budget', 'absent'];
 export const ROOMS_PENALTY = 0.15; // the party does not fit in one unit
+export const UNKNOWN_FIT_PENALTY = 0.08; // a party of 3 or more and nobody knows whether they fit in one unit
+const fitPenalty = (a, size) => { const f = roomFit(a, size); return f === 'rooms' ? ROOMS_PENALTY : f === 'unknown' ? UNKNOWN_FIT_PENALTY : 0; };
 // the must-haves: preference key, tag, and the flag that says "confirmed absent"
 const MUST = [['airco', 'airco', 'noAirco'], ['ev', 'ev_charging', 'noEv']];
 // top accommodations for a region. Tiers: 0 = fits everything (required extras confirmed); 1 = a required extra is unknown (shown "onbekend, vraag na");
@@ -310,7 +312,7 @@ export function topAccommodations(accs, region, profile, n = 3, { labels = {}, l
   groups.forEach(([tier, list]) => {
     if (out.length >= n || !list.length) return;
     if (tier === 3 && out.length >= 2) return; // above the budget: never next to two or more stays that fit
-    for (const { item, s } of mmr(list, n - out.length, { score: a => scoreItem(profile, a) + prefDelta(a, prefs) - (roomFit(a, size) === 'rooms' ? ROOMS_PENALTY : 0), sim: accSim, lambda, minRel })) {
+    for (const { item, s } of mmr(list, n - out.length, { score: a => scoreItem(profile, a) + prefDelta(a, prefs) - fitPenalty(a, size), sim: accSim, lambda, minRel })) {
       const i = info(item);
       out.push({ item, score: s, tier, note: TIER_NOTE[tier], confirmed: i.confirmed, unconfirmed: i.unknown, absent: i.absent, fit: roomFit(item, size), why: explain(profile, item, labels, 2, { vocab, hide }) });
     }
@@ -676,7 +678,8 @@ export const HL_TRIP_CREDIT = 0.75;
 // minutes per straight-line km to a sight: calibrated on real drives (Porto - Calvi 35 km = 2 h 15, Zonza - Palombaggia 25 km = 1 h)
 export const HL_ROAD = 2.4;
 export const hlMin = km => Math.round(km * HL_ROAD);
-export const HL_WEIGHT = 0.5; // what missing every chosen highlight costs a route
+export const HL_WEIGHT = 3; // what missing every chosen highlight costs a route: more than any taste difference, the chosen highlights come first
+export const LONG_LEG_MIN = 90; // after a drive this long the travel day has nothing else planned
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
 // the first day: the fixed start, or the 1st of the first month of a flexible trip ('' when unknown)
@@ -786,6 +789,8 @@ export function placeHighlights(stays, highlights, places, caps = null) {
   }
   return rows.map(r => ({ hl: r.hl, ...placed.get(r) }));
 }
+// the routes (ids, ranking order) that give this highlight a day: the explanation for a highlight that does not fit
+export const routesWith = (plans, hlId) => (plans || []).filter(p => (p.placed || []).some(x => x.hl.id === hlId && x.stop >= 0)).map(p => p.route.id);
 // highlights from a file: safe ids, real coordinates, a category and the activity ids it stands for
 export function sanitizeHighlights(list) {
   return (Array.isArray(list) ? list : []).filter(h => h && typeof h.id === 'string' && /^[-a-z0-9]{1,40}$/.test(h.id) && Number.isFinite(numOr(h.lat, NaN)) && Number.isFinite(numOr(h.lon, NaN)))
@@ -794,24 +799,26 @@ export function sanitizeHighlights(list) {
 const heavy = it => { const tw = tagWeights(it); return (it.durationH || 0) >= 5 || tw.effort_high >= 0.5 || tw.hike_hard >= 0.5 || tw.canyoning >= 0.5; };
 const light = it => (it.durationH || 0) <= 3 && !heavy(it);
 // Day by day: day 1 and every change of stop is a travel day with something light nearby; each chosen highlight gets a day at its stop;
-// the other days get the best activities near the stop (no repeats, another kind than the day before when possible); with kids or a
-// laid-back profile a quiet day follows two heavy ones. Exactly nights + 1 days (the last one is the way back to the ferry).
+// the other days get the best activities near the stop that fit the taste (score > 0; no repeats, another kind than the day before when
+// possible), else a free day; with kids or a laid-back profile a quiet day follows two heavy ones. After a long drive the travel day
+// stays empty. Exactly nights + 1 days (the last one is the way back to the ferry).
 // opts: { picks: placeHighlights() with .item (the activity), calm, start (YYYY-MM-DD for fixed dates) }
 export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
   const days = [], used = new Set(), legs = plan.route.legs || [];
   const unplaced = picks.filter(p => p.stop < 0).map(p => p.hl);
+  for (const p of picks) for (const id of [p.item && p.item.id, ...((p.hl && p.hl.acts) || [])]) if (id) used.add(id); // a highlight is never also a plain activity, at any stop
   let streak = 0, prevCluster = null;
   const push = d => { days.push({ n: days.length + 1, ...(start ? { date: addDays(start, days.length) } : {}), ...d }); };
   const next = (list, ok = () => true) => list.find(a => !used.has(a.item.id) && ok(a.item));
   plan.stops.forEach((s, si) => {
     const queue = picks.filter(p => p.stop === si).sort((a, b) => a.min - b.min || a.hl.id.localeCompare(b.hl.id));
-    for (const p of queue) if (p.item) used.add(p.item.id); // a highlight is never also a plain activity
-    const acts = s.acts || [];
+    const acts = (s.acts || []).filter(a => !(a.score <= 0)); // only what fits the taste; the rest of the days stay free
     const free = Math.max(0, s.nights - 1);
     if (queue.length > free) unplaced.push(...queue.splice(free).map(p => p.hl)); // more highlights than days at this stop
     for (let k = 0; k < s.nights; k++) {
       if (k === 0) {
-        const pick = next(acts, light);
+        const long = legs[si] && legs[si].min >= LONG_LEG_MIN;
+        const pick = long ? null : next(acts, light);
         if (pick) used.add(pick.item.id);
         push({ kind: 'travel', stay: s.stay, leg: legs[si] || null, ...(pick ? { act: pick } : {}) });
         streak = 0; prevCluster = null;

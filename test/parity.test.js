@@ -309,6 +309,7 @@ test('parity: every member edits the trip settings, validated; strangers and rem
     ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', uid: 'bad uid' } } } }, 'deny'],
     ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', age: 5 } } } }, 'deny'], // unknown field
     ['bob', 'setTrip', { t: { ...TRIP, budget: 3 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: {} } }, 'ok'], // an empty party is simply absent
     ['bob', 'setTrip', { t: { nights: 14 } }, 'deny'], // dest missing
     ['anna', 'remove', { target: 'bob' }, 'ok'],
     ['bob', 'setTrip', { t: TRIP }, 'deny'], // removed
@@ -318,6 +319,7 @@ test('parity: the household lives in my own user record, validated like a party'
   await run([
     ['anna', 'setUser', { household: { p0: { name: 'Stefan', born: 1980 }, p1: { name: 'Lisa', born: 2020 } } }, 'ok'],
     ['anna', 'setUser', { household: { p12: { name: 'X' } } }, 'deny'],
+    ['anna', 'setUser', { household: {} }, 'ok'],
     ['anna', 'setUser', { household: { p0: { name: 'X', born: 2041 } } }, 'deny'],
     ['bob', 'setUser', { target: 'uid-anna', household: { p0: { name: 'X' } } }, 'deny'],
   ]);

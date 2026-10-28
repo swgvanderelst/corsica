@@ -41,6 +41,7 @@ async function drag(page, dx, dy) { // drag the top card with the mouse (pointer
   await page.mouse.up();
 }
 const getUser = uid => srv.db().users[uid];
+const waitFor = async (fn, ms = 6000) => { const end = Date.now() + ms; while (!fn()) { if (Date.now() > end) throw new Error('timeout: ' + fn); await sleep(100); } };
 
 try {
   // ================= Anna: sign in, decks, profile, routes =================
@@ -249,15 +250,19 @@ try {
   assert.equal(Object.keys(profiles).length, 2, 'both members wrote a profile summary');
   assert.ok(Object.values(profiles).every(p => p.n > 0 && Object.keys(p.w).length > 0));
 
-  // Bob edits the party (every member plans along); Anna sees it live
+  // Bob edits the party (every member plans along) while Anna has the highlights open: both changes survive
+  await click(anna, '[data-a=trip-edit][data-step=highlights]'); await anna.waitForSelector('.hltile');
   await click(bob, '[data-a=trip-open]'); await bob.waitForSelector('[data-a=trip-edit][data-step=who]');
   assert.equal(await bob.$('[data-a=group-kick]'), null, 'only the maker removes people');
   await click(bob, '[data-a=trip-edit][data-step=who]'); await bob.waitForSelector('#people');
   await click(bob, '[data-a=wiz-add]'); await bob.waitForSelector('#people [data-f=pname][data-i="3"]');
   await typeIn(bob, '#people [data-f=pname][data-i="3"]', 'Oma');
   await click(bob, '[data-a=wiz-next]'); // "Bewaar"
+  await waitFor(() => Object.keys(srv.db().groups[gid].trip.party).length === 4);
+  await click(anna, '.hltile[data-id="hl-bonifacio"]'); await click(anna, '[data-a=wiz-next]'); // Anna saves her step
   await anna.waitForFunction(() => /Oma/.test(document.getElementById('party').textContent), { timeout: 6000 });
-  assert.equal(Object.keys(srv.db().groups[gid].trip.party).length, 4);
+  assert.equal(Object.keys(srv.db().groups[gid].trip.party).length, 4, "Anna's save kept Bob's party change");
+  assert.ok(srv.db().groups[gid].trip.highlights.split(' ').includes('hl-bonifacio'), "and her own highlight change");
   // Anna: Bob in the members list, his taste can be switched off and on
   await anna.waitForFunction(() => document.querySelectorAll('#members .row').length === 2, { timeout: 6000 });
   assert.match(await text(anna, '#members'), /Bob/);

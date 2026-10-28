@@ -227,3 +227,33 @@ test('dayPlan: an alternative is never planned elsewhere in the trip', () => {
   assert.ok(alts.every(a => !main.includes(a)), 'alternatives are activities that are not in the plan');
   assert.equal(new Set(alts).size, alts.length);
 });
+
+test('routesWith: the routes that give a highlight a day, in ranking order', () => {
+  const plans = [{ route: { id: 'a' }, placed: [{ hl: { id: 'h1' }, stop: 0 }, { hl: { id: 'h2' }, stop: -1 }] }, { route: { id: 'b' }, placed: [{ hl: { id: 'h2' }, stop: 1 }] }, { route: { id: 'c' } }];
+  assert.deepEqual(L.routesWith(plans, 'h2'), ['b']);
+  assert.deepEqual(L.routesWith(plans, 'h1'), ['a']);
+  assert.deepEqual(L.routesWith(null, 'h1'), []);
+});
+test('dayPlan: activities that do not fit the taste leave a day free; a long drive leaves the travel day empty', () => {
+  const acts = [{ item: mkAct('good', ['culture']), score: 0.4 }, { item: mkAct('bad', ['hike_hard'], 6), score: -0.2 }];
+  const long = L.dayPlan(mkPlan([{ stay: 's', nights: 3, acts }], [{ min: 120 }, { min: 60 }]));
+  assert.deepEqual(long.days.map(d => d.kind), ['travel', 'activity', 'free', 'depart']);
+  assert.equal(long.days[0].act, undefined, 'nothing after a two-hour drive');
+  assert.ok(!long.days.some(d => d.act && d.act.item.id === 'bad'));
+  const short = L.dayPlan(mkPlan([{ stay: 's', nights: 3, acts }], [{ min: 40 }, { min: 60 }]));
+  assert.equal(short.days[0].act.item.id, 'good');
+});
+test('dayPlan: a highlight activity is never also a plain activity at another stop', () => {
+  const melo = mkAct('melo', ['hike']);
+  const plan = mkPlan([{ stay: 's1', nights: 3, acts: [{ item: melo, score: 0.9 }, { item: mkAct('o1', ['culture']), score: 0.5 }] }, { stay: 's2', nights: 3, acts: [{ item: melo, score: 0.9 }] }]);
+  const { days } = L.dayPlan(plan, { picks: [{ hl: { id: 'hl-melo', acts: ['melo'] }, stop: 1, min: 10, item: melo }] });
+  assert.equal(days.filter(d => (d.act && d.act.item.id === 'melo') || (d.item && d.item.id === 'melo')).length, 1);
+});
+
+test('topAccommodations: for a party of 4 a stay that surely fits beats one with an unknown capacity', () => {
+  const acc = (id, extra) => ({ id, region: 'r', name: id, priceLevel: 2, tags: { hotel: 1 }, ...extra });
+  const out = L.topAccommodations([acc('unk', {}), acc('fits', { sleeps: 6 })], 'r', L.emptyProfile(), 2, { prefs: { size: 4 } });
+  assert.deepEqual(out.map(a => a.item.id), ['fits', 'unk']);
+  const two = L.topAccommodations([acc('unk', {}), acc('fits', { sleeps: 6 })], 'r', L.emptyProfile(), 2, { prefs: { size: 2 } });
+  near(two[0].score, two[1].score); // a couple fits everywhere
+});

@@ -17,8 +17,10 @@ const euro = n => (n > 0 ? '€'.repeat(Math.round(n)) : '');
 const fmt = m => `${Math.floor(m / 60)} u ${String(m % 60).padStart(2, '0')}`;
 
 // the trip as the app stores it (party as {p0..}, highlights as a string)
+// tolerant about the input: party or people, names as strings or {name, born}
 export function tripOf(t) {
-  const out = { dest: 'corsica', nights: t.start && t.end ? L.nightsBetween(t.start, t.end) : t.nights, party: L.writePeople(t.party || []) };
+  const people = (t.party || t.people || t.travelers || []).map(p => (typeof p === 'string' ? { name: p } : { ...p, born: p.born ?? p.birthYear }));
+  const out = { dest: 'corsica', nights: t.start && t.end ? L.nightsBetween(t.start, t.end) : t.nights, party: L.writePeople(people) };
   if (t.start && t.end) { out.start = t.start; out.end = t.end; } else if (t.months) out.months = t.months;
   if (Array.isArray(t.highlights) && t.highlights.length) out.highlights = t.highlights.join(' ');
   return out;
@@ -33,7 +35,7 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs,
     nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
   const ranked = L.rankRoutes(data.routes, profile, ctx);
-  const plan = (route && ranked.find(p => p.route.id === route)) || ranked[0];
+  const plan = (route && ranked.find(p => p.route.id === route.toLowerCase())) || ranked[0];
   const actById = id => data.catalog.act.find(a => a.id === id);
   const picks = (plan.placed || []).map(p => ({ ...p, item: actById(p.hl.acts[0]) }));
   const { days, unplaced } = L.dayPlan(plan, { picks, calm: L.burdenWeight(profile, prefs) >= 0.3, start: trip.start && trip.end ? trip.start : '' });
@@ -48,7 +50,7 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   lines.push(`=== ${plan === ranked[0] ? 'Aanbevolen' : 'Gekozen'} route ${plan.route.id.toUpperCase()}: ${plan.route.title} ===`);
   lines.push(plan.route.lead);
   lines.push(`Stops: ${plan.stops.map(s => `${stay(s.stay)} ${s.nights} nachten`).join(', ')} · rijden totaal ca. ${fmt(plan.route.legs.reduce((a, l) => a + l.min, 0))}`);
-  if (unplaced.length) lines.push(`Past niet in deze route: ${unplaced.map(h => h.name || h.id).join(', ')}`);
+  for (const h of unplaced) { const other = L.routesWith(ranked, h.id); lines.push(`Past niet in deze route: ${h.name || h.id}${other.length ? ` (wel in route ${other.map(x => x.toUpperCase()).join(', ')})` : ''}`); }
   lines.push('');
   lines.push('Dag voor dag:');
   for (const d of days) {
@@ -80,7 +82,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   } else {
     const [sw, tr] = args.filter(a => !a.startsWith('--'));
     const ri = args.indexOf('--route');
-    const out = proposal(JSON.parse(fs.readFileSync(sw, 'utf8')), JSON.parse(fs.readFileSync(tr, 'utf8')), data, { route: ri >= 0 ? args[ri + 1] : null });
+    const readJson = p => JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, '')); // files written by PowerShell start with a BOM
+    const out = proposal(readJson(sw), readJson(tr), data, { route: ri >= 0 ? args[ri + 1] : null });
     console.log(out.text);
   }
 }

@@ -40,8 +40,8 @@ const sameSecret = (a, b) => {
 const PERSON_KEY_RE = /^p([0-9]|1[01])$/; // p0..p11: at most 12 people
 const DATE_RE = /^20[2-9][0-9]-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 const MONTHS_RE = /^20[2-9][0-9]-(0[1-9]|1[0-2])( 20[2-9][0-9]-(0[1-9]|1[0-2])){0,2}$/;
-// a household or travel party: {p0: {name, born?, uid?}, ...}
-const peopleOk = v => isObj(v) && Object.keys(v).length > 0 && Object.entries(v).every(([k, p]) => PERSON_KEY_RE.test(k) && isObj(p)
+// a household or travel party: {p0: {name, born?, uid?}, ...}; an empty one is simply absent (as in the database)
+const peopleOk = v => isObj(v) && Object.entries(v).every(([k, p]) => PERSON_KEY_RE.test(k) && isObj(p)
   && Object.keys(p).every(f => ['name', 'born', 'uid'].includes(f)) && isStr(p.name, 1, 40)
   && (!('born' in p) || (isNum(p.born) && p.born >= 1920 && p.born <= 2040 && p.born % 1 === 0)) && (!('uid' in p) || isKey(p.uid)));
 const tripOk = t => isObj(t) && Object.keys(t).every(f => ['dest', 'nights', 'start', 'end', 'months', 'party', 'highlights'].includes(f))
@@ -100,7 +100,7 @@ export function startServer({ port = 8787, host = '127.0.0.1', persistFile = nul
         if (body.groups && Object.keys(body.groups).length) u.groups = body.groups;
         if (body.overrides && Object.keys(body.overrides).length) u.overrides = body.overrides;
         if (body.prefs && Object.keys(body.prefs).length) u.prefs = body.prefs;
-        if (body.household) u.household = body.household;
+        if (body.household && Object.keys(body.household).length) u.household = body.household;
         db.users[uid] = u;
         dirty();
         return [200, { ok: true }];
@@ -226,6 +226,7 @@ export function startServer({ port = 8787, host = '127.0.0.1', persistFile = nul
       if (!mine(g) || g.banned?.[uid]) throw deny('members only');
       if (!tripOk(body)) throw bad('trip');
       g.trip = { ...body, updatedAt: now() };
+      if (g.trip.party && !Object.keys(g.trip.party).length) delete g.trip.party;
       push(gid);
       return [200, { ok: true }];
     }

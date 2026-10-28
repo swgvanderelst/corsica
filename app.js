@@ -2,7 +2,7 @@
 // ranked routes of exactly the trip length with a day-by-day plan, 3 stays per stop and a map of activities.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, placeHighlights, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -400,10 +400,11 @@ function wizHtml() {
     ${!w.only && idx > 0 ? '<button class="btn alt" data-a="wiz-prev">Vorige</button>' : ''}</div>`;
 }
 function wizWhen(w) {
-  const months = upcomingMonths(18).map(m => `<button data-a="wiz-month" data-m="${m}" aria-pressed="${w.months.includes(m)}">${monthLabel(m)}</button>`).join('');
+  // stored months stay visible, also once they are past
+  const months = [...new Set([...w.months, ...upcomingMonths(18)])].sort().map(m => `<button data-a="wiz-month" data-m="${m}" aria-pressed="${w.months.includes(m)}">${monthLabel(m)}</button>`).join('');
   const n = nightsBetween(w.start, w.end);
   return `<div class="large">Wanneer?</div>
-    <div class="group-h">Naam van de reis</div><input class="field" data-f="name" maxlength="30" value="${esc(w.name)}" aria-label="Naam van de reis">
+    <div class="group-h">Naam van de reis</div><input class="field" data-f="name" maxlength="30" value="${esc(w.name)}" aria-label="Naam van de reis"${canRename(w) ? '' : ' readonly'}>${canRename(w) ? '' : '<p class="note">Alleen de maker van de reis kan de naam wijzigen.</p>'}
     <div class="scrollchips" role="group" aria-label="Soort datum" style="margin-top:12px"><button data-a="wiz-mode" data-m="flex" aria-pressed="${w.mode === 'flex'}">Flexibel</button><button data-a="wiz-mode" data-m="fixed" aria-pressed="${w.mode === 'fixed'}">Vaste data</button></div>
     ${w.mode === 'flex' ? `<div class="group-h">In welke maand? Kies er maximaal 3</div><div class="chips" id="months">${months}</div>
       <div class="group-h">Hoeveel nachten?</div><div class="stepper"><button class="chip" data-a="wiz-n" data-d="-1" aria-label="Een nacht minder">&minus;</button><b id="wnights">${w.nights}</b><span>nachten</span><button class="chip" data-a="wiz-n" data-d="1" aria-label="Een nacht meer">+</button></div>`
@@ -445,33 +446,47 @@ function tripFromWiz(w) {
   if (!Object.keys(t.party).length) delete t.party;
   return t;
 }
+// the fields each step owns: an edit replaces only those, on top of the latest trip (another member may have changed the rest meanwhile)
+const STEP_FIELDS = { when: ['nights', 'start', 'end', 'months'], who: ['party'], highlights: ['highlights'] };
+function tripToSave(w) {
+  const mine = tripFromWiz(w), cur = w.gid && S.gdata[w.gid] && S.gdata[w.gid].trip;
+  if (!w.only || !cur) return mine;
+  const { updatedAt, ...out } = cur; void updatedAt;
+  for (const f of STEP_FIELDS[w.only]) { if (f in mine) out[f] = mine[f]; else delete out[f]; }
+  return out;
+}
+// a real calendar day in the years the rules accept (a typed 2026-02-31 or 2100-01-01 is not)
+const realDay = d => /^20[2-9][0-9]-[01][0-9]-[0-3][0-9]$/.test(d) && new Date(d + 'T00:00:00Z').toISOString().slice(0, 10) === d;
+const canRename = w => !w.gid || !S.gdata[w.gid] || S.gdata[w.gid].owner === S.user.uid;
 // a problem with this step, or '' when it is fine
 function wizProblem(w) {
   if (w.step === 'when') {
     if (!w.household && !String(w.name).trim()) return 'Geef de reis een naam.';
+    if (w.mode === 'fixed' && !(realDay(w.start) && realDay(w.end))) return 'Kies de eerste nacht en de vertrekdag.';
+    if (w.mode === 'fixed' && w.start < new Date().toISOString().slice(0, 10)) return 'De eerste nacht ligt in het verleden.';
     const n = wizNights(w);
-    if (w.mode === 'fixed' && !n) return 'Kies de eerste nacht en de vertrekdag.';
     if (n < NIGHTS_RANGE[0] || n > NIGHTS_RANGE[1]) return `Een reis duurt ${NIGHTS_RANGE[0]} tot ${NIGHTS_RANGE[1]} nachten.`;
   }
   if (w.step === 'who') {
     if (!w.party.some(p => String(p.name).trim())) return 'Voeg minstens één persoon toe.';
-    if (w.party.some(p => p.born !== undefined && !(Number.isInteger(p.born) && p.born >= 1920 && p.born <= 2040))) return 'Een geboortejaar is een jaar tussen 1920 en 2040.';
+    const year = new Date().getFullYear();
+    if (w.party.some(p => p.born !== undefined && !(Number.isInteger(p.born) && p.born >= 1920 && p.born <= year))) return `Een geboortejaar is een jaar tussen 1920 en ${year}.`;
   }
   return '';
 }
 async function wizSave() {
   const w = S.wiz;
-  if (w.household) { S.household = readPeople(writePeople(w.party)); schedulePersist(); popScreen(); S.wiz = null; refreshLive(); toast('Gezin bewaard'); return; }
-  const trip = tripFromWiz(w);
+  if (w.household) { S.household = readPeople(writePeople(w.party)); schedulePersist(); popScreen(); refreshLive(); toast('Gezin bewaard'); return; }
+  const trip = tripToSave(w), edit = !!w.gid;
   try {
-    let gid = w.gid;
-    if (!gid) gid = await createGroup(String(w.name).trim().slice(0, 30));
-    else if (w.name.trim() && w.name.trim() !== S.gdata[gid].name && S.gdata[gid].owner === S.user.uid) await S.store.renameGroup(gid, w.name.trim().slice(0, 30), Object.keys(S.gdata[gid].codes || {}));
-    await S.store.setTrip(gid, trip);
-    S.wiz = null; S.ranked = {};
+    if (!w.gid) w.gid = await createGroup(String(w.name).trim().slice(0, 30)); // remembered at once: a failed trip write never makes a second trip
+    else if (canRename(w) && w.name.trim() && w.name.trim() !== S.gdata[w.gid].name) await S.store.renameGroup(w.gid, w.name.trim().slice(0, 30), Object.keys(S.gdata[w.gid].codes || {}));
+    await S.store.setTrip(w.gid, trip);
+    const gid = w.gid;
+    S.ranked = {};
     popScreen();
-    if (!w.gid) { await sleep(150); openTrip(gid); } else refreshLive();
-    toast(w.gid ? 'Reis bijgewerkt' : 'Reis gemaakt');
+    if (!edit) { await sleep(150); openTrip(gid); } else refreshLive();
+    toast(edit ? 'Reis bijgewerkt' : 'Reis gemaakt');
   } catch (e) { toast(errMsg(e)); }
 }
 
@@ -586,16 +601,19 @@ function paint(entry) {
   if (entry.mount) entry.mount(entry.el);
 }
 const repaintTop = () => { const top = pushed[pushed.length - 1]; if (top) paint(top); };
+// leaving the wizard in any way (back, swipe, tab, a trip that disappears) drops the draft, so live updates paint again
+const dropDraft = e => { if (e.renderFn === wizHtml) S.wiz = null; };
 function popScreen() {
   const e = pushed.pop();
   if (!e) return;
+  dropDraft(e);
   e.el.classList.remove('push'); e.el.classList.add('pop');
   if (e.unmount) e.unmount();
   const done = () => e.el.remove();
   e.el.addEventListener('animationend', done, { once: true });
   setTimeout(done, 400);
 }
-function popAll() { while (pushed.length) { const e = pushed.pop(); if (e.unmount) e.unmount(); e.el.remove(); } }
+function popAll() { while (pushed.length) { const e = pushed.pop(); dropDraft(e); if (e.unmount) e.unmount(); e.el.remove(); } }
 const prevTitle = () => (pushed.length ? pushed[pushed.length - 1].title : { routes: 'Reizen', profile: 'Profiel' }[S.tab] || 'Terug');
 function refreshLive() {
   if (S.mode === 'app' && !pushed.length) { const sc = $('rootscroll'); const t = sc ? sc.scrollTop : 0; renderApp($('root')); const n = $('rootscroll'); if (n) n.scrollTop = t; }
@@ -646,7 +664,7 @@ function routeDetail(gid, id) {
       <div class="warnbox">${esc(r.ferry)}</div>
       <div class="mapcard" style="margin-top:12px">${routeSvg(S.places, r)}</div>
       <div class="group-h">Dag voor dag</div>
-      ${unplaced.length ? `<div class="warnbox" id="unplaced">Past niet in deze route: ${unplaced.map(h => esc(h.name || h.id)).join(', ')}. Kies een andere route, of meer nachten.</div>` : ''}
+      ${unplaced.length ? `<div class="warnbox" id="unplaced">${unplaced.map(h => { const other = routesWith(rankedFor(gid).plans, h.id).filter(x => x !== r.id); return `<b>${esc(h.name || h.id)}</b> past niet in deze route${other.length ? ` (wel in route ${other.map(x => esc(x.toUpperCase())).join(', ')})` : ''}.`; }).join('<br>')} Kies een andere route, of meer nachten.</div>` : ''}
       <div class="group" id="days">${days.map(d => dayRow(d, youngest)).join('')}</div>
       <div class="group-h">Verblijfplaatsen</div>
       ${plan.stops.map((s, i) => stopCard(s, i)).join('')}
@@ -841,7 +859,7 @@ const actions = {
   tab: d => { popAll(); S.tab = d.tab; renderApp($('root')); },
   'open-route': d => openRoute(d.gid, d.id),
   'open-stop': d => openStop(lastRoute.gid, lastRoute.id, +d.i),
-  back: () => { if (pushed.length && pushed[pushed.length - 1].renderFn === wizHtml) S.wiz = null; popScreen(); },
+  back: () => popScreen(),
   why: (d, el) => { const t = el.parentElement.querySelector('.whytxt'); t.hidden = !t.hidden; el.setAttribute('aria-expanded', String(!t.hidden)); },
   more: () => { const p = myProfile(); const cards = moreCards(allCards(), S.swipes, p, 10); if (!cards.length) return toast('Alle kaarten zijn al beoordeeld.'); startDeck('more', { from: 'profile', cards }); },
   reswipe: d => openSheet(`<h3>Opnieuw swipen?</h3><p>Je eerdere antwoorden voor ${d.kind === 'acc' ? 'accommodaties' : 'activiteiten'} worden gewist.</p><button class="btn danger" data-a="reswipe-yes" data-kind="${esc(d.kind)}">Ja, wis en begin opnieuw</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
