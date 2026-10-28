@@ -27,3 +27,9 @@
 - `auth.token.firebase.sign_in_provider !== 'anonymous'` in every .read/.write keeps the anonymous test users out of production. The rules evaluator needs a token on its fake auth.
 - `signInWithRedirect` needs first-party storage (authDomain = the app's origin) on Safari; the popup from the tap handler is the primary path. See docs/auth-ios.md.
 - Node on Windows maps `/tmp` to `C:	mp` while the Git Bash heredoc writes to its own `/tmp`: pass files between them through the scratchpad.
+- `String.prototype.replace` treats `$$` in the replacement as one `$` (`page.$$(...)` became `page.$(...)`): patch with `split(a).join(b)` or the Edit tool.
+- A `//` comment pasted mid-line comments out the rest of that line: `test/syntax.test.js` runs `node --check` on every browser file so this fails fast, not only in the Edge smoke.
+- Straight-line km x a road factor badly underestimates Corsican drives to sights (Porto - Calvi 35 km is 2 h 15): highlight reach uses 2.4 min per km. Check a sample against known drive times after changing it.
+- Chosen highlights must beat taste: with a weak weight every persona lost a highlight that another route had (round 6: 0/6 tevreden). Explain a missing one with the routes that have it.
+- A day plan filled with whatever is near (hikes for a culture couple) costs more satisfaction than a free day: only use activities with a positive score.
+- A trip is a group with a `trip` child that every member writes: an edit must replace only its own fields on the latest version, or it wipes a co-traveller's change.

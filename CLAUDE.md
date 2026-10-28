@@ -1,6 +1,6 @@
 # Corsica: project guide for Claude
 
-A mobile travel planner. You swipe 25 accommodation cards and 25 activity cards (Tinder-style), which builds a taste profile. From that profile the app ranks itineraries with 3 stays per stop and an activity map, and groups can combine profiles. Built with the **`firebase-app` skill**: GitHub Pages + Firebase Realtime Database + Google login. Reference project: `C:\Users\Stefan\Coding\Michel`.
+A mobile travel planner. You swipe 25 accommodation cards and 25 activity cards (Tinder-style), which builds a taste profile. Per trip you set the dates (fixed or flexible), the party (names and birth years) and the highlights; the app proposes routes of exactly that length with a day-by-day plan, 3 stays per stop and an activity map. A trip is shared through a link and every member plans along. Built with the **`firebase-app` skill**: GitHub Pages + Firebase Realtime Database + Google login. Reference project: `C:\Users\Stefan\Coding\Michel`.
 
 This file is a **router**. Details live in the documents below.
 
@@ -13,13 +13,14 @@ This file is a **router**. Details live in the documents below.
 | Competitor research and roadmap to a real travel app | [`docs/travel-app-research.md`](docs/travel-app-research.md) |
 
 ## Map
-- **App:** `index.html`, `styles.css`, `app.js` (UI), `deck.js` (swipe physics), `maps.js` (Leaflet), `logic.js` (pure: profile, ranking, plan, filters).
-- **Data per destination:** `destinations/<name>/` holds `places.json`, `routes.json`, `catalog-*.json` and `img/`. Shared files are `destinations/tags.json` (a CLOSED tag vocabulary) and `destinations/swipe-deck.json` with `img/deck/`.
+- **App:** `index.html`, `styles.css`, `app.js` (UI), `deck.js` (swipe physics), `maps.js` (Leaflet), `logic.js` (pure: profile, ranking, trips, day plan, filters).
+- **Data per destination:** `destinations/<name>/` holds `places.json`, `routes.json` (templates), `highlights.json`, `catalog-*.json` and `img/`. Shared files are `destinations/tags.json` (a CLOSED tag vocabulary) and `destinations/swipe-deck.json` with `img/deck/`.
 - **Backend:** `store.js` picks `store-dev.js` on localhost and `store-firebase.js` everywhere else. `dev-server.mjs` mirrors the rules.
 - **Rules:** `scripts/gen-rules.mjs` generates `database.rules.json`. Never edit the JSON by hand.
 - **Tools:**
   - `tools/smoke.mjs`, `firebase-smoke.mjs`, `simulate.mjs` (proposal per k);
   - `curve.mjs` (learning curve; `--check` gives 0 violations);
+  - `trip-proposal.mjs` (one trip as text, for persona tests);
   - `edge.mjs`.
 
 ## Rules for Claude
