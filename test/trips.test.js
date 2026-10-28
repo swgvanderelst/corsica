@@ -314,8 +314,23 @@ test('rankRoutes on a trip: no more stops than the trip allows, the generated on
   assert.ok(L.rankRoutes(routes, L.emptyProfile(), ctx).every(p => !p.tag));
 });
 
-test('dayPlan: only a clear fit is planned (at least ACT_MIN and ACT_REL of the best at the stop)', () => {
-  const acts = [{ item: mkAct('best', ['culture']), score: 0.5 }, { item: mkAct('ok', ['town']), score: 0.25 }, { item: mkAct('meh', ['hike']), score: 0.15 }, { item: mkAct('low', ['hike']), score: 0.05 }];
-  const ids = L.dayPlan(mkPlan([{ stay: 's', nights: 5, acts }], [{ min: 120 }, { min: 60 }])).days.flatMap(d => [d.act, d.alt].filter(Boolean).map(a => a.item.id));
-  assert.deepEqual(ids.sort(), ['best', 'ok']);
+test('dayPlan: a calm party only gets a clear fit (else a free day); an active party a full programme; alternatives are always a clear fit', () => {
+  const acts = [{ item: mkAct('best', ['culture']), score: 0.5 }, { item: mkAct('ok', ['town']), score: 0.25 }, { item: mkAct('meh', ['hike']), score: 0.15 }, { item: mkAct('low', ['hike']), score: 0.05 }, { item: mkAct('no', ['hike']), score: -0.1 }];
+  const plan = () => mkPlan([{ stay: 's', nights: 6, acts }], [{ min: 120 }, { min: 60 }]);
+  const calm = L.dayPlan(plan(), { calm: true }).days;
+  assert.deepEqual(calm.flatMap(d => [d.act, d.alt].filter(Boolean).map(a => a.item.id)).sort(), ['best', 'ok']);
+  assert.ok(calm.some(d => d.kind === 'free'));
+  const busy = L.dayPlan(plan()).days;
+  assert.deepEqual(busy.filter(d => d.kind === 'activity').map(d => d.act.item.id).sort(), ['best', 'low', 'meh', 'ok']);
+  assert.ok(!busy.some(d => d.alt), 'no clear fit left for an alternative');
+  assert.ok(!busy.some(d => d.act && d.act.item.id === 'no'));
+});
+test('topAccommodations: a villa that suits children is no family resort for a party without them', () => {
+  const villa = { id: 'villa', region: 'r', name: 'v', priceLevel: 3, tags: { villa: 1, pool: 1, family: 0.9 } };
+  const resort = { id: 'resort', region: 'r', name: 'r', priceLevel: 3, tags: { camping: 1, pool: 1, family: 0.9 } };
+  const out = L.topAccommodations([resort, villa], 'r', L.emptyProfile(), 2, { prefs: { size: 4 } });
+  assert.equal(out.find(a => a.item.id === 'villa').tier, 0);
+  assert.equal(out.find(a => a.item.id === 'resort').tier, 2);
+  assert.equal(L.prefDelta(villa, {}), 0);
+  assert.equal(L.prefDelta(resort, {}), -0.225);
 });

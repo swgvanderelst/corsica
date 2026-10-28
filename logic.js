@@ -207,10 +207,12 @@ export function scoreItem(profile, item) {
   }
   return memberScore(profile || {}, it);
 }
+// how family-oriented a place is: a private villa or apartment that suits children is no family resort for the ones without
+const familyness = tw => (tw.villa >= 0.5 || tw.apartment >= 0.5 ? 0 : Math.max(tw.family || 0, tw.kids || 0));
 // children: without kids a family resort or kids club costs 0.25; with kids adults-only costs a little
 export function prefDelta(item, prefs) {
   const tw = tagWeights(item);
-  return prefs && prefs.kids ? -0.1 * (tw.adults_only || 0) : -0.25 * Math.max(tw.family || 0, tw.kids || 0);
+  return prefs && prefs.kids ? -0.1 * (tw.adults_only || 0) : -0.25 * familyness(tw) || 0;
 }
 const likes = (p, t) => !!p && !!p.w && p.w[t] >= 0.3 && ((p.c && p.c[t]) || 0) >= 1;
 const negative = (p, t) => !!p && !!p.w && p.w[t] < 0 && ((p.c && p.c[t]) || 0) >= 1;
@@ -293,7 +295,7 @@ export function topAccommodations(accs, region, profile, n = 3, { labels = {}, l
   };
   const soft = a => {
     const tw = tagWeights(a), ty = typeOf(a);
-    return (ty && ex.has(ty)) || (noKids && Math.max(tw.family || 0, tw.kids || 0) >= 0.8) || (hostelsOut && tw.budget >= 0.5)
+    return (ty && ex.has(ty)) || (noKids && familyness(tw) >= 0.8) || (hostelsOut && tw.budget >= 0.5)
       || (adventure && (ty === 'hotel' || (tw.pool >= 0.8 && ty !== 'camping' && ty !== 'glamping')));
   };
   const tierOf = (a, i) => {
@@ -519,18 +521,18 @@ const hlCredit = placed => placed.reduce((a, p) => a + (p.stop < 0 ? 0 : p.min <
 // With a trip the list leads with the best route, then "less driving" and "all highlights" when they are different routes (plan.tag).
 export function rankRoutes(routes, profile, ctx, opts) {
   let fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
+  let extra = []; // one stop more than the trip allows: only a candidate for "all highlights"
   if (ctx.trip && ctx.nights) {
     const limit = maxStopsFor(ctx.nights, burdenWeight(profile, ctx.prefs) >= 0.3);
+    const hls = ctx.highlights || [], aff = regionAffinity(profile, ctx.regionTags || {});
+    const promise = r => (hls.length ? 10 * hlCredit(placeHighlights(r.stays, hls, ctx.places, r.nights.map(n => Math.max(0, n - 1)))) / hls.length : 0)
+      + 2 * regionMatch(r.profile, aff) - r.legs.reduce((a, l) => a + l.min, 0) / 300;
+    const best = (list, n) => list.map(r => ({ r, v: promise(r) })).sort((a, b) => b.v - a.v || a.r.id.localeCompare(b.r.id)).slice(0, n).map(x => x.r);
+    if (hls.length) extra = best(fitted.filter(r => r.stays.length === limit + 1), 8);
     const fewer = fitted.filter(r => r.stays.length <= limit);
     if (fewer.length) fitted = fewer;
     const gen = fitted.filter(r => r.generated);
-    if (gen.length > GEN_KEEP) {
-      const hls = ctx.highlights || [], aff = regionAffinity(profile, ctx.regionTags || {});
-      const promise = r => (hls.length ? 10 * hlCredit(placeHighlights(r.stays, hls, ctx.places, r.nights.map(n => Math.max(0, n - 1)))) / hls.length : 0)
-        + 2 * regionMatch(r.profile, aff) - r.legs.reduce((a, l) => a + l.min, 0) / 300;
-      const keep = new Set(gen.map(r => ({ r, v: promise(r) })).sort((a, b) => b.v - a.v || a.r.id.localeCompare(b.r.id)).slice(0, GEN_KEEP).map(x => x.r));
-      fitted = fitted.filter(r => !r.generated || keep.has(r));
-    }
+    if (gen.length > GEN_KEEP) { const keep = new Set(best(gen, GEN_KEEP)); fitted = fitted.filter(r => !r.generated || keep.has(r)); }
   }
   const plans = fitted.map(r => planRoute(r, profile, ctx, opts));
   if (!plans.length) return plans;
@@ -562,7 +564,11 @@ export function rankRoutes(routes, profile, ctx, opts) {
     const best = out[0], hls = (ctx.highlights || []).length;
     const drive = p => p.route.legs.reduce((a, l) => a + l.min, 0); // the driving the app shows
     const less = out.findIndex((p, i) => i > 0 && drive(p) <= 0.75 * drive(best) && p.parts.highlights >= best.parts.highlights - 0.4);
-    const all = hls && best.placed.some(x => x.stop < 0) ? out.findIndex((p, i) => i > 0 && p.placed.every(x => x.stop >= 0)) : -1;
+    let all = hls && best.placed.some(x => x.stop < 0) ? out.findIndex((p, i) => i > 0 && p.placed.every(x => x.stop >= 0)) : -1;
+    if (all < 0 && hls && best.placed.some(x => x.stop < 0)) { // none within the stop limit: the best with one stop more
+      const more = extra.map(r => planRoute(r, profile, ctx, opts)).filter(p => p.placed.every(x => x.stop >= 0)).sort((a, b) => b.score - a.score)[0];
+      if (more) { more.rawScore = more.score; more.matchPct = null; out.push(more); all = out.length - 1; }
+    }
     const lead = [];
     if (all > 0) { out[all].tag = 'all'; lead.push(out[all]); }
     if (less > 0 && less !== all) { out[less].tag = 'less'; lead.push(out[less]); }
@@ -912,7 +918,8 @@ export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
   plan.stops.forEach((s, si) => {
     const queue = picks.filter(p => p.stop === si).sort((a, b) => a.min - b.min || a.hl.id.localeCompare(b.hl.id));
     const top = Math.max(0, ...(s.acts || []).map(a => a.score));
-    const acts = (s.acts || []).filter(a => a.score >= Math.max(ACT_MIN, ACT_REL * top)); // only a clear fit; the rest of the days stay free
+    const clear = (s.acts || []).filter(a => a.score >= Math.max(ACT_MIN, ACT_REL * top));
+    const acts = calm ? clear : (s.acts || []).filter(a => a.score > 0); // a calm party gets free days rather than a so-so outing; an active one a full programme
     const free = Math.max(0, s.nights - 1);
     if (queue.length > free) unplaced.push(...queue.splice(free).map(p => p.hl)); // more highlights than days at this stop
     for (let k = 0; k < s.nights; k++) {
@@ -945,7 +952,7 @@ export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
       } else { push({ kind: 'free', stay: s.stay }); streak = 0; prevCluster = null; }
     }
     // an alternative per activity day: something at this stop that is nowhere else in the plan
-    for (const d of days) if (d.stay === s.stay && d.kind === 'activity' && !d.alt) { const alt = next(acts); if (alt) { used.add(alt.item.id); d.alt = alt; } }
+    for (const d of days) if (d.stay === s.stay && d.kind === 'activity' && !d.alt) { const alt = next(clear); if (alt) { used.add(alt.item.id); d.alt = alt; } }
   });
   push({ kind: 'depart', stay: plan.stops.length ? plan.stops[plan.stops.length - 1].stay : '', leg: legs[legs.length - 1] || null });
   return { days, unplaced };
