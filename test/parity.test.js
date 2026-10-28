@@ -312,6 +312,11 @@ test('parity: every member edits the trip settings, validated; strangers and rem
     ['bob', 'setTrip', { t: { ...TRIP, pace: 'calm' } }, 'ok'],
     ['bob', 'setTrip', { t: { ...TRIP, pace: 'fast' } }, 'deny'],
     ['bob', 'setTrip', { t: { ...TRIP, pace: 1 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, maxLeg: 180 } }, 'ok'],
+    ['bob', 'setTrip', { t: { ...TRIP, maxLeg: 30 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, maxLeg: 601 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, maxLeg: 150.5 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, maxLeg: '3u' } }, 'deny'],
     ['bob', 'setTrip', { t: { ...TRIP, party: {} } }, 'ok'], // an empty party is simply absent
     ['bob', 'setTrip', { t: { nights: 14 } }, 'deny'], // dest missing
     ['anna', 'remove', { target: 'bob' }, 'ok'],

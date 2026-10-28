@@ -161,6 +161,7 @@ try {
   for (let i = 0; i < 3; i++) await click(anna, '[data-a=wiz-n][data-d="1"]');
   assert.equal(await text(anna, '#wnights'), '14');
   await click(anna, '[data-a=wiz-pace][data-v=normal]'); await sleep(200);
+  await click(anna, '[data-a=wiz-leg][data-v="240"]'); await sleep(200);
   assert.equal(await anna.$eval('[data-a=wiz-pace][data-v=normal]', e => e.getAttribute('aria-pressed')), 'true');
   await sleep(400); await shot(anna, '07-trip-when');
   await click(anna, '[data-a=wiz-next]');
@@ -180,6 +181,7 @@ try {
   assert.equal(srv.db().groups[gid].name, 'Zomer 2027');
   assert.equal(trip.nights, 14);
   assert.equal(trip.pace, 'normal');
+  assert.equal(trip.maxLeg, 240);
   assert.deepEqual(trip.months, [months[8], months[9]].sort().join(' '));
   assert.deepEqual(trip.party, { p0: { name: 'Anna', born: 1985 }, p1: { name: 'Mila', born: 2022 } });
   assert.deepEqual(trip.highlights.split(' ').sort(), ['hl-calvi', 'hl-corte', 'hl-palombaggia']);

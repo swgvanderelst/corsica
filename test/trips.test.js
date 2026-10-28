@@ -287,10 +287,10 @@ test('generateRoutes: every set of 1-4 stays once, from a ferry port, with real 
   assert.deepEqual(L.generateRoutes([], {}, {}), []);
 });
 test('drivePenalty / maxStopsFor: driving above a fair share costs, much more for a calm party; fewer stops for short or calm trips', () => {
-  assert.equal(L.DRIVE_FREE(10), 320);
-  assert.equal(L.drivePenalty(300, 10, false), 0);
-  near(L.drivePenalty(420, 10, false), 0.06);
-  near(L.drivePenalty(420, 10, true), 0.3); // calm: five times the normal rate
+  assert.equal(L.DRIVE_FREE(10), 450);
+  assert.equal(L.drivePenalty(420, 10, false), 0);
+  near(L.drivePenalty(550, 10, false), 0.03);
+  near(L.drivePenalty(550, 10, true), 0.3); // calm: ten times the normal rate
   assert.equal(L.drivePenalty(5000, 10, true), 1.2);
   assert.deepEqual([7, 10, 13, 14, 16, 28].map(n => L.maxStopsFor(n, false)), [2, 2, 3, 4, 4, 4]);
   assert.deepEqual([5, 7, 10, 13, 14].map(n => L.maxStopsFor(n, true)), [1, 1, 2, 2, 3]);
@@ -339,7 +339,7 @@ test('pace: the party chooses calm, normal or active; without a choice kids or a
   assert.deepEqual(['calm', 'normal', 'active'].map(p => L.maxStopsFor(14, p)), [3, 4, 4]);
   assert.deepEqual(['calm', 'normal', 'active'].map(p => L.maxStopsFor(9, p)), [2, 2, 3]);
   assert.equal(L.maxStopsFor(9, 'nonsense'), L.maxStopsFor(9, 'normal'));
-  near(L.drivePenalty(520, 10, 'active'), 0.06);
+  near(L.drivePenalty(550, 10, 'active'), 0.01);
   assert.equal(L.resolvePace('active', L.emptyProfile(), { kids: true }), 'active', 'a chosen pace wins');
   assert.equal(L.resolvePace(undefined, L.emptyProfile(), { kids: true }), 'calm');
   assert.equal(L.resolvePace('', L.emptyProfile(), {}), 'normal');
@@ -366,4 +366,53 @@ test('eveningKinds: going out only for people who like it, eating for food or wi
   assert.deepEqual([...L.eveningKinds(foodie)], ['food']);
   assert.deepEqual([...L.eveningKinds(party)], ['night']);
   assert.deepEqual([...L.eveningKinds(L.emptyProfile())], []);
+});
+
+test('evenings are a bonus: they never take a day activity, also not at a later stop', () => {
+  const shared = mkAct('haven', ['food', 'town']);
+  const plan = mkPlan([
+    { stay: 's1', nights: 2, acts: [], evenings: [{ item: shared, score: 0.5 }] },
+    { stay: 's2', nights: 3, acts: [{ item: shared, score: 0.5 }], evenings: [] },
+  ], [{ min: 30 }, { min: 30 }, { min: 30 }]);
+  const { days } = L.dayPlan(plan, { evening: true });
+  assert.ok(days.some(d => d.stay === 's2' && d.act && d.act.item.id === 'haven'), 'the later stop still gets it as a day activity');
+  assert.ok(!days.some(d => d.evening && d.evening.item.id === 'haven'), 'and it is then no evening suggestion');
+  const without = L.dayPlan(plan).days.map(d => (d.act ? d.act.item.id : d.kind));
+  assert.deepEqual(days.map(d => (d.act ? d.act.item.id : d.kind)), without, 'the day programme is the same with or without evenings');
+});
+test('planRoute: going out is never a day activity and never in the score', () => {
+  const night = { id: 'disco', name: 'disco', lat: 42.56, lon: 8.76, durationH: 4, tags: { nightlife: 1 } };
+  const r = routes.find(x => x.id === 'g');
+  const partyGoer = L.profileFrom({ c1: 2 }, [{ id: 'c1', tags: ['nightlife'] }]);
+  const plan = L.planRoute(r, partyGoer, { ...ctx, act: [...ctx.act, night] });
+  assert.ok(plan.stops.every(s => !s.acts.some(a => a.item.id === 'disco')));
+  assert.equal(plan.score, L.planRoute(r, partyGoer, ctx).score, 'adding a nightlife place changes nothing in the score');
+  assert.ok(plan.stops[0].evenings.some(a => a.item.id === 'disco'), 'it is an evening suggestion instead');
+});
+
+test('evening places: a harbour with real nightlife is also for people who go out; a beach is never an evening', () => {
+  const r = routes.find(x => x.id === 'g');
+  const partyGoer = L.profileFrom({ c1: 2 }, [{ id: 'c1', tags: ['nightlife'] }]);
+  const harbour = { id: 'harbour', name: 'h', lat: 42.56, lon: 8.76, durationH: 2, tags: { food: 1, nightlife: 0.6 } };
+  const beach = { id: 'beachbar', name: 'b', lat: 42.56, lon: 8.76, durationH: 3, tags: { beach: 1, food: 0.6, nightlife: 0.3 } };
+  const ev = L.planRoute(r, partyGoer, { ...ctx, act: [harbour, beach] }).stops[0].evenings.map(a => a.item.id);
+  assert.deepEqual(ev, ['harbour']);
+});
+
+test('maxLeg: no route with a longer drive on one day than the party accepts (unless nothing is left)', () => {
+  const all = [...routes, ...generated];
+  const out = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 14, maxLeg: 150 });
+  assert.ok(out.length > 0);
+  assert.ok(out.every(p => p.route.legs.every(l => l.min <= 150)));
+  const none = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 14, maxLeg: 60 });
+  assert.ok(none.length > 0, 'an impossible limit keeps the proposals instead of an empty screen');
+});
+test('highlightsFarApart: both ends of the island in a short trip', () => {
+  const H = json('../destinations/corsica/highlights.json');
+  const pick = ids => H.filter(h => ids.includes(h.id));
+  const far = pick(['hl-calvi', 'hl-palombaggia']);
+  assert.ok(L.highlightsFarApart(far, 7) >= 100);
+  assert.equal(L.highlightsFarApart(far, 14), 0, 'two weeks is enough time');
+  assert.equal(L.highlightsFarApart(pick(['hl-palombaggia', 'hl-bonifacio']), 7), 0, 'close together');
+  assert.equal(L.highlightsFarApart([], 7), 0);
 });

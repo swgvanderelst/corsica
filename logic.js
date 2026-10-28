@@ -456,6 +456,8 @@ export function regionVeto(routeProfile, profile, veto) {
 }
 // whether evening suggestions fit: the person likes going out, food or wine
 export const likesEvenings = profile => eveningKinds(profile).size > 0;
+// an evening place for these kinds: a going-out or food place, and for people who go out also a food place with real nightlife (a harbour)
+const eveningFits = (a, kinds) => { const c = clusterOf(a); return (c === 'night' || c === 'food') && (kinds.has(c) || (kinds.has('night') && tagWeights(a).nightlife >= 0.5)); };
 // which evenings: going out only for people who like it, eating for people who like food or wine
 export function eveningKinds(profile) {
   const liked = t => likes(profile, t) || membersOf(profile).some(m => likes(m, t));
@@ -473,10 +475,11 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
     const xy = ctx.places[stay];
     const acc = topAccommodations(ctx.acc, stay, profile, 3, { labels, prefs: ctx.prefs, vocab: vocab.acc });
     const near = { labels, coast: !!(stays[stay] && stays[stay].coast), vocab: vocab.act, prefs: ctx.prefs };
-    const acts = xy ? activitiesNear(ctx.act, { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm, n: nActs }) : [];
-    // for the evenings: going out and eating near the stay
+    // the day programme is what counts: going out is an evening thing and never a day activity or part of the score
+    const acts = xy ? activitiesNear(ctx.act.filter(a => clusterOf(a) !== 'night'), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm, n: nActs }) : [];
+    // only suggestions for the evenings (a bonus, not scored): going out and eating near the stay
     const kinds = eveningKinds(profile);
-    const evenings = xy && kinds.size ? activitiesNear(ctx.act.filter(a => kinds.has(clusterOf(a))), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm: 20, n: 6 }) : [];
+    const evenings = xy && kinds.size ? activitiesNear(ctx.act.filter(a => eveningFits(a, kinds)), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm: 20, n: 6 }) : [];
     const accBest = acc.length ? acc[0].score : 0, actMean = mean(acts.slice(0, TOP_ACTS).map(a => a.score));
     const cover = liked.length ? liked.filter(t => acts.some(a => tagWeights(a.item)[t] >= 0.5)).length / liked.length : 0;
     const score = 0.55 * accBest + 0.25 * actMean + 0.2 * 0.5 * cover;
@@ -520,10 +523,10 @@ export function matchPercentages(scores) {
 }
 // ---- driving on a trip ----
 // a fair amount of driving for the trip length; more costs the route, twice as much for a calm party (kids, rest, little effort)
-export const DRIVE_FREE = (nights) => 120 + 20 * nights;
+export const DRIVE_FREE = (nights) => 150 + 30 * nights; // a 14-night round trip of 4 stays may drive about 10 hours without a cost
 // the pace of a trip: calm (little moving), normal, active (a round trip). Chosen in the trip, else calm with kids or a laid-back taste.
 export const PACES = ['calm', 'normal', 'active'];
-const PACE = { calm: { perStop: 4.5, rate: 0.003 }, normal: { perStop: 3.5, rate: 0.0006 }, active: { perStop: 3, rate: 0.0003 } };
+const PACE = { calm: { perStop: 4.5, rate: 0.003 }, normal: { perStop: 3.5, rate: 0.0003 }, active: { perStop: 3, rate: 0.0001 } };
 const paceOf = p => PACE[p === true ? 'calm' : p === false ? 'normal' : p] || PACE.normal; // true/false: calm or not
 export const resolvePace = (pace, profile, prefs) => (PACES.includes(pace) ? pace : burdenWeight(profile, prefs) >= 0.3 ? 'calm' : 'normal');
 export const drivePenalty = (minutes, nights, pace) => Math.min(1.2, paceOf(pace).rate * Math.max(0, minutes - DRIVE_FREE(nights)));
@@ -539,6 +542,8 @@ export function rankRoutes(routes, profile, ctx, opts) {
   let fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
   let extra = []; // one stop more than the trip allows: only a candidate for "all highlights"
   if (ctx.trip && ctx.nights) {
+    // the longest drive the party accepts on one day (ctx.maxLeg minutes): longer routes drop out, unless nothing is left
+    if (ctx.maxLeg) { const ok = fitted.filter(r => r.legs.every(l => l.min <= ctx.maxLeg)); if (ok.length) fitted = ok; }
     const limit = maxStopsFor(ctx.nights, resolvePace(ctx.pace, profile, ctx.prefs));
     const hls = ctx.highlights || [], aff = regionAffinity(profile, ctx.regionTags || {});
     const promise = r => (hls.length ? 10 * hlCredit(placeHighlights(r.stays, hls, ctx.places, r.nights.map(n => Math.max(0, n - 1)))) / hls.length : 0)
@@ -912,6 +917,12 @@ export function generateRoutes(templates, places, stays, { ports = GEN_PORTS, ma
 
 // the routes (ids, ranking order) that give this highlight a day: the explanation for a highlight that does not fit
 export const routesWith = (plans, hlId) => (plans || []).filter(p => (p.placed || []).some(x => x.hl.id === hlId && x.stop >= 0)).map(p => p.route.id);
+// chosen highlights far apart for the trip length: the warning in the wizard (both ends of the island in a week means a lot of driving)
+export function highlightsFarApart(hls, nights) {
+  let spread = 0;
+  for (const a of hls || []) for (const b of hls || []) spread = Math.max(spread, distanceKm(a, b));
+  return nights > 0 && ((spread >= 100 && nights <= 8) || (spread >= 150 && nights <= 11)) ? Math.round(spread) : 0;
+}
 // highlights from a file: safe ids, real coordinates, a category and the activity ids it stands for
 export function sanitizeHighlights(list) {
   return (Array.isArray(list) ? list : []).filter(h => h && typeof h.id === 'string' && /^[-a-z0-9]{1,40}$/.test(h.id) && Number.isFinite(numOr(h.lat, NaN)) && Number.isFinite(numOr(h.lon, NaN)))
@@ -923,7 +934,8 @@ const light = it => (it.durationH || 0) <= 3 && !heavy(it);
 // the other days get the best activities near the stop that fit the taste (score > 0; no repeats, another kind than the day before when
 // possible), else a free day; with kids or a laid-back profile a quiet day follows two heavy ones. After a long drive the travel day
 // stays empty. Exactly nights + 1 days (the last one is the way back to the ferry).
-// opts.evening: every day but the last also gets an evening suggestion (going out or eating near the stay) while there are new ones.
+// opts.evening: afterwards every day but the last gets an evening suggestion (going out or eating near the stay) while there are new
+// ones. It is a bonus: it never takes an activity away from any day, and never one that is planned for a day.
 // opts: { picks: placeHighlights() with .item (the activity), calm, evening, start (YYYY-MM-DD for fixed dates) }
 export function dayPlan(plan, { picks = [], calm = false, evening = false, start = '' } = {}) {
   const days = [], used = new Set(), legs = plan.route.legs || [];
@@ -970,8 +982,14 @@ export function dayPlan(plan, { picks = [], calm = false, evening = false, start
     }
     // an alternative per activity day: something at this stop that is nowhere else in the plan
     for (const d of days) if (d.stay === s.stay && d.kind === 'activity' && !d.alt) { const alt = next(clear); if (alt) { used.add(alt.item.id); d.alt = alt; } }
-    if (evening) for (const d of days) if (d.stay === s.stay && !d.evening) { const e = next((s.evenings || []).filter(a => a.score > 0)); if (e) { used.add(e.item.id); d.evening = e; } }
   });
+  if (evening) {
+    const eve = new Set();
+    for (const s of plan.stops) for (const d of days) if (d.stay === s.stay) {
+      const e = (s.evenings || []).find(a => a.score > 0 && !used.has(a.item.id) && !eve.has(a.item.id));
+      if (e) { eve.add(e.item.id); d.evening = e; }
+    }
+  }
   push({ kind: 'depart', stay: plan.stops.length ? plan.stops[plan.stops.length - 1].stay : '', leg: legs[legs.length - 1] || null });
   return { days, unplaced };
 }

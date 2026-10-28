@@ -24,6 +24,7 @@ export function tripOf(t) {
   if (t.start && t.end) { out.start = t.start; out.end = t.end; } else if (t.months) out.months = t.months;
   if (Array.isArray(t.highlights) && t.highlights.length) out.highlights = t.highlights.join(' ');
   if (L.PACES.includes(t.pace)) out.pace = t.pace;
+  if (Number.isInteger(t.maxLeg) && t.maxLeg >= 60) out.maxLeg = t.maxLeg;
   return out;
 }
 
@@ -34,7 +35,7 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   const prefs = L.tripPrefs([own], trip);
   const profile = L.profileFrom(swipes, [...data.deck.acc, ...data.deck.act], L.effectiveOverrides(overrides, prefs));
   const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs,
-    trip: true, pace: trip.pace, nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
+    trip: true, pace: trip.pace, maxLeg: trip.maxLeg, nights: L.tripNights(trip), highlights: L.highlightIds(trip).map(id => hls.find(h => h.id === id)).filter(Boolean), vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
   const routes = [...data.routes, ...L.generateRoutes(data.routes, data.places.places, L.sanitizePlaces(data.places).stays)]; // templates plus the generated ones, as in the app
   const ranked = L.rankRoutes(routes, profile, ctx);
   const plan = (route && ranked.find(p => p.route.id === route.toLowerCase())) || ranked[0];
@@ -66,9 +67,9 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
     else if (d.kind === 'free') lines.push(head + ((data.places.stays[d.stay] || {}).coast === false ? 'vrije dag, rustig rondkijken' : 'vrije dag: strand of zwembad'));
     else lines.push(head + `terug naar de ferry${d.leg ? `, ${d.leg.from} naar ${d.leg.to} (${fmt(d.leg.min)})` : ''}`);
   }
-  for (let i = 0; i < days.length; i++) if (days[i].evening) lines[lines.length - days.length + i] += ` · 's avonds: ${days[i].evening.item.name}`;
+  for (let i = 0; i < days.length; i++) if (days[i].evening) lines[lines.length - days.length + i] += ` · suggestie voor de avond: ${days[i].evening.item.name}`;
   lines.push('');
-  lines.push(`Reistempo: ${L.resolvePace(trip.pace, profile, prefs)}${trip.pace ? ' (gekozen)' : ' (afgeleid)'}`);
+  lines.push(`Reistempo: ${L.resolvePace(trip.pace, profile, prefs)}${trip.pace ? ' (gekozen)' : ' (afgeleid)'} · langste rit: ${trip.maxLeg ? fmt(trip.maxLeg) : 'geen limiet'}`);
   lines.push('');
   lines.push('Verblijven per stop (top 3):');
   for (const s of plan.stops) {

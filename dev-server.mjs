@@ -44,11 +44,12 @@ const MONTHS_RE = /^20[2-9][0-9]-(0[1-9]|1[0-2])( 20[2-9][0-9]-(0[1-9]|1[0-2])){
 const peopleOk = v => isObj(v) && Object.entries(v).every(([k, p]) => PERSON_KEY_RE.test(k) && isObj(p)
   && Object.keys(p).every(f => ['name', 'born', 'uid'].includes(f)) && isStr(p.name, 1, 40)
   && (!('born' in p) || (isNum(p.born) && p.born >= 1920 && p.born <= 2040 && p.born % 1 === 0)) && (!('uid' in p) || isKey(p.uid)));
-const tripOk = t => isObj(t) && Object.keys(t).every(f => ['dest', 'nights', 'start', 'end', 'months', 'party', 'highlights', 'pace'].includes(f))
+const tripOk = t => isObj(t) && Object.keys(t).every(f => ['dest', 'nights', 'start', 'end', 'months', 'party', 'highlights', 'pace', 'maxLeg'].includes(f))
   && isKey(t.dest) && isNum(t.nights) && t.nights >= 3 && t.nights <= 28 && t.nights % 1 === 0
   && (!('start' in t) || (typeof t.start === 'string' && DATE_RE.test(t.start))) && (!('end' in t) || (typeof t.end === 'string' && DATE_RE.test(t.end)))
   && (!('months' in t) || (typeof t.months === 'string' && MONTHS_RE.test(t.months))) && (!('party' in t) || peopleOk(t.party))
   && (!('pace' in t) || ['calm', 'normal', 'active'].includes(t.pace))
+  && (!('maxLeg' in t) || (isNum(t.maxLeg) && t.maxLeg >= 60 && t.maxLeg <= 600 && t.maxLeg % 1 === 0))
   && (!('highlights' in t) || (typeof t.highlights === 'string' && t.highlights.length <= 1000 && /^[-a-z0-9 ]*$/.test(t.highlights)));
 const numMap = (v, keyRe, lo, hi) => isObj(v) && Object.keys(v).length > 0 && Object.entries(v).every(([k, x]) => keyRe.test(k) && isNum(x) && x >= lo && x <= hi);
 
