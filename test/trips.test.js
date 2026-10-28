@@ -407,12 +407,3 @@ test('maxLeg: no route with a longer drive on one day than the party accepts (un
   const none = L.rankRoutes(all, L.emptyProfile(), { ...ctx, stays: sp.stays, trip: true, nights: 14, maxLeg: 60 });
   assert.ok(none.length > 0, 'an impossible limit keeps the proposals instead of an empty screen');
 });
-test('highlightsFarApart: both ends of the island in a short trip', () => {
-  const H = json('../destinations/corsica/highlights.json');
-  const pick = ids => H.filter(h => ids.includes(h.id));
-  const far = pick(['hl-calvi', 'hl-palombaggia']);
-  assert.ok(L.highlightsFarApart(far, 7) >= 100);
-  assert.equal(L.highlightsFarApart(far, 14), 0, 'two weeks is enough time');
-  assert.equal(L.highlightsFarApart(pick(['hl-palombaggia', 'hl-bonifacio']), 7), 0, 'close together');
-  assert.equal(L.highlightsFarApart([], 7), 0);
-});

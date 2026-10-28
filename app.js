@@ -2,7 +2,7 @@
 // ranked routes of exactly the trip length with a day-by-day plan, 3 stays per stop and a map of activities.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, generateRoutes, dayPlan, resolvePace, likesEvenings, highlightsFarApart, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, routesWith, generateRoutes, dayPlan, resolvePace, likesEvenings, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -448,10 +448,10 @@ function wizHl(w) {
   return `<div class="large">Wat willen jullie zien?</div><p class="subt">Kies de hoogtepunten die in het schema moeten. De app zoekt de route die ze het best combineert.</p>
     <div class="warnbox" id="hlcount">${hlCountText(w)}</div>${groups || '<p class="subt">Voor deze bestemming zijn nog geen highlights.</p>'}`;
 }
-// the counter above the highlights, with a warning when they are many or far apart for the nights
+// the counter above the highlights, with a note when there are more than days to fill
 function hlCountText(w) {
-  const n = wizNights(w), far = highlightsFarApart([...w.hl].map(hlById).filter(Boolean), n);
-  return `${w.hl.size} gekozen${n && w.hl.size > Math.max(1, n - 3) ? ` · veel voor ${n} nachten: misschien past niet alles` : ''}${far ? ` · deze highlights liggen tot ${far} km uit elkaar: in ${n} nachten betekent dat veel rijden of een highlight laten vallen` : ''}`;
+  const n = wizNights(w);
+  return `${w.hl.size} gekozen${n && w.hl.size > Math.max(1, n - 3) ? ` · veel voor ${n} nachten: misschien past niet alles` : ''}`;
 }
 function tripFromWiz(w) {
   const n = wizNights(w);

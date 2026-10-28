@@ -917,12 +917,6 @@ export function generateRoutes(templates, places, stays, { ports = GEN_PORTS, ma
 
 // the routes (ids, ranking order) that give this highlight a day: the explanation for a highlight that does not fit
 export const routesWith = (plans, hlId) => (plans || []).filter(p => (p.placed || []).some(x => x.hl.id === hlId && x.stop >= 0)).map(p => p.route.id);
-// chosen highlights far apart for the trip length: the warning in the wizard (both ends of the island in a week means a lot of driving)
-export function highlightsFarApart(hls, nights) {
-  let spread = 0;
-  for (const a of hls || []) for (const b of hls || []) spread = Math.max(spread, distanceKm(a, b));
-  return nights > 0 && ((spread >= 100 && nights <= 8) || (spread >= 150 && nights <= 11)) ? Math.round(spread) : 0;
-}
 // highlights from a file: safe ids, real coordinates, a category and the activity ids it stands for
 export function sanitizeHighlights(list) {
   return (Array.isArray(list) ? list : []).filter(h => h && typeof h.id === 'string' && /^[-a-z0-9]{1,40}$/.test(h.id) && Number.isFinite(numOr(h.lat, NaN)) && Number.isFinite(numOr(h.lon, NaN)))
