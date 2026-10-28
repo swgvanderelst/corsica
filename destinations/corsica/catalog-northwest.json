@@ -31,7 +31,11 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://lavilla.fr/en/stay/suites/2-bedroom-suite-with-2-bathrooms",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-la-signoria-calvi",
@@ -62,7 +66,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.expedia.com/Calvi-Hotels-La-Signoria.h1314937.Hotel-Information",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-kasano-calvi",
@@ -91,7 +99,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 3,
+      "familyRooms": false,
+      "capacitySource": "https://all.accor.com/hotel/C1V2/index.fr.shtml",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-onda-calvi",
@@ -118,7 +130,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.booking.com/hotel/fr/onda.html",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-rocabella-ile-rousse",
@@ -146,7 +160,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.hotel-rocabella.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-a-piattatella-monticello",
@@ -176,7 +192,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.apiattatella.fr/",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-saletta-mare-ile-rousse",
@@ -207,7 +225,9 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "visit-corsica.com listing",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/RESIDENCE-SALETTA-MARE",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-serenada-algajola",
@@ -235,7 +255,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.hotelserenada-algajola.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-les-castors-calvi",
@@ -265,7 +287,11 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.camping-castors.fr/wp-content/uploads/brochureweb-Sejoya-2023.pdf",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-lodge-saleccia-calvi",
@@ -295,7 +321,11 @@
       "verified": "2026-10-27",
       "noAirco": true,
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://camping-calvi.com/hebergement/lodge-saleccia/",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-paradella-calenzana",
@@ -323,7 +353,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.campeggi.com/en/france/camping-camping-locations-paradella-313533313466",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-demeure-loredana-stflorent",
@@ -353,7 +387,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.expedia.com/Saint-Florent-hotels-Demeure-Loredana-.h4001909.Hotel-information",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-la-roya-stflorent",
@@ -381,7 +419,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.expedia.com/Saint-Florent-Hotels-La-Roya.h68891556.Hotel-Information",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-tettola-stflorent",
@@ -408,7 +450,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.hoteltettola.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-dolce-notte-stflorent",
@@ -434,7 +478,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 10,
+      "familyRooms": true,
+      "capacitySource": "https://www.hotel-dolce-notte.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-auberge-u-lustincone-patrimonio",
@@ -464,7 +512,9 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.u-lustincone.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-la-dimora-oletta",
@@ -497,7 +547,11 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.fr.lastminute.com/hotel/france/oletta/la-dimora_hid-2630457",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-u-palazzu-serenu-oletta",
@@ -527,7 +581,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.i-escape.com/u-palazzu-serenu",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-kalliste-stflorent",
@@ -554,7 +612,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://homair.com/en/campsite/kalliste/accommodations",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-olzo-stflorent",
@@ -580,7 +642,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.campingolzo.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-castel-brando-erbalunga",
@@ -610,7 +676,9 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.castelbrando.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-hotel-scandola-piana",
@@ -637,7 +705,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.selectour.com/iles/sejour/corse/ajaccio/hotel-scandola-avec-vols-reguliers/464027",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-hotel-capo-rosso-piana",
@@ -664,7 +736,10 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 3,
+      "capacitySource": "https://www.travelocity.com/Piana-Hotels-Hotel-Capo-Rosso.h1718967.Hotel-Information",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-les-roches-rouges-piana",
@@ -691,7 +766,11 @@
       },
       "photoGeneric": false,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 5,
+      "familyRooms": true,
+      "capacitySource": "https://www.lesrochesrouges.com",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-capu-seninu-porto",
@@ -718,7 +797,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.gites.fr/gites_residence-hoteliere-capu-seninu_porto-ota_h611447_en.htm",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-les-flots-bleus-porto",
@@ -744,7 +827,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 3,
+      "familyRooms": false,
+      "capacitySource": "https://www.france-voyage.com/hotels/hotel-porto-1377451.htm",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-les-oliviers-porto",
@@ -774,7 +861,11 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 5,
+      "familyRooms": true,
+      "capacitySource": "https://www.gites.fr/gites_camping-les-oliviers_porto-ota_h1450449_es.htm",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-sole-e-vista-porto",
@@ -803,7 +894,11 @@
       "photoGeneric": true,
       "verified": "2026-10-27",
       "evSource": "official website",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.camping-sole-e-vista.fr",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-camping-torraccia-cargese",
@@ -830,7 +925,11 @@
       },
       "photoGeneric": true,
       "verified": "2026-10-27",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "https://www.toocamp.com/france/camping-torraccia-c26631.html",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-calvi-relais-jeunesse-carabellu",
@@ -854,7 +953,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:Corse_baie_de_Calvi.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://en.balagne-corsica.com/hebergement-collec/relais-international-de-la-jeunesse/",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-calenzana-gite-municipal",
@@ -878,7 +979,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:Calenzana-Village.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.visit-corsica.com/fr/Mes-Favoris/GITE-D-ETAPE-COMMUNAL",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-calenzana-a-casa",
@@ -903,7 +1006,11 @@
         "page": "https://commons.wikimedia.org/wiki/File:Village_de_Calenzana.JPG"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Locatifs/A-CASA",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-pigna-casa-musicale",
@@ -929,7 +1036,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:Vue_Village_-_Pigna_(FR2B)_-_2021-09-06_-_1.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/CASA-MUSICALE",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-pigna-palazzu",
@@ -955,7 +1064,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:PIGNA_LE_VILLAGE.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.visit-corsica.com/de/layout/set/print/Carnet-de-voyage/PALAZZU-PIGNA",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-olivella-corbara",
@@ -983,7 +1094,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:Corbara-Village.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/L-OLIVELLA",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-porto-chez-marie-ota",
@@ -1009,7 +1122,10 @@
         "page": "https://commons.wikimedia.org/wiki/File:Corse-du-Sud_Ota.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 12,
+      "capacitySource": "https://www.gite-chez-marie.com/",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-porto-ustaria-di-a-rota",
@@ -1034,7 +1150,9 @@
         "page": "https://commons.wikimedia.org/wiki/File:Marignana-maison.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "capacitySource": "https://www.ouestcorsica.com/hebergements/ustaria-di-a-rota/",
+      "capacityChecked": "2026-10-28"
     },
     {
       "id": "acc-marina-darone-piana",
@@ -1064,7 +1182,11 @@
         "page": "https://commons.wikimedia.org/wiki/File:Plage_d'arone.jpg"
       },
       "verified": "2026-10-28",
-      "facilitiesChecked": "2026-10-28"
+      "facilitiesChecked": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "capacitySource": "http://www.marina-arone.com/",
+      "capacityChecked": "2026-10-28"
     }
   ],
   "activities": [
@@ -1090,7 +1212,8 @@
         "author": "Isiwal",
         "page": "https://commons.wikimedia.org/wiki/File:Corsica_Calvi_port_citadelle.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-grande-plage-calvi",
@@ -1113,7 +1236,8 @@
         "author": "Fr.Latreille",
         "page": "https://commons.wikimedia.org/wiki/File:Calvi-plage-87.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-notre-dame-de-la-serra",
@@ -1136,7 +1260,8 @@
         "author": "Dnalor 01",
         "page": "https://commons.wikimedia.org/wiki/File:Bucht_von_Calvi,_Blick_von_Notre-Dame_de_La_Serra.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-revellata",
@@ -1160,7 +1285,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Revellata-phare.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-trinichellu",
@@ -1184,7 +1310,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Calvi_arr%C3%AAt_CFC_Balagne_Orizonte_Novu.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-ile-rousse",
@@ -1209,7 +1336,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Ile-Rousse_march%C3%A9_couvert.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-pigna",
@@ -1233,7 +1361,8 @@
         "author": "Tim Tim (VD fr)",
         "page": "https://commons.wikimedia.org/wiki/File:Pigna-Corse.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-sant-antonino",
@@ -1256,7 +1385,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:StAntonino-pano.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-arinella-lumio",
@@ -1280,7 +1410,8 @@
         "author": "Chabe01",
         "page": "https://commons.wikimedia.org/wiki/File:Plage_Sainte_Restitude_-_Lumio_(FR2B)_-_2021-09-11_-_4.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-diving-calvi",
@@ -1303,7 +1434,10 @@
         "author": "Arnaud Abadie",
         "page": "https://commons.wikimedia.org/wiki/File:Scuba_divers_on_the_wreck_of_a_B-17_bomber.JPG"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "minAge": 8,
+      "kidFriendly": "older",
+      "ageSource": "https://www.adrenactive.com/bapteme-plongee-calvi-corse-8618.htm"
     },
     {
       "id": "act-kayak-revellata",
@@ -1326,7 +1460,8 @@
         "author": "Edelmauswaldgeist",
         "page": "https://commons.wikimedia.org/wiki/File:Halbinsel_Revellata_3.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-gr20-calenzana",
@@ -1349,7 +1484,8 @@
         "author": "Rémih",
         "page": "https://commons.wikimedia.org/wiki/File:GR20_Calenzana.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "no"
     },
     {
       "id": "act-calenzana",
@@ -1371,7 +1507,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Calenzana-le_village.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-zilia-wijn",
@@ -1394,7 +1531,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Zilia_Panorama.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-corbara",
@@ -1417,7 +1555,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Corbara-Couvent_et_Ste-Lucie.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-citadelle-stflorent",
@@ -1440,7 +1579,8 @@
         "author": "Gzen92",
         "page": "https://commons.wikimedia.org/wiki/File:Citadelle_(Saint-Florent)_(2).jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-nebbio-kathedraal",
@@ -1462,7 +1602,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Cath%C3%A9drale_du_Nebbio_portail.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-haven-stflorent",
@@ -1486,7 +1627,8 @@
         "author": "Chabe01",
         "page": "https://commons.wikimedia.org/wiki/File:Port_-_Saint-Florent_(FR2B)_-_2021-09-10_-_7.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-saleccia",
@@ -1510,7 +1652,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Saleccia_2004.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-lotu",
@@ -1534,7 +1677,8 @@
         "author": "Alacoolwiki",
         "page": "https://commons.wikimedia.org/wiki/File:Plage_de_Lotu.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-agriates-boot",
@@ -1558,7 +1702,8 @@
         "author": "Clemens Pohl",
         "page": "https://commons.wikimedia.org/wiki/File:D%C3%A9sert_des_Agriates_-_panoramio.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-agriates-wandeling",
@@ -1582,7 +1727,8 @@
         "author": "jeffwarder",
         "page": "https://commons.wikimedia.org/wiki/File:Sentier_du_littoral_-_Plage_de_Loto_(Lotu)_-_rocks_%26_Cap_Corse_-_panoramio.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-patrimonio-wijn",
@@ -1606,7 +1752,8 @@
         "author": "cremona daniel",
         "page": "https://commons.wikimedia.org/wiki/File:Vignoble_de_l%27AOC_Patrimonio_pr%C3%A8s_de_Saint-Florent.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-col-de-teghime",
@@ -1628,7 +1775,8 @@
         "author": "skender",
         "page": "https://commons.wikimedia.org/wiki/File:Col_de_Teghime_et_D81.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-nonza",
@@ -1652,7 +1800,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Nonza-pano-cut.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-oletta",
@@ -1675,7 +1824,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Oletta-panorama.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-erbalunga",
@@ -1699,7 +1849,8 @@
         "author": "jeffwarder",
         "page": "https://commons.wikimedia.org/wiki/File:Cap_Corse_-_Erbalunga_-_the_tour_-_panoramio.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-la-roya-snorkel",
@@ -1723,7 +1874,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:St-Florent-LV.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-diving-stflorent",
@@ -1740,7 +1892,9 @@
       },
       "desc": "Duikcentra in de haven bieden duiken in de Golf van Saint-Florent.",
       "photo": null,
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "minAge": 8,
+      "kidFriendly": "older"
     },
     {
       "id": "act-kayak-stflorent",
@@ -1762,7 +1916,8 @@
         "author": "Astronautilus",
         "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Saint-Florent.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-agriates-mtb",
@@ -1785,7 +1940,8 @@
         "author": "Jedesto",
         "page": "https://commons.wikimedia.org/wiki/File:D%C3%A9sert_des_Agriates_(71915).jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-tour-mortella",
@@ -1803,7 +1959,8 @@
       },
       "desc": "Genuese toren aan de kust op de route naar de Agriates.",
       "photo": null,
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-calanques-piana",
@@ -1826,7 +1983,8 @@
         "author": "Myrabella",
         "page": "https://commons.wikimedia.org/wiki/File:01_Calanche_Piana.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-piana",
@@ -1849,7 +2007,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Piana_village.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-boot-calanques",
@@ -1873,7 +2032,8 @@
         "author": "Pinpin",
         "page": "https://commons.wikimedia.org/wiki/File:Corse-04844-Capo_Rosso.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-scandola",
@@ -1897,7 +2057,8 @@
         "author": "LySioS-wkp",
         "page": "https://commons.wikimedia.org/wiki/File:R%C3%A9serve_naturelle_scandola_(62731).jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-girolata",
@@ -1921,7 +2082,8 @@
         "author": "Guallendra",
         "page": "https://commons.wikimedia.org/wiki/File:Corse_Girolata_en_2021.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-spelunca",
@@ -1945,7 +2107,8 @@
         "author": "Rolf Gebhardt",
         "page": "https://commons.wikimedia.org/wiki/File:Gorges_de_spelunca_2005_09c.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-aitone",
@@ -1969,7 +2132,8 @@
         "author": "Myrabella",
         "page": "https://commons.wikimedia.org/wiki/File:Aitone_cascade_Evisa.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-capu-rossu",
@@ -1993,7 +2157,8 @@
         "author": "Pinpin",
         "page": "https://commons.wikimedia.org/wiki/File:Corse-04940-Capo_Rosso.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-tour-porto",
@@ -2016,7 +2181,8 @@
         "author": "Myrabella",
         "page": "https://commons.wikimedia.org/wiki/File:Corse_Porto_tour_genoise.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-plage-porto",
@@ -2039,7 +2205,8 @@
         "author": "Tmaurizia",
         "page": "https://commons.wikimedia.org/wiki/File:Stones_Porto_DSCF0572.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-golfe-de-peru",
@@ -2063,7 +2230,8 @@
         "author": "Rotavdrag",
         "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Peru.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-cargese",
@@ -2087,7 +2255,8 @@
         "author": "Sy.forester",
         "page": "https://commons.wikimedia.org/wiki/File:Carg%C3%A8se_-_The_two_churches.JPG"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-evisa",
@@ -2111,7 +2280,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Evisa_gorges_de_Spelonca.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-diving-porto",
@@ -2134,7 +2304,9 @@
         "author": "Amada44",
         "page": "https://commons.wikimedia.org/wiki/File:Diving_boat_of_the_coast_of_Corsica.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "minAge": 8,
+      "kidFriendly": "older"
     },
     {
       "id": "act-fango",
@@ -2157,7 +2329,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Vallee_Fango-Paglia_Orba.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "older"
     },
     {
       "id": "act-galeria",
@@ -2181,7 +2354,8 @@
         "author": "Pierre Bona",
         "page": "https://commons.wikimedia.org/wiki/File:Galeria_village.jpg"
       },
-      "verified": "2026-10-27"
+      "verified": "2026-10-27",
+      "kidFriendly": "yes"
     },
     {
       "id": "act-algajola-sport-nature-velo",
@@ -2198,7 +2372,9 @@
         "village": 0.3
       },
       "desc": "Verhuur van mountainbikes, e-bikes en racefietsen tussen Calvi en L'Île-Rousse, ook begeleide tochten door de Balagne-dorpen (1 april tot 31 oktober).",
-      "verified": "2026-10-28"
+      "verified": "2026-10-28",
+      "kidFriendly": "older",
+      "ageSource": "https://www.visit-corsica.com/en/Mon-sejour/Activites-Loisirs/Toutes-les-activites/ALGAJOLA-SPORT-NATURE-VELO"
     },
     {
       "id": "act-casamore-spa-day-pass",
@@ -2214,7 +2390,34 @@
         "effort_low": 1
       },
       "desc": "Dagpas voor buitenbad en spa in Romeinse-thermenstijl (verwarmd binnenbad, hammam, sauna) boven de Middellandse Zee in Méria, 10.00 tot 20.00 uur via Staycation. Hotel zelf noemt dagpas niet: vooraf navragen.",
-      "verified": "2026-10-28"
+      "verified": "2026-10-28",
+      "kidFriendly": "older"
+    },
+    {
+      "id": "act-bastia",
+      "name": "Bastia en het Vieux Port",
+      "region": "stflorent",
+      "url": "https://www.bastia-tourisme.com/",
+      "lat": 42.7002,
+      "lon": 9.4509,
+      "durationH": 3,
+      "tags": {
+        "town": 1,
+        "culture": 0.7,
+        "food": 0.6,
+        "photo": 0.8,
+        "market": 0.4,
+        "effort_low": 0.9
+      },
+      "desc": "De levendige havenstad met het pittoreske Vieux Port, de Genuese citadel en veel terrasjes.",
+      "photo": {
+        "file": "img/act-bastia.jpg",
+        "lic": "CC BY-SA 4.0",
+        "author": "Gzen92",
+        "page": "https://commons.wikimedia.org/wiki/File:Vieux_port_(Bastia)_(2).jpg"
+      },
+      "verified": "2026-10-28",
+      "kidFriendly": "yes"
     }
   ]
 }

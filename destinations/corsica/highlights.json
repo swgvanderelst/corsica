@@ -1,0 +1,381 @@
+[
+ {
+  "id": "hl-palombaggia",
+  "name": "Palombaggia",
+  "cat": "beaches",
+  "acts": [
+   "act-palombaggia"
+  ],
+  "lat": 41.5616,
+  "lon": 9.3338,
+  "desc": "Droomstrand met rode rotsen, parasoldennen en turquoise water."
+ },
+ {
+  "id": "hl-santa-giulia",
+  "name": "Santa Giulia",
+  "cat": "beaches",
+  "acts": [
+   "act-santa-giulia"
+  ],
+  "lat": 41.5275,
+  "lon": 9.2722,
+  "desc": "Ondiepe, kindvriendelijke lagune met wit zand."
+ },
+ {
+  "id": "hl-rondinara",
+  "name": "Baai van Rondinara",
+  "cat": "beaches",
+  "acts": [
+   "act-rondinara"
+  ],
+  "lat": 41.4723,
+  "lon": 9.2724,
+  "desc": "Bijna perfect hoefijzervormige baai, een van de mooiste van Europa."
+ },
+ {
+  "id": "hl-saleccia",
+  "name": "Saleccia",
+  "cat": "beaches",
+  "acts": [
+   "act-saleccia"
+  ],
+  "lat": 42.7253,
+  "lon": 9.202,
+  "desc": "Wild, wit duinstrand in de Agriates, alleen via piste of boot."
+ },
+ {
+  "id": "hl-lotu",
+  "name": "Lotu",
+  "cat": "beaches",
+  "acts": [
+   "act-lotu"
+  ],
+  "lat": 42.7195,
+  "lon": 9.2342,
+  "desc": "Rustiger buurstrand van Saleccia met helder water."
+ },
+ {
+  "id": "hl-roccapina",
+  "name": "Roccapina",
+  "cat": "beaches",
+  "acts": [
+   "act-roccapina"
+  ],
+  "lat": 41.4956,
+  "lon": 8.9287,
+  "desc": "Strand onder de rots in de vorm van een leeuw."
+ },
+ {
+  "id": "hl-bonifacio",
+  "name": "Bonifacio",
+  "cat": "towns",
+  "acts": [
+   "act-citadelle-bonifacio"
+  ],
+  "lat": 41.3879,
+  "lon": 9.1582,
+  "desc": "Citadel op krijtrotsen boven zee, het icoon van Zuid-Corsica."
+ },
+ {
+  "id": "hl-calvi",
+  "name": "Calvi",
+  "cat": "towns",
+  "acts": [
+   "act-citadelle-calvi"
+  ],
+  "lat": 42.569,
+  "lon": 8.755,
+  "desc": "Genuese citadel boven de baai en een lang zandstrand."
+ },
+ {
+  "id": "hl-corte",
+  "name": "Corte",
+  "cat": "towns",
+  "acts": [
+   "act-corte-citadelle"
+  ],
+  "lat": 42.3046,
+  "lon": 9.1484,
+  "desc": "Historische hoofdstad in de bergen met adelaarsnest-citadel."
+ },
+ {
+  "id": "hl-porto-vecchio",
+  "name": "Porto-Vecchio",
+  "cat": "towns",
+  "acts": [
+   "act-porto-vecchio-oude-stad"
+  ],
+  "lat": 41.5911,
+  "lon": 9.2795,
+  "desc": "Sfeervolle bovenstad bij de mooiste stranden van het zuidoosten."
+ },
+ {
+  "id": "hl-ajaccio",
+  "name": "Ajaccio",
+  "cat": "towns",
+  "acts": [
+   "act-maison-bonaparte",
+   "act-marche-ajaccio"
+  ],
+  "lat": 41.9179,
+  "lon": 8.7386,
+  "desc": "Geboortestad van Napoleon met haven, markt en musea."
+ },
+ {
+  "id": "hl-sartene",
+  "name": "Sartène",
+  "cat": "towns",
+  "acts": [
+   "act-sartene"
+  ],
+  "lat": 41.6209,
+  "lon": 8.9722,
+  "desc": "Granieten stadje, het meest Corsicaanse van Corsica."
+ },
+ {
+  "id": "hl-saint-florent",
+  "name": "Saint-Florent",
+  "cat": "towns",
+  "acts": [
+   "act-citadelle-stflorent",
+   "act-haven-stflorent"
+  ],
+  "lat": 42.6829,
+  "lon": 9.3016,
+  "desc": "Gezellig havenstadje, de poort naar de Agriates."
+ },
+ {
+  "id": "hl-bastia",
+  "name": "Bastia",
+  "cat": "towns",
+  "acts": [
+   "act-bastia"
+  ],
+  "lat": 42.7002,
+  "lon": 9.4509,
+  "desc": "Levendige havenstad met Vieux Port en Genuese citadel."
+ },
+ {
+  "id": "hl-calanques-piana",
+  "name": "Calanques de Piana",
+  "cat": "nature",
+  "acts": [
+   "act-calanques-piana"
+  ],
+  "lat": 42.25,
+  "lon": 8.653,
+  "desc": "Rode granietrotsen die in zee duiken, UNESCO-werelderfgoed."
+ },
+ {
+  "id": "hl-bavella",
+  "name": "Col de Bavella",
+  "cat": "nature",
+  "acts": [
+   "act-bavella-col-de-bavella"
+  ],
+  "lat": 41.7959,
+  "lon": 9.225,
+  "desc": "Gekartelde naalden en dennenbos, hoogtepunt van de bergen."
+ },
+ {
+  "id": "hl-restonica",
+  "name": "Gorges de la Restonica",
+  "cat": "nature",
+  "acts": [
+   "act-restonica-gorges"
+  ],
+  "lat": 42.2483,
+  "lon": 9.0566,
+  "desc": "Woeste kloof met rivierpoelen en bergzicht bij Corte."
+ },
+ {
+  "id": "hl-melo-capitello",
+  "name": "Lac de Melo en Capitello",
+  "cat": "nature",
+  "acts": [
+   "act-restonica-lac-de-melo-capitello"
+  ],
+  "lat": 42.213,
+  "lon": 9.0227,
+  "desc": "Klassieke wandeling naar twee gletsjermeren."
+ },
+ {
+  "id": "hl-spelunca",
+  "name": "Gorges de Spelunca",
+  "cat": "nature",
+  "acts": [
+   "act-spelunca"
+  ],
+  "lat": 42.2513,
+  "lon": 8.7685,
+  "desc": "Wandeling langs Genuese bruggen door een diepe kloof."
+ },
+ {
+  "id": "hl-cascade-anglais",
+  "name": "Cascade des Anglais",
+  "cat": "nature",
+  "acts": [
+   "act-vizzavona-cascade-des-anglais"
+  ],
+  "lat": 42.1177,
+  "lon": 9.1092,
+  "desc": "Watervallen en poelen in het bos van Vizzavona."
+ },
+ {
+  "id": "hl-agriates",
+  "name": "Désert des Agriates",
+  "cat": "nature",
+  "acts": [
+   "act-agriates-wandeling"
+  ],
+  "lat": 42.722,
+  "lon": 9.218,
+  "desc": "Ongerepte maquis-kust met het mooiste kustpad van Noord-Corsica."
+ },
+ {
+  "id": "hl-scala-santa-regina",
+  "name": "Scala di Santa Regina",
+  "cat": "nature",
+  "acts": [
+   "act-niolo-scala-di-santa-regina"
+  ],
+  "lat": 42.3581,
+  "lon": 9.0592,
+  "desc": "Spectaculaire kloofweg naar het Niolu-hoogland."
+ },
+ {
+  "id": "hl-scandola-girolata",
+  "name": "Scandola en Girolata",
+  "cat": "boat",
+  "acts": [
+   "act-scandola"
+  ],
+  "lat": 42.3589,
+  "lon": 8.56,
+  "desc": "Natuurreservaat met rode kliffen, alleen per boot bereikbaar."
+ },
+ {
+  "id": "hl-lavezzi",
+  "name": "Îles Lavezzi",
+  "cat": "boat",
+  "acts": [
+   "act-lavezzi"
+  ],
+  "lat": 41.3409,
+  "lon": 9.2541,
+  "desc": "Granieten eilandjes met kristalhelder water bij Bonifacio."
+ },
+ {
+  "id": "hl-krijtrotsen-bonifacio",
+  "name": "Krijtrotsen en grotten Bonifacio",
+  "cat": "boat",
+  "acts": [
+   "act-bonifacio-boot-krijtrotsen"
+  ],
+  "lat": 41.387,
+  "lon": 9.157,
+  "desc": "Varen langs de overhangende kliffen en zeegrotten."
+ },
+ {
+  "id": "hl-cerbicale",
+  "name": "Îles Cerbicale",
+  "cat": "boat",
+  "acts": [
+   "act-cerbicale"
+  ],
+  "lat": 41.551,
+  "lon": 9.3617,
+  "desc": "Snorkelen bij beschermde eilandjes voor Porto-Vecchio."
+ },
+ {
+  "id": "hl-sanguinaires",
+  "name": "Îles Sanguinaires",
+  "cat": "boat",
+  "acts": [
+   "act-sanguinaires"
+  ],
+  "lat": 41.878,
+  "lon": 8.5934,
+  "desc": "Bloedrode eilandjes bij zonsondergang voor Ajaccio."
+ },
+ {
+  "id": "hl-filitosa",
+  "name": "Filitosa",
+  "cat": "culture",
+  "acts": [
+   "act-filitosa"
+  ],
+  "lat": 41.7467,
+  "lon": 8.8723,
+  "desc": "Prehistorische menhirbeelden in een olijfgaard."
+ },
+ {
+  "id": "hl-nonza",
+  "name": "Nonza",
+  "cat": "culture",
+  "acts": [
+   "act-nonza"
+  ],
+  "lat": 42.7853,
+  "lon": 9.345,
+  "desc": "Dorp op een rots met uitzicht over het zwarte strand."
+ },
+ {
+  "id": "hl-trinichellu",
+  "name": "Trinichellu-trein",
+  "cat": "culture",
+  "acts": [
+   "act-trinichellu",
+   "act-corte-trinichellu"
+  ],
+  "lat": 42.5648,
+  "lon": 8.7561,
+  "desc": "Het Corsicaanse treintje langs kust en bergen."
+ },
+ {
+  "id": "hl-balagne",
+  "name": "Balagne-dorpen",
+  "cat": "culture",
+  "acts": [
+   "act-pigna",
+   "act-sant-antonino",
+   "act-corbara"
+  ],
+  "lat": 42.6003,
+  "lon": 8.9028,
+  "desc": "Pittoreske bergdorpen met ambachten boven de kust."
+ },
+ {
+  "id": "hl-cucuruzzu",
+  "name": "Cucuruzzu en Capula",
+  "cat": "culture",
+  "acts": [
+   "act-levie-cucuruzzu-capula"
+  ],
+  "lat": 41.7247,
+  "lon": 9.1268,
+  "desc": "Bronstijd-vesting verscholen in het bos."
+ },
+ {
+  "id": "hl-sainte-lucie-tallano",
+  "name": "Sainte-Lucie-de-Tallano",
+  "cat": "culture",
+  "acts": [
+   "act-tallano-sainte-lucie"
+  ],
+  "lat": 41.6977,
+  "lon": 9.064,
+  "desc": "Authentiek dorp in de Alta Rocca met Genuese sfeer."
+ },
+ {
+  "id": "hl-erbalunga",
+  "name": "Erbalunga",
+  "cat": "culture",
+  "acts": [
+   "act-erbalunga"
+  ],
+  "lat": 42.774,
+  "lon": 9.477,
+  "desc": "Schilderachtig vissersdorp aan Cap Corse."
+ }
+]

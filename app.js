@@ -1,7 +1,8 @@
-// Corsica app: sign-in, swipe decks, taste profile, ranked routes with 3 stays per stop and a map of activities, groups.
+// Corsica app: sign-in, swipe decks, taste profile, trips (dates, party, highlights, shared with the travel party),
+// ranked routes of exactly the trip length with a day-by-day plan, 3 stays per stop and a map of activities.
 import {
   MIN_SKIP, SWIPE, profileFrom, certainty, summarize, readSummary, cleanSwipes, topTags, moreCards, tagWeights, flattenLabels,
-  groupProfile, rankRoutes, effectiveOverrides, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
+  groupProfile, rankRoutes, effectiveOverrides, tripPrefs, tripNights, tripStart, highlightIds, readPeople, writePeople, ageOn, placeHighlights, dayPlan, burdenWeight, sanitizeHighlights, nightsBetween, tooYoung, NIGHTS_RANGE, cleanOverrides, cleanPrefs, hiddenReasons, sanitizeRoutes, sanitizePlaces, sanitizeItems, sanitizeCards, combinePrefs, readPrefs, memberName, regionAffinity, mergeCatalogs, normalizeDeck, photoOf, mapsUrl, newToken, isValidCode, tokenFromLink, shareUrl, shareText,
   escapeHtml as esc, fmtMin,
 } from './logic.js';
 import { createDeck } from './deck.js';
@@ -18,9 +19,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const S = {
   store: null, user: null, displayName: '', allowed: new Set(), mode: 'loading', tab: 'routes', online: true,
   dest: null, places: null, routes: [], catalog: { acc: [], act: [] }, deck: { acc: [], act: [] }, labels: {}, tagsJson: {}, credits: {}, base: '', deckBase: '',
-  swipes: {}, overrides: {}, prefs: {}, skipped: {}, groups: [], gdata: {}, unwatch: {}, view: 'me', toggles: {},
+  swipes: {}, overrides: {}, prefs: {}, skipped: {}, groups: [], gdata: {}, unwatch: {}, toggles: {}, household: [], highlights: [], wiz: null,
   deckKind: null, deckFrom: null, deckSession: null, interstitial: null,
-  rankKey: '', ranked: null, joinPending: null,
+  ranked: {}, joinPending: null,
 };
 const pushed = []; // open pushed screens
 let deckCtl = null, persistT = null, saving = Promise.resolve();
@@ -40,7 +41,6 @@ const GOOGLE = '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335"
 const TABS = [
   ['routes', 'Reizen', '<svg viewBox="0 0 24 24"><path d="M3 18c3-8 6-8 9-3s6 3 9-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3.5" cy="18" r="1.6" fill="currentColor"/><circle cx="20.5" cy="9" r="1.6" fill="currentColor"/></svg>'],
   ['profile', 'Profiel', '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M4 20c1-4 4-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>'],
-  ['groups', 'Samen', '<svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 19c.7-3.2 3-5 6-5s5.3 1.8 6 5M15 14.3c3 0 5 1.4 6 4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'],
 ];
 
 function toast(msg, ms = 2600) {
@@ -86,10 +86,10 @@ async function loadDestination() {
   const url = custom && DEST_RE.test(custom) ? custom : 'destinations/corsica/destination.json';
   const dest = await fetchJson(url);
   const path = p => (typeof p === 'string' && sameOrigin(p) && !/^[a-z][a-z0-9+.-]*:/i.test(p) ? p : '');
-  for (const k of ['tags', 'places', 'routes', 'deck', 'credits', 'base', 'stayImages']) dest[k] = path(dest[k]);
+  for (const k of ['tags', 'places', 'routes', 'deck', 'credits', 'base', 'stayImages', 'highlights']) dest[k] = path(dest[k]);
   dest.catalogs = (Array.isArray(dest.catalogs) ? dest.catalogs : []).map(path).filter(Boolean);
-  const [tags, places, routes, deck, credits, ...catalogs] = await Promise.all([
-    fetchJson(dest.tags), fetchJson(dest.places), fetchJson(dest.routes), dest.deck ? fetchJson(dest.deck, true) : null, dest.credits ? fetchJson(dest.credits, true) : null,
+  const [tags, places, routes, deck, credits, highlights, ...catalogs] = await Promise.all([
+    fetchJson(dest.tags), fetchJson(dest.places), fetchJson(dest.routes), dest.deck ? fetchJson(dest.deck, true) : null, dest.credits ? fetchJson(dest.credits, true) : null, dest.highlights ? fetchJson(dest.highlights, true) : null,
     ...dest.catalogs.map(c => fetchJson(c, true)),
   ]);
   S.dest = dest; S.base = dest.base; S.deckBase = dest.deck.replace(/[^/]*$/, '');
@@ -98,6 +98,7 @@ async function loadDestination() {
   S.places = sanitizePlaces(places); S.routes = sanitizeRoutes(routes && routes.routes); S.credits = credits && typeof credits === 'object' ? credits : {};
   const cat = mergeCatalogs(catalogs.filter(Boolean));
   S.catalog = { acc: sanitizeItems(cat.acc, 'accommodation'), act: sanitizeItems(cat.act, 'activity') };
+  S.highlights = sanitizeHighlights(highlights);
   const dk = deck ? normalizeDeck(deck) : { acc: [], act: [] };
   S.deck = { acc: sanitizeCards(dk.acc), act: sanitizeCards(dk.act) };
 }
@@ -111,7 +112,7 @@ const firstName = n => String(n || '').trim().split(/\s+/)[0].slice(0, 40) || 'R
 const myName = () => (S.displayName || 'Reiziger').slice(0, 40);
 
 // ---------- persistence ----------
-function saveLocal() { wr(key('name'), S.displayName); wr(key('overrides'), JSON.stringify(S.overrides)); wr(key('prefs'), JSON.stringify(S.prefs)); wr(key('swipes'), JSON.stringify(S.swipes)); wr(key('skipped'), JSON.stringify(S.skipped)); wr(key('groups'), JSON.stringify(S.groups)); }
+function saveLocal() { wr(key('name'), S.displayName); wr(key('overrides'), JSON.stringify(S.overrides)); wr(key('prefs'), JSON.stringify(S.prefs)); wr(key('swipes'), JSON.stringify(S.swipes)); wr(key('skipped'), JSON.stringify(S.skipped)); wr(key('groups'), JSON.stringify(S.groups)); wr(key('household'), JSON.stringify(writePeople(S.household))); }
 function schedulePersist() {
   saveLocal();
   clearTimeout(persistT);
@@ -122,7 +123,7 @@ function persist() {
   saving = saving.then(async () => {
     if (!S.user) return;
     try {
-      await S.store.saveUser({ name: myName(), swipes: S.swipes, overrides: S.overrides, prefs: S.prefs, groups: Object.fromEntries(S.groups.map(g => [g, true])) });
+      await S.store.saveUser({ name: myName(), swipes: S.swipes, overrides: S.overrides, prefs: S.prefs, household: writePeople(S.household), groups: Object.fromEntries(S.groups.map(g => [g, true])) });
       await syncProfiles();
       wr(key('dirty'), null);
     } catch (e) { wr(key('dirty'), '1'); if (e.code === 'network') toast('Offline: je swipes worden later opgeslagen.'); }
@@ -151,7 +152,7 @@ async function onUser(user) {
   S.displayName = firstName(rd(key('name')) || user.name);
   S.prefs = cleanPrefs(rdj(key('prefs'), {}));
   S.groups = rdj(key('groups'), []).filter(g => typeof g === 'string');
-  S.view = rd(key('view')) || 'me';
+  S.household = readPeople(rdj(key('household'), {}));
   S.toggles = rdj(key('toggles'), {});
   S.mode = 'loading'; render();
   let server = null, offline = false;
@@ -160,7 +161,7 @@ async function onUser(user) {
     const remote = cleanSwipes(server.swipes);
     if (Object.keys(remote).length || !Object.keys(S.swipes).length) S.swipes = remote; // the server is authoritative once it has swipes
     S.groups = [...new Set([...Object.keys(server.groups || {}), ...S.groups])];
-    if (rd(key('dirty')) !== '1') { S.overrides = cleanOverrides(server.overrides, S.allowed); S.prefs = cleanPrefs(server.prefs); if (typeof server.name === 'string' && server.name) S.displayName = server.name.slice(0, 40); } // the server record wins unless local changes never arrived
+    if (rd(key('dirty')) !== '1') { S.overrides = cleanOverrides(server.overrides, S.allowed); S.prefs = cleanPrefs(server.prefs); S.household = readPeople(server.household); if (typeof server.name === 'string' && server.name) S.displayName = server.name.slice(0, 40); } // the server record wins unless local changes never arrived
     if (rd(key('dirty')) === '1') { /* local changes that never arrived: keep them */ }
   }
   saveLocal();
@@ -190,11 +191,14 @@ function teardown() {
   if (deckCtl) { deckCtl.destroy(); deckCtl = null; }
 }
 
-// ---------- profile / ranking ----------
-function activeProfile() {
+// ---------- profile / ranking (per trip) ----------
+const tripOf = gid => (S.gdata[gid] && S.gdata[gid].trip) || null;
+// the taste of a trip: the members who count (switch) and have swiped; the preferences of all of them plus what the party says
+function tripProfile(gid) {
   const me = myProfile();
-  if (S.view === 'me' || !S.gdata[S.view]) return { profile: me, label: 'Jij', members: 1, missing: [], group: null, prefs: S.prefs };
-  const g = S.gdata[S.view], tog = S.toggles[S.view] || {};
+  const g = S.gdata[gid];
+  if (!g) return { profile: me, members: me.n ? 1 : 0, missing: [], names: [], prefs: S.prefs, trip: null };
+  const tog = S.toggles[gid] || {};
   const list = [], names = [], missing = [], prefList = [];
   for (const [uid, m] of Object.entries(g.members || {})) {
     if (tog[uid] === false) continue;
@@ -203,16 +207,21 @@ function activeProfile() {
     prefList.push(uid === S.user.uid ? S.prefs : readPrefs(g.profiles && g.profiles[uid])); // the strictest budget, the union of the must-haves
     if (p.n > 0) { list.push(p); names.push(name); } else missing.push(name);
   }
-  return { profile: groupProfile(list), label: g.name, members: list.length, missing, group: g, names, prefs: combinePrefs(prefList) };
+  return { profile: groupProfile(list), members: list.length, missing, names, prefs: tripPrefs(prefList, g.trip), trip: g.trip || null };
 }
-function ctx(prefs = S.prefs) { return { acc: S.catalog.acc, act: S.catalog.act, places: S.places.places, stays: S.places.stays, regionTags: S.places.regionTags, regionVeto: S.places.regionVeto, labels: S.labels, prefs, vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } }; }
-function rankedRoutes() {
-  const ap = activeProfile();
-  const k = JSON.stringify([ap.profile, ap.prefs, S.catalog.acc.length, S.catalog.act.length]);
-  if (S.rankKey !== k) { S.ranked = rankRoutes(S.routes, ap.profile, ctx(ap.prefs)); S.rankKey = k; }
-  return { plans: S.ranked, ap };
+const hlById = id => S.highlights.find(h => h.id === id);
+const actById = id => S.catalog.act.find(a => a.id === id);
+function ctx(prefs, trip) {
+  return { acc: S.catalog.acc, act: S.catalog.act, places: S.places.places, stays: S.places.stays, regionTags: S.places.regionTags, regionVeto: S.places.regionVeto, labels: S.labels, prefs,
+    nights: tripNights(trip) || undefined, highlights: highlightIds(trip).map(hlById).filter(Boolean), vocab: { acc: Object.keys(S.tagsJson.accommodation || {}), act: Object.keys(S.tagsJson.activity || {}) } };
 }
-function prefsChanged() { S.rankKey = ''; schedulePersist(); if (S.mode === 'deck') render(); else if (S.mode === 'app') refreshLive(); }
+function rankedFor(gid) {
+  const tp = tripProfile(gid);
+  const k = JSON.stringify([tp.profile, tp.prefs, tp.trip, S.catalog.acc.length, S.catalog.act.length]);
+  if (!S.ranked[gid] || S.ranked[gid].k !== k) S.ranked[gid] = { k, plans: rankRoutes(S.routes, tp.profile, ctx(tp.prefs, tp.trip)) };
+  return { plans: S.ranked[gid].plans, tp };
+}
+function prefsChanged() { S.ranked = {}; schedulePersist(); if (S.mode === 'deck') render(); else if (S.mode === 'app') refreshLive(); }
 const pctText = p => (p.matchPct == null ? 'minder passend' : p.matchPct + '%');
 
 // ---------- rendering ----------
@@ -246,7 +255,7 @@ function renderIntro(root) {
     <ol class="steps">
       <li><div><b>Swipe ${na || 25} accommodaties</b><span>Rechts of LEUK als het je aanspreekt, links of NIET als het niets voor je is. Omhoog is super leuk.</span></div></li>
       <li><div><b>Swipe ${nb || 25} activiteiten</b><span>Wandelen, strand, eten, uitgaan: laat zien wat je wilt doen.</span></div></li>
-      <li><div><b>Je reis stelt zichzelf samen</b><span>Per stop de 3 beste verblijven en een kaart met activiteiten in de buurt. Je kunt ook samen met reisgenoten plannen.</span></div></li>
+      <li><div><b>Plan je reis</b><span>Kies wanneer, met wie en welke highlights. Je krijgt een schema voor elke dag, per stop de 3 beste verblijven en een kaart met activiteiten. Deel de reis met je reisgenoten.</span></div></li>
     </ol>
     <button class="btn" data-a="start">Beginnen</button>
     <p class="note">Je kunt na 10 kaarten overslaan en later altijd verder swipen.</p>
@@ -319,36 +328,204 @@ function renderInterstitial(root) {
 // ---------- app shell: tabs ----------
 function renderApp(root) {
   $('tabs').innerHTML = TABS.map(([id, name, svg]) => `<button role="tab" data-a="tab" data-tab="${id}" aria-selected="${S.tab === id}">${svg}<span>${name}</span></button>`).join('');
-  root.innerHTML = `<div class="scroll pad" id="rootscroll" style="padding-top:calc(14px + env(safe-area-inset-top,0px))">${S.tab === 'routes' ? routesHtml() : S.tab === 'profile' ? profileHtml() : groupsHtml()}</div>`;
+  root.innerHTML = `<div class="scroll pad" id="rootscroll" style="padding-top:calc(14px + env(safe-area-inset-top,0px))">${S.tab === 'profile' ? profileHtml() : tripsHtml()}</div>`;
 }
-function viewChips() {
-  const opts = [['me', 'Alleen ik'], ...S.groups.filter(g => S.gdata[g]).map(g => [g, S.gdata[g].name])];
-  if (opts.length < 2) return '';
-  return `<div class="scrollchips" role="group" aria-label="Voor wie">${opts.map(([id, n]) => `<button data-a="view" data-v="${esc(id)}" aria-pressed="${S.view === id}">${esc(n)}</button>`).join('')}</div>`;
-}
-const PREF_ROWS = [['airco', 'Airco nodig'], ['ev', 'Laadpaal nodig'], ['kids', 'Met kinderen']];
+const PREF_ROWS = [['airco', 'Airco nodig'], ['ev', 'Laadpaal nodig']];
 function prefsHtml() {
   const rows = PREF_ROWS.map(([k, t]) => `<div class="row"><div class="grow"><div class="t">${t}</div></div><button class="switch" role="switch" aria-checked="${!!S.prefs[k]}" data-a="pref" data-k="${k}" aria-label="${t}"></button></div>`).join('');
   const budget = [0, 1, 2, 3, 4].map(v => `<button data-a="budget" data-v="${v}" aria-pressed="${(S.prefs.budget || 0) === v}">${v ? '€'.repeat(v) : 'Geen'}</button>`).join('');
   return `<div class="group-h" style="text-align:left">Voorkeuren</div><div class="group" id="prefs" style="text-align:left">${rows}<div class="row"><div class="grow"><div class="t">Budget per nacht</div><div class="s">Hoogste prijsniveau dat je wilt zien</div></div></div></div>
-    <div class="scrollchips" role="group" aria-label="Budget" style="margin-top:8px">${budget}</div><p class="note" style="text-align:left">Airco en laadpaal tellen hard mee: stays zonder bevestiging krijgen een waarschuwing. Het budget filtert verblijven.</p>`;
+    <div class="scrollchips" role="group" aria-label="Budget" style="margin-top:8px">${budget}</div><p class="note" style="text-align:left">Airco en laadpaal tellen hard mee: verblijven zonder bevestiging krijgen een waarschuwing. Het budget filtert verblijven. Kinderen volgen uit de leeftijden in je reisgezelschap.</p>`;
 }
-function routesHtml() {
-  const { plans, ap } = rankedRoutes();
-  const empty = ap.profile.n === 0;
-  const who = ap.group ? `Gerangschikt voor groep <b>${esc(ap.label)}</b> (${ap.members} ${ap.members === 1 ? 'profiel' : 'profielen'})` : 'Gerangschikt op jouw smaak';
-  const missing = ap.missing && ap.missing.length ? `<div class="warnbox">Nog geen swipes van: ${ap.missing.map(esc).join(', ')}.</div>` : '';
-  return `<div class="large">Jouw reizen</div><p class="subt">${empty ? 'Swipe een paar kaarten om de reizen op jouw smaak te rangschikken.' : who}</p>${viewChips()}${missing}
-    <div id="routelist">${empty ? plans.map((p, i) => routeCard(p, i, empty)).join('') : `<div class="group-h" style="margin-top:4px">Aanbevolen voor jou</div>${routeCard(plans[0], 0, empty)}${routeWhy(plans[0], ap) ? `<p class="note" id="reco" style="margin-top:-6px;margin-bottom:12px">${esc(routeWhy(plans[0], ap))}</p>` : ''}<div class="group-h">Alternatieven</div>${plans.slice(1).map((p, i) => routeCard(p, i + 1, empty)).join('')}`}</div>`;
+
+// ---------- trips ----------
+const MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+const WEEKDAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
+const monthLabel = m => `${MONTHS[Number(m.slice(5, 7)) - 1]} ${m.slice(0, 4)}`;
+const dayLabel = d => { const t = new Date(d + 'T00:00:00Z'); return `${WEEKDAYS[t.getUTCDay()]} ${t.getUTCDate()} ${MONTHS[t.getUTCMonth()]}`; };
+function upcomingMonths(n) {
+  const now = new Date(), out = [];
+  for (let i = 1; i <= n; i++) { const d = new Date(Date.UTC(now.getFullYear(), now.getMonth() + i, 1)); out.push(d.toISOString().slice(0, 7)); }
+  return out;
 }
-function routeCard(p, i, empty) {
-  const r = p.route, km = r.legs.reduce((a, l) => a + Number(l.km), 0), nights = r.nights.reduce((a, b) => a + Number(b), 0);
-  const m = p.matchPct;
-  return `<button class="rcard${i === 0 && !empty ? ' best' : ''}" data-a="open-route" data-id="${esc(r.id)}" style="--c:var(--route-${esc(r.id)})">
+function whenText(trip) {
+  if (!trip || !tripNights(trip)) return 'Nog niet ingesteld';
+  const n = tripNights(trip);
+  if (trip.start && trip.end) return `${dayLabel(trip.start)} tot ${dayLabel(trip.end)} ${trip.end.slice(0, 4)} · ${n} nachten`;
+  const ms = String(trip.months || '').split(' ').filter(Boolean);
+  return `${ms.length ? ms.map(monthLabel).join(' of ') : 'Datum nog open'} · ${n} nachten`;
+}
+function partyText(trip) {
+  const day = tripStart(trip), ppl = readPeople(trip && trip.party);
+  return ppl.length ? ppl.map(p => { const a = ageOn(p.born, day); return a !== null && a < 18 ? `${p.name} (${a})` : p.name; }).join(', ') : 'Nog niemand';
+}
+function tripsHtml() {
+  const mine = S.groups.filter(g => S.gdata[g]);
+  const rows = mine.map(gid => {
+    const g = S.gdata[gid], t = g.trip, n = Object.keys(g.members || {}).length;
+    return `<button class="row" data-a="trip-open" data-gid="${esc(gid)}"><div class="grow"><div class="t">${esc(g.name)}</div><div class="s">${esc(whenText(t))}</div><div class="s">${esc(t ? partyText(t) : 'Stel datum, gezelschap en highlights in')}${n > 1 ? ` · ${n} in de app` : ''}</div></div>${CHEV}</button>`;
+  }).join('');
+  return `<div class="large">Jouw reizen</div><p class="subt">Per reis kies je wanneer, met wie en wat jullie willen zien. De app maakt er een schema van, dag voor dag.</p>
+    ${myProfile().n === 0 ? '<div class="warnbox">Swipe eerst een paar kaarten (Profiel), dan passen de voorstellen bij jouw smaak.</div>' : ''}
+    ${rows ? `<div class="group" id="triplist">${rows}</div>` : ''}
+    <button class="btn" data-a="trip-new">Nieuwe reis</button>`;
+}
+
+// ---------- trip settings: a wizard for a new trip, one step at a time to edit ----------
+const WIZ_STEPS = ['when', 'who', 'highlights'];
+const HL_CATS = [['beaches', 'Stranden'], ['towns', 'Stadjes'], ['nature', 'Natuur en bergen'], ['boat', 'Boottochten'], ['culture', 'Cultuur en dorpen']];
+function wizFrom(gid) {
+  const g = gid && S.gdata[gid], t = g && g.trip;
+  if (t) return { gid, name: g.name, mode: t.start && t.end ? 'fixed' : 'flex', start: t.start || '', end: t.end || '', months: String(t.months || '').split(' ').filter(Boolean), nights: tripNights(t) || 14, party: readPeople(t.party), hl: new Set(highlightIds(t)) };
+  const party = S.household.length ? S.household.map(p => ({ ...p })) : [{ name: myName(), uid: S.user.uid }];
+  return { gid: g ? gid : null, name: g ? g.name : 'Corsica ' + (new Date().getFullYear() + 1), mode: 'flex', start: '', end: '', months: [], nights: 14, party, hl: new Set() };
+}
+function openWizard(gid = null, only = null) {
+  S.wiz = { ...wizFrom(gid), step: only || 'when', only };
+  pushScreen({ title: gid ? 'Reis aanpassen' : 'Nieuwe reis', back: prevTitle(), render: wizHtml });
+}
+function openHousehold() {
+  S.wiz = { household: true, step: 'who', only: 'who', party: S.household.map(p => ({ ...p })), months: [], start: '', end: '', mode: 'flex', nights: 14, hl: new Set() };
+  pushScreen({ title: 'Mijn gezin', back: 'Profiel', render: wizHtml });
+}
+const wizNights = w => (w.mode === 'fixed' ? nightsBetween(w.start, w.end) : w.nights);
+function wizHtml() {
+  const w = S.wiz;
+  if (!w) return '';
+  const idx = WIZ_STEPS.indexOf(w.step);
+  const body = w.step === 'when' ? wizWhen(w) : w.step === 'who' ? wizWho(w) : wizHl(w);
+  const last = w.only || idx === WIZ_STEPS.length - 1;
+  return `<div class="pad" id="wiz">${w.only ? '' : `<p class="note" style="margin:0 0 6px">Stap ${idx + 1} van ${WIZ_STEPS.length}</p>`}${body}
+    <button class="btn" data-a="wiz-next">${last ? (w.gid || w.household ? 'Bewaar' : 'Maak reis') : 'Volgende'}</button>
+    ${!w.only && idx > 0 ? '<button class="btn alt" data-a="wiz-prev">Vorige</button>' : ''}</div>`;
+}
+function wizWhen(w) {
+  const months = upcomingMonths(18).map(m => `<button data-a="wiz-month" data-m="${m}" aria-pressed="${w.months.includes(m)}">${monthLabel(m)}</button>`).join('');
+  const n = nightsBetween(w.start, w.end);
+  return `<div class="large">Wanneer?</div>
+    <div class="group-h">Naam van de reis</div><input class="field" data-f="name" maxlength="30" value="${esc(w.name)}" aria-label="Naam van de reis">
+    <div class="scrollchips" role="group" aria-label="Soort datum" style="margin-top:12px"><button data-a="wiz-mode" data-m="flex" aria-pressed="${w.mode === 'flex'}">Flexibel</button><button data-a="wiz-mode" data-m="fixed" aria-pressed="${w.mode === 'fixed'}">Vaste data</button></div>
+    ${w.mode === 'flex' ? `<div class="group-h">In welke maand? Kies er maximaal 3</div><div class="chips" id="months">${months}</div>
+      <div class="group-h">Hoeveel nachten?</div><div class="stepper"><button class="chip" data-a="wiz-n" data-d="-1" aria-label="Een nacht minder">&minus;</button><b id="wnights">${w.nights}</b><span>nachten</span><button class="chip" data-a="wiz-n" data-d="1" aria-label="Een nacht meer">+</button></div>`
+    : `<div class="group-h">Eerste nacht</div><input class="field" type="date" data-f="start" value="${esc(w.start)}" aria-label="Eerste nacht">
+      <div class="group-h">Vertrekdag</div><input class="field" type="date" data-f="end" value="${esc(w.end)}" aria-label="Vertrekdag">
+      <p class="note" id="fixedn">${n ? n + ' nachten' : 'Kies beide data.'}</p>`}`;
+}
+function wizWho(w) {
+  const day = tripStart({ start: w.start, months: w.months.join(' ') }) || `${new Date().getFullYear()}-07-01`;
+  const rows = w.party.map((p, i) => {
+    const a = ageOn(p.born, day);
+    return `<div class="row person"><input class="field" data-f="pname" data-i="${i}" maxlength="40" value="${esc(p.name)}" aria-label="Naam" style="margin:0;flex:1;min-width:0">
+      <input class="field" data-f="pborn" data-i="${i}" inputmode="numeric" maxlength="4" placeholder="Geb. jaar" value="${Number.isInteger(p.born) ? p.born : ''}" aria-label="Geboortejaar" style="margin:0;width:96px">
+      <span class="s age" data-age="${i}" style="width:44px;text-align:center">${a !== null ? a + ' jr' : ''}</span>
+      <button class="chip" data-a="wiz-del" data-i="${i}" aria-label="Verwijder ${esc(p.name || 'persoon')}">&times;</button></div>`;
+  }).join('');
+  return `<div class="large">${w.household ? 'Mijn gezin' : 'Wie gaan er mee?'}</div>
+    <p class="subt">${w.household ? 'Je gezin is het standaard reisgezelschap van een nieuwe reis.' : 'Met geboortejaar, zodat verblijven en activiteiten passen bij de leeftijden. Volwassenen zonder geboortejaar kan ook.'}</p>
+    <div class="group" id="people">${rows || '<div class="row"><div class="grow"><div class="s">Nog niemand.</div></div></div>'}</div>
+    ${w.party.length < 12 ? '<button class="btn alt" data-a="wiz-add">Persoon toevoegen</button>' : ''}
+    ${w.household ? '' : '<button class="btn alt" data-a="wiz-household">Bewaar ook als mijn gezin</button><p class="note">Reisgenoten met de app nodig je uit met de deellink in de reis. Hun smaak telt dan mee.</p>'}`;
+}
+function wizHl(w) {
+  const n = wizNights(w);
+  const tile = h => {
+    const it = actById(h.acts[0]), src = it ? photoOf(it, S.base) : '';
+    return `<button class="hltile" data-a="wiz-hl" data-id="${esc(h.id)}" aria-pressed="${w.hl.has(h.id)}" aria-label="${esc(h.name)}">${phHtml(src, h.id, '', `<span class="ov"><b>${esc(h.name)}</b></span>`)}<span class="tick" aria-hidden="true">&#10003;</span></button>`;
+  };
+  const groups = HL_CATS.map(([c, t]) => { const list = S.highlights.filter(h => h.cat === c); return list.length ? `<div class="group-h">${t}</div><div class="hlgrid">${list.map(tile).join('')}</div>` : ''; }).join('');
+  const many = n && w.hl.size > Math.max(1, n - 3);
+  return `<div class="large">Wat willen jullie zien?</div><p class="subt">Kies de hoogtepunten die in het schema moeten. De app zoekt de route die ze het best combineert.</p>
+    <div class="warnbox" id="hlcount">${w.hl.size} gekozen${many ? ` · veel voor ${n} nachten: misschien past niet alles` : ''}</div>${groups || '<p class="subt">Voor deze bestemming zijn nog geen highlights.</p>'}`;
+}
+function tripFromWiz(w) {
+  const n = wizNights(w);
+  const t = { dest: (S.dest && /^[-_A-Za-z0-9]{1,32}$/.test(S.dest.id) && S.dest.id) || 'corsica', nights: n, party: writePeople(w.party) };
+  if (w.mode === 'fixed') { t.start = w.start; t.end = w.end; } else if (w.months.length) t.months = w.months.slice().sort().join(' ');
+  if (w.hl.size) t.highlights = [...w.hl].join(' ');
+  if (!Object.keys(t.party).length) delete t.party;
+  return t;
+}
+// a problem with this step, or '' when it is fine
+function wizProblem(w) {
+  if (w.step === 'when') {
+    if (!w.household && !String(w.name).trim()) return 'Geef de reis een naam.';
+    const n = wizNights(w);
+    if (w.mode === 'fixed' && !n) return 'Kies de eerste nacht en de vertrekdag.';
+    if (n < NIGHTS_RANGE[0] || n > NIGHTS_RANGE[1]) return `Een reis duurt ${NIGHTS_RANGE[0]} tot ${NIGHTS_RANGE[1]} nachten.`;
+  }
+  if (w.step === 'who') {
+    if (!w.party.some(p => String(p.name).trim())) return 'Voeg minstens één persoon toe.';
+    if (w.party.some(p => p.born !== undefined && !(Number.isInteger(p.born) && p.born >= 1920 && p.born <= 2040))) return 'Een geboortejaar is een jaar tussen 1920 en 2040.';
+  }
+  return '';
+}
+async function wizSave() {
+  const w = S.wiz;
+  if (w.household) { S.household = readPeople(writePeople(w.party)); schedulePersist(); popScreen(); S.wiz = null; refreshLive(); toast('Gezin bewaard'); return; }
+  const trip = tripFromWiz(w);
+  try {
+    let gid = w.gid;
+    if (!gid) gid = await createGroup(String(w.name).trim().slice(0, 30));
+    else if (w.name.trim() && w.name.trim() !== S.gdata[gid].name && S.gdata[gid].owner === S.user.uid) await S.store.renameGroup(gid, w.name.trim().slice(0, 30), Object.keys(S.gdata[gid].codes || {}));
+    await S.store.setTrip(gid, trip);
+    S.wiz = null; S.ranked = {};
+    popScreen();
+    if (!w.gid) { await sleep(150); openTrip(gid); } else refreshLive();
+    toast(w.gid ? 'Reis bijgewerkt' : 'Reis gemaakt');
+  } catch (e) { toast(errMsg(e)); }
+}
+
+// ---------- trip detail ----------
+function openTrip(gid) {
+  pushScreen({ title: (S.gdata[gid] || {}).name || 'Reis', back: 'Reizen', live: true, render: () => tripDetail(gid) });
+}
+function tripDetail(gid) {
+  const g = S.gdata[gid];
+  if (!g) return '<div class="pad"><p class="subt">Deze reis bestaat niet meer.</p></div>';
+  const t = g.trip, G = esc(gid);
+  if (!t || !tripNights(t)) return `<div class="pad"><div class="large">${esc(g.name)}</div><p class="subt">Stel eerst in wanneer jullie gaan, met wie en wat jullie willen zien.</p>
+    <button class="btn" data-a="trip-setup" data-gid="${G}">Reis instellen</button>${membersHtml(gid)}</div>`;
+  const { plans, tp } = rankedFor(gid);
+  const hls = highlightIds(t).map(hlById).filter(Boolean), empty = tp.profile.n === 0;
+  const edit = (step, title, sub) => `<button class="row" data-a="trip-edit" data-gid="${G}" data-step="${step}"><div class="grow"><div class="t">${title}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div><span class="chip">Wijzig</span></button>`;
+  return `<div class="pad">
+    <div class="large">${esc(g.name)}</div><p class="subt">${esc(whenText(t))}</p>
+    ${tp.missing.length ? `<div class="warnbox">Nog geen swipes van: ${tp.missing.map(esc).join(', ')}.</div>` : ''}
+    <div class="group-h">${empty ? 'Routes' : 'Aanbevolen voor jullie'}</div>
+    <div id="routelist">${plans.length ? plans.slice(0, 3).map((p, i) => routeCard(p, i, empty, gid) + (i === 0 && !empty ? '<div class="group-h">Alternatieven</div>' : '')).join('') : '<div class="warnbox">Geen route past in dit aantal nachten.</div>'}
+    ${plans.length > 3 ? `<details class="more"><summary class="btn alt">Toon alle ${plans.length} routes</summary>${plans.slice(3).map((p, i) => routeCard(p, i + 3, empty, gid)).join('')}</details>` : ''}</div>
+    <div class="group-h">Wanneer</div><div class="group">${edit('when', esc(whenText(t)), '')}</div>
+    <div class="group-h">Reisgezelschap</div><div class="group" id="party">${edit('who', esc(partyText(t)), `${readPeople(t.party).length} personen`)}</div>
+    <div class="group-h">Highlights</div><div class="group" id="hls">${edit('highlights', hls.length ? hls.map(h => esc(h.name)).join(', ') : 'Nog geen highlights gekozen', '')}</div>
+    ${membersHtml(gid)}</div>`;
+}
+function routeCard(p, i, empty, gid) {
+  const r = p.route, km = r.legs.reduce((a, l) => a + Number(l.km), 0), nights = p.stops.reduce((a, s) => a + Number(s.nights), 0);
+  const m = p.matchPct, miss = (p.placed || []).filter(x => x.stop < 0).length;
+  return `<button class="rcard${i === 0 && !empty ? ' best' : ''}" data-a="open-route" data-gid="${esc(gid)}" data-id="${esc(r.id)}" style="--c:var(--route-${esc(r.id)})">
     <div class="top"><div class="badge">${esc(r.id.toUpperCase())}</div><div><div class="t">${esc(r.title)}</div><div class="s">${esc(r.sub)}</div></div>
     ${empty ? '' : `<div class="match">${m == null ? '<b style="font-size:15px">minder passend</b>' : `<b>${m}%</b>`}<span>${i === 0 ? 'aanbevolen' : m == null ? '' : 'match'}</span></div>`}</div>
     ${empty || m == null ? '' : `<div class="bar"><i style="width:${m}%"></i></div>`}
-    <div class="foot"><span>${nights} nachten</span><span>${r.stays.map(s => esc(S.places.stays[s] ? S.places.stays[s].short : s)).join(' · ')}</span><span>${km} km · ca. ${fmtMin(r.legs.reduce((a, l) => a + Number(l.min), 0))} rijden</span></div></button>`;
+    ${miss ? `<div class="s" style="color:var(--warn,#b36a0f);margin-top:6px">${miss} ${miss === 1 ? 'highlight past' : 'highlights passen'} niet in deze route</div>` : ''}
+    <div class="foot"><span>${nights} nachten</span><span>${p.stops.map(s => `${esc(S.places.stays[s.stay] ? S.places.stays[s.stay].short : s.stay)} ${Number(s.nights)}`).join(' · ')}</span><span>${km} km · ca. ${fmtMin(r.legs.reduce((a, l) => a + Number(l.min), 0))} rijden</span></div></button>`;
+}
+// the app users of a trip: whose taste counts, invite link, remove, leave or delete
+function membersHtml(gid) {
+  const g = S.gdata[gid];
+  const owner = g.owner === S.user.uid, tog = S.toggles[gid] || {}, link = groupLink(g), G = esc(gid);
+  const rows = Object.entries(g.members || {}).map(([uid, m]) => {
+    const name = memberName(m);
+    const p = uid === S.user.uid ? myProfile() : readSummary(g.profiles && g.profiles[uid], S.allowed);
+    return `<div class="row"><div class="grow"><div class="t">${esc(name)}${uid === S.user.uid ? ' (jij)' : ''}${uid === g.owner ? ' · maker' : ''}</div><div class="s">${p.n ? p.n + ' kaarten beoordeeld' : 'nog niet geswipet'}</div></div>
+      ${owner && uid !== S.user.uid ? `<button class="chip" data-a="group-kick" data-gid="${G}" data-uid="${esc(uid)}" aria-label="Verwijder ${esc(name)}">Verwijder</button>` : ''}
+      <button class="switch" role="switch" aria-checked="${tog[uid] !== false}" data-a="group-toggle" data-gid="${G}" data-uid="${esc(uid)}" aria-label="Smaak van ${esc(name)} telt mee"></button></div>`;
+  }).join('');
+  return `<div class="group-h">Plannen met reisgenoten</div><p class="note" style="margin-top:0">Wie de link opent, plant mee en past de reis aan. Zet iemand uit als diens smaak niet mee moet tellen.</p>
+    <div class="group" id="members">${rows}</div>
+    ${link ? `<button class="btn alt" data-a="group-share" data-gid="${G}">Deel de reis</button><button class="btn alt" data-a="group-copy" data-gid="${G}">Kopieer link</button>
+      ${owner ? `<button class="btn alt" data-a="group-rotate" data-gid="${G}">Nieuwe link maken</button>` : ''}`
+      : owner ? `<button class="btn alt" data-a="group-rotate" data-gid="${G}">Deellink maken</button>` : ''}
+    ${owner ? `<button class="btn danger" data-a="group-delete" data-gid="${G}">Reis verwijderen</button>` : `<button class="btn danger" data-a="group-leave" data-gid="${G}">Reis verlaten</button>`}`;
 }
 
 function profileHtml() {
@@ -359,8 +536,11 @@ function profileHtml() {
   const total = allCards().length, done = Object.keys(S.swipes).length;
   const sentence = likes.length ? `Jij houdt van: ${likes.slice(0, 5).map(t => `<b>${esc(label(t.tag).toLowerCase())}</b>`).join(', ')}.` : 'We kennen je smaak nog niet. Swipe een paar kaarten.';
   const more = moreCards(allCards(), S.swipes, p, 10).length;
+  const year = new Date().getFullYear();
+  const fam = S.household.map(m => { const a = ageOn(m.born, `${year}-07-01`); return esc(m.name) + (a !== null && a < 18 ? ` (${a})` : ''); }).join(', ');
   return `<div class="large">${esc(S.displayName)}</div><p class="subt">${done} van ${total} kaarten beoordeeld</p>
-    <div class="group-h">Naam in groepen</div><div class="group"><div class="row"><input class="field" id="dname" maxlength="40" value="${esc(S.displayName)}" aria-label="Je naam in groepen" style="margin:0"><button class="chip on" data-a="setname">Bewaar</button></div></div>
+    <div class="group-h">Je naam in gedeelde reizen</div><div class="group"><div class="row"><input class="field" id="dname" maxlength="40" value="${esc(S.displayName)}" aria-label="Je naam in gedeelde reizen" style="margin:0"><button class="chip on" data-a="setname">Bewaar</button></div></div>
+    <div class="group-h">Mijn gezin</div><div class="group" id="household"><button class="row" data-a="household"><div class="grow"><div class="t">${fam || 'Nog niemand toegevoegd'}</div><div class="s">Het standaard reisgezelschap van een nieuwe reis</div></div><span class="chip">Wijzig</span></button></div>
     <p class="sentence">${sentence}</p>
     ${dislikes.length ? `<p class="subt" style="margin-top:0">Liever niet: ${dislikes.slice(0, 4).map(t => esc(label(t.tag).toLowerCase())).join(', ')}.</p>` : ''}
     ${likes.length ? `<div class="group-h">Dit vind je leuk</div><div class="likes">${likes.map(t => row(t, false)).join('')}</div>` : ''}
@@ -379,14 +559,6 @@ function profileHtml() {
       <button class="row" data-a="credits"><div class="grow"><div class="t">Fotocredits</div></div>${CHEV}</button>
       <button class="row" data-a="signout"><div class="grow"><div class="t" style="color:var(--no)">Uitloggen</div></div></button>
     </div>`;
-}
-
-function groupsHtml() {
-  const mine = S.groups.filter(g => S.gdata[g]);
-  const rows = mine.map(g => { const d = S.gdata[g], n = Object.keys(d.members || {}).length; return `<button class="row" data-a="group-open" data-gid="${esc(g)}"><div class="grow"><div class="t">${esc(d.name)}</div><div class="s">${n} ${n === 1 ? 'deelnemer' : 'deelnemers'}${d.owner === S.user.uid ? ' · jij beheert deze groep' : ''}</div></div>${CHEV}</button>`; }).join('');
-  return `<div class="large">Samen plannen</div><p class="subt">Maak een groep, stuur de link naar je reisgenoten en plan op een gecombineerd profiel.</p>
-    ${rows ? `<div class="group">${rows}</div>` : '<div class="warnbox">Je zit nog in geen enkele groep.</div>'}
-    <button class="btn" data-a="group-new">Nieuwe groep</button>`;
 }
 
 // ---------- pushed screens ----------
@@ -413,6 +585,7 @@ function paint(entry) {
   sc.scrollTop = top;
   if (entry.mount) entry.mount(entry.el);
 }
+const repaintTop = () => { const top = pushed[pushed.length - 1]; if (top) paint(top); };
 function popScreen() {
   const e = pushed.pop();
   if (!e) return;
@@ -423,77 +596,102 @@ function popScreen() {
   setTimeout(done, 400);
 }
 function popAll() { while (pushed.length) { const e = pushed.pop(); if (e.unmount) e.unmount(); e.el.remove(); } }
-const prevTitle = () => (pushed.length ? pushed[pushed.length - 1].title : { routes: 'Reizen', profile: 'Profiel', groups: 'Samen' }[S.tab]);
+const prevTitle = () => (pushed.length ? pushed[pushed.length - 1].title : { routes: 'Reizen', profile: 'Profiel' }[S.tab] || 'Terug');
 function refreshLive() {
   if (S.mode === 'app' && !pushed.length) { const sc = $('rootscroll'); const t = sc ? sc.scrollTop : 0; renderApp($('root')); const n = $('rootscroll'); if (n) n.scrollTop = t; }
-  const top = pushed[pushed.length - 1];
-  if (top && top.live) paint(top);
+  for (const e of pushed) if (e.live) paint(e); // every live screen, also the ones under a pushed screen
 }
 
-// ---------- route detail ----------
-function routeWhy(plan, ap) {
-  const aff = regionAffinity(ap.profile, S.places.regionTags);
+// ---------- route detail: the day-by-day plan ----------
+function routeWhy(plan, tp) {
+  const aff = regionAffinity(tp.profile, S.places.regionTags);
   const rows = Object.keys(aff).map(k => ({ k, v: (plan.route.profile[k] || 0) * aff[k] })).filter(x => x.v > 0.05).sort((a, b) => b.v - a.v).slice(0, 2);
   const names = S.tagsJson.region || {};
-  return rows.length ? `Past bij jouw voorkeur voor: ${rows.map(r => (names[r.k] || r.k).toLowerCase()).join(' en ')}.` : '';
+  return rows.length ? `Past bij jullie voorkeur voor: ${rows.map(r => (names[r.k] || r.k).toLowerCase()).join(' en ')}.` : '';
 }
 function gmaps(route) {
   const nm = k => ((S.places.names[k] && S.places.names[k].name) || k) + ', Corsica';
   const s = route.stops.map(nm);
   return 'https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=' + encodeURIComponent(s[0]) + '&destination=' + encodeURIComponent(s[s.length - 1]) + '&waypoints=' + encodeURIComponent(s.slice(1, -1).join('|'));
 }
-let lastRouteId = ''; // the route whose detail screen is open: a stop opens with the same plan
-function openRoute(id) {
-  lastRouteId = id;
-  const { plans, ap } = rankedRoutes();
-  const plan = plans.find(p => p.route.id === id);
-  if (!plan) return;
+let lastRoute = { gid: '', id: '' }; // the route whose detail screen is open: a stop opens with the same plan
+function planOf(gid, id) {
+  const { plans, tp } = rankedFor(gid);
+  return { plan: plans.find(p => p.route.id === id), tp };
+}
+function daysOf(plan, tp) {
+  const picks = (plan.placed || []).map(p => ({ ...p, item: actById(p.hl.acts[0]) }));
+  const fixed = tp.trip && tp.trip.start && tp.trip.end ? tp.trip.start : '';
+  return dayPlan(plan, { picks, calm: burdenWeight(tp.profile, tp.prefs) >= 0.3, start: fixed });
+}
+function openRoute(gid, id) {
+  lastRoute = { gid, id };
+  const first = planOf(gid, id).plan;
+  if (!first) return;
+  pushScreen({ title: first.route.name, back: (S.gdata[gid] || {}).name || 'Reis', live: true, render: () => routeDetail(gid, id) });
+}
+function routeDetail(gid, id) {
+  const { plan, tp } = planOf(gid, id);
+  if (!plan) return '<div class="pad"><p class="subt">Deze route past niet meer bij de reis.</p></div>';
   const r = plan.route, km = r.legs.reduce((a, l) => a + Number(l.km), 0), min = r.legs.reduce((a, l) => a + Number(l.min), 0);
-  const first = S.places.stays[r.stays[0]];
-  pushScreen({
-    title: r.name, back: prevTitle(),
-    render: () => {
-      const why = ap.profile.n ? routeWhy(plan, ap) : '';
-      return `<div>${phHtml(first ? stayImg(first.img) : '', r.id, 'hero', `<span class="ov"><b>${esc(r.title)}</b><span>${esc(r.sub)}</span></span>`)}</div>
-      <div class="pad">
-        <p>${esc(r.lead)}</p>
-        ${ap.profile.n ? `<div class="warnbox"><b>${plan.matchPct == null ? 'Minder passend.' : 'Match ' + plan.matchPct + '%.'}</b> ${esc(why)}${plan.shifted ? ' De nachten zijn iets verschoven naar de plekken die het best bij je passen.' : ''}</div>` : ''}
-        <div class="stats"><div class="stat"><b>${r.nights.reduce((a, b) => a + Number(b), 0)}</b><span>nachten</span></div><div class="stat"><b>${km}</b><span>km rijden</span></div><div class="stat"><b>${fmtMin(min)}</b><span>rijtijd totaal</span></div></div>
-        <div class="warnbox">${esc(r.ferry)}</div>
-        <div class="mapcard" style="margin-top:12px">${routeSvg(S.places, r)}</div>
-        <div class="group-h">Verblijfplaatsen</div>
-        ${plan.stops.map((s, i) => stopCard(s, i)).join('')}
-        <button class="btn alt" data-a="offline" data-id="${esc(r.id)}" id="offlinebtn">Download voor offline</button>
-        <a class="btn alt" href="${esc(gmaps(r))}" target="_blank" rel="noopener">Route in Google Maps</a>
-        <div class="group-h">Ritten</div>
-        <div class="group">${r.legs.map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)})">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
-        ${r.days ? `<div class="group-h">Voorbeeld-dagprogramma</div><p class="note" style="margin-top:0">Voor de oorspronkelijke verdeling van nachten.</p><div class="group">${r.days.map((d, i) => `<div class="row" style="align-items:flex-start"><span class="num sq" style="background:var(--fill);color:var(--fg);border-radius:9px;font-size:13px">${i + 1}</span><div class="grow"><div class="t">${esc(d.title)}</div><div class="s" style="color:var(--fg)">${esc(d.text)}</div>${d.drive ? `<div class="s">${esc(d.drive)}</div>` : ''}</div></div>`).join('')}</div>` : ''}
-      </div>`;
-    },
-  });
+  const nights = plan.stops.reduce((a, s) => a + Number(s.nights), 0), first = S.places.stays[r.stays[0]];
+  const { days, unplaced } = daysOf(plan, tp);
+  const why = tp.profile.n ? routeWhy(plan, tp) : '';
+  const youngest = tp.prefs.youngest ?? null;
+  return `<div>${phHtml(first ? stayImg(first.img) : '', r.id, 'hero', `<span class="ov"><b>${esc(r.title)}</b><span>${esc(r.sub)}</span></span>`)}</div>
+    <div class="pad">
+      <p>${esc(r.lead)}</p>
+      ${tp.profile.n ? `<div class="warnbox"><b>${plan.matchPct == null ? 'Minder passend.' : 'Match ' + plan.matchPct + '%.'}</b> ${esc(why)}</div>` : ''}
+      <div class="stats"><div class="stat"><b>${nights}</b><span>nachten</span></div><div class="stat"><b>${km}</b><span>km rijden</span></div><div class="stat"><b>${fmtMin(min)}</b><span>rijtijd totaal</span></div></div>
+      <div class="warnbox">${esc(r.ferry)}</div>
+      <div class="mapcard" style="margin-top:12px">${routeSvg(S.places, r)}</div>
+      <div class="group-h">Dag voor dag</div>
+      ${unplaced.length ? `<div class="warnbox" id="unplaced">Past niet in deze route: ${unplaced.map(h => esc(h.name || h.id)).join(', ')}. Kies een andere route, of meer nachten.</div>` : ''}
+      <div class="group" id="days">${days.map(d => dayRow(d, youngest)).join('')}</div>
+      <div class="group-h">Verblijfplaatsen</div>
+      ${plan.stops.map((s, i) => stopCard(s, i)).join('')}
+      <button class="btn alt" data-a="offline" data-gid="${esc(gid)}" data-id="${esc(r.id)}" id="offlinebtn">Download voor offline</button>
+      <a class="btn alt" href="${esc(gmaps(r))}" target="_blank" rel="noopener">Route in Google Maps</a>
+      <div class="group-h">Ritten</div>
+      <div class="group">${r.legs.map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)})">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
+    </div>`;
+}
+const legText = l => (l ? `${l.from} naar ${l.to}, ca. ${fmtMin(Number(l.min))} rijden` : '');
+function dayRow(d, youngest) {
+  const st = S.places.stays[d.stay] || { short: d.stay };
+  let title = '', sub = '', extra = '', warn = '';
+  if (d.kind === 'travel') { title = d.n === 1 ? `Aankomst, naar ${st.short}` : `Naar ${st.short}`; sub = legText(d.leg); if (d.act) extra = 'Daarna: ' + d.act.item.name; }
+  else if (d.kind === 'highlight') {
+    title = d.hl.name; sub = d.hl.desc || ''; extra = d.min > 15 ? `ca. ${fmtMin(Number(d.min))} rijden vanaf ${st.short}` : `bij ${st.short}`;
+    if (d.item && tooYoung(d.item, youngest)) warn = 'Let op: niet geschikt voor de jongste reisgenoot';
+  } else if (d.kind === 'activity') { title = d.act.item.name; sub = [dur(Number(d.act.item.durationH) || undefined), d.act.driveMin ? `ca. ${Number(d.act.driveMin)} min rijden` : ''].filter(Boolean).join(' · '); if (d.alt) extra = 'Of: ' + d.alt.item.name; }
+  else if (d.kind === 'rest') { title = 'Rustige dag'; sub = d.act ? d.act.item.name : 'Zwembad, strand of lekker niets'; }
+  else if (d.kind === 'free') { title = 'Vrije dag'; sub = `Rond ${st.short}`; }
+  else { title = 'Terug naar de ferry'; sub = legText(d.leg); }
+  return `<div class="row day ${esc(d.kind)}" style="align-items:flex-start"><span class="num sq" style="background:${d.kind === 'highlight' ? 'var(--accent)' : 'var(--fill)'};color:${d.kind === 'highlight' ? '#fff' : 'var(--fg)'};border-radius:9px;font-size:13px">${d.n}</span>
+    <div class="grow"><div class="s">Dag ${d.n}${d.date ? ' · ' + esc(dayLabel(d.date)) : ''}${d.kind === 'highlight' ? ' · highlight' : ''}</div><div class="t">${esc(title)}</div>${sub ? `<div class="s" style="color:var(--fg)">${esc(sub)}</div>` : ''}${extra ? `<div class="s">${esc(extra)}</div>` : ''}${warn ? `<div class="s" style="color:var(--no)">${esc(warn)}</div>` : ''}</div></div>`;
 }
 function stopCard(s, i) {
   const st = S.places.stays[s.stay] || { name: s.stay, short: s.stay, kind: '' };
-  const changed = s.nights !== s.baseNights ? ` <span class="pill ok">was ${Number(s.baseNights)}</span>` : '';
   return `<button class="stopcard" data-a="open-stop" data-i="${i}">${phHtml(stayImg(st.img || s.stay), s.stay, '', `<span class="ov"><b>${i + 1}. ${esc(st.name)}</b></span>`)}
-    <div class="meta"><span>${Number(s.nights)} ${Number(s.nights) === 1 ? 'nacht' : 'nachten'}${changed}</span><span>${s.acc.length} verblijven · ${s.acts.length} activiteiten ${CHEV.replace('class="chev"', 'class="chev" style="display:inline;vertical-align:-1px"')}</span></div></button>`;
+    <div class="meta"><span>${Number(s.nights)} ${Number(s.nights) === 1 ? 'nacht' : 'nachten'}</span><span>${s.acc.length} verblijven · ${s.acts.length} activiteiten ${CHEV.replace('class="chev"', 'class="chev" style="display:inline;vertical-align:-1px"')}</span></div></button>`;
 }
-function openStop(planId, i) {
-  const { plans, ap } = rankedRoutes();
-  const plan = plans.find(p => p.route.id === planId);
+function openStop(gid, routeId, i) {
+  const { plan, tp } = planOf(gid, routeId);
   const s = plan && plan.stops[i];
   if (!s) return;
   const st = S.places.stays[s.stay] || { name: s.stay, desc: '', sights: [], food: [] };
   const xy = S.places.places[s.stay] || [9.1, 42.15];
+  const who = tp.members > 1 ? 'jullie' : 'jou';
   let mapCtl = null;
   pushScreen({
     title: st.short || st.name, back: plan.route.name,
     render: () => `<div>${phHtml(stayImg(st.img || s.stay), s.stay, 'hero', `<span class="ov"><b>${esc(st.name)}</b><span>${Number(s.nights)} ${Number(s.nights) === 1 ? 'nacht' : 'nachten'} · ${esc(st.kind || '')}</span></span>`)}</div>
       <div class="pad">
         <p>${esc(st.desc)}</p>
-        <div class="group-h">Waar slaap je? Top 3 voor ${esc(ap.label === 'Jij' ? 'jou' : ap.label)}</div>
+        <div class="group-h">Waar slaap je? Top 3 voor ${who}</div>
         ${(s.must || []).length ? `<div class="warnbox" id="must" style="margin:0 0 10px">${s.must.map(m => `${m.key === 'ev' ? 'Laadpaal' : 'Airco'}: ${m.confirmed} van ${m.total} bevestigd`).join(' · ')}</div>` : ''}
-        ${s.acc.length ? s.acc.map((a, n) => accHtml(a, n)).join('') : '<div class="warnbox">Nog geen accommodaties in de catalogus voor deze plek.</div>'}
+        ${s.acc.length ? s.acc.map((a, n) => accHtml(a, n, tp.prefs)).join('') : '<div class="warnbox">Nog geen accommodaties in de catalogus voor deze plek.</div>'}
         <div class="group-h">Activiteiten binnen 30 km</div>
         ${s.acts.length ? `<div class="map" id="stopmap" aria-label="Kaart met activiteiten"></div>
         <div class="group" style="margin-top:12px" id="actlist">${s.acts.map((a, n) => actHtml(a, n)).join('')}</div>` : '<div class="warnbox">Nog geen activiteiten in de catalogus voor deze plek.</div>'}
@@ -511,9 +709,9 @@ function highlight(el, id) {
   const row = [...el.querySelectorAll('.actrow')].find(r => r.dataset.id === id);
   if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
-function accHtml(a, n) {
+function accHtml(a, n, prefs) {
   const it = a.item, src = photoOf(it, S.base);
-  const tags = Object.entries(tagWeights(it)).filter(([t]) => t !== 'airco' && t !== 'ev_charging' && !hiddenReasons(S.prefs).includes(t)).sort((x, y) => y[1] - x[1]).slice(0, 5).map(([t]) => `<span class="chip">${esc(label(t))}</span>`).join('');
+  const tags = Object.entries(tagWeights(it)).filter(([t]) => t !== 'airco' && t !== 'ev_charging' && !hiddenReasons(prefs).includes(t)).sort((x, y) => y[1] - x[1]).slice(0, 5).map(([t]) => `<span class="chip">${esc(label(t))}</span>`).join('');
   const generic = it.photoGeneric === true;
   const url = safeUrl(it.url);
   const town = (S.places.stays[it.region] && S.places.stays[it.region].short) || '';
@@ -521,12 +719,15 @@ function accHtml(a, n) {
   const tw = tagWeights(it);
   const NAMES = { airco: 'airco', ev: 'laadpaal' };
   const badges = [tw.airco >= 0.5 ? '<span class="pill ok">Airco</span>' : '', tw.ev_charging >= 0.5 ? '<span class="pill ok">Laadpaal</span>' : '',
+    a.fit === 'ok' && prefs && prefs.size > 2 && Number.isInteger(it.sleeps) ? `<span class="pill ok">Tot ${Number(it.sleeps)} personen</span>` : '',
+    a.fit === 'rooms' ? `<span class="pill warn">&#9888; max. ${Number(it.sleeps)} per kamer: meer kamers nodig</span>` : '',
+    a.fit === 'unknown' ? '<span class="pill warn">&#9888; aantal personen onbekend, vraag na</span>' : '',
     ...(a.unconfirmed || []).map(t => `<span class="pill warn">&#9888; ${NAMES[t] || esc(t)} onbekend &mdash; vraag na</span>`),
     ...(a.absent || []).map(t => `<span class="pill warn">&#9888; geen ${NAMES[t] || esc(t)}</span>`)].join('');
   const con = a.why.con ? `<br>${esc(a.why.con.text.charAt(0).toUpperCase() + a.why.con.text.slice(1))}.` : '';
   return `<div class="acc" data-acc="${esc(it.id)}">${phHtml(src, it.id, '')}
     <div class="body"><div class="nm"><span class="rank">${n + 1}</span>${esc(it.name)}</div>
-    <div class="meta">${esc((S.places.stays[it.region] && S.places.stays[it.region].short) || it.region)}${euro(Number(it.priceLevel)) ? ' · ' + euro(Number(it.priceLevel)) : ''}${generic ? ' · illustratieve foto' : ''}</div>
+    <div class="meta">${esc(town || it.region)}${euro(Number(it.priceLevel)) ? ' · ' + euro(Number(it.priceLevel)) : ''}${generic ? ' · illustratieve foto' : ''}</div>
     <div class="badges">${badges}</div>
     <div class="chips">${tags}</div>
     ${a.tier === 3 ? '<div class="badges"><span class="pill warn">&#9888; boven je budget</span></div><div class="note" style="margin:6px 0 0">Alleen getoond omdat er in deze plaats niets anders is.</div>' : a.tier === 2 ? '<div class="note" style="margin:6px 0 0">Alleen getoond omdat er in deze plaats niets anders is.</div>' : ''}
@@ -543,14 +744,12 @@ function actHtml(a, n) {
   return `<div class="actrow" data-id="${esc(it.id)}"><span class="no">${n + 1}</span><div class="grow" style="flex:1;min-width:0"><div class="t">${esc(it.name)}</div><div class="s">${esc(bits)}${a.why.match.length ? ' · ' + a.why.match.map(m => esc(m.label)).join(', ') : ''}</div></div>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="Meer over ${esc(it.name)}" style="padding:10px">Info</a>` : ''}</div>`;
 }
 
-// ---------- groups ----------
-// no ghost groups: when I am not (or no longer) a member, or the group is gone, it leaves my list
+// ---------- trips are groups: members, invite links, live updates ----------
+// no ghost trips: when I am not (or no longer) a member, or the trip is gone, it leaves my list
 function dropGroup(gid) {
   if (S.unwatch[gid]) { S.unwatch[gid](); delete S.unwatch[gid]; }
-  delete S.gdata[gid];
+  delete S.gdata[gid]; delete S.ranked[gid];
   if (S.groups.includes(gid)) { S.groups = S.groups.filter(x => x !== gid); schedulePersist(); }
-  S.rankKey = '';
-  if (S.view === gid) setView('me');
   if (S.mode === 'app') { popAll(); refreshLive(); }
 }
 function watchGroup(gid) {
@@ -558,53 +757,16 @@ function watchGroup(gid) {
   S.unwatch[gid] = S.store.watchGroup(gid, g => {
     if (!g || !g.members || g.members[S.user.uid] === undefined) return dropGroup(gid);
     S.gdata[gid] = g;
-    S.rankKey = '';
-    if (S.mode === 'app') refreshLive();
-  }, () => dropGroup(gid)); // permission denied: removed, or the group does not exist
+    if (S.mode === 'app' && !S.wiz) refreshLive(); // never repaint a form somebody is typing in
+  }, () => dropGroup(gid)); // permission denied: removed, or the trip does not exist
 }
-function setView(v) { S.view = v; wr(key('view'), v); S.rankKey = ''; }
 function groupLink(g) { const code = Object.keys(g.codes || {})[0]; return code ? shareUrl(location.origin, location.pathname.replace(/index\.html$/, ''), code) : ''; }
-function openGroup(gid) {
-  pushScreen({ title: (S.gdata[gid] || {}).name || 'Groep', back: 'Samen', live: true, render: () => groupDetail(gid) });
-}
-function groupDetail(gid) {
-  const g = S.gdata[gid];
-  if (!g) return '<div class="pad"><p class="subt">Deze groep bestaat niet meer.</p></div>';
-  const owner = g.owner === S.user.uid, tog = S.toggles[gid] || {}, link = groupLink(g);
-  const members = Object.entries(g.members || {});
-  const rows = members.map(([uid, m]) => {
-    const name = memberName(m);
-    const p = uid === S.user.uid ? myProfile() : readSummary(g.profiles && g.profiles[uid], S.allowed);
-    const on = tog[uid] !== false;
-    return `<div class="row"><div class="grow"><div class="t">${esc(name)}${uid === S.user.uid ? ' (jij)' : ''}${uid === g.owner ? ' · beheerder' : ''}</div><div class="s">${p.n ? p.n + ' kaarten beoordeeld' : 'nog niet geswipet'}</div></div>
-      ${owner && uid !== S.user.uid ? `<button class="chip" data-a="group-kick" data-gid="${esc(gid)}" data-uid="${esc(uid)}" aria-label="Verwijder ${esc(name)}">Verwijder</button>` : ''}
-      <button class="switch" role="switch" aria-checked="${on}" data-a="group-toggle" data-gid="${esc(gid)}" data-uid="${esc(uid)}" aria-label="${esc(name)} meenemen"></button></div>`;
-  }).join('');
-  const comb = (() => { const old = S.view; S.view = gid; const a = activeProfile(); S.view = old; return a; })();
-  const likes = topTags(comb.profile, { n: 5, sign: 1 });
-  return `<div class="pad"><div class="large">${esc(g.name)}</div><p class="subt">${members.length} ${members.length === 1 ? 'deelnemer' : 'deelnemers'}</p>
-    <div class="group-h">Wie telt mee in het gecombineerde profiel</div><div class="group" id="members">${rows}</div>
-    <div class="group-h">Gecombineerd profiel</div>
-    <div class="warnbox" id="combined">${comb.members ? (likes.length ? `Jullie houden van: ${likes.map(t => esc(label(t.tag).toLowerCase())).join(', ')}.` : 'Nog geen duidelijke voorkeuren.') + ` (${comb.members} ${comb.members === 1 ? 'profiel' : 'profielen'})` : 'Nog niemand heeft geswipet.'}</div>
-    <button class="btn" data-a="group-use" data-gid="${esc(gid)}">Toon reizen voor deze groep</button>
-    <div class="group-h">Uitnodigen</div>
-    ${link ? `<div class="warnbox" style="word-break:break-all" id="glink">${esc(link)}</div>
-    <button class="btn alt" data-a="group-share" data-gid="${esc(gid)}">Link delen</button>
-    <button class="btn alt" data-a="group-copy" data-gid="${esc(gid)}">Kopieer link</button>
-    ${owner ? `<button class="btn alt" data-a="group-rotate" data-gid="${esc(gid)}">Nieuwe link maken</button>` : ''}`
-      : `<p class="note">Er is geen uitnodigingslink.</p>${owner ? `<button class="btn alt" data-a="group-rotate" data-gid="${esc(gid)}">Link maken</button>` : ''}`}
-    ${owner ? `<button class="btn danger" data-a="group-delete" data-gid="${esc(gid)}">Groep verwijderen</button>` : `<button class="btn danger" data-a="group-leave" data-gid="${esc(gid)}">Groep verlaten</button>`}</div>`;
-}
 async function createGroup(name) {
   const id = newToken(20), code = newToken(12);
-  try {
-    await S.store.createGroup({ id, name, memberName: myName(), codes: [code] });
-    S.groups.push(id); schedulePersist(); watchGroup(id);
-    await persist();
-    closeSheet(); toast('Groep gemaakt');
-    await sleep(150);
-    openGroup(id);
-  } catch (e) { toast(errMsg(e)); }
+  await S.store.createGroup({ id, name, memberName: myName(), codes: [code] });
+  S.groups.push(id); schedulePersist(); watchGroup(id);
+  await persist();
+  return id;
 }
 async function handlePendingJoin() {
   const token = rd('corsica_join') || '';
@@ -617,15 +779,29 @@ async function handlePendingJoin() {
   if (S.groups.includes(preview.gid)) { watchGroup(preview.gid); return; } // already in
   S.joinPending = { gid: preview.gid, name: String(preview.name || ''), token };
 }
+// after joining: I am in the travel party (linked to a person with my name, else added)
+async function linkMeInParty(gid) {
+  const g = await S.store.fetchGroup(gid).catch(() => null);
+  const t = g && g.trip;
+  if (!t) return;
+  const ppl = readPeople(t.party);
+  if (ppl.some(p => p.uid === S.user.uid)) return;
+  const mine = ppl.find(p => !p.uid && p.name.trim().toLowerCase() === myName().trim().toLowerCase());
+  if (mine) mine.uid = S.user.uid; else if (ppl.length < 12) ppl.push({ name: myName(), uid: S.user.uid }); else return;
+  const { updatedAt, ...rest } = t; void updatedAt;
+  await S.store.setTrip(gid, { ...rest, party: writePeople(ppl) });
+}
 async function joinGroup() {
   const j = S.joinPending; if (!j) return;
   try {
     await S.store.join(j.gid, myName(), j.token); // the invite token is the proof
     S.groups.push(j.gid); watchGroup(j.gid); S.joinPending = null;
     await persist();
-    closeSheet(); toast('Je doet mee');
-    setView(j.gid); S.tab = 'routes'; render();
-  } catch (e) { toast(e && e.code === 'denied' ? 'Meedoen lukt niet: de uitnodiging is niet meer geldig, of je bent uit de groep gehaald.' : errMsg(e)); }
+    await linkMeInParty(j.gid).catch(() => {});
+    closeSheet(); toast('Je plant mee');
+    S.tab = 'routes'; popAll(); render();
+    if (S.mode === 'app') { await sleep(150); openTrip(j.gid); } // a new person swipes first; the trip is then in the list
+  } catch (e) { toast(e && e.code === 'denied' ? 'Meedoen lukt niet: de uitnodiging is niet meer geldig, of je bent uit de reis gehaald.' : errMsg(e)); }
 }
 async function shareGroup(gid, copy) {
   const g = S.gdata[gid], url = groupLink(g);
@@ -634,6 +810,7 @@ async function shareGroup(gid, copy) {
   if (!copy && navigator.share) { try { await navigator.share({ text }); return; } catch (e) { if (e && e.name === 'AbortError') return; } } // the link goes inside the text: WhatsApp drops a separate url
   try { await navigator.clipboard.writeText(url); toast('Link gekopieerd'); } catch { openSheet(`<h3>Uitnodigingslink</h3><p style="word-break:break-all">${esc(url)}</p>`); }
 }
+
 
 // ---------- sheet ----------
 function openSheet(html) { $('sheetBody').innerHTML = html; $('sheet').classList.add('on'); $('bd').classList.add('on'); }
@@ -660,22 +837,21 @@ const actions = {
   undo: () => deckCtl && deckCtl.undo(),
   skip: () => deckFinished(true),
   'deck-close': () => deckFinished(false),
-  'next-deck': () => { const n = S.interstitial.next; S.interstitial = null; if (n === 'app') { S.mode = 'app'; S.tab = 'profile'; S.deckFrom = null; render(); } else startDeck(n); },
+  'next-deck': () => { const n = S.interstitial.next; S.interstitial = null; if (n === 'app') { S.mode = 'app'; S.tab = 'routes'; S.deckFrom = null; render(); } else startDeck(n); },
   tab: d => { popAll(); S.tab = d.tab; renderApp($('root')); },
-  view: d => { setView(d.v); refreshLive(); },
-  'open-route': d => openRoute(d.id),
-  'open-stop': d => openStop(lastRouteId, +d.i),
-  back: () => popScreen(),
+  'open-route': d => openRoute(d.gid, d.id),
+  'open-stop': d => openStop(lastRoute.gid, lastRoute.id, +d.i),
+  back: () => { if (pushed.length && pushed[pushed.length - 1].renderFn === wizHtml) S.wiz = null; popScreen(); },
   why: (d, el) => { const t = el.parentElement.querySelector('.whytxt'); t.hidden = !t.hidden; el.setAttribute('aria-expanded', String(!t.hidden)); },
   more: () => { const p = myProfile(); const cards = moreCards(allCards(), S.swipes, p, 10); if (!cards.length) return toast('Alle kaarten zijn al beoordeeld.'); startDeck('more', { from: 'profile', cards }); },
   reswipe: d => openSheet(`<h3>Opnieuw swipen?</h3><p>Je eerdere antwoorden voor ${d.kind === 'acc' ? 'accommodaties' : 'activiteiten'} worden gewist.</p><button class="btn danger" data-a="reswipe-yes" data-kind="${esc(d.kind)}">Ja, wis en begin opnieuw</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
-  'reswipe-yes': d => { for (const c of deckOf(d.kind)) delete S.swipes[c.id]; delete S.skipped[d.kind]; S.rankKey = ''; schedulePersist(); closeSheet(); startDeck(d.kind, { from: 'profile' }); },
+  'reswipe-yes': d => { for (const c of deckOf(d.kind)) delete S.swipes[c.id]; delete S.skipped[d.kind]; S.ranked = {}; schedulePersist(); closeSheet(); startDeck(d.kind, { from: 'profile' }); },
   credits: creditsSheet,
   async signout() { await persist(); await S.store.auth.signOut(); },
   'sheet-close': closeSheet,
   // fetch the images of this route (stays, accommodations, activities): the service worker caches them as they pass through
   async offline(d, el) {
-    const plan = (rankedRoutes().plans || []).find(p => p.route.id === d.id);
+    const plan = planOf(d.gid, d.id).plan;
     if (!plan) return;
     const urls = new Set();
     for (const st of plan.stops) {
@@ -707,30 +883,26 @@ const actions = {
     const grp = (title, map) => `<div class="group-h" style="margin-top:14px">${title}</div><div class="chips">${Object.keys(map).map(t => `<button class="chip" data-a="tagedit" data-tag="${esc(t)}">${esc(map[t])}</button>`).join('')}</div>`;
     openSheet(`<h3>Tag toevoegen</h3><p>Kies wat je wilt aanpassen.</p>${grp('Verblijf', S.tagsJson.accommodation || {})}${grp('Activiteiten', S.tagsJson.activity || {})}`);
   },
-  'group-new': () => openSheet('<h3>Nieuwe groep</h3><p>Geef de groep een naam, bijvoorbeeld de reis of de vriendengroep.</p><input class="field" id="gname" maxlength="30" value="Corsica samen" aria-label="Naam van de groep"><button class="btn" data-a="group-create">Maak groep</button>'),
-  'group-create': () => { const n = $('gname').value.trim(); if (!n) return toast('Geef de groep een naam.'); createGroup(n.slice(0, 30)); },
-  'group-open': d => openGroup(d.gid),
-  'group-toggle': d => { const t = (S.toggles[d.gid] ||= {}); t[d.uid] = t[d.uid] === false; wr(key('toggles'), JSON.stringify(S.toggles)); S.rankKey = ''; refreshLive(); },
-  'group-use': d => { setView(d.gid); popAll(); S.tab = 'routes'; renderApp($('root')); },
+  'group-toggle': d => { const t = (S.toggles[d.gid] ||= {}); t[d.uid] = t[d.uid] === false; wr(key('toggles'), JSON.stringify(S.toggles)); delete S.ranked[d.gid]; refreshLive(); },
   'group-share': d => shareGroup(d.gid, false),
   'group-copy': d => shareGroup(d.gid, true),
   async 'group-rotate'(d) {
     const g = S.gdata[d.gid], old = Object.keys(g.codes || {}), code = newToken(12);
     try { if (old.length) await S.store.rotateLink(d.gid, code, old, g.name); else await S.store.addCode(d.gid, code, g.name); toast('Nieuwe link gemaakt'); } catch (e) { toast(errMsg(e)); }
   },
-  'group-leave': d => openSheet(`<h3>Groep verlaten?</h3><p>Je profiel wordt uit de groep gehaald.</p><button class="btn danger" data-a="group-leave-yes" data-gid="${esc(d.gid)}">Ja, verlaat de groep</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
+  'group-leave': d => openSheet(`<h3>Reis verlaten?</h3><p>Je profiel wordt uit de reis gehaald.</p><button class="btn danger" data-a="group-leave-yes" data-gid="${esc(d.gid)}">Ja, verlaat de reis</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
   async 'group-leave-yes'(d) {
     try {
       await S.store.removeMember(d.gid, S.user.uid);
       S.groups = S.groups.filter(g => g !== d.gid); if (S.unwatch[d.gid]) { S.unwatch[d.gid](); delete S.unwatch[d.gid]; }
-      delete S.gdata[d.gid]; if (S.view === d.gid) setView('me');
+      delete S.gdata[d.gid]; delete S.ranked[d.gid];
       await persist(); closeSheet(); popAll(); renderApp($('root'));
     } catch (e) { toast(errMsg(e)); }
   },
-  'group-delete': d => openSheet(`<h3>Groep verwijderen?</h3><p>De groep, de uitnodigingslinks en de gedeelde profielen verdwijnen voor iedereen.</p><button class="btn danger" data-a="group-delete-yes" data-gid="${esc(d.gid)}">Ja, verwijder de groep</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
+  'group-delete': d => openSheet(`<h3>Reis verwijderen?</h3><p>De reis, de deellinks en de gedeelde profielen verdwijnen voor iedereen.</p><button class="btn danger" data-a="group-delete-yes" data-gid="${esc(d.gid)}">Ja, verwijder de reis</button><button class="btn alt" data-a="sheet-close">Annuleren</button>`),
   async 'group-delete-yes'(d) {
     const g = S.gdata[d.gid];
-    try { await S.store.deleteGroup(d.gid, Object.keys((g && g.codes) || {})); dropGroup(d.gid); await persist(); closeSheet(); popAll(); renderApp($('root')); toast('Groep verwijderd'); } catch (e) { toast(errMsg(e)); }
+    try { await S.store.deleteGroup(d.gid, Object.keys((g && g.codes) || {})); dropGroup(d.gid); await persist(); closeSheet(); popAll(); renderApp($('root')); toast('Reis verwijderd'); } catch (e) { toast(errMsg(e)); }
   },
   async setname() {
     const n = ($('dname').value || '').trim().slice(0, 40);
@@ -740,6 +912,27 @@ const actions = {
     toast('Naam bewaard');
   },
   async 'group-kick'(d) { try { await S.store.removeMember(d.gid, d.uid); } catch (e) { toast(errMsg(e)); } },
+  'trip-new': () => openWizard(),
+  'trip-open': d => openTrip(d.gid),
+  'trip-setup': d => openWizard(d.gid),
+  'trip-edit': d => openWizard(d.gid, d.step),
+  household: () => openHousehold(),
+  'wiz-mode': d => { S.wiz.mode = d.m; repaintTop(); },
+  'wiz-month': d => { const m = S.wiz.months; if (m.includes(d.m)) m.splice(m.indexOf(d.m), 1); else if (m.length < 3) m.push(d.m); else return toast('Kies maximaal 3 maanden.'); repaintTop(); },
+  'wiz-n': d => { S.wiz.nights = Math.min(NIGHTS_RANGE[1], Math.max(NIGHTS_RANGE[0], S.wiz.nights + Number(d.d))); $('wnights').textContent = S.wiz.nights; },
+  'wiz-add': () => { S.wiz.party.push({ name: '' }); repaintTop(); const ins = document.querySelectorAll('#people [data-f=pname]'); if (ins.length) ins[ins.length - 1].focus(); },
+  'wiz-del': d => { S.wiz.party.splice(+d.i, 1); repaintTop(); },
+  'wiz-household': () => { const p = wizProblem(S.wiz); if (p) return toast(p); S.household = readPeople(writePeople(S.wiz.party.map(({ uid, ...x }) => (uid === S.user.uid ? { ...x, uid } : x)))); schedulePersist(); toast('Bewaard als je gezin'); },
+  'wiz-hl': (d, el) => { const h = S.wiz.hl; if (h.has(d.id)) h.delete(d.id); else h.add(d.id); el.setAttribute('aria-pressed', String(h.has(d.id))); const n = wizNights(S.wiz), many = n && h.size > Math.max(1, n - 3); $('hlcount').textContent = h.size + ' gekozen' + (many ? ` · veel voor ${n} nachten: misschien past niet alles` : ''); },
+  'wiz-prev': () => { S.wiz.step = WIZ_STEPS[Math.max(0, WIZ_STEPS.indexOf(S.wiz.step) - 1)]; repaintTop(); },
+  'wiz-next': () => {
+    const w = S.wiz, p = wizProblem(w);
+    if (p) return toast(p);
+    const i = WIZ_STEPS.indexOf(w.step);
+    if (w.only || i === WIZ_STEPS.length - 1) return wizSave();
+    w.step = WIZ_STEPS[i + 1]; repaintTop();
+    const sc = pushed.length && pushed[pushed.length - 1].el.querySelector('.scroll'); if (sc) sc.scrollTop = 0;
+  },
   'join-yes': joinGroup,
   'join-no': () => { S.joinPending = null; closeSheet(); },
 };
@@ -750,6 +943,19 @@ document.addEventListener('click', e => {
   if (fn) { e.preventDefault(); fn(el.dataset, el); }
 });
 $('bd').addEventListener('click', closeSheet);
+document.addEventListener('input', e => {
+  const el = e.target, w = S.wiz, f = el.dataset && el.dataset.f;
+  if (!w || !f) return;
+  if (f === 'name' || f === 'start' || f === 'end') w[f] = el.value;
+  if (f === 'start' || f === 'end') { const n = nightsBetween(w.start, w.end), out = $('fixedn'); if (out) out.textContent = n ? n + ' nachten' : 'Kies beide data.'; }
+  if (f === 'pname') w.party[+el.dataset.i].name = el.value.slice(0, 40);
+  if (f === 'pborn') {
+    const v = el.value.trim(), p = w.party[+el.dataset.i];
+    if (v === '') delete p.born; else p.born = /^[0-9]{4}$/.test(v) ? Number(v) : NaN;
+    const a = ageOn(p.born, tripStart({ start: w.start, months: w.months.join(' ') }) || `${new Date().getFullYear()}-07-01`), out = document.querySelector(`[data-age="${el.dataset.i}"]`);
+    if (out) out.textContent = a !== null ? a + ' jr' : '';
+  }
+});
 document.addEventListener('keydown', e => {
   if (S.mode === 'deck' && deckCtl && !e.target.closest('input')) {
     if (e.key === 'ArrowRight') deckCtl.swipe(SWIPE.YES);
@@ -763,7 +969,7 @@ document.addEventListener('keydown', e => {
 // the join sheet appears once the app is showing
 const joinWatcher = setInterval(() => {
   if (S.joinPending && (S.mode === 'app' || S.mode === 'intro') && !$('sheet').classList.contains('on')) {
-    openSheet(`<h3>Meedoen met ${esc(S.joinPending.name)}?</h3><p>Jouw smaakprofiel wordt gedeeld met de deelnemers van deze groep. Je kunt altijd weer vertrekken.</p><button class="btn" data-a="join-yes">Meedoen</button><button class="btn alt" data-a="join-no">Niet nu</button>`);
+    openSheet(`<h3>Meeplannen met ${esc(S.joinPending.name)}?</h3><p>Je ziet de reis, kunt hem aanpassen en jouw smaakprofiel telt mee. Je kunt altijd weer vertrekken.</p><button class="btn" data-a="join-yes">Meedoen</button><button class="btn alt" data-a="join-no">Niet nu</button>`);
   }
 }, 400);
 void joinWatcher;

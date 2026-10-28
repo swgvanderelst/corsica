@@ -68,8 +68,8 @@ export async function createStore() {
     now: () => Date.now(),
     onOnline(cb) { online.add(cb); cb(isOnline); return () => online.delete(cb); },
     async getUser() { const r = await api('GET', '/users/' + me.uid); return r && !r.notFound ? r : null; },
-    async saveUser({ name, swipes, groups, overrides, prefs }) {
-      await api('PUT', '/users/' + me.uid, { name, ...(swipes ? { swipes } : {}), ...(groups ? { groups } : {}), ...(overrides ? { overrides } : {}), ...(prefs ? { prefs } : {}) });
+    async saveUser({ name, swipes, groups, overrides, prefs, household }) {
+      await api('PUT', '/users/' + me.uid, { name, ...(swipes ? { swipes } : {}), ...(groups ? { groups } : {}), ...(overrides ? { overrides } : {}), ...(prefs ? { prefs } : {}), ...(household && Object.keys(household).length ? { household } : {}) });
     },
     // the invite preview: {gid, name} or null
     async resolveCode(code) { const r = await api('GET', '/codes/' + code); return r.notFound ? null : { gid: r.groupId, name: r.name }; },
@@ -93,6 +93,7 @@ export async function createStore() {
     unban: (gid, uid) => api('DELETE', `/groups/${gid}/banned/${uid}`),
     deleteGroup: gid => api('DELETE', '/groups/' + gid),
     setProfile: (gid, { w, c, n, prefs }) => api('PUT', `/groups/${gid}/profiles/${me.uid}`, { w, c, n, ...(prefs && Object.keys(prefs).length ? { prefs } : {}) }),
+    setTrip: (gid, trip) => api('PUT', `/groups/${gid}/trip`, trip),
     deleteProfile: (gid, uid = me.uid) => api('DELETE', `/groups/${gid}/profiles/${uid}`),
   };
 }

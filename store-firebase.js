@@ -67,12 +67,13 @@ export async function createStore(config) {
     now: () => Date.now(),
     onOnline(cb) { return onValue(R('.info/connected'), s => cb(s.val() === true)); },
     getUser: () => wrap(async () => (await get(R('users/' + uid()))).val()),
-    saveUser({ name, swipes, groups, overrides, prefs }) {
+    saveUser({ name, swipes, groups, overrides, prefs, household }) {
       const v = { name, updatedAt: ts() };
       if (swipes && Object.keys(swipes).length) v.swipes = swipes; // an empty map does not exist in RTDB
       if (groups && Object.keys(groups).length) v.groups = groups;
       if (overrides && Object.keys(overrides).length) v.overrides = overrides;
       if (prefs && Object.keys(prefs).length) v.prefs = prefs;
+      if (household && Object.keys(household).length) v.household = household;
       return wrap(() => set(R('users/' + uid()), v));
     },
     // the invite preview: {gid, name} or null
@@ -122,6 +123,8 @@ export async function createStore(config) {
       return multi(u);
     },
     setProfile: (gid, { w, c, n, prefs }) => wrap(() => set(R(`groups/${gid}/profiles/${uid()}`), { w, c, n, ...(prefs && Object.keys(prefs).length ? { prefs } : {}), updatedAt: ts() })),
+    // the trip settings: any member writes them (dates, party, highlights)
+    setTrip: (gid, trip) => wrap(() => set(R(`groups/${gid}/trip`), { ...trip, updatedAt: ts() })),
     deleteProfile: (gid, who = uid()) => wrap(() => set(R(`groups/${gid}/profiles/${who}`), null)),
   };
 }

@@ -16,5 +16,6 @@
  "deck": "test/fixtures/deck.json",
  "credits": "https://evil.example/credits.json",
  "base": "https://evil.example/",
- "stayImages": "destinations/corsica/stay-img/"
+ "stayImages": "destinations/corsica/stay-img/",
+ "highlights": "test/fixtures/evil-highlights.json"
 }

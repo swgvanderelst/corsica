@@ -1,0 +1,229 @@
+// Trips: dates, travel party, nights per template, highlights and the day plan (pure logic).
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import * as L from '../logic.js';
+
+const json = p => JSON.parse(fs.readFileSync(new URL(p, import.meta.url), 'utf8'));
+const places = json('../destinations/corsica/places.json');
+const routes = json('../destinations/corsica/routes.json').routes;
+const catalog = L.mergeCatalogs([json('./fixtures/catalog.json')]);
+const ctx = { acc: catalog.acc, act: catalog.act, places: places.places, regionTags: places.regionTags, labels: {} };
+const near = (a, b, e = 1e-9) => assert.ok(Math.abs(a - b) <= e, `${a} !~ ${b}`);
+
+test('trip dates: start, nights between, adding days, age reached in the trip year', () => {
+  assert.equal(L.tripStart({ start: '2027-07-04', months: '2027-08' }), '2027-07-04');
+  assert.equal(L.tripStart({ months: '2027-07 2027-08', nights: 14 }), '2027-07-01'); // flexible: the 1st of the first month
+  assert.equal(L.tripStart({ months: 'juli' }), '');
+  assert.equal(L.tripStart(null), '');
+  assert.equal(L.nightsBetween('2027-07-04', '2027-07-18'), 14);
+  assert.equal(L.nightsBetween('2027-03-27', '2027-03-29'), 2); // across the clock change
+  assert.equal(L.nightsBetween('2027-07-18', '2027-07-04'), 0);
+  assert.equal(L.nightsBetween('x', '2027-07-04'), 0);
+  assert.equal(L.addDays('2027-07-30', 3), '2027-08-02');
+  assert.equal(L.addDays('nope', 1), '');
+  assert.equal(L.ageOn(2020, '2027-07-01'), 7);
+  assert.equal(L.ageOn(2028, '2027-07-01'), 0); // not born yet: counts as a baby
+  assert.equal(L.ageOn(undefined, '2027-07-01'), null);
+  assert.equal(L.ageOn(2020, ''), null);
+});
+
+test('tripNights: from fixed dates, else the stored nights, within 3-28', () => {
+  assert.equal(L.tripNights({ start: '2027-07-04', end: '2027-07-18', nights: 3 }), 14);
+  assert.equal(L.tripNights({ nights: 10 }), 10);
+  assert.equal(L.tripNights({ nights: 2 }), 0);
+  assert.equal(L.tripNights({ nights: 29 }), 0);
+  assert.equal(L.tripNights({ start: '2027-07-04', end: '2027-08-30' }), 0); // 57 nights: out of range
+  assert.equal(L.tripNights(null), 0);
+});
+
+test('people: read and write the p0..p11 shape, junk is dropped', () => {
+  const raw = { p1: { name: 'Lisa', born: 2020 }, p0: { name: 'Stefan', born: 1980, uid: 'u1' }, p12: { name: 'X' }, p2: { name: '' }, p3: { name: 'Bad', born: 1800, uid: '<b>' }, x: { name: 'Y' } };
+  assert.deepEqual(L.readPeople(raw), [{ key: 'p0', name: 'Stefan', born: 1980, uid: 'u1' }, { key: 'p1', name: 'Lisa', born: 2020 }, { key: 'p3', name: 'Bad' }]);
+  assert.deepEqual(L.readPeople(null), []);
+  const many = Array.from({ length: 14 }, (_, i) => ({ name: ' P' + i + ' ', born: 2000 }));
+  const out = L.writePeople([...many, { name: '' }]);
+  assert.equal(Object.keys(out).length, 12);
+  assert.deepEqual(out.p0, { name: 'P0', born: 2000 });
+  assert.deepEqual(L.writePeople([{ name: 'A', born: 'x', uid: 'bad uid' }]), { p0: { name: 'A' } });
+});
+
+test('partyPrefs / tripPrefs: kids come from the ages on the trip, the size and the youngest travel along', () => {
+  const trip = { months: '2027-07', nights: 14, party: { p0: { name: 'Stefan', born: 1980 }, p1: { name: 'Lisa', born: 2020 }, p2: { name: 'Oma' } } };
+  assert.deepEqual(L.partyPrefs(trip.party, trip), { size: 3, youngest: 7, kids: true });
+  assert.deepEqual(L.partyPrefs({ p0: { name: 'A', born: 2015 } }, { months: '2027-07' }), { size: 1, youngest: 12, kids: false }); // 12 is no longer a kid
+  assert.deepEqual(L.partyPrefs({ p0: { name: 'A' } }, trip), { size: 1, youngest: null, kids: false }); // no birth year: an adult
+  // the kids switch of a member is replaced by the party; airco and budget still combine
+  const adults = { ...trip, party: { p0: { name: 'A', born: 1980 }, p1: { name: 'B', born: 1982 } } };
+  assert.deepEqual(L.tripPrefs([{ kids: true, budget: 3 }, { airco: true, budget: 2 }], adults), { airco: true, budget: 2, size: 2, youngest: 45 });
+  assert.deepEqual(L.tripPrefs([{ airco: true }], trip), { airco: true, kids: true, size: 3, youngest: 7 });
+  assert.deepEqual(L.tripPrefs([{ kids: true }], { nights: 7 }), { kids: true }); // no party yet: the old switch still counts
+  assert.deepEqual(L.highlightIds({ highlights: 'hl-a hl-b  <b> hl-c' }), ['hl-a', 'hl-b', 'hl-c']);
+  assert.deepEqual(L.highlightIds(null), []);
+});
+
+test('tooYoung / roomFit / refusesParty: the party decides what is possible', () => {
+  assert.equal(L.tooYoung({ minAge: 8 }, 7), true);
+  assert.equal(L.tooYoung({ minAge: 8 }, 8), false);
+  assert.equal(L.tooYoung({ kidFriendly: 'no' }, 15), true);
+  assert.equal(L.tooYoung({ kidFriendly: 'no' }, 16), false);
+  assert.equal(L.tooYoung({ kidFriendly: 'older' }, 5), true);
+  assert.equal(L.tooYoung({ kidFriendly: 'older' }, 9), false);
+  assert.equal(L.tooYoung({ kidFriendly: 'no', minAge: 18 }, null), false); // unknown ages: nothing is filtered
+  assert.equal(L.roomFit({ sleeps: 2 }, 2), 'ok');
+  assert.equal(L.roomFit({ sleeps: 4 }, 4), 'ok');
+  assert.equal(L.roomFit({ sleeps: 2 }, 4), 'rooms');
+  assert.equal(L.roomFit({}, 4), 'unknown');
+  assert.equal(L.roomFit({ sleeps: 2 }, undefined), 'ok');
+  assert.equal(L.refusesParty({ adultsOnly: true }, { kids: true }), true);
+  assert.equal(L.refusesParty({ adultsOnly: true }, {}), false);
+  assert.equal(L.refusesParty({ minAge: 16 }, { youngest: 12 }), true);
+  assert.equal(L.refusesParty({ minAge: 16 }, { youngest: 16 }), false);
+  assert.equal(L.refusesParty({ adultsOnly: true }, null), false);
+});
+
+test('fitNights: exactly n nights in the template proportions, at least 2 per stop, null when impossible', () => {
+  assert.deepEqual(L.fitNights([4, 3, 6], 13), [4, 3, 6]);
+  assert.deepEqual(L.fitNights([4, 3, 6], 7), [2, 2, 3]);
+  assert.deepEqual(L.fitNights([4, 3, 6], 21), [6, 5, 10]);
+  assert.deepEqual(L.fitNights([5], 9), [9]);
+  assert.equal(L.fitNights([3, 3, 3, 4], 7), null); // 4 stops need 8 nights
+  assert.equal(L.fitNights([], 7), null);
+  assert.equal(L.fitNights([4, 4], 7.5), null);
+  for (const n of [6, 9, 14, 20, 28]) {
+    const out = L.fitNights([3, 3, 3, 4], n) || L.fitNights([4, 3, 6], n);
+    assert.equal(out.reduce((a, b) => a + b, 0), n);
+    assert.ok(out.every(x => x >= 2));
+  }
+});
+
+test('rankRoutes with a trip length: every proposal has exactly that many nights; short templates stay short', () => {
+  for (const n of [5, 7, 10, 14, 21]) {
+    const out = L.rankRoutes(routes, L.emptyProfile(), { ...ctx, nights: n });
+    assert.ok(out.length >= 3, `at least 3 proposals for ${n} nights`);
+    for (const plan of out) assert.equal(plan.stops.reduce((a, s) => a + s.nights, 0), n, `${plan.route.id} at ${n}`);
+    for (const plan of out) assert.ok(!(plan.route.maxNights < n));
+  }
+});
+
+test('placeHighlights: nearest stop with a free day; out of reach or no day left is reported', () => {
+  const pl = { a: [9.0, 42.0], b: [9.0, 41.5] }; // [lon, lat]
+  const hl = (id, lat) => ({ id, lat, lon: 9.0 });
+  const out = L.placeHighlights(['a', 'b'], [hl('h1', 42.05), hl('h2', 41.52), hl('far', 43.0)], pl);
+  assert.deepEqual(out.map(o => o.stop), [0, 1, -1]);
+  assert.equal(out[2].why, 'far');
+  assert.equal(out[0].min, L.hlMin(L.distanceKm({ lat: 42, lon: 9 }, hl('h1', 42.05))));
+  assert.equal(L.hlMin(35), 84); // Porto - Calvi: no day trip
+  // one free day at a and none at b: the second highlight near a has no day left
+  const full = L.placeHighlights(['a', 'b'], [hl('x1', 42.0), hl('x2', 42.01)], pl, [1, 0]);
+  assert.deepEqual(full.map(o => o.stop).sort(), [-1, 0]);
+  assert.equal(full.find(o => o.stop < 0).why, 'full');
+  assert.deepEqual(L.placeHighlights(['a'], [], pl), []);
+  assert.deepEqual(L.placeHighlights(['zz'], [hl('h', 42)], pl).map(o => o.stop), [-1]); // a stop without coordinates
+});
+
+test('planRoute: missing the chosen highlights costs a route', () => {
+  const r = routes.find(x => x.id === 'g'); // Calvi and Corte
+  const bonifacio = { id: 'hl-x', lat: 41.39, lon: 9.16 }; // far from both
+  const without = L.planRoute(r, L.emptyProfile(), ctx), withHl = L.planRoute(r, L.emptyProfile(), { ...ctx, highlights: [bonifacio] });
+  assert.equal(withHl.parts.highlights, 0);
+  near(without.score - withHl.score, L.HL_WEIGHT);
+  const onRoute = L.planRoute(r, L.emptyProfile(), { ...ctx, highlights: [{ id: 'hl-c', lat: 42.567, lon: 8.757 }] }); // Calvi
+  assert.equal(onRoute.parts.highlights, 1);
+  assert.equal(onRoute.placed[0].stop, 0);
+});
+
+test('sanitizeHighlights: safe ids, real coordinates, activity ids only', () => {
+  const out = L.sanitizeHighlights([{ id: 'hl-a', name: 'A', cat: 'beaches', lat: '41.5', lon: 9, acts: ['act-1', '<b>', 5], desc: 'x' }, { id: 'HL bad', lat: 1, lon: 1 }, { id: 'hl-b', lat: 'x', lon: 1 }, null]);
+  assert.deepEqual(out, [{ id: 'hl-a', name: 'A', cat: 'beaches', desc: 'x', lat: 41.5, lon: 9, acts: ['act-1'] }]);
+  assert.deepEqual(L.sanitizeHighlights('x'), []);
+});
+
+// a small plan for the day planner
+const mkAct = (id, t, h = 2) => ({ id, name: id, lat: 42, lon: 9, durationH: h, tags: t });
+const mkPlan = (stops, legs = [{ min: 60 }, { min: 30 }, { min: 90 }]) => ({ route: { id: 'x', legs }, stops });
+
+test('dayPlan: exactly nights + 1 days, travel days on every change, every placed highlight once', () => {
+  const acts = n => Array.from({ length: n }, (_, i) => ({ item: mkAct('a' + i + '-' + n, i % 2 ? ['beach'] : ['culture']), score: 1 - i / 10 }));
+  const plan = mkPlan([{ stay: 's1', nights: 4, acts: acts(6) }, { stay: 's2', nights: 3, acts: acts(5) }]);
+  const picks = [{ hl: { id: 'hl-1' }, stop: 1, min: 20, item: mkAct('hlact', ['viewpoint']) }, { hl: { id: 'hl-far' }, stop: -1, min: 200 }];
+  const { days, unplaced } = L.dayPlan(plan, { picks, start: '2027-07-04' });
+  assert.equal(days.length, 8);
+  assert.deepEqual(days.map(d => d.kind), ['travel', 'activity', 'activity', 'activity', 'travel', 'highlight', 'activity', 'depart']);
+  assert.deepEqual(days.map(d => d.n), [1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.equal(days[0].date, '2027-07-04');
+  assert.equal(days[7].date, '2027-07-11');
+  assert.equal(days[4].leg.min, 30);
+  assert.equal(days[7].leg.min, 90);
+  assert.equal(days[5].hl.id, 'hl-1');
+  assert.deepEqual(unplaced.map(h => h.id), ['hl-far']);
+  const ids = days.flatMap(d => (d.act ? [d.act.item.id] : []));
+  assert.equal(new Set(ids).size, ids.length, 'no activity twice');
+  assert.ok(days.every(d => !d.alt || d.alt.item.id !== d.act.item.id));
+  assert.equal(L.dayPlan(plan).days[0].date, undefined); // flexible dates: no dates
+});
+
+test('dayPlan: more highlights than free days are reported; a calm party gets a quiet day after two heavy ones', () => {
+  const h = i => ({ hl: { id: 'h' + i }, stop: 0, min: i, item: mkAct('hx' + i, ['hike']) });
+  const r = L.dayPlan(mkPlan([{ stay: 's', nights: 2, acts: [] }]), { picks: [h(1), h(2), h(3)] });
+  assert.deepEqual(r.days.map(d => d.kind), ['travel', 'highlight', 'depart']);
+  assert.deepEqual(r.unplaced.map(x => x.id), ['h2', 'h3']);
+  const heavyActs = [0, 1, 2, 3].map(i => ({ item: mkAct('heavy' + i, ['hike_hard'], 6), score: 1 }));
+  const beach = { item: mkAct('beach', ['beach', 'relax'], 2), score: 0.1 };
+  const calm = L.dayPlan(mkPlan([{ stay: 's', nights: 5, acts: [...heavyActs, beach] }]), { calm: true }).days.map(d => d.kind);
+  assert.deepEqual(calm, ['travel', 'activity', 'activity', 'rest', 'activity', 'depart']);
+  const busy = L.dayPlan(mkPlan([{ stay: 's', nights: 5, acts: [...heavyActs, beach] }])).days.map(d => d.kind);
+  assert.ok(!busy.includes('rest'));
+  assert.deepEqual(L.dayPlan(mkPlan([{ stay: 's', nights: 3, acts: [] }])).days.map(d => d.kind), ['travel', 'free', 'free', 'depart']);
+});
+
+test('activitiesNear / topAccommodations: the party filters what is too young or refuses children, and flags tight rooms', () => {
+  const stop = { lat: 42, lon: 9 };
+  const acts = [{ ...mkAct('dive', ['diving']), minAge: 8 }, mkAct('beach', ['beach'])];
+  assert.deepEqual(L.activitiesNear(acts, stop, L.emptyProfile(), { prefs: { youngest: 5 } }).map(a => a.item.id), ['beach']);
+  assert.equal(L.activitiesNear(acts, stop, L.emptyProfile(), { prefs: { youngest: 9 } }).length, 2);
+  const acc = (id, extra) => ({ id, region: 'r', name: id, priceLevel: 2, tags: { hotel: 1 }, ...extra });
+  const list = [acc('adults', { adultsOnly: true }), acc('small', { sleeps: 2 }), acc('big', { sleeps: 4 }), acc('unk', {})];
+  const kids = L.topAccommodations(list, 'r', L.emptyProfile(), 3, { prefs: { kids: true, size: 4, youngest: 6 } });
+  assert.ok(!kids.some(a => a.item.id === 'adults'));
+  assert.equal(kids.find(a => a.item.id === 'small').fit, 'rooms');
+  assert.equal(kids.find(a => a.item.id === 'big').fit, 'ok');
+  assert.equal(kids.find(a => a.item.id === 'unk').fit, 'unknown');
+  assert.equal(kids[kids.length - 1].item.id, 'small', 'a stay that needs two rooms comes last');
+  assert.ok(L.topAccommodations(list, 'r', L.emptyProfile(), 4, { prefs: { size: 2 } }).some(a => a.item.id === 'adults'));
+});
+
+test('sanitizeItems: party facts are whole numbers, booleans or known words', () => {
+  const [a] = L.sanitizeItems([{ id: 'x', lat: 42, lon: 9, sleeps: '4', minAge: 8.5, familyRooms: 'yes', adultsOnly: true, kidFriendly: 'maybe' }], 'accommodation');
+  assert.equal(a.sleeps, undefined);
+  assert.equal(a.minAge, undefined);
+  assert.equal(a.familyRooms, undefined);
+  assert.equal(a.adultsOnly, true);
+  assert.equal(a.kidFriendly, undefined);
+  const [b] = L.sanitizeItems([{ id: 'y', lat: 42, lon: 9, minAge: 8, kidFriendly: 'older' }], 'activity');
+  assert.equal(b.minAge, 8);
+  assert.equal(b.kidFriendly, 'older');
+});
+
+test('planRoute: a highlight at a stop counts more than a day trip to it', () => {
+  const r = routes.find(x => x.id === 'g'); // Calvi and Corte
+  const at = L.planRoute(r, L.emptyProfile(), { ...ctx, highlights: [{ id: 'hl-c', lat: 42.567, lon: 8.757 }] }); // Calvi itself
+  const trip = L.planRoute(r, L.emptyProfile(), { ...ctx, highlights: [{ id: 'hl-r', lat: 42.638, lon: 8.94 }] }); // Île-Rousse direction, a day trip
+  assert.equal(at.parts.highlights, 1);
+  assert.equal(trip.parts.highlights, L.HL_TRIP_CREDIT);
+});
+test('rankRoutes: the route with the chosen highlights at its stops comes first', () => {
+  const hls = json('../destinations/corsica/highlights.json').filter(h => ['hl-calvi', 'hl-corte', 'hl-palombaggia'].includes(h.id));
+  const out = L.rankRoutes(routes, L.emptyProfile(), { ...ctx, nights: 14, highlights: hls });
+  assert.equal(out[0].route.id, 'a', 'Calvi, Corte and Porto-Vecchio');
+  assert.ok(out[0].placed.every(p => p.stop >= 0));
+});
+
+test('dayPlan: an alternative is never planned elsewhere in the trip', () => {
+  const acts = Array.from({ length: 8 }, (_, i) => ({ item: mkAct('x' + i, i % 2 ? ['beach'] : ['culture']), score: 1 - i / 10 }));
+  const { days } = L.dayPlan(mkPlan([{ stay: 's', nights: 5, acts }]));
+  const main = days.flatMap(d => (d.act ? [d.act.item.id] : [])), alts = days.flatMap(d => (d.alt ? [d.alt.item.id] : []));
+  assert.ok(alts.length > 0);
+  assert.ok(alts.every(a => !main.includes(a)), 'alternatives are activities that are not in the plan');
+  assert.equal(new Set(alts).size, alts.length);
+});

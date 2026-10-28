@@ -23,6 +23,21 @@ const PREFS = {
   $other: { '.validate': false },
 };
 
+// a person in a household or a travel party: keys p0..p11 cap the list at 12 (rules cannot count)
+const PERSON_KEY = '/^p([0-9]|1[01])$/';
+const PEOPLE = {
+  '.validate': 'newData.hasChildren()',
+  $p: {
+    '.validate': `$p.matches(${PERSON_KEY}) && newData.hasChildren(['name'])`,
+    name: { '.validate': 'newData.isString() && newData.val().length >= 1 && newData.val().length <= 40' },
+    born: { '.validate': 'newData.isNumber() && newData.val() >= 1920 && newData.val() <= 2040 && newData.val() % 1 === 0' },
+    uid: { '.validate': `newData.isString() && newData.val().matches(${KEY})` },
+    $other: { '.validate': false },
+  },
+};
+const DATE = '/^20[2-9][0-9]-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/';
+const MONTHS = '/^20[2-9][0-9]-(0[1-9]|1[0-2])( 20[2-9][0-9]-(0[1-9]|1[0-2])){0,2}$/';
+
 // codes/$code: newData.parent().parent() is the root after the write
 const CR = 'newData.parent().parent()';
 const CODE_GID = "newData.child('gid').val()";
@@ -43,6 +58,8 @@ const rules = {
         overrides: { '.validate': 'newData.hasChildren()', $t: { '.validate': `$t.matches(${TAG}) && (newData.val() === -1 || newData.val() === 0 || newData.val() === 1)` } },
         // switches and a budget cap (1-4 euro signs)
         prefs: PREFS,
+        // my household: the default travel party of a new trip
+        household: PEOPLE,
         updatedAt: { '.validate': TIME },
         $other: { '.validate': false },
       },
@@ -122,6 +139,21 @@ const rules = {
             updatedAt: { '.validate': TIME },
             $other: { '.validate': false },
           },
+        },
+        // the trip settings: every member plans along (dates, party, highlights); removed only with the group
+        trip: {
+          '.write': `${AUTHED} && newData.exists() && ${G}.child('members').child(auth.uid).exists() && !${G}.child('banned').child(auth.uid).exists()`,
+          '.validate': "newData.hasChildren(['dest', 'nights', 'updatedAt'])",
+          dest: { '.validate': `newData.isString() && newData.val().matches(${KEY})` },
+          nights: { '.validate': 'newData.isNumber() && newData.val() >= 3 && newData.val() <= 28 && newData.val() % 1 === 0' },
+          start: { '.validate': `newData.isString() && newData.val().matches(${DATE})` },
+          end: { '.validate': `newData.isString() && newData.val().matches(${DATE})` },
+          months: { '.validate': `newData.isString() && newData.val().matches(${MONTHS})` },
+          party: PEOPLE,
+          // chosen highlight ids, space separated
+          highlights: { '.validate': 'newData.isString() && newData.val().length <= 1000 && newData.val().matches(/^[-a-z0-9 ]*$/)' },
+          updatedAt: { '.validate': TIME },
+          $other: { '.validate': false },
         },
         $other: { '.validate': false },
       },

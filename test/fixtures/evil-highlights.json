@@ -1,0 +1,38 @@
+[
+ {
+  "id": "hl-ok",
+  "name": "Calvi <img src=x onerror=window.__pwned=1>",
+  "cat": "towns",
+  "desc": "</script><svg onload=window.__pwned=1>",
+  "lat": 42.567,
+  "lon": 8.757,
+  "acts": [
+   "act-x",
+   "<img src=x onerror=window.__pwned=1>"
+  ]
+ },
+ {
+  "id": "<img src=x onerror=window.__pwned=1>",
+  "name": "bad id",
+  "cat": "towns",
+  "lat": 42,
+  "lon": 9,
+  "acts": []
+ },
+ {
+  "id": "hl-nolat",
+  "name": "x",
+  "cat": "beaches",
+  "lat": "<img src=x onerror=window.__pwned=1>",
+  "lon": 9,
+  "acts": []
+ },
+ {
+  "id": "hl-cat",
+  "name": "odd category",
+  "cat": "<img src=x onerror=window.__pwned=1>",
+  "lat": 42.3,
+  "lon": 9.1,
+  "acts": []
+ }
+]

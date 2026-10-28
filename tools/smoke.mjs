@@ -105,12 +105,14 @@ try {
   await click(anna, '[data-a=pref][data-k=airco]'); await click(anna, '[data-a=budget][data-v="3"]'); await sleep(1300);
   assert.deepEqual(getUser(aUid).prefs, { airco: true, budget: 3 }, 'preferences are saved in the user record');
   await click(anna, '[data-a=next-deck]');
+  await anna.waitForSelector('[data-a=trip-new]'); // after the decks: the trips
+  await click(anna, '[data-tab=profile]');
   await anna.waitForSelector('.sentence');
   assert.match(await text(anna, '.sentence'), /Jij houdt van/);
   await shot(anna, '06-profile');
   assert.ok((await anna.$$('.trow')).length >= 3);
   // profile correction: flip the first liked tag to 'liever niet', add a tag from the list, preferences are on the screen
-  assert.equal((await anna.$$('#prefs .switch')).length, 3);
+  assert.equal((await anna.$$('#prefs .switch')).length, 2, 'airco and charger; kids follow from the travel party');
   const firstTag = await anna.$eval('.trow', e => e.dataset.tag);
   await click(anna, '.trow'); await anna.waitForSelector('#sheet.on [data-a=tagset]');
   await click(anna, '[data-a=tagset][data-v="-1"]'); await sleep(1300);
@@ -120,27 +122,84 @@ try {
   await click(anna, '#sheet .chip[data-tag="pool"]'); await anna.waitForSelector('[data-a=tagset]');
   await click(anna, '[data-a=tagset][data-v="1"]'); await sleep(1300);
   assert.equal(getUser(aUid).overrides.pool, 1);
-  // the name in groups: the Google first name by default, editable in the profile
+  // the name in shared trips: the Google first name by default, editable in the profile
   assert.match(await anna.$eval('#dname', e => e.value), /^Anna$/);
   await anna.$eval('#dname', e => { e.value = 'Anni'; }); await click(anna, '[data-a=setname]'); await sleep(1300);
   assert.equal(getUser(aUid).name, 'Anni', 'the chosen name is saved');
   await shot(anna, '06b-profile-overrides');
 
-  // routes: 7 ranked, best first
+  // ================= household in the profile: the default party of a new trip =================
+  const typeIn = async (page, sel, value) => { await page.$eval(sel, e => { e.value = ''; }); await page.type(sel, value); };
+  await click(anna, '[data-a=household]');
+  await anna.waitForSelector('#people');
+  await click(anna, '[data-a=wiz-del][data-i="0"]').catch(() => {}); // start from an empty household
+  await click(anna, '[data-a=wiz-add]'); await anna.waitForSelector('#people [data-f=pname][data-i="0"]');
+  await typeIn(anna, '#people [data-f=pname][data-i="0"]', 'Anna'); await typeIn(anna, '#people [data-f=pborn][data-i="0"]', '1985');
+  await click(anna, '[data-a=wiz-add]'); await anna.waitForSelector('#people [data-f=pname][data-i="1"]');
+  await typeIn(anna, '#people [data-f=pname][data-i="1"]', 'Mila'); await typeIn(anna, '#people [data-f=pborn][data-i="1"]', '1800');
+  await click(anna, '[data-a=wiz-next]'); await sleep(300);
+  assert.match(await text(anna, '#toast'), /geboortejaar/i, 'an impossible birth year is refused');
+  await typeIn(anna, '#people [data-f=pborn][data-i="1"]', '2022');
+  await click(anna, '[data-a=wiz-next]');
+  await anna.waitForSelector('#household'); await sleep(1300);
+  assert.deepEqual(getUser(aUid).household, { p0: { name: 'Anna', born: 1985 }, p1: { name: 'Mila', born: 2022 } }, 'the household is saved in the user record');
+  assert.match(await text(anna, '#household'), /Anna, Mila \(\d\)/);
+
+  // ================= a new trip: when, who, highlights =================
   await click(anna, '[data-tab=routes]');
-  await anna.waitForSelector('.rcard');
-  const cards = await anna.$$eval('.rcard', els => els.map(e => ({ id: e.dataset.id, pct: (/(\d+)%/.exec(e.textContent) || [0, null])[1] })));
-  assert.equal(cards.length, 7);
-  assert.match(await text(anna, '#routelist'), /Aanbevolen voor jou[^]*Alternatieven/);
+  await anna.waitForSelector('[data-a=trip-new]');
+  assert.match(await text(anna, '#rootscroll'), /Jouw reizen/);
+  assert.equal(await anna.$('[data-tab=groups]'), null, 'no separate "Samen" tab any more');
+  await click(anna, '[data-a=trip-new]');
+  await anna.waitForSelector('#wiz [data-f=name]');
+  await typeIn(anna, '#wiz [data-f=name]', 'Zomer 2027');
+  const months = await anna.$$eval('[data-a=wiz-month]', els => els.map(e => e.dataset.m));
+  await click(anna, `[data-a=wiz-month][data-m="${months[8]}"]`); await click(anna, `[data-a=wiz-month][data-m="${months[9]}"]`);
+  assert.equal((await anna.$$('[data-a=wiz-month][aria-pressed=true]')).length, 2);
+  for (let i = 0; i < 3; i++) await click(anna, '[data-a=wiz-n][data-d="-1"]');
+  for (let i = 0; i < 3; i++) await click(anna, '[data-a=wiz-n][data-d="1"]');
+  assert.equal(await text(anna, '#wnights'), '14');
+  await sleep(400); await shot(anna, '07-trip-when');
+  await click(anna, '[data-a=wiz-next]');
+  await anna.waitForSelector('#people');
+  assert.equal((await anna.$$('#people .person')).length, 2, 'the household is the default party');
+  await sleep(400); await shot(anna, '07b-trip-who');
+  await click(anna, '[data-a=wiz-next]');
+  await anna.waitForSelector('.hltile');
+  assert.ok((await anna.$$('.hltile')).length >= 30, 'the highlights of Corsica to choose from');
+  for (const id of ['hl-calvi', 'hl-corte', 'hl-palombaggia']) await click(anna, `.hltile[data-id="${id}"]`);
+  assert.match(await text(anna, '#hlcount'), /^3 gekozen/);
+  await sleep(400); await shot(anna, '07c-trip-highlights');
+  await click(anna, '[data-a=wiz-next]'); // "Maak reis"
+  await anna.waitForSelector('#routelist .rcard', { timeout: 9000 });
+  const gid = Object.keys(srv.db().groups)[0];
+  const trip = srv.db().groups[gid].trip;
+  assert.equal(srv.db().groups[gid].name, 'Zomer 2027');
+  assert.equal(trip.nights, 14);
+  assert.deepEqual(trip.months, [months[8], months[9]].sort().join(' '));
+  assert.deepEqual(trip.party, { p0: { name: 'Anna', born: 1985 }, p1: { name: 'Mila', born: 2022 } });
+  assert.deepEqual(trip.highlights.split(' ').sort(), ['hl-calvi', 'hl-corte', 'hl-palombaggia']);
+  const cards = await anna.$$eval('#routelist > .rcard', els => els.map(e => ({ id: e.dataset.id, txt: e.textContent, pct: (/(\d+)%/.exec(e.textContent) || [0, null])[1] })));
+  assert.equal(cards.length, 3, 'three proposals, more behind "toon alle"');
+  assert.ok(cards.every(c => /14 nachten/.test(c.txt)), 'every proposal lasts exactly the trip');
   assert.equal((await anna.$$('#routelist .rcard.best')).length, 1, 'one clearly recommended route');
-  assert.match(await text(anna, '#routelist .rcard'), /aanbevolen/);
   const shown = cards.map(c => (c.pct === null ? -1 : +c.pct));
-  assert.deepEqual(shown, shown.slice().sort((a, b) => b - a), 'percentages follow the order (minder passend last)');
-  await shot(anna, '07-routes');
-  await click(anna, '.rcard');
-  await anna.waitForSelector('.stopcard');
+  assert.deepEqual(shown, shown.slice().sort((a, b) => b - a), 'percentages follow the order');
+  assert.match(await text(anna, '#party'), /Anna, Mila \(5\)/);
+  assert.match(await text(anna, '#hls'), /Calvi/);
+  await sleep(400); await shot(anna, '07d-trip');
+
+  // the recommended route: 15 days, the three highlights in it
+  await click(anna, '#routelist .rcard.best');
+  await anna.waitForSelector('#days .row.day');
+  assert.equal((await anna.$$('#days .row.day')).length, 15, '14 nights = 15 days');
+  const daysText = await text(anna, '#days');
+  for (const name of ['Calvi', 'Corte', 'Palombaggia']) assert.match(daysText, new RegExp(name), `${name} is in the plan`);
+  assert.equal(await anna.$('#unplaced'), null, 'every chosen highlight has a day');
+  assert.equal((await anna.$$('#days .row.day.highlight')).length, 3);
+  assert.match(daysText, /Dag 1[^]*Aankomst/); assert.match(daysText, /Terug naar de ferry/);
+  await sleep(500); await shot(anna, '08-route-days');
   assert.ok((await anna.$$('.stopcard')).length >= 2);
-  await sleep(500); await shot(anna, '08-route-detail');
   await click(anna, '#offlinebtn');
   await anna.waitForFunction(() => /Offline beschikbaar|mislukt/.test(document.getElementById('offlinebtn').textContent), { timeout: 20000 });
   assert.match(await text(anna, '#offlinebtn'), /Offline beschikbaar/, 'the route images were fetched');
@@ -163,27 +222,20 @@ try {
   await shot(anna, '10-stop-map');
   assert.match(await text(anna, '.leaflet-control-attribution'), /OpenStreetMap/);
   await click(anna, '[data-a=back]'); await sleep(500); await click(anna, '[data-a=back]'); await sleep(500);
+  await anna.waitForSelector('#members');
 
-  // ================= groups: Anna creates, Bob joins by link =================
-  await click(anna, '[data-tab=groups]');
-  await click(anna, '[data-a=group-new]');
-  await anna.waitForSelector('#gname');
-  await anna.$eval('#gname', e => { e.value = 'Zomer 2027'; });
-  await click(anna, '[data-a=group-create]');
-  await anna.waitForSelector('#glink', { timeout: 6000 });
-  const link = await text(anna, '#glink');
-  assert.match(link, /\?g=[A-Za-z0-9]{12}$/);
-  await sleep(600); await shot(anna, '11-group');
-  await sleep(800);
-
-  const bob = await phone('devuid=bob&devname=Bob&' + link.split('?')[1]);
+  // ================= sharing: Bob opens the trip link, plans along =================
+  const code = Object.keys(srv.db().groups[gid].codes)[0];
+  assert.match(code, /^[A-Za-z0-9]{12}$/);
+  await shot(anna, '11-trip-members');
+  const bob = await phone('devuid=bob&devname=Bob&g=' + code);
   await bob.waitForSelector('#sheet.on', { timeout: 9000 });
-  assert.match(await text(bob, '#sheetBody'), /Meedoen met Zomer 2027/);
+  assert.match(await text(bob, '#sheetBody'), /Meeplannen met Zomer 2027/);
   await sleep(600); await shot(bob, '12-join');
   await click(bob, '[data-a=join-yes]');
-  await sleep(1200);
-  const gid = Object.keys(srv.db().groups)[0];
+  await sleep(1500);
   assert.equal(Object.keys(srv.db().groups[gid].members).length, 2);
+  assert.deepEqual(srv.db().groups[gid].trip.party.p2, { name: 'Bob', uid: 'bob' }, 'Bob is added to the travel party');
   await click(bob, '[data-a=start]');
   await bob.waitForSelector('.swcard[data-pos="0"]');
   for (let n = 1; n <= 10; n++) { await click(bob, n % 2 ? '[data-a=nope]' : '[data-a=like]'); await waitCount(bob, n); }
@@ -191,70 +243,64 @@ try {
   await click(bob, '[data-a=next-deck]'); await bob.waitForSelector('.swcard[data-pos="0"]');
   for (let n = 1; n <= 10; n++) { await click(bob, n % 2 ? '[data-a=like]' : '[data-a=nope]'); await waitCount(bob, n); }
   await click(bob, '[data-a=skip]'); await bob.waitForSelector('[data-a=next-deck]'); await click(bob, '[data-a=next-deck]');
-  await bob.waitForSelector('.sentence');
+  await bob.waitForSelector('[data-a=trip-open]');
   await sleep(1800);
   const profiles = srv.db().groups[gid].profiles;
   assert.equal(Object.keys(profiles).length, 2, 'both members wrote a profile summary');
   assert.ok(Object.values(profiles).every(p => p.n > 0 && Object.keys(p.w).length > 0));
 
-  // Anna sees Bob's summary, combines, toggles Bob off and on
-  await click(anna, '[data-a=back]').catch(() => {});
-  await sleep(300);
-  await anna.waitForFunction(() => document.getElementById('members') && document.querySelectorAll('#members .row').length === 2, { timeout: 6000 }).catch(async () => {
-    await click(anna, '[data-tab=groups]'); await click(anna, '[data-a=group-open]');
-  });
-  await anna.waitForSelector('#members .row');
+  // Bob edits the party (every member plans along); Anna sees it live
+  await click(bob, '[data-a=trip-open]'); await bob.waitForSelector('[data-a=trip-edit][data-step=who]');
+  assert.equal(await bob.$('[data-a=group-kick]'), null, 'only the maker removes people');
+  await click(bob, '[data-a=trip-edit][data-step=who]'); await bob.waitForSelector('#people');
+  await click(bob, '[data-a=wiz-add]'); await bob.waitForSelector('#people [data-f=pname][data-i="3"]');
+  await typeIn(bob, '#people [data-f=pname][data-i="3"]', 'Oma');
+  await click(bob, '[data-a=wiz-next]'); // "Bewaar"
+  await anna.waitForFunction(() => /Oma/.test(document.getElementById('party').textContent), { timeout: 6000 });
+  assert.equal(Object.keys(srv.db().groups[gid].trip.party).length, 4);
+  // Anna: Bob in the members list, his taste can be switched off and on
+  await anna.waitForFunction(() => document.querySelectorAll('#members .row').length === 2, { timeout: 6000 });
   assert.match(await text(anna, '#members'), /Bob/);
-  assert.match(await text(anna, '#combined'), /2 profielen/);
-  await click(anna, '[data-a=group-toggle][data-uid]:not([data-uid="' + aUid + '"])'); await sleep(300);
-  assert.match(await text(anna, '#combined'), /1 profiel\)/);
-  await click(anna, '[data-a=group-toggle][data-uid]:not([data-uid="' + aUid + '"])'); await sleep(300);
-  assert.match(await text(anna, '#combined'), /2 profielen/);
-  await click(anna, '[data-a=group-use]'); await anna.waitForSelector('#routelist');
-  assert.match(await text(anna, '#root'), /Gerangschikt voor groep Zomer 2027 \(2 profielen\)/);
-  await shot(anna, '13-group-routes');
-  const groupOrder = await anna.$$eval('.rcard', els => els.map(e => e.dataset.id));
-  assert.equal(groupOrder.length, 7);
-
-  // Bob is not the owner: no kick buttons, can leave
-  await click(bob, '[data-tab=groups]'); await click(bob, '[data-a=group-open]');
-  await bob.waitForSelector('#members .row');
-  assert.equal(await bob.$('[data-a=group-kick]'), null);
+  const bobSwitch = '[data-a=group-toggle]:not([data-uid="' + aUid + '"])';
+  await click(anna, bobSwitch); await sleep(300);
+  assert.equal(await anna.$eval(bobSwitch, e => e.getAttribute('aria-checked')), 'false');
+  await click(anna, bobSwitch); await sleep(300);
+  assert.equal(await anna.$eval(bobSwitch, e => e.getAttribute('aria-checked')), 'true');
+  await shot(anna, '13-trip-together');
+  // Bob leaves
+  await bob.waitForSelector('[data-a=group-leave]'); // after saving, Bob is back on the trip
   await click(bob, '[data-a=group-leave]'); await click(bob, '[data-a=group-leave-yes]'); await sleep(1200);
   assert.equal(Object.keys(srv.db().groups[gid].members).length, 1);
   assert.equal(srv.db().groups[gid].profiles && Object.keys(srv.db().groups[gid].profiles).length, 1, 'the leaving member took their profile away');
 
-
-  // ================= owner tools: new link, remove a member; profile tools: more cards, re-swipe, credits, sign out =================
-  const oldCode = Object.keys(srv.db().groups[gid].codes)[0];
-  await click(anna, '[data-tab=groups]'); await click(anna, '[data-a=group-open]');
+  // ================= owner tools: new link, remove a member, delete the trip =================
+  const oldCode = code;
   await anna.waitForSelector('[data-a=group-rotate]');
   await click(anna, '[data-a=group-rotate]');
-  await anna.waitForFunction(old => !document.getElementById('glink').textContent.includes(old), { timeout: 6000 }, oldCode);
+  await anna.waitForFunction(() => true); await sleep(1000);
   const codes = Object.keys(srv.db().groups[gid].codes);
   assert.equal(codes.length, 1); assert.notEqual(codes[0], oldCode);
   assert.equal(srv.db().codes[oldCode], undefined, 'the old link is switched off in the same write');
-  const link2 = await text(anna, '#glink');
-  const bob2 = await phone('devuid=bob2&devname=Bobby&' + link2.split('?')[1]);
+  const bob2 = await phone('devuid=bob2&devname=Bobby&g=' + codes[0]);
   await bob2.waitForSelector('#sheet.on', { timeout: 9000 });
   await click(bob2, '[data-a=join-yes]'); await sleep(1200);
   assert.equal(Object.keys(srv.db().groups[gid].members).length, 2);
   await anna.waitForSelector('[data-a=group-kick]', { timeout: 6000 });
   await click(anna, '[data-a=group-kick]'); await sleep(1000);
   assert.equal(Object.keys(srv.db().groups[gid].members).length, 1, 'the owner removed the member');
-  // no ghost group on the removed member's phone, and the link no longer lets them back in
+  // no ghost trip on the removed member's phone, and the link no longer lets them back in
   await sleep(800);
-  assert.deepEqual(JSON.parse(await bob2.evaluate(() => localStorage.getItem('corsica_groups_bob2'))), [], 'the removed member drops the group from the list');
-  await bob2.goto(base + '/?' + DEST + 'devuid=bob2&devname=Bobby&' + link2.split('?')[1], { waitUntil: 'domcontentloaded' });
+  assert.deepEqual(JSON.parse(await bob2.evaluate(() => localStorage.getItem('corsica_groups_bob2'))), [], 'the removed member drops the trip from the list');
+  await bob2.goto(base + '/?' + DEST + 'devuid=bob2&devname=Bobby&g=' + codes[0], { waitUntil: 'domcontentloaded' });
   await bob2.waitForSelector('#sheet.on', { timeout: 9000 });
   await click(bob2, '[data-a=join-yes]'); await sleep(1000);
   assert.match(await text(bob2, '#toast'), /Meedoen lukt niet/);
   assert.equal(Object.keys(srv.db().groups[gid].members).length, 1, 'banned: a valid link does not help');
   assert.ok(srv.db().groups[gid].banned, 'the ban is recorded');
-  // the owner deletes the group together with its codes
   await click(anna, '[data-a=group-delete]'); await click(anna, '[data-a=group-delete-yes]'); await sleep(1200);
   assert.equal(srv.db().groups[gid], undefined); assert.deepEqual(Object.keys(srv.db().codes), [], 'its codes went with it');
-  await anna.waitForSelector('[data-a=group-new]');
+  await anna.waitForSelector('[data-a=trip-new]');
+
 
   await click(anna, '[data-tab=profile]'); await anna.waitForSelector('[data-a=more]');
   await click(anna, '[data-a=more]');
@@ -295,6 +341,14 @@ try {
     await sleep(1500);
     await evil.evaluate(s => localStorage.setItem('corsica_swipes_evil1', JSON.stringify(s)), sw);
     await evil.reload({ waitUntil: 'domcontentloaded' });
+    await evil.waitForSelector('[data-a=trip-new]', { timeout: 9000 });
+    await evil.$eval('[data-a=trip-new]', e => e.click()); await evil.waitForSelector('#wiz');
+    await evil.$eval('[data-a=wiz-next]', e => e.click()); await evil.waitForSelector('#people');
+    await evil.$eval('[data-a=wiz-next]', e => e.click()); await evil.waitForSelector('.hltile');
+    assert.deepEqual(await evil.$$eval('.hltile', els => els.map(e => e.dataset.id)), ['hl-ok'], 'only the highlight with a safe id, a category and coordinates');
+    assert.equal(await evil.$('img[src="x"]'), null, 'no injected <img> in the highlights');
+    await evil.$eval('.hltile', e => e.click());
+    await evil.$eval('[data-a=wiz-next]', e => e.click());
     await evil.waitForSelector('.rcard', { timeout: 9000 });
     assert.equal(await evil.$('img[src="x"]'), null, 'no injected <img>');
     assert.equal(await evil.$('svg[onload]'), null);
@@ -303,6 +357,7 @@ try {
     assert.doesNotMatch(await evil.$eval('#root', e => e.innerHTML), /<img src=x|<svg onload/i, 'markup in titles and numbers is text');
     await evil.$eval('.rcard', e => e.click());
     await evil.waitForSelector('.stopcard');
+    assert.match(await evil.$eval('#days', e => e.textContent), /Calvi <img src=x/, 'the hostile highlight name is shown as text');
     assert.equal(await evil.$('img[src="x"]'), null);
     assert.equal(await evil.evaluate(() => window.__pwned), undefined);
     assert.doesNotMatch(await evil.$eval('#pushed', e => e.innerHTML), /<img src=x|<svg onload/i);

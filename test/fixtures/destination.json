@@ -15,5 +15,6 @@
  "deck": "test/fixtures/deck.json",
  "credits": "destinations/corsica/credits.json",
  "base": "destinations/corsica/",
- "stayImages": "destinations/corsica/stay-img/"
+ "stayImages": "destinations/corsica/stay-img/",
+ "highlights": "destinations/corsica/highlights.json"
 }

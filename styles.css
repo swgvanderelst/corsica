@@ -3,7 +3,7 @@
   --bg: #f2f2f7; --surface: #ffffff; --fg: #111418; --muted: #6a6f76; --line: rgba(60,60,67,.18); --fill: rgba(120,120,128,.14);
   --accent: #0a7488; --accent-fg: #ffffff; --maquis: #4c6b3a; --ochre: #c27a1d; --rock: #e6e1d6; --pin: #f2c230;
   --ok: #248a3d; --warn: #946000; --no: #c0392b; --bar: rgba(249,249,251,.82);
-  --route-a: #0a7488; --route-b: #b36a0f; --route-c: #7a4a8a; --route-d: #2a6f97; --route-e: #4c6b3a; --route-f: #9a5b2a; --route-g: #8a4a5a;
+  --route-a: #0a7488; --route-b: #b36a0f; --route-c: #7a4a8a; --route-d: #2a6f97; --route-e: #4c6b3a; --route-f: #9a5b2a; --route-g: #8a4a5a; --route-h: #0f7a6a; --route-i: #a8551f; --route-j: #3b5f9e; --route-k: #7d6b2a;
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
   --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, system-ui, sans-serif;
   --tabh: 56px;
@@ -13,7 +13,7 @@
     --bg: #000000; --surface: #1c1c1e; --fg: #f2f2f7; --muted: #9a9aa1; --line: rgba(84,84,88,.55); --fill: rgba(120,120,128,.28);
     --accent: #5cc0cf; --accent-fg: #06191d; --maquis: #9cc384; --ochre: #e6a54c; --rock: #2c2c2e;
     --ok: #52c76d; --warn: #e5b94c; --no: #ff8a7e; --bar: rgba(22,22,24,.82);
-    --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; --route-d: #7fb8e0; --route-e: #9cc384; --route-f: #d9a070; --route-g: #e0909f; color-scheme: dark;
+    --route-a: #5cc0cf; --route-b: #e6a54c; --route-c: #c9a0dc; --route-d: #7fb8e0; --route-e: #9cc384; --route-f: #d9a070; --route-g: #e0909f; --route-h: #5fd0bd; --route-i: #f0a070; --route-j: #8fb0ea; --route-k: #d8c27a; color-scheme: dark;
   }
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -254,3 +254,22 @@ button.trow { width: 100%; text-align: left; min-height: 44px; }
 .trow small { color: var(--muted); font-size: 12px; }
 .interstitial.long { overflow-y: auto; place-content: start center; padding-top: calc(40px + env(safe-area-inset-top, 0px)); }
 .interstitial.long .big { font-size: 40px; }
+
+/* trips: month chips, nights stepper, highlight tiles, the day plan */
+#months button { background: var(--fill); border-radius: 999px; padding: 7px 14px; font-size: 14px; font-weight: 500; min-height: 40px; }
+#months button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); font-weight: 600; }
+.stepper { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+.stepper b { font-size: 28px; min-width: 2ch; text-align: center; }
+.stepper .chip { min-width: 48px; min-height: 44px; font-size: 22px; }
+.person { gap: 8px; }
+.hlgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.hltile { position: relative; border-radius: 14px; overflow: hidden; padding: 0; outline: 3px solid transparent; outline-offset: -3px; }
+.hltile .ph { aspect-ratio: 4 / 3; }
+.hltile .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,.65)); }
+.hltile .ov { position: absolute; z-index: 1; left: 10px; right: 10px; bottom: 8px; color: #fff; text-align: left; font-size: 15px; line-height: 1.2; }
+.hltile .tick { position: absolute; z-index: 2; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: rgba(0,0,0,.35); color: transparent; border: 2px solid #fff; font-weight: 700; }
+.hltile[aria-pressed="true"] { outline-color: var(--accent); }
+.hltile[aria-pressed="true"] .tick { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+details.more > summary { list-style: none; cursor: pointer; }
+details.more > summary::-webkit-details-marker { display: none; }
+.row.day .num { flex: none; width: 30px; height: 30px; display: grid; place-items: center; }

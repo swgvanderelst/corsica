@@ -18,7 +18,7 @@ test('simulate: one proposal per k with ranking, 3 stays and activities per stop
   assert.deepEqual(out.map(p => p.k), DEFAULT_KS);
   assert.deepEqual(out.map(p => p.swipes), [10, 20, 30, 40, 50]);
   for (const p of out) {
-    assert.equal(p.ranking.length, data.routes.length);
+    assert.equal(p.ranking.length, data.routes.filter(r => !(r.maxNights < 13)).length); // a 13-night trip: short-trip templates drop out
     assert.equal(p.itinerary.length, 1);
     for (const s of p.itinerary[0].stops) { assert.equal(s.accommodations.length, 3); assert.ok(s.activities.length >= 1); }
     assert.ok(p.similarityToFull > 0 && p.similarityToFull <= 1);
@@ -40,7 +40,7 @@ test('toText: readable Dutch proposal', () => {
   const t = toText(simulate(swipes, data, { ks: [10] })[0]);
   assert.match(t, /=== 10 kaarten per deck \(20 swipes verwerkt\) ===/);
   assert.match(t, /Jij houdt van:/);
-  assert.match(t, /Gerangschikte routes: [A-G] \d+%/);
+  assert.match(t, /Gerangschikte routes: [A-K] \d+%/);
   assert.match(t, /Verblijven:\n {7}1\) /);
   assert.match(t, /Activiteiten in de buurt:/);
   assert.match(t, /\d+ km/);

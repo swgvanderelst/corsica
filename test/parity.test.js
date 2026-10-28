@@ -31,6 +31,7 @@ function toWrites(op, a, tree, who) {
       if (a.groups && Object.keys(a.groups).length) v.groups = a.groups;
       if (a.overrides && Object.keys(a.overrides).length) v.overrides = a.overrides;
       if (a.prefs && Object.keys(a.prefs).length) v.prefs = a.prefs;
+      if (a.household) v.household = a.household;
       return [{ path: ['users', a.target ?? uid], value: v }];
     }
     case 'createGroup': {
@@ -59,6 +60,7 @@ function toWrites(op, a, tree, who) {
     case 'deleteGroup': return [{ path: G, value: null }, ...Object.keys(group?.codes ?? {}).map(c => ({ path: ['codes', c], value: null }))];
     case 'setProfile': return [{ path: [...G, 'profiles', target], value: { ...(a.p ?? prof()), updatedAt: NOW } }];
     case 'delProfile': return [{ path: [...G, 'profiles', target], value: null }];
+    case 'setTrip': return [{ path: [...G, 'trip'], value: { ...a.t, updatedAt: NOW } }];
     default: throw new Error('op ' + op);
   }
 }
@@ -70,7 +72,7 @@ function toHttp(op, a, who, tree) {
   const base = `/api/groups/${gid}`;
   const target = a.target ? uidOf(a.target) : uid;
   switch (op) {
-    case 'setUser': return ['PUT', `/api/users/${a.target ?? uid}`, { name: a.name ?? 'Test', ...(a.swipes ? { swipes: a.swipes } : {}), ...(a.groups ? { groups: a.groups } : {}), ...(a.overrides ? { overrides: a.overrides } : {}), ...(a.prefs ? { prefs: a.prefs } : {}) }];
+    case 'setUser': return ['PUT', `/api/users/${a.target ?? uid}`, { name: a.name ?? 'Test', ...(a.swipes ? { swipes: a.swipes } : {}), ...(a.groups ? { groups: a.groups } : {}), ...(a.overrides ? { overrides: a.overrides } : {}), ...(a.prefs ? { prefs: a.prefs } : {}), ...(a.household ? { household: a.household } : {}) }];
     case 'createGroup': return ['POST', '/api/groups', { id: gid, name: a.name ?? 'Reis', memberName: a.memberName ?? 'Ik', codes: a.codes ?? [] }];
     case 'rename': return ['PATCH', base, { name: a.name }];
     case 'renameOnly': case 'forgeCodeName': case 'kickNoBan': case 'banSelf': return null;
@@ -83,6 +85,7 @@ function toHttp(op, a, who, tree) {
     case 'deleteGroup': return ['DELETE', base];
     case 'setProfile': return ['PUT', `${base}/profiles/${target}`, a.p ?? prof()];
     case 'delProfile': return ['DELETE', `${base}/profiles/${target}`];
+    case 'setTrip': return ['PUT', `${base}/trip`, a.t];
     default: throw new Error('op ' + op);
   }
 }
@@ -277,5 +280,45 @@ test('parity: profiles in a group are written by the member for themselves only'
     ['bob', 'setProfile', {}, 'ok'],
     ['anna', 'remove', { target: 'bob' }, 'ok'], // removing a member removes the profile too
     ['bob', 'setProfile', {}, 'deny'], // no longer a member
+  ]);
+});
+
+const TRIP = { dest: 'corsica', nights: 14, months: '2027-07 2027-08', party: { p0: { name: 'Stefan', born: 1980, uid: 'uid-anna' }, p1: { name: 'Lisa', born: 2020 } }, highlights: 'hl-bonifacio hl-palombaggia' };
+test('parity: every member edits the trip settings, validated; strangers and removed members cannot', async () => {
+  const people = n => Object.fromEntries(Array.from({ length: n }, (_, i) => ['p' + i, { name: 'P' + i }]));
+  await run([
+    ['anna', 'createGroup', { codes: [A] }, 'ok'],
+    ['anna', 'setTrip', { t: TRIP }, 'ok'],
+    ['bob', 'setTrip', { t: TRIP }, 'deny'], // not a member
+    ['bob', 'join', { name: 'Bob' }, 'ok'],
+    ['bob', 'setTrip', { t: { ...TRIP, nights: 10, start: '2027-07-04', end: '2027-07-14' } }, 'ok'], // a member plans along
+    ['bob', 'setTrip', { t: { ...TRIP, nights: 2 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, nights: 29 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, nights: 7.5 } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, dest: 'bad dest' } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, start: '2027-13-01' } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, months: '2027-07 2027-08 2027-09 2027-10' } }, 'deny'], // at most 3 months
+    ['bob', 'setTrip', { t: { ...TRIP, months: 'juli' } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, highlights: 'hl-<b>' } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, highlights: 'h'.repeat(1001) } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: people(12) } }, 'ok'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: { ...people(12), p12: { name: 'X' } } } }, 'deny'], // at most 12 people
+    ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: '' } } } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', born: 1900 } } } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', born: 2019.5 } } } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', uid: 'bad uid' } } } }, 'deny'],
+    ['bob', 'setTrip', { t: { ...TRIP, party: { p0: { name: 'Kid', age: 5 } } } }, 'deny'], // unknown field
+    ['bob', 'setTrip', { t: { ...TRIP, budget: 3 } }, 'deny'],
+    ['bob', 'setTrip', { t: { nights: 14 } }, 'deny'], // dest missing
+    ['anna', 'remove', { target: 'bob' }, 'ok'],
+    ['bob', 'setTrip', { t: TRIP }, 'deny'], // removed
+  ]);
+});
+test('parity: the household lives in my own user record, validated like a party', async () => {
+  await run([
+    ['anna', 'setUser', { household: { p0: { name: 'Stefan', born: 1980 }, p1: { name: 'Lisa', born: 2020 } } }, 'ok'],
+    ['anna', 'setUser', { household: { p12: { name: 'X' } } }, 'deny'],
+    ['anna', 'setUser', { household: { p0: { name: 'X', born: 2041 } } }, 'deny'],
+    ['bob', 'setUser', { target: 'uid-anna', household: { p0: { name: 'X' } } }, 'deny'],
   ]);
 });

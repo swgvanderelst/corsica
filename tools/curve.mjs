@@ -16,8 +16,9 @@ export function loadPersonas() {
   return fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort().map(f => ({ name: f.replace('.json', ''), raw: JSON.parse(fs.readFileSync(new URL(f, dir), 'utf8')) }));
 }
 
+export const TRIP_NIGHTS = 13; // the persona experiment judged trips of about 13 nights
 function ctxOf(data, prefs) {
-  return { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs,
+  return { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs, nights: TRIP_NIGHTS,
     vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
 }
 

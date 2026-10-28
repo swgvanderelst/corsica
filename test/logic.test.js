@@ -247,8 +247,9 @@ test('rankRoutes: mountain lovers get the mountain route, beach lovers the beach
   const tagsOf = (id, t) => ({ id, tags: t });
   const mountain = L.profileFrom({ m1: 1, m2: 2, m3: 1, b1: -1 }, [tagsOf('m1', ['hike', 'swim_river']), tagsOf('m2', ['hike_hard', 'village']), tagsOf('m3', ['mountain_view', 'nature']), tagsOf('b1', ['beach', 'boat'])]);
   const beach = L.profileFrom({ m1: -1, m2: -1, b1: 2, b2: 1 }, [tagsOf('m1', ['hike', 'swim_river']), tagsOf('m2', ['hike_hard', 'village']), tagsOf('b1', ['beach', 'boat']), tagsOf('b2', ['snorkel', 'sea_view'])]);
-  const rm = L.rankRoutes(routes, mountain, ctx), rb = L.rankRoutes(routes, beach, ctx);
-  assert.equal(rm.length, routes.length);
+  const long = { ...ctx, nights: 13 }; // short-trip templates (maxNights) drop out of a 13-night trip
+  const rm = L.rankRoutes(routes, mountain, long), rb = L.rankRoutes(routes, beach, long);
+  assert.equal(rm.length, routes.filter(r => !(r.maxNights < 13)).length);
   assert.equal(rm[0].route.id, 'd', 'the mountain route wins for mountain lovers');
   assert.equal(rb[0].route.id, 'e', 'the beach route wins for beach lovers');
   // the first is the best; the alternatives are only varied a little (same first stop = small nudge)
@@ -771,8 +772,9 @@ test('sanitizeRoutes: unsafe ids and broken routes are dropped, numbers are real
   assert.equal(z.profile.coast, 1); assert.equal(z.profile.mountains, 0);
   assert.ok(out[0].legs.every(l => typeof l.km === 'number' && typeof l.min === 'number'));
   assert.deepEqual(L.sanitizeRoutes(null), []);
-  assert.ok(Array.isArray(out[0].days) && out[0].days.every(d => typeof d.title === 'string'));
-  assert.equal(L.sanitizeRoutes([{ ...good, id: 'q', days: undefined }])[0].days, undefined);
+  assert.equal(out[0].days, undefined); // day plans are generated now, never read from the file
+  assert.equal(L.sanitizeRoutes([{ ...good, id: 'q', maxNights: '<b>' }])[0].maxNights, undefined);
+  assert.equal(L.sanitizeRoutes([{ ...good, id: 'q', maxNights: 8 }])[0].maxNights, 8);
 });
 test('sanitizePlaces / sanitizeItems / sanitizeCards: numeric fields and keys', () => {
   const p = L.sanitizePlaces({ places: { calvi: [8.7, '42.5'], [EVIL]: [1, 2], bad: ['x', 1], odd: [1] }, names: { calvi: { name: 5, side: 'l' }, [EVIL]: {} }, outline: [[1, 2], ['a', 'b']],

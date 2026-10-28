@@ -266,6 +266,7 @@ const tagSim = (a, b) => { const x = tagWeights(a), y = tagWeights(b); return co
 const accSim = (a, b) => { const ta = typeOf(a); return ta && ta === typeOf(b) ? 1 : 0.25 * tagSim(a, b); };
 
 const TIER_NOTE = ['', 'unknown', 'excluded', 'over_budget', 'absent'];
+export const ROOMS_PENALTY = 0.15; // the party does not fit in one unit
 // the must-haves: preference key, tag, and the flag that says "confirmed absent"
 const MUST = [['airco', 'airco', 'noAirco'], ['ev', 'ev_charging', 'noEv']];
 // top accommodations for a region. Tiers: 0 = fits everything (required extras confirmed); 1 = a required extra is unknown (shown "onbekend, vraag na");
@@ -273,7 +274,8 @@ const MUST = [['airco', 'airco', 'noAirco'], ['ev', 'ev_charging', 'noEv']];
 // card was liked, hotels and pool resorts for an adventure profile; 3 = above the budget; 4 = a required extra is confirmed absent.
 // Tiers 2 to 4 only fill slots when nothing better exists; over-budget stays are hidden once two stays fit. prefs: {airco, ev, kids, budget}. Within a tier: best matches, but a different type when scores are close.
 export function topAccommodations(accs, region, profile, n = 3, { labels = {}, lambda = 0.3, minRel = 0.8, prefs = null, vocab = null } = {}) {
-  const pool = accs.filter(a => a.region === region);
+  const pool = accs.filter(a => a.region === region && !refusesParty(a, prefs));
+  const size = prefs && prefs.size;
   const ex = rejectedTypes(profile), hide = hiddenReasons(prefs);
   const need = MUST.filter(([k]) => prefs && prefs[k]);
   const noKids = !(prefs && prefs.kids);
@@ -308,9 +310,9 @@ export function topAccommodations(accs, region, profile, n = 3, { labels = {}, l
   groups.forEach(([tier, list]) => {
     if (out.length >= n || !list.length) return;
     if (tier === 3 && out.length >= 2) return; // above the budget: never next to two or more stays that fit
-    for (const { item, s } of mmr(list, n - out.length, { score: a => scoreItem(profile, a) + prefDelta(a, prefs), sim: accSim, lambda, minRel })) {
+    for (const { item, s } of mmr(list, n - out.length, { score: a => scoreItem(profile, a) + prefDelta(a, prefs) - (roomFit(a, size) === 'rooms' ? ROOMS_PENALTY : 0), sim: accSim, lambda, minRel })) {
       const i = info(item);
-      out.push({ item, score: s, tier, note: TIER_NOTE[tier], confirmed: i.confirmed, unconfirmed: i.unknown, absent: i.absent, why: explain(profile, item, labels, 2, { vocab, hide }) });
+      out.push({ item, score: s, tier, note: TIER_NOTE[tier], confirmed: i.confirmed, unconfirmed: i.unknown, absent: i.absent, fit: roomFit(item, size), why: explain(profile, item, labels, 2, { vocab, hide }) });
     }
   });
   // the first stay should not say "nog weinig bekend" when a near-equal stay has a known match
@@ -372,7 +374,8 @@ function isBadActivity(item, dis, calm, nightOut) {
 // near-duplicates are dropped and a type cluster gets one slot first, a second only to fill the list.
 export function activitiesNear(acts, stop, profile, { radiusKm = 30, n = 8, labels = {}, coast = false, vocab = null, prefs = null } = {}) {
   const dis = dislikedTags(profile), hide = hiddenReasons(prefs), calm = laidBackDrops(profile), nightOut = negative(profile, 'nightlife');
-  const scored = acts.map(item => ({ item, km: distanceKm(stop, item) })).filter(x => x.km <= radiusKm)
+  const youngest = prefs ? prefs.youngest : null;
+  const scored = acts.filter(item => !tooYoung(item, youngest)).map(item => ({ item, km: distanceKm(stop, item) })).filter(x => x.km <= radiusKm)
     .map(x => ({ ...x, s: scoreItem(profile, x.item) + prefDelta(x.item, prefs), bad: isBadActivity(x.item, dis, calm, nightOut) }))
     .sort((a, b) => b.s - a.s || String(a.item.id).localeCompare(String(b.item.id)));
   const choose = list => {
@@ -467,6 +470,11 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
   const nights = adjustNights(route.nights, stops.map(s => s.score));
   stops.forEach((s, i) => { s.baseNights = s.nights; s.nights = nights[i]; });
   const burden = travelBurden(route, stays);
+  // the chosen highlights: the share that gets a day at a stop within reach
+  const hls = ctx.highlights || [];
+  const placed = hls.length ? placeHighlights(route.stays, hls, ctx.places, nights.map(n => Math.max(0, n - 1))) : [];
+  // a highlight at a stop counts fully, a day trip for less, one that does not fit not at all
+  const hlCover = hls.length ? placed.reduce((a, p) => a + (p.stop < 0 ? 0 : p.min <= HL_NEAR_MIN ? 1 : HL_TRIP_CREDIT), 0) / hls.length : 1;
   const parts = {
     region: regionMatch(route.profile, regionAffinity(profile, ctx.regionTags || {})),
     activity: mean(stops.map(s => mean(s.acts.slice(0, TOP_ACTS).map(a => a.score)))),
@@ -476,9 +484,10 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
     over: mean(stops.map(s => (s.acc.some(a => a.tier === 3) ? 1 : 0))),
     burden: burdenWeight(profile, ctx.prefs) * clamp((burden - 300) / 600, 0, 1),
     weak: 0.2 * mean(stops.map(s => (s.weak || s.acc.length && s.acc[0].score < 0 ? 1 : 0))),
+    highlights: hlCover,
   };
-  const score = 0.8 * mean(stops.map(s => s.score)) + 0.2 * parts.region - parts.burden - parts.weak - parts.veto - 0.5 * parts.over;
-  return { route, stops, parts, score, burden, overBudget: parts.over > 0, shifted: nights.some((x, i) => x !== route.nights[i]) };
+  const score = 0.8 * mean(stops.map(s => s.score)) + 0.2 * parts.region - parts.burden - parts.weak - parts.veto - 0.5 * parts.over - HL_WEIGHT * (1 - hlCover);
+  return { route, stops, parts, score, burden, placed, overBudget: parts.over > 0, shifted: nights.some((x, i) => x !== route.nights[i]) };
 }
 // all routes, best match for the profile first (the plan of every route is included)
 // Scores are stretched around their mean so a profile with clear preferences separates the routes by at least MIN_SPREAD
@@ -494,8 +503,11 @@ export function matchPercentages(scores) {
   const top = 85 + 10 * clamp((best + SHIFT) / 0.7, 0, 1); // the best route is always on the 85-95 scale
   return scores.map(v => { if (v === best) return Math.round(top); if (v + SHIFT <= 0) return null; const p = Math.round(top * (v + SHIFT) / base); return p < MIN_SHOWN_PCT ? null : p; });
 }
+// ctx.nights: the trip length; every template is stretched or shrunk to exactly that. Templates that cannot fit (2 nights per stop)
+// or are meant for short trips only (maxNights) drop out.
 export function rankRoutes(routes, profile, ctx, opts) {
-  const plans = routes.map(r => planRoute(r, profile, ctx, opts));
+  const fitted = ctx.nights ? routes.map(r => { const n = r.maxNights && ctx.nights > r.maxNights ? null : fitNights(r.nights, ctx.nights); return n ? { ...r, nights: n } : null; }).filter(Boolean) : routes;
+  const plans = fitted.map(r => planRoute(r, profile, ctx, opts));
   if (!plans.length) return plans;
   const sc = plans.map(p => p.score), spread = Math.max(...sc) - Math.min(...sc);
   const f = spread > 1e-9 ? Math.min(MAX_STRETCH, Math.max(1, MIN_SPREAD / spread)) : 1, m = mean(sc);
@@ -576,8 +588,8 @@ export function sanitizeRoutes(routes) {
     out.push({
       id: r.id, name: strOr(r.name), sub: strOr(r.sub), title: strOr(r.title), lead: strOr(r.lead), ferry: strOr(r.ferry),
       stops: safeKeys(r.stops), stays, nights: r.nights.map(n => Math.max(1, Math.round(numOr(n, 1)))), profile,
+      ...(Number.isInteger(r.maxNights) && r.maxNights > 0 ? { maxNights: r.maxNights } : {}),
       legs: (Array.isArray(r.legs) ? r.legs : []).filter(l => l && typeof l === 'object').map(l => ({ from: strOr(l.from), to: strOr(l.to), km: Math.max(0, numOr(l.km)), min: Math.max(0, numOr(l.min)), via: safeKeys(l.via) })),
-      ...(Array.isArray(r.days) ? { days: r.days.filter(d => d && typeof d === 'object').map(d => ({ stay: strOr(d.stay), title: strOr(d.title), text: strOr(d.text), ...(d.drive ? { drive: strOr(d.drive) } : {}) })) } : {}),
     });
   }
   return out;
@@ -612,6 +624,10 @@ export function sanitizeItems(list, kind) {
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
     const o = { ...it, lat, lon, name: strOr(it.name), region: strOr(it.region) };
     if (kind === 'accommodation') { if ('priceLevel' in it) o.priceLevel = numOr(it.priceLevel, 0) || undefined; } else if ('durationH' in it) o.durationH = numOr(it.durationH, 0) || undefined;
+    // party facts: whole numbers, booleans and one of three words, or nothing
+    for (const k of ['minAge', 'sleeps']) if (!(Number.isInteger(it[k]) && it[k] > 0 && it[k] < 100)) delete o[k];
+    for (const k of ['familyRooms', 'adultsOnly']) if (typeof it[k] !== 'boolean') delete o[k];
+    if (!['yes', 'older', 'no'].includes(it.kidFriendly)) delete o.kidFriendly;
     out.push(o);
   }
   return out;
@@ -648,6 +664,184 @@ export function mapsUrl(item, town = '') {
   if (!name) return '';
   const q = [name, typeof town === 'string' ? town.trim() : '', 'Corse'].filter(Boolean).join(', ');
   return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+}
+
+// ---- trips: dates, travel party, highlights, the day plan ----
+export const KID_AGE = 12; // younger than this on the trip: "met kinderen"
+export const MIN_NIGHTS = 2; // per stop
+export const NIGHTS_RANGE = [3, 28];
+export const HL_REACH_MIN = 75; // a highlight counts as reachable within this many minutes' drive of a stop
+export const HL_NEAR_MIN = 30; // closer than this it is "at" the stop; further it is a day trip and counts for HL_TRIP_CREDIT
+export const HL_TRIP_CREDIT = 0.75;
+// minutes per straight-line km to a sight: calibrated on real drives (Porto - Calvi 35 km = 2 h 15, Zonza - Palombaggia 25 km = 1 h)
+export const HL_ROAD = 2.4;
+export const hlMin = km => Math.round(km * HL_ROAD);
+export const HL_WEIGHT = 0.5; // what missing every chosen highlight costs a route
+const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
+const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
+// the first day: the fixed start, or the 1st of the first month of a flexible trip ('' when unknown)
+export function tripStart(trip) {
+  if (trip && typeof trip.start === 'string' && DAY_RE.test(trip.start)) return trip.start;
+  const m = trip && typeof trip.months === 'string' ? trip.months.split(' ')[0] : '';
+  return MONTH_RE.test(m) ? m + '-01' : '';
+}
+// whole days between two YYYY-MM-DD dates (0 when either is missing or the order is wrong)
+export function nightsBetween(start, end) {
+  if (!DAY_RE.test(String(start)) || !DAY_RE.test(String(end))) return 0;
+  const d = (Date.parse(end + 'T00:00:00Z') - Date.parse(start + 'T00:00:00Z')) / 86400000;
+  return Number.isFinite(d) && d > 0 ? Math.round(d) : 0;
+}
+export function addDays(day, n) {
+  if (!DAY_RE.test(String(day))) return '';
+  return new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
+}
+// the age a person reaches in the trip's year (only the birth year is known); null when unknown
+export function ageOn(born, day) {
+  const y = Number(String(day || '').slice(0, 4));
+  return Number.isInteger(born) && y > 0 ? Math.max(0, y - born) : null;
+}
+// a household or party from the database -> [{key, name, born?, uid?}] (keys p0..p11)
+export function readPeople(raw) {
+  const out = [];
+  for (const [k, p] of Object.entries(raw && typeof raw === 'object' ? raw : {})) {
+    if (!/^p([0-9]|1[01])$/.test(k) || !p || typeof p !== 'object' || typeof p.name !== 'string' || !p.name.trim()) continue;
+    out.push({ key: k, name: p.name.slice(0, 40), ...(Number.isInteger(p.born) && p.born >= 1920 && p.born <= 2040 ? { born: p.born } : {}), ...(typeof p.uid === 'string' && ID_RE.test(p.uid) ? { uid: p.uid } : {}) });
+  }
+  return out.sort((a, b) => Number(a.key.slice(1)) - Number(b.key.slice(1)));
+}
+// [{name, born?, uid?}] -> {p0: ..., p1: ...} (at most 12, the shape the rules accept)
+export function writePeople(list) {
+  const out = {};
+  (list || []).filter(p => p && typeof p.name === 'string' && p.name.trim()).slice(0, 12).forEach((p, i) => {
+    out['p' + i] = { name: p.name.trim().slice(0, 40), ...(Number.isInteger(p.born) ? { born: p.born } : {}), ...(typeof p.uid === 'string' && ID_RE.test(p.uid) ? { uid: p.uid } : {}) };
+  });
+  return out;
+}
+// what the party means for the plan: size, the youngest age (people without a birth year count as adults) and "with kids"
+export function partyPrefs(party, trip) {
+  const people = readPeople(party), day = tripStart(trip);
+  const ages = people.map(p => ageOn(p.born, day)).filter(a => a !== null);
+  const youngest = ages.length ? Math.min(...ages) : null;
+  return { size: people.length, youngest, kids: youngest !== null && youngest < KID_AGE };
+}
+// the members' preferences (strictest budget, union of airco/ev) plus what the party says; kids then come from the ages, not from a switch
+export function tripPrefs(memberPrefs, trip) {
+  const base = combinePrefs(memberPrefs);
+  if (!trip || !readPeople(trip.party).length) return base;
+  const pp = partyPrefs(trip.party, trip);
+  delete base.kids;
+  return { ...base, ...(pp.kids ? { kids: true } : {}), size: pp.size, ...(pp.youngest !== null ? { youngest: pp.youngest } : {}) };
+}
+export function tripNights(trip) {
+  const n = trip && trip.start && trip.end ? nightsBetween(trip.start, trip.end) : Number(trip && trip.nights);
+  return Number.isInteger(n) && n >= NIGHTS_RANGE[0] && n <= NIGHTS_RANGE[1] ? n : 0;
+}
+export const highlightIds = trip => String((trip && trip.highlights) || '').split(' ').filter(h => /^[-a-z0-9]{1,40}$/.test(h));
+// an activity that is not for the youngest of the party: a stated minimum age, or "not for kids" / "from about 8"
+export function tooYoung(item, youngest) {
+  if (youngest === null || youngest === undefined) return false;
+  if (Number.isInteger(item && item.minAge) && youngest < item.minAge) return true;
+  return (item && item.kidFriendly === 'no' && youngest < 16) || (item && item.kidFriendly === 'older' && youngest < 8);
+}
+// does the whole party fit in one unit? 'ok', 'rooms' (more than one room or unit needed) or 'unknown'
+export function roomFit(item, size) {
+  if (!size || size <= 2) return 'ok';
+  if (!Number.isInteger(item && item.sleeps)) return 'unknown';
+  return item.sleeps >= size ? 'ok' : 'rooms';
+}
+// a stay that refuses the party: adults only with a child along, or a minimum age above the youngest
+export const refusesParty = (item, prefs) => !!prefs && ((prefs.kids && item.adultsOnly === true) || (Number.isInteger(item.minAge) && Number.isInteger(prefs.youngest) && prefs.youngest < item.minAge));
+// spread n nights over a template's stops in its proportions, at least `min` per stop; null when they do not fit
+export function fitNights(template, n, min = MIN_NIGHTS) {
+  const k = (template || []).length;
+  if (!k || !Number.isInteger(n) || n < k * min) return null;
+  const sum = template.reduce((a, b) => a + b, 0);
+  const raw = template.map(x => (x * n) / sum);
+  const out = raw.map(x => Math.max(min, Math.floor(x)));
+  let diff = n - out.reduce((a, b) => a + b, 0);
+  const pick = (ok, key) => out.reduce((bi, _, i) => (ok(i) && (bi < 0 || key(i) > key(bi) + 1e-9) ? i : bi), -1);
+  while (diff > 0) { out[pick(() => true, i => raw[i] - out[i])]++; diff--; }
+  while (diff < 0) { out[pick(i => out[i] > min, i => out[i] - raw[i])]--; diff++; }
+  return out;
+}
+// Chosen highlights over the stops: each goes to the nearest stop within HL_REACH_MIN that still has a free day (caps[i], the nights
+// minus the travel day). Highlights with the fewest options are placed first. stop -1: out of reach (far) or no day left (full).
+export function placeHighlights(stays, highlights, places, caps = null) {
+  const left = caps ? caps.slice() : stays.map(() => Infinity);
+  const rows = (highlights || []).map(hl => {
+    const opts = [];
+    stays.forEach((s, i) => {
+      const xy = places[s];
+      if (xy) opts.push({ i, min: hlMin(distanceKm({ lat: xy[1], lon: xy[0] }, hl)) });
+    });
+    opts.sort((a, b) => a.min - b.min || a.i - b.i);
+    return { hl, opts, near: opts.filter(o => o.min <= HL_REACH_MIN) };
+  });
+  const order = rows.slice().sort((a, b) => a.near.length - b.near.length || (a.opts[0] ? a.opts[0].min : 1e9) - (b.opts[0] ? b.opts[0].min : 1e9) || a.hl.id.localeCompare(b.hl.id));
+  const placed = new Map();
+  for (const r of order) {
+    const o = r.near.find(x => left[x.i] > 0);
+    if (o) left[o.i]--;
+    placed.set(r, o ? { stop: o.i, min: o.min } : { stop: -1, min: r.opts.length ? r.opts[0].min : null, why: r.near.length ? 'full' : 'far' });
+  }
+  return rows.map(r => ({ hl: r.hl, ...placed.get(r) }));
+}
+// highlights from a file: safe ids, real coordinates, a category and the activity ids it stands for
+export function sanitizeHighlights(list) {
+  return (Array.isArray(list) ? list : []).filter(h => h && typeof h.id === 'string' && /^[-a-z0-9]{1,40}$/.test(h.id) && Number.isFinite(numOr(h.lat, NaN)) && Number.isFinite(numOr(h.lon, NaN)))
+    .map(h => ({ id: h.id, name: strOr(h.name, h.id), cat: strOr(h.cat), desc: strOr(h.desc), lat: numOr(h.lat), lon: numOr(h.lon), acts: (Array.isArray(h.acts) ? h.acts : []).filter(a => typeof a === 'string' && ITEM_ID_RE.test(a)) }));
+}
+const heavy = it => { const tw = tagWeights(it); return (it.durationH || 0) >= 5 || tw.effort_high >= 0.5 || tw.hike_hard >= 0.5 || tw.canyoning >= 0.5; };
+const light = it => (it.durationH || 0) <= 3 && !heavy(it);
+// Day by day: day 1 and every change of stop is a travel day with something light nearby; each chosen highlight gets a day at its stop;
+// the other days get the best activities near the stop (no repeats, another kind than the day before when possible); with kids or a
+// laid-back profile a quiet day follows two heavy ones. Exactly nights + 1 days (the last one is the way back to the ferry).
+// opts: { picks: placeHighlights() with .item (the activity), calm, start (YYYY-MM-DD for fixed dates) }
+export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
+  const days = [], used = new Set(), legs = plan.route.legs || [];
+  const unplaced = picks.filter(p => p.stop < 0).map(p => p.hl);
+  let streak = 0, prevCluster = null;
+  const push = d => { days.push({ n: days.length + 1, ...(start ? { date: addDays(start, days.length) } : {}), ...d }); };
+  const next = (list, ok = () => true) => list.find(a => !used.has(a.item.id) && ok(a.item));
+  plan.stops.forEach((s, si) => {
+    const queue = picks.filter(p => p.stop === si).sort((a, b) => a.min - b.min || a.hl.id.localeCompare(b.hl.id));
+    for (const p of queue) if (p.item) used.add(p.item.id); // a highlight is never also a plain activity
+    const acts = s.acts || [];
+    const free = Math.max(0, s.nights - 1);
+    if (queue.length > free) unplaced.push(...queue.splice(free).map(p => p.hl)); // more highlights than days at this stop
+    for (let k = 0; k < s.nights; k++) {
+      if (k === 0) {
+        const pick = next(acts, light);
+        if (pick) used.add(pick.item.id);
+        push({ kind: 'travel', stay: s.stay, leg: legs[si] || null, ...(pick ? { act: pick } : {}) });
+        streak = 0; prevCluster = null;
+        continue;
+      }
+      if (queue.length) {
+        const p = queue.shift();
+        push({ kind: 'highlight', stay: s.stay, hl: p.hl, ...(p.item ? { item: p.item } : {}), min: p.min });
+        streak = p.item && heavy(p.item) ? streak + 1 : 0; prevCluster = p.item ? clusterOf(p.item) : null;
+        continue;
+      }
+      if (calm && streak >= 2) {
+        const pick = next(acts, it => light(it) && ['sea', 'relax'].includes(clusterOf(it)));
+        if (pick) used.add(pick.item.id);
+        push({ kind: 'rest', stay: s.stay, ...(pick ? { act: pick } : {}) });
+        streak = 0; prevCluster = null;
+        continue;
+      }
+      const pick = next(acts, it => clusterOf(it) !== prevCluster) || next(acts);
+      if (pick) {
+        used.add(pick.item.id);
+        push({ kind: 'activity', stay: s.stay, act: pick });
+        streak = heavy(pick.item) ? streak + 1 : 0; prevCluster = clusterOf(pick.item);
+      } else { push({ kind: 'free', stay: s.stay }); streak = 0; prevCluster = null; }
+    }
+    // an alternative per activity day: something at this stop that is nowhere else in the plan
+    for (const d of days) if (d.stay === s.stay && d.kind === 'activity' && !d.alt) { const alt = next(acts); if (alt) { used.add(alt.item.id); d.alt = alt; } }
+  });
+  push({ kind: 'depart', stay: plan.stops.length ? plan.stops[plan.stops.length - 1].stay : '', leg: legs[legs.length - 1] || null });
+  return { days, unplaced };
 }
 
 // ---- tokens and links (same pattern as De Michel) ----

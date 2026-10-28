@@ -37,7 +37,7 @@ const dur = h => (typeof h !== 'number' ? '' : h < 1 ? Math.round(h * 60) + ' mi
 function proposalFor(k, swipes, data, { routes: nDetail = 1, profile: given = null, ov = {}, prefs = {} } = {}) {
   const decks = [data.deck.acc, data.deck.act];
   const profile = given || L.profileAfter(swipes, k, decks, ov);
-  const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs, vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
+  const ctx = { acc: data.catalog.acc, act: data.catalog.act, places: data.places.places, stays: data.places.stays, regionTags: data.places.regionTags, regionVeto: data.places.regionVeto, labels: data.labels, prefs, nights: 13, vocab: { acc: Object.keys(data.tags.accommodation), act: Object.keys(data.tags.activity) } };
   const ranked = L.rankRoutes(data.routes, profile, ctx);
   const label = t => data.labels[t] || t;
   const itinerary = ranked.slice(0, nDetail).map(p => ({
