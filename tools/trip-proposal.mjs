@@ -49,7 +49,7 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
   lines.push('');
   const TAG = { all: 'ALLE HIGHLIGHTS', less: 'MINDER RIJDEN' };
   lines.push('Voorstellen in de app (de eerste is aanbevolen):');
-  for (const p of ranked.slice(0, 3)) lines.push(`- ${p.tag ? TAG[p.tag] + ': ' : ''}route ${p.route.id.toUpperCase()} ${p.route.title} · ${p.stops.map(s => `${stay(s.stay)} ${s.nights}`).join(', ')} · ${fmt(p.route.legs.reduce((a, l) => a + l.min, 0))} rijden · ${(p.placed || []).filter(x => x.stop >= 0).length}/${(p.placed || []).length} highlights · ${p.matchPct == null ? 'minder passend' : p.matchPct + '%'}`);
+  for (const p of ranked.slice(0, 3)) lines.push(`- ${p.tag ? TAG[p.tag] + ': ' : ''}route ${p.route.id.toUpperCase()} ${p.route.title} · ${p.stops.map(s => `${stay(s.stay)} ${s.nights}`).join(', ')} · ${fmt(p.route.legs.reduce((a, l) => a + l.min, 0))} rijden · ${(p.placed || []).filter(x => x.stop >= 0).length}/${(p.placed || []).length} highlights ${p.matchPct == null ? (p.tag ? '' : ' · minder passend') : ' · ' + p.matchPct + '%'}`);
   lines.push('');
   lines.push(`=== ${plan === ranked[0] ? 'Aanbevolen' : 'Gekozen'} route ${plan.route.id.toUpperCase()}: ${plan.route.title} ===`);
   lines.push(plan.route.lead);

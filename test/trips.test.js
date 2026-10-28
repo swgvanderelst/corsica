@@ -286,11 +286,11 @@ test('generateRoutes: every set of 1-4 stays once, from a ferry port, with real 
   assert.equal(g, undefined, 'Porto-Vecchio alone is template H');
   assert.deepEqual(L.generateRoutes([], {}, {}), []);
 });
-test('drivePenalty / maxStopsFor: driving above a fair share costs, twice for a calm party; fewer stops for short or calm trips', () => {
+test('drivePenalty / maxStopsFor: driving above a fair share costs, much more for a calm party; fewer stops for short or calm trips', () => {
   assert.equal(L.DRIVE_FREE(10), 320);
   assert.equal(L.drivePenalty(300, 10, false), 0);
   near(L.drivePenalty(420, 10, false), 0.06);
-  near(L.drivePenalty(420, 10, true), 0.15);
+  near(L.drivePenalty(420, 10, true), 0.3); // calm: five times the normal rate
   assert.equal(L.drivePenalty(5000, 10, true), 1.2);
   assert.deepEqual([7, 10, 13, 14, 16, 28].map(n => L.maxStopsFor(n, false)), [2, 2, 3, 4, 4, 4]);
   assert.deepEqual([5, 7, 10, 13, 14].map(n => L.maxStopsFor(n, true)), [1, 1, 2, 2, 3]);
@@ -358,4 +358,12 @@ test('dayPlan: evening suggestions (going out, eating) when the party likes them
   const foodie = L.profileFrom({ c1: 1, c2: 1 }, [{ id: 'c1', tags: ['food'] }, { id: 'c2', tags: ['food', 'wine'] }]);
   assert.equal(L.likesEvenings(foodie), true);
   assert.equal(L.likesEvenings(L.emptyProfile()), false);
+});
+
+test('eveningKinds: going out only for people who like it, eating for food or wine lovers', () => {
+  const foodie = L.profileFrom({ c1: 1 }, [{ id: 'c1', tags: ['food', 'wine'] }]);
+  const party = L.profileFrom({ c1: 1 }, [{ id: 'c1', tags: ['nightlife'] }]);
+  assert.deepEqual([...L.eveningKinds(foodie)], ['food']);
+  assert.deepEqual([...L.eveningKinds(party)], ['night']);
+  assert.deepEqual([...L.eveningKinds(L.emptyProfile())], []);
 });

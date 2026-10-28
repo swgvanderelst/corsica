@@ -454,9 +454,13 @@ export function regionVeto(routeProfile, profile, veto) {
   }
   return worst;
 }
-const EVENING = new Set(['night', 'food']);
 // whether evening suggestions fit: the person likes going out, food or wine
-export const likesEvenings = profile => ['nightlife', 'food', 'wine'].some(t => likes(profile, t) || membersOf(profile).some(m => likes(m, t)));
+export const likesEvenings = profile => eveningKinds(profile).size > 0;
+// which evenings: going out only for people who like it, eating for people who like food or wine
+export function eveningKinds(profile) {
+  const liked = t => likes(profile, t) || membersOf(profile).some(m => likes(m, t));
+  return new Set([...(liked('nightlife') ? ['night'] : []), ...(liked('food') || liked('wine') ? ['food'] : [])]);
+}
 const WEAK = 0.1; // a stop whose best stay and activities both score below this is "weak"
 // ctx: { acc, act, places: {key: [lon, lat]}, stays: {key: {coast}}, regionTags, labels, vocab: {acc, act}, prefs }
 // A stop scores on its best stay, its activities and how many of the person's favourite activity kinds are near (coverage).
@@ -471,7 +475,8 @@ export function planRoute(route, profile, ctx, { radiusKm = 30, nActs = 8 } = {}
     const near = { labels, coast: !!(stays[stay] && stays[stay].coast), vocab: vocab.act, prefs: ctx.prefs };
     const acts = xy ? activitiesNear(ctx.act, { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm, n: nActs }) : [];
     // for the evenings: going out and eating near the stay
-    const evenings = xy ? activitiesNear(ctx.act.filter(a => EVENING.has(clusterOf(a))), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm: 20, n: 6 }) : [];
+    const kinds = eveningKinds(profile);
+    const evenings = xy && kinds.size ? activitiesNear(ctx.act.filter(a => kinds.has(clusterOf(a))), { lat: xy[1], lon: xy[0] }, profile, { ...near, radiusKm: 20, n: 6 }) : [];
     const accBest = acc.length ? acc[0].score : 0, actMean = mean(acts.slice(0, TOP_ACTS).map(a => a.score));
     const cover = liked.length ? liked.filter(t => acts.some(a => tagWeights(a.item)[t] >= 0.5)).length / liked.length : 0;
     const score = 0.55 * accBest + 0.25 * actMean + 0.2 * 0.5 * cover;
@@ -518,7 +523,7 @@ export function matchPercentages(scores) {
 export const DRIVE_FREE = (nights) => 120 + 20 * nights;
 // the pace of a trip: calm (little moving), normal, active (a round trip). Chosen in the trip, else calm with kids or a laid-back taste.
 export const PACES = ['calm', 'normal', 'active'];
-const PACE = { calm: { perStop: 4.5, rate: 0.0015 }, normal: { perStop: 3.5, rate: 0.0006 }, active: { perStop: 3, rate: 0.0003 } };
+const PACE = { calm: { perStop: 4.5, rate: 0.003 }, normal: { perStop: 3.5, rate: 0.0006 }, active: { perStop: 3, rate: 0.0003 } };
 const paceOf = p => PACE[p === true ? 'calm' : p === false ? 'normal' : p] || PACE.normal; // true/false: calm or not
 export const resolvePace = (pace, profile, prefs) => (PACES.includes(pace) ? pace : burdenWeight(profile, prefs) >= 0.3 ? 'calm' : 'normal');
 export const drivePenalty = (minutes, nights, pace) => Math.min(1.2, paceOf(pace).rate * Math.max(0, minutes - DRIVE_FREE(nights)));
