@@ -135,7 +135,8 @@
         "budget": 0.8,
         "family": 0.6,
         "mountain_view": 0.3,
-        "self_catering": 0.5
+        "self_catering": 0.5,
+        "airco": 1
       },
       "desc": "Grote camping (82 plaatsen) langs de weg naar de Restonica, vlak bij Corte.",
       "photoGeneric": true,
@@ -148,7 +149,8 @@
       "verified": "2026-10-27",
       "facilitiesChecked": "2026-10-28",
       "capacitySource": "https://www.alividiarestonica.com/",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.alividiarestonica.com/nos-hebergements"
     },
     {
       "id": "acc-calacuccia-acqua-viva",

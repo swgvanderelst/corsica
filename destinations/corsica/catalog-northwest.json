@@ -325,7 +325,8 @@
       "sleeps": 4,
       "familyRooms": true,
       "capacitySource": "https://camping-calvi.com/hebergement/lodge-saleccia/",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://camping-calvi.com/hebergement/lodge-saleccia/"
     },
     {
       "id": "acc-camping-paradella-calenzana",
@@ -342,7 +343,8 @@
         "rustic": 0.6,
         "mountain_view": 0.6,
         "family": 0.6,
-        "secluded": 0.5
+        "secluded": 0.5,
+        "airco": 1
       },
       "desc": "Grote camping met zwembad bij Calenzana (7 km van het strand), startpunt van de GR20.",
       "photo": {
@@ -357,7 +359,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campeggi.com/en/france/camping-camping-locations-paradella-313533313466",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.camping-paradella.fr/hergements.html"
     },
     {
       "id": "acc-demeure-loredana-stflorent",
@@ -646,7 +649,9 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campingolzo.com",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "noAirco": true,
+      "aircoSource": "https://www.campingolzo.com/annonces/location-mobil-home-30m2-2.htm"
     },
     {
       "id": "acc-castel-brando-erbalunga",
@@ -1187,6 +1192,227 @@
       "familyRooms": true,
       "capacitySource": "http://www.marina-arone.com/",
       "capacityChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-mylos-cargese",
+      "name": "Mylos Hôtel (Cargèse)",
+      "region": "porto",
+      "url": "https://www.mylos-hotel.com/",
+      "lat": 42.1363,
+      "lon": 8.5959,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 1,
+        "boutique": 1,
+        "luxury": 0.8,
+        "pool": 1,
+        "sea_view": 0.8,
+        "restaurant": 0.9,
+        "modern": 0.9
+      },
+      "desc": "Nieuw designhotel van 35 kamers boven zee bij Cargèse, met binnen- en buitenbad en restaurant Teos.",
+      "photo": {
+        "file": "img/acc-mylos-cargese.jpg",
+        "lic": "CC BY 3.0",
+        "author": "Jean-Christophe BENOIST",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse-Carg%C3%A8se-Vue_de_l'%C3%A9glise_latine.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 2,
+      "familyRooms": false,
+      "adultsOnly": false,
+      "capacitySource": "https://www.mylos-hotel.com/chambres"
+    },
+    {
+      "id": "acc-domaine-de-l-oriu-serriera",
+      "name": "Hôtel Domaine de l'Oriu (Serriera)",
+      "region": "porto",
+      "url": "https://www.domainedeloriu.com/",
+      "lat": 42.2891,
+      "lon": 8.6989,
+      "priceLevel": 3,
+      "tags": {
+        "hotel": 1,
+        "boutique": 0.7,
+        "pool": 1,
+        "airco": 1,
+        "secluded": 0.5,
+        "mountain_view": 0.4,
+        "sea_view": 0.3,
+        "rustic": 0.4
+      },
+      "desc": "Charmehotel met 35 kamers en suites met eigen terras, zwembad en jacuzzi in een domein boven de Golf van Porto.",
+      "photo": {
+        "file": "img/acc-domaine-de-l-oriu-serriera.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Serriera_vue_du_village.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 4,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.domainedeloriu.com/les-chambres/"
+    },
+    {
+      "id": "acc-villa-exclusive-mandarine-calvi",
+      "name": "Villa Exclusive, Villas Mandarine (Calvi)",
+      "region": "calvi",
+      "url": "https://www.calvi-location-villa.com/villas/villa-4-chambres",
+      "lat": 42.5468,
+      "lon": 8.761,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "airco": 1,
+        "self_catering": 1,
+        "family": 0.9,
+        "modern": 0.7,
+        "mountain_view": 0.4
+      },
+      "desc": "Villa van 180 m² met 4 slaapkamers en eigen badkamers, privézwembad en airco bij Calvi, voor 8 personen.",
+      "photo": {
+        "file": "img/acc-villa-exclusive-mandarine-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Jean-Pol GRANDMONT",
+        "page": "https://commons.wikimedia.org/wiki/File:0_Baie_de_Calvi_-_Pointes_Revellata_et_St-Fran%C3%A7ois.JPG"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.calvi-location-villa.com/villas/villa-4-chambres"
+    },
+    {
+      "id": "acc-villa-algajola-balagne",
+      "name": "Villa Algajola (Balagne Villa Management)",
+      "region": "calvi",
+      "url": "https://www.location-villa-balagne.fr/location-villa-algajola/villa-algajola",
+      "lat": 42.603,
+      "lon": 8.856,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "airco": 1,
+        "sea_view": 0.8,
+        "self_catering": 1,
+        "family": 0.9,
+        "secluded": 0.5
+      },
+      "desc": "Villa met 4 slaapkamers en zwembad van 9 x 4,5 m, airco en uitzicht op de golf, twee minuten van Algajola.",
+      "photo": {
+        "file": "img/acc-villa-algajola-balagne.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:Algajola-Vue_generale.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 10,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.location-villa-balagne.fr/location-villa-algajola/villa-algajola"
+    },
+    {
+      "id": "acc-villa-flo6-stflorent",
+      "name": "Villa FLO6 (Saint-Florent)",
+      "region": "stflorent",
+      "url": "https://www.villasdumonde.fr/location-villa-france/saint-florent-fr-1432.html",
+      "lat": 42.68,
+      "lon": 9.29,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "sea_view": 0.7,
+        "self_catering": 1,
+        "family": 0.8,
+        "secluded": 0.8
+      },
+      "desc": "Villa van 160 m² voor 6 tot 8 personen met privé infinitypool in een tuin van 8.000 m², 200 m van zee en minder dan 5 km van Saint-Florent.",
+      "photo": {
+        "file": "img/acc-villa-flo6-stflorent.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Pierre Bona",
+        "page": "https://commons.wikimedia.org/wiki/File:St-Florent-littoral_ouest_du_golfe.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.villasdumonde.fr/location-villa-france/saint-florent-fr-1432.html"
+    },
+    {
+      "id": "acc-dolce-paese-algajola",
+      "name": "Résidence Dolce Paese (Algajola)",
+      "region": "calvi",
+      "url": "https://www.dolcepaese.com/",
+      "lat": 42.6072,
+      "lon": 8.8665,
+      "priceLevel": 4,
+      "tags": {
+        "hotel": 0.8,
+        "apartment": 1,
+        "luxury": 1,
+        "pool": 1,
+        "spa": 1,
+        "sea_view": 1,
+        "airco": 1,
+        "restaurant": 0.9,
+        "self_catering": 0.6,
+        "walk_to_beach": 0.7,
+        "secluded": 0.5,
+        "modern": 0.6
+      },
+      "desc": "Rustige vijfsterren-residence tussen zee en maquis met verwarmd zwembad, spa en airco-appartementen met terras en zeezicht.",
+      "photo": {
+        "file": "img/acc-dolce-paese-algajola.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Ruthven",
+        "page": "https://commons.wikimedia.org/wiki/File:Algajola.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.dolcepaese.com/appartements"
+    },
+    {
+      "id": "acc-camping-bella-vista-calvi",
+      "name": "Camping Bella Vista (Calvi)",
+      "region": "calvi",
+      "url": "https://www.camping-bellavista.com/location-mobil-home-calvi/",
+      "lat": 42.55,
+      "lon": 8.765,
+      "priceLevel": 2,
+      "tags": {
+        "camping": 1,
+        "family": 1,
+        "pool": 1,
+        "airco": 0.8,
+        "self_catering": 0.8,
+        "budget": 0.5
+      },
+      "desc": "Driesterrencamping bij Calvi met waterpark en geklimatiseerde mobil-homes en chalets voor 2 tot 6 personen.",
+      "photo": {
+        "file": "img/acc-camping-bella-vista-calvi.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Jean-Pol GRANDMONT",
+        "page": "https://commons.wikimedia.org/wiki/File:0_Calvi_-_Punta_San_Francesco_-_Quartiers_de_la_Citadelle.JPG"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 6,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.camping-bellavista.com/location-mobil-home-calvi/"
     }
   ],
   "activities": [

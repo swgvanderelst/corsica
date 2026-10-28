@@ -715,6 +715,7 @@ export const HL_ROAD = 2.4;
 export const hlMin = km => Math.round(km * HL_ROAD);
 export const HL_WEIGHT = 3; // what missing every chosen highlight costs a route: more than any taste difference, the chosen highlights come first
 export const LONG_LEG_MIN = 90; // after a drive this long the travel day has nothing else planned
+export const ACT_MIN = 0.1, ACT_REL = 0.4; // a planned activity scores at least this, and at least this share of the best one at the stop
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
 // the first day: the fixed start, or the 1st of the first month of a flexible trip ('' when unknown)
@@ -910,7 +911,8 @@ export function dayPlan(plan, { picks = [], calm = false, start = '' } = {}) {
   const next = (list, ok = () => true) => list.find(a => !used.has(a.item.id) && ok(a.item));
   plan.stops.forEach((s, si) => {
     const queue = picks.filter(p => p.stop === si).sort((a, b) => a.min - b.min || a.hl.id.localeCompare(b.hl.id));
-    const acts = (s.acts || []).filter(a => !(a.score <= 0)); // only what fits the taste; the rest of the days stay free
+    const top = Math.max(0, ...(s.acts || []).map(a => a.score));
+    const acts = (s.acts || []).filter(a => a.score >= Math.max(ACT_MIN, ACT_REL * top)); // only a clear fit; the rest of the days stay free
     const free = Math.max(0, s.nights - 1);
     if (queue.length > free) unplaced.push(...queue.splice(free).map(p => p.hl)); // more highlights than days at this stop
     for (let k = 0; k < s.nights; k++) {

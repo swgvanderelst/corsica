@@ -62,7 +62,7 @@ export function proposal(raw, tripIn, data, { route = null } = {}) {
     else if (d.kind === 'highlight') lines.push(head + `HIGHLIGHT ${d.hl.name}${d.min > 15 ? ` (ca. ${fmt(d.min)} rijden)` : ''}${d.item && L.tooYoung(d.item, prefs.youngest ?? null) ? ' [let op: niet voor de jongste]' : ''}`);
     else if (d.kind === 'activity') lines.push(head + `${d.act.item.name} (${d.act.item.durationH ?? '?'} u, ${d.act.driveMin} min rijden)${d.alt ? ' — of: ' + d.alt.item.name : ''}`);
     else if (d.kind === 'rest') lines.push(head + `rustige dag${d.act ? ': ' + d.act.item.name : ''}`);
-    else if (d.kind === 'free') lines.push(head + 'vrije dag');
+    else if (d.kind === 'free') lines.push(head + ((data.places.stays[d.stay] || {}).coast === false ? 'vrije dag, rustig rondkijken' : 'vrije dag: strand of zwembad'));
     else lines.push(head + `terug naar de ferry${d.leg ? `, ${d.leg.from} naar ${d.leg.to} (${fmt(d.leg.min)})` : ''}`);
   }
   lines.push('');

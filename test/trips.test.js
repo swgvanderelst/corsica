@@ -313,3 +313,9 @@ test('rankRoutes on a trip: no more stops than the trip allows, the generated on
   // without a trip nothing changes: no tags, no stop limit
   assert.ok(L.rankRoutes(routes, L.emptyProfile(), ctx).every(p => !p.tag));
 });
+
+test('dayPlan: only a clear fit is planned (at least ACT_MIN and ACT_REL of the best at the stop)', () => {
+  const acts = [{ item: mkAct('best', ['culture']), score: 0.5 }, { item: mkAct('ok', ['town']), score: 0.25 }, { item: mkAct('meh', ['hike']), score: 0.15 }, { item: mkAct('low', ['hike']), score: 0.05 }];
+  const ids = L.dayPlan(mkPlan([{ stay: 's', nights: 5, acts }], [{ min: 120 }, { min: 60 }])).days.flatMap(d => [d.act, d.alt].filter(Boolean).map(a => a.item.id));
+  assert.deepEqual(ids.sort(), ['best', 'ok']);
+});

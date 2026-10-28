@@ -272,7 +272,8 @@
         "family": 0.8,
         "budget": 0.6,
         "rustic": 0.3,
-        "pool": 0.8
+        "pool": 0.8,
+        "airco": 1
       },
       "desc": "Familiecamping tussen de bomen, ongeveer 10 minuten van Porto-Vecchio.",
       "photo": {
@@ -287,7 +288,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campinglavetta.com",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.campinglavetta.com/Page/4810/vt-mobil-home-confort-2-ch"
     },
     {
       "id": "acc-camping-u-paradisu",
@@ -613,7 +615,8 @@
         "walk_to_beach": 1,
         "family": 0.7,
         "restaurant": 0.5,
-        "secluded": 0.5
+        "secluded": 0.5,
+        "airco": 1
       },
       "desc": "Camping met strandrestaurant vlak bij de baai van Rondinara.",
       "photo": {
@@ -628,7 +631,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/CAMPING-RONDINARA",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.camping-rondinara.com/fr/hebergements"
     },
     {
       "id": "acc-camping-des-iles",
@@ -659,7 +663,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campings.com/fr/camping/camping-les-iles-79152",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.camping-desiles.com/mobil-home-immortelle-4-personnes/"
     },
     {
       "id": "acc-camping-kevano-plage",
@@ -673,7 +678,8 @@
         "camping": 1,
         "walk_to_beach": 1,
         "pool": 0.7,
-        "family": 0.8
+        "family": 0.8,
+        "airco": 1
       },
       "desc": "Camping met de voeten in het water bij Pianottoli-Caldarello, met zwembad.",
       "photo": {
@@ -688,7 +694,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campingdirect.com/fr/reservation-emplacement-mobil-home/corse-du-sud/camping-pianottoli-caldarello/camping-kevano-plage",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.campingkevano.com/Page/1486/ke-locations"
     },
     {
       "id": "acc-hotel-macchie-e-fiori",
@@ -923,7 +930,8 @@
         "pool": 0.8,
         "family": 0.8,
         "restaurant": 0.5,
-        "ev_charging": 1
+        "ev_charging": 1,
+        "airco": 1
       },
       "desc": "Driesterrencamping met zwembad in Olmeto, dicht bij Propriano.",
       "photo": {
@@ -939,7 +947,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.goboony.fr/campings/france/corse/corse-du-sud/vetricella/1504-camping-vigna-maggiore",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.vignamaggiore.com/fr/hebergements"
     },
     {
       "id": "acc-camping-l-esplanade",
@@ -955,7 +964,8 @@
         "walk_to_beach": 1,
         "pool": 0.8,
         "family": 0.8,
-        "ev_charging": 1
+        "ev_charging": 1,
+        "airco": 1
       },
       "desc": "Camping met lodgetenten en mobil-homes, zwembad en strand voor de deur.",
       "photo": {
@@ -971,7 +981,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.campingdirect.com/fr/reservation-emplacement-mobil-home/corse-du-sud/camping-olmeto/camping-l-esplanade",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.campingesplanade.fr/mobil-home-corse-du-sud/"
     },
     {
       "id": "acc-camping-tikiti",
@@ -1241,7 +1252,8 @@
         "family": 0.7,
         "secluded": 0.7,
         "sea_view": 0.8,
-        "self_catering": 0.5
+        "self_catering": 0.5,
+        "airco": 1
       },
       "desc": "Vakantiedorp op ongeveer 10 km van Ajaccio met uitzicht over de baai van Lava.",
       "photo": {
@@ -1254,7 +1266,8 @@
       "verified": "2026-10-27",
       "facilitiesChecked": "2026-10-28",
       "capacitySource": "https://www.booking.com/hotel/fr/paese-di-lava.html",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.paese-di-lava.com/les-chambres-doubles"
     },
     {
       "id": "acc-domaine-finili",
@@ -1327,7 +1340,8 @@
         "camping": 1,
         "walk_to_beach": 0.6,
         "family": 0.6,
-        "restaurant": 0.5
+        "restaurant": 0.5,
+        "airco": 1
       },
       "desc": "Driesterrencamping met restaurant dicht bij het strand van Porticcio.",
       "photo": {
@@ -1342,7 +1356,8 @@
       "sleeps": 6,
       "familyRooms": true,
       "capacitySource": "https://www.toocamp.com/france/camping-le-sud-c26746.html",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.camping-le-sud.com/"
     },
     {
       "id": "acc-camping-les-mimosas",
@@ -1354,7 +1369,8 @@
       "priceLevel": 1,
       "tags": {
         "camping": 1,
-        "budget": 0.8
+        "budget": 0.8,
+        "airco": 1
       },
       "desc": "Eenvoudige camping aan de rand van Ajaccio.",
       "photo": {
@@ -1369,7 +1385,8 @@
       "sleeps": 4,
       "familyRooms": true,
       "capacitySource": "https://www.visit-corsica.com/nl/Mon-sejour/Hebergement/Hebergement-de-Plein-Air/LES-MIMOSAS",
-      "capacityChecked": "2026-10-28"
+      "capacityChecked": "2026-10-28",
+      "aircoSource": "https://www.camping-lesmimosas.com/mobilhomes.html"
     },
     {
       "id": "acc-portov-corsica-hostel",
@@ -1458,6 +1475,132 @@
       "facilitiesChecked": "2026-10-28",
       "capacitySource": "https://www.visit-corsica.com/en/Mon-sejour/Hebergement/Hotels/COLOMBA",
       "capacityChecked": "2026-10-28"
+    },
+    {
+      "id": "acc-villa-pina-sainte-lucie",
+      "name": "Villa Pina (Sainte-Lucie-de-Porto-Vecchio)",
+      "region": "portov",
+      "url": "https://www.gites.fr/gites_villa-pina_sainte-lucie-de-porto-vecchio_h7414898_en.htm",
+      "lat": 41.69646,
+      "lon": 9.39663,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "airco": 1,
+        "sea_view": 0.8,
+        "self_catering": 1,
+        "family": 0.8,
+        "secluded": 0.5,
+        "walk_to_beach": 0.3
+      },
+      "desc": "Villa voor 8 personen met privé verwarmd zwembad, airco en zeezicht, op 13 minuten lopen van het strand van Lavu Santu.",
+      "photo": {
+        "file": "img/acc-villa-pina-sainte-lucie.jpg",
+        "lic": "CC0",
+        "author": "25asd",
+        "page": "https://commons.wikimedia.org/wiki/File:Corse_SteLucie_08.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.gites.fr/gites_villa-pina_sainte-lucie-de-porto-vecchio_h7414898_en.htm"
+    },
+    {
+      "id": "acc-villa-bois-porto-vecchio",
+      "name": "Villa Bois (Porto-Vecchio)",
+      "region": "portov",
+      "url": "https://www.gites.fr/gites_villa-bois-porto-vecchio_porto-vecchio_103982.htm",
+      "lat": 41.591,
+      "lon": 9.28,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "airco": 1,
+        "self_catering": 1,
+        "family": 0.9,
+        "mountain_view": 0.3
+      },
+      "desc": "Volledig geklimatiseerde villa voor 8 personen met 4 slaapkamers, verwarmd privézwembad en jacuzzi nabij Porto-Vecchio.",
+      "photo": {
+        "file": "img/acc-villa-bois-porto-vecchio.jpg",
+        "lic": "CC BY 4.0",
+        "author": "Edison McCullen",
+        "page": "https://commons.wikimedia.org/wiki/File:Golfe_de_Porto-Vecchio.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.gites.fr/gites_villa-bois-porto-vecchio_porto-vecchio_103982.htm"
+    },
+    {
+      "id": "acc-villa-cala-longa-bonifacio",
+      "name": "Villa Cala Longa (Bonifacio)",
+      "region": "bonifacio",
+      "url": "https://www.accasa.corsica/location-vacances/1-bonifacio/villa/238-villa-de-prestige-pieds-dans-l-eau-a-bonifacio-4-chambres-piscine-privee-acces-plage-de-sable-direct",
+      "lat": 41.3909,
+      "lon": 9.2043,
+      "priceLevel": 4,
+      "tags": {
+        "villa": 1,
+        "luxury": 0.8,
+        "pool": 1,
+        "airco": 1,
+        "sea_view": 0.8,
+        "walk_to_beach": 0.9,
+        "secluded": 0.9,
+        "self_catering": 1,
+        "family": 0.6
+      },
+      "desc": "Luxe villa voor 8 personen met privé overloopzwembad en airco in een dennenbos, met directe paden naar een zandstrandje aan Cala Longa.",
+      "photo": {
+        "file": "img/acc-villa-cala-longa-bonifacio.jpg",
+        "lic": "CC BY-SA 2.0",
+        "author": "teorem / Teorem / Remy Amouroux",
+        "page": "https://commons.wikimedia.org/wiki/File:Bonifacio_falaise_de_calcaire.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 8,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.accasa.corsica/location-vacances/1-bonifacio/villa/238-villa-de-prestige-pieds-dans-l-eau-a-bonifacio-4-chambres-piscine-privee-acces-plage-de-sable-direct"
+    },
+    {
+      "id": "acc-villa-mare-e-macchia-bonifacio",
+      "name": "Villa Mare è Macchia (Sant'Amanza, Bonifacio)",
+      "region": "bonifacio",
+      "url": "https://www.accasa.corsica/location-vacances/1-bonifacio/villa/t5/119-villa-de-charme-avec-piscine-mare-e-macchia-plage-de-sant-amanza-a-pied/",
+      "lat": 41.41,
+      "lon": 9.24,
+      "priceLevel": 3,
+      "tags": {
+        "villa": 1,
+        "pool": 1,
+        "airco": 1,
+        "sea_view": 0.5,
+        "self_catering": 1,
+        "family": 0.8,
+        "walk_to_beach": 0.4
+      },
+      "desc": "Charmevilla met 4 slaapkamers, omheind privézwembad en airco in alle slaapkamers, vlak bij de baai van Sant'Amanza.",
+      "photo": {
+        "file": "img/acc-villa-mare-e-macchia-bonifacio.jpg",
+        "lic": "CC BY-SA 3.0",
+        "author": "Telperion",
+        "page": "https://commons.wikimedia.org/wiki/File:Tour_de_Sant'Amanza.jpg"
+      },
+      "photoGeneric": true,
+      "verified": "2026-10-28",
+      "sleeps": 7,
+      "familyRooms": true,
+      "adultsOnly": false,
+      "capacitySource": "https://www.accasa.corsica/location-vacances/1-bonifacio/villa/t5/119-villa-de-charme-avec-piscine-mare-e-macchia-plage-de-sant-amanza-a-pied/"
     }
   ],
   "activities": [
