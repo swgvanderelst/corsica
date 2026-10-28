@@ -33,3 +33,5 @@
 - Chosen highlights must beat taste: with a weak weight every persona lost a highlight that another route had (round 6: 0/6 tevreden). Explain a missing one with the routes that have it.
 - A day plan filled with whatever is near (hikes for a culture couple) costs more satisfaction than a free day: only use activities with a positive score.
 - A trip is a group with a `trip` child that every member writes: an edit must replace only its own fields on the latest version, or it wipes a co-traveller's change.
+- Two lost lines in one feature came from appending `// comment` to a patched line: never append a comment in a string patch; put it on its own line. The smoke now checks the credits sheet.
+- Persona rounds plateau when the personas' own choices conflict (highlights at both ends of the island in a calm week): show the trade-off (Minder rijden / Alle highlights) instead of tuning weights on the noise.

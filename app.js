@@ -96,7 +96,8 @@ async function loadDestination() {
   S.tagsJson = cleanTags(tags); S.labels = flattenLabels(S.tagsJson);
   S.allowed = new Set(Object.keys(S.labels)); // the only tags that may appear in other people's data
   S.places = sanitizePlaces(places); S.routes = sanitizeRoutes(routes && routes.routes);
-  S.routes.push(...generateRoutes(S.routes, S.places.places, S.places.stays)); // tailor-made combinations next to the templates S.credits = credits && typeof credits === 'object' ? credits : {};
+  S.routes.push(...generateRoutes(S.routes, S.places.places, S.places.stays)); // tailor-made combinations next to the templates
+  S.credits = credits && typeof credits === 'object' ? credits : {};
   const cat = mergeCatalogs(catalogs.filter(Boolean));
   S.catalog = { acc: sanitizeItems(cat.acc, 'accommodation'), act: sanitizeItems(cat.act, 'activity') };
   S.highlights = sanitizeHighlights(highlights);
@@ -680,7 +681,7 @@ function routeDetail(gid, id) {
       <button class="btn alt" data-a="offline" data-gid="${esc(gid)}" data-id="${esc(r.id)}" id="offlinebtn">Download voor offline</button>
       <a class="btn alt" href="${esc(gmaps(r))}" target="_blank" rel="noopener">Route in Google Maps</a>
       <div class="group-h">Ritten</div>
-      <div class="group">${r.legs.map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)}, var(--accent))">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
+      <div class="group">${r.legs.filter(l => l.from !== l.to).map((l, i) => `<div class="row"><span class="num" style="background:var(--route-${esc(r.id)}, var(--accent))">${'ABCDEFG'[i] || i + 1}</span><div class="grow"><div class="t">${esc(l.from)} naar ${esc(l.to)}</div><div class="s">${Number(l.km)} km · ca. ${fmtMin(Number(l.min))} rijden</div></div></div>`).join('')}</div>
     </div>`;
 }
 const legText = l => (!l ? '' : l.from === l.to ? 'De ferry komt hier aan' : `${l.from} naar ${l.to}, ca. ${fmtMin(Number(l.min))} rijden`);
@@ -694,7 +695,7 @@ function dayRow(d, youngest) {
   } else if (d.kind === 'activity') { title = d.act.item.name; sub = [dur(Number(d.act.item.durationH) || undefined), d.act.driveMin ? `ca. ${Number(d.act.driveMin)} min rijden` : ''].filter(Boolean).join(' · '); if (d.alt) extra = 'Of: ' + d.alt.item.name; }
   else if (d.kind === 'rest') { title = 'Rustige dag'; sub = d.act ? d.act.item.name : 'Zwembad, strand of lekker niets'; }
   else if (d.kind === 'free') { title = 'Vrije dag'; sub = st.coast === false ? `Rustig rondkijken in en rond ${st.short}` : `Strand of zwembad, of rondkijken in ${st.short}`; }
-  else { title = 'Terug naar de ferry'; sub = legText(d.leg); }
+  else { title = 'Terug naar de ferry'; sub = d.leg && d.leg.from === d.leg.to ? `De ferry vertrekt in ${d.leg.from}` : legText(d.leg); }
   return `<div class="row day ${esc(d.kind)}" style="align-items:flex-start"><span class="num sq" style="background:${d.kind === 'highlight' ? 'var(--accent)' : 'var(--fill)'};color:${d.kind === 'highlight' ? '#fff' : 'var(--fg)'};border-radius:9px;font-size:13px">${d.n}</span>
     <div class="grow"><div class="s">Dag ${d.n}${d.date ? ' · ' + esc(dayLabel(d.date)) : ''}${d.kind === 'highlight' ? ' · highlight' : ''}</div><div class="t">${esc(title)}</div>${sub ? `<div class="s" style="color:var(--fg)">${esc(sub)}</div>` : ''}${extra ? `<div class="s">${esc(extra)}</div>` : ''}${d.evening ? `<div class="s">'s Avonds: ${esc(d.evening.item.name)}</div>` : ''}${warn ? `<div class="s" style="color:var(--no)">${esc(warn)}</div>` : ''}</div></div>`;
 }

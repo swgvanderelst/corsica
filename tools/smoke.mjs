@@ -330,6 +330,8 @@ try {
   assert.ok(Object.keys(getUser(aUid).swipes).length < before, 'the old accommodation swipes are gone');
   await click(anna, '[data-a=credits]'); await anna.waitForSelector('#sheet.on');
   assert.match(await text(anna, '#sheetBody'), /Fotocredits/);
+  const creditTitles = Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'destinations/corsica/credits.json'), 'utf8'))).map(c => c.title).filter(Boolean);
+  assert.ok(creditTitles.length > 0 && (await text(anna, '#sheetBody')).includes(creditTitles[0]), 'the CC BY credits of credits.json are listed');
   await click(anna, '[data-a=sheet-close]'); await sleep(400);
   await click(anna, '[data-a=signout]');
   await anna.waitForSelector('[data-a=google]');
